@@ -5,7 +5,6 @@
 .component-card_9 {
   border: 1px solid $m-color_3;
   border-radius: 6px;
-  width: 80rem;
   margin: 10px;
   -webkit-box-shadow: 4px 6px 10px -3px $m-color_4;
   box-shadow: 4px 6px 10px -3px $m-color_4;
@@ -43,8 +42,8 @@
     &:before {
       content: '';
       position: absolute;
-      height: 1px;
-      width: 215px;
+      height: 2px;
+      width: 80%;
       background: $m-color_3;
       top: 0;
       right: 0;

@@ -84,7 +84,7 @@
             async submit() {
       try {
         await this.Register(this.form);
-        this.$router.push('/');
+        this.$router.push('/auth/userinfo');
       } catch (error) {
           console.log(error)
       }

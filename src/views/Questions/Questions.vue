@@ -15,9 +15,9 @@
         </portal>
 
         <div class="row layout-top-spacing">
-            <div>
+            <div class="col-xl-12 col-md-12 col-sm-12 col-12">
                         <div class="panel-body">
-                            <b-card class="component-card_9 " v-for="q in Questions" :key="q.id">
+                            <b-card class="component-card_9" v-for="q in Questions" :key="q.id">
                                 <p class="meta-date">{{q.dateQ | formatDate}}</p>
 
                                 <b-card-title title-tag="h5">{{q.titleQ}}</b-card-title>

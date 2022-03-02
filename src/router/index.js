@@ -171,6 +171,12 @@ const routes = [
         meta: { layout: 'auth' }
     },
     {
+        path: '/auth/userinfo',
+        name: 'userinfo',
+        component: () => import( '../views/auth/stepper_userinfo.vue'),
+        meta: { layout: 'auth' }
+    },
+    {
         path: '/auth/register-boxed',
         name: 'register-boxed',
         component: () => import(/* webpackChunkName: "auth-register-boxed" */ '../views/auth/register_boxed.vue'),
