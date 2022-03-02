@@ -10,9 +10,19 @@ import { BootstrapVue } from 'bootstrap-vue';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 Vue.use(BootstrapVue);
 
+//phone number
+import MazPhoneNumberInput from 'maz-ui'
+Vue.use(MazPhoneNumberInput)
+import VuePhoneNumberInput from 'vue-phone-number-input';
+import 'vue-phone-number-input/dist/vue-phone-number-input.css';
+Vue.component('vue-phone-number-input', VuePhoneNumberInput);
 //perfect scrollbar
 import PerfectScrollbar from 'vue2-perfect-scrollbar';
 Vue.use(PerfectScrollbar);
+
+import vueCountryRegionSelect from 'vue-country-region-select'
+Vue.use(vueCountryRegionSelect)
+
 
 //vue-scrollactive
 import VueScrollactive from 'vue-scrollactive';

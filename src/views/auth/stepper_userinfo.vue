@@ -43,6 +43,7 @@
             <b-form-invalid-feedback :class="{'d-block' : is_submit_form1 && !form.age}">Please fill the age</b-form-invalid-feedback>
         </b-form-group>
     </b-form-row>
+    <hr>
     <b-form-row class="mb-4">
     <b-form-group label="Email" class="col-md-6" >
             <b-input  placeholder="Email@email.com" type="email" v-model="form.email" :class="[is_submit_form1 ? (form.email && email_validate(form.email) ? 'is-valid' : 'is-invalid') : '']"></b-input>
@@ -50,11 +51,12 @@
         <b-form-invalid-feedback :class="{'d-block' : is_submit_form1 && !form.email}">Please fill the email</b-form-invalid-feedback>
         </b-form-group>
         <b-form-group label="Phone Number" class="col-md-6">
-            <b-input type="number" placeholder="Phone Number" v-model="form.phone" :class="[is_submit_form1 ? (form.phone ? 'is-valid' : 'is-invalid') : '']"></b-input>
-            <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
-            <b-form-invalid-feedback :class="{'d-block' : is_submit_form1 && !form.phone}">Please fill the phone</b-form-invalid-feedback>
-        </b-form-group>
+            <MazPhoneNumberInput Black
+    v-model="form.tel"
+  /> 
+             </b-form-group>
     </b-form-row>
+    <hr>
     <b-form-row class="mb-4">
       <b-form-group class="col-md-6" label="Address">
         <b-input placeholder="1234 Main St" v-model="form.address" :class="[is_submit_form1 ? (form.address ? 'is-valid' : 'is-invalid') : '']"></b-input>
@@ -62,31 +64,39 @@
     <b-form-invalid-feedback :class="{'d-block' : is_submit_form1 && !form.address}">Please fill the Address</b-form-invalid-feedback>
     </b-form-group>  
      <b-form-group class="col-md-6" label="Country">
-        <b-input placeholder="Your country here" v-model="form.country" :class="[is_submit_form1 ? (form.country ? 'is-valid' : 'is-invalid') : '']"></b-input>
-        <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
-        <b-form-invalid-feedback :class="{'d-block' : is_submit_form1 && !form.country}">Please fill the Country</b-form-invalid-feedback>
-    </b-form-group> 
+         <country-select class="country-select" v-model="country" :country="country" topCountry="US" />
+     </b-form-group> 
     </b-form-row>
+    <hr>
     <b-form-row class="mb-4">
-        <div class="custom-file-container" data-upload-id="myFirstImage">
-                                <label>Upload (Single File) <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">x</a></label>
+        <div class="custom-file-container col-6" data-upload-id="myFirstImage">
+                                <label>Upload Image <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">x</a></label>
                                 <label class="custom-file-container__custom-file">
                                     <input type="file" class="custom-file-container__custom-file__custom-file-input" accept="image/*">
                                     <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
                                     <span class="custom-file-container__custom-file__custom-file-control"></span>
                                 </label>
                                 <div class="custom-file-container__image-preview"></div>
+                                
                             </div>
-    </b-form-row>
-
-</b-form>
-                                </tab-content>
-                                    <b-select value="Default select">
-    <b-select-option value="Default select">Default select</b-select-option>
+                            
+    <div class="border-left col-4 pl-4">
+    <h4>Preferences</h4>
+    <h5>Question Category:</h5>
+    <b-select value="Default select">
+    <b-select-option value="Default select">Select Category</b-select-option>
     <b-select-option value="One">One</b-select-option>
     <b-select-option value="Two">Two</b-select-option>
     <b-select-option value="Three">Three</b-select-option>
 </b-select>
+           
+
+</div>
+    </b-form-row>
+
+</b-form>
+                                </tab-content>
+                                    
                             
                             </form-wizard>
                         </div>
@@ -102,7 +112,6 @@
 </style>
 <script>
 import '@/assets/sass/scrollspyNav.scss';
-
     import { FormWizard, TabContent } from 'vue-form-wizard';
     import 'vue-form-wizard/dist/vue-form-wizard.min.css';
     import '@/assets/sass/forms/file-upload-with-preview.min.css';
@@ -114,20 +123,22 @@ import '@/assets/sass/scrollspyNav.scss';
         components: {
             FormWizard,
             TabContent,
+            
         },
         data(){
             return{
+                country:'',
             form:{
                 firstname:'',
                 lasttname:'',
                 age:'',
                 email:'',
                 address:'',
-                phone:'',
+                tel:'',
                 country:'',
             },
             is_submit_form1: false,
-            count: 0
+            ok:false,
             }
         },
         mounted() {
@@ -141,11 +152,27 @@ import '@/assets/sass/scrollspyNav.scss';
         methods: {
           onComplete: function(){
       this.submit_form1()
+      if (this.ok==true){
+          /*var formdata = new FormData();
+        if (this.image != null) {
+          formdata.append("imageU", this.image);
+        }
+        formdata.append("lastname", this.userprofile.lastname);
+        formdata.append("firstname", this.userprofile.firstname);
+        formdata.append("adresse", this.userprofile.adresse);
+        formdata.append("email", this.userprofile.email);
+        formdata.append("age", this.userprofile.age);
+        formdata.append("tel", this.userprofile.tel);
+        formdata.append("userU", this.userprofile.userU.id);
+        //
+        await axios.post("/userprofile/userprofile-create/", formdata);*/
+      }
    },
    submit_form1() {
                 this.is_submit_form1 = true;
                 if (this.form.firstname && this.form.lastname && this.form.age && this.form.address && this.form.email && this.form.country && this.form.phone) {
                     //form validated success
+                    this.ok=true
                     this.$bvToast.toast('Form submitted successfully.', { headerClass: 'd-none', bodyClass: 'toast-success', toaster: 'b-toaster-top-center', autohidedelay: 2000 })
                 }
             },
