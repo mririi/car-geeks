@@ -7,7 +7,10 @@ Vue.use(VueRouter);
 
 const routes = [
     //dashboard
-    { path: '/', name: 'Home', component: Home },
+    { path: '/', 
+    name: 'Home', 
+    component: Home 
+},
 
     {
         path: '/index2',
@@ -223,6 +226,12 @@ const routes = [
         path: '/questions',
         name: 'questions',
         component: () => import( '../views/Questions/Questions.vue')
+    },
+    //Question Page
+    {
+        path: '/questionpage/:id',
+        name: 'questionpage',
+        component: () => import( '../views/Questions/QuestionPage.vue')
     },
     //Services
     {
