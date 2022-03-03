@@ -92,8 +92,7 @@
             User.append("password", this.form.password);
             try {
                 await this.LogIn(User);
-                console.log("login")
-                this.$router.push("/");
+                this.$router.push("/auth/userinfo");
             
             } catch (error) {
                 console.log(error)

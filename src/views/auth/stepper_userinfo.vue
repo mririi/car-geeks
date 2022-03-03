@@ -25,7 +25,7 @@
                             color="#4361ee">
                                 <h4 class="text-center mt-2 mb-3">More Informations</h4>
                                 <tab-content title="" icon="far fa-user">
-                                    <b-form novalidate>
+                                    <b-form @submit.prevent="submit">
     <b-form-row class="mb-4">
         <b-form-group label="First name" class="col-md-4 ">
             <b-input type="text" placeholder="First name" v-model="form.firstname"  :class="[is_submit_form1 ? (form.firstname ? 'is-valid' : 'is-invalid') : '']"></b-input>
@@ -64,7 +64,7 @@
     <b-form-invalid-feedback :class="{'d-block' : is_submit_form1 && !form.address}">Please fill the Address</b-form-invalid-feedback>
     </b-form-group>  
      <b-form-group class="col-md-6" label="Country">
-         <country-select class="country-select" v-model="country" :country="country" topCountry="US" />
+         <country-select class="country-select" v-model="form.country" :country="form.country" topCountry="US" />
      </b-form-group> 
     </b-form-row>
     <hr>
@@ -72,7 +72,7 @@
         <div class="custom-file-container col-6" data-upload-id="myFirstImage">
                                 <label>Upload Image <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">x</a></label>
                                 <label class="custom-file-container__custom-file">
-                                    <input type="file" class="custom-file-container__custom-file__custom-file-input" accept="image/*">
+                                    <input type="file" @change="onFileChanged" class="custom-file-container__custom-file__custom-file-input" accept="image/*">
                                     <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
                                     <span class="custom-file-container__custom-file__custom-file-control"></span>
                                 </label>
@@ -111,6 +111,8 @@
     }
 </style>
 <script>
+import { mapGetters, mapActions } from "vuex";
+import axios from 'axios'
 import '@/assets/sass/scrollspyNav.scss';
     import { FormWizard, TabContent } from 'vue-form-wizard';
     import 'vue-form-wizard/dist/vue-form-wizard.min.css';
@@ -127,18 +129,19 @@ import '@/assets/sass/scrollspyNav.scss';
         },
         data(){
             return{
-                country:'',
             form:{
                 firstname:'',
-                lasttname:'',
+                lastname:'',
                 age:'',
                 email:'',
                 address:'',
                 tel:'',
                 country:'',
+                userU:'',
             },
             is_submit_form1: false,
             ok:false,
+            image: null,
             }
         },
         mounted() {
@@ -149,30 +152,41 @@ import '@/assets/sass/scrollspyNav.scss';
                 },
             });
         },
+        computed: {
+    ...mapGetters({
+      Users: "StateUsers",
+      User: "StateUser"
+      })},
         methods: {
-          onComplete: function(){
-      this.submit_form1()
-      if (this.ok==true){
-          /*var formdata = new FormData();
+            ...mapActions(["GetUsers"]),
+      //upload image
+    onFileChanged(event) {
+      this.image = event.target.files[0];
+    },
+    onComplete: function(){
+        this.is_submit_form1 = true;
+            if (this.form.firstname && this.form.lastname && this.form.age && this.form.address && this.form.email && this.form.country && this.form.phone) {
+                    //form validated success
+            for (let u in this.Users) {
+          if (this.Users[u].username == this.User) {
+            this.form.userU = this.Users[u];
+          }
+        }
+          var formdata = new FormData();
         if (this.image != null) {
           formdata.append("imageU", this.image);
         }
-        formdata.append("lastname", this.userprofile.lastname);
-        formdata.append("firstname", this.userprofile.firstname);
-        formdata.append("adresse", this.userprofile.adresse);
-        formdata.append("email", this.userprofile.email);
-        formdata.append("age", this.userprofile.age);
-        formdata.append("tel", this.userprofile.tel);
-        formdata.append("userU", this.userprofile.userU.id);
+        formdata.append("lastname", this.form.lastname);
+        formdata.append("firstname", this.form.firstname);
+        formdata.append("address", this.form.address);
+        formdata.append("email", this.form.email);
+        formdata.append("age", this.form.age);
+        formdata.append("tel", this.form.tel);
+        formdata.append("country", this.form.country);
+        formdata.append("userU", this.form.userU.id);
         //
-        await axios.post("/userprofile/userprofile-create/", formdata);*/
-      }
-   },
-   submit_form1() {
-                this.is_submit_form1 = true;
-                if (this.form.firstname && this.form.lastname && this.form.age && this.form.address && this.form.email && this.form.country && this.form.phone) {
-                    //form validated success
-                    this.ok=true
+        console.log(this.form)
+         axios.post("/userprofile/userprofile-create/", formdata);
                     this.$bvToast.toast('Form submitted successfully.', { headerClass: 'd-none', bodyClass: 'toast-success', toaster: 'b-toaster-top-center', autohidedelay: 2000 })
                 }
             },
@@ -180,7 +194,12 @@ import '@/assets/sass/scrollspyNav.scss';
                 const regexp = /^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$/;
                 return regexp.test(email);
             },
-     
-    },
+   },
+   
+            
+    created() {
+    this.GetUsers();
+    console.log(this.User)
+    }
     };
 </script>
