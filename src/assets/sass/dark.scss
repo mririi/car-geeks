@@ -410,7 +410,7 @@ body.dark {
             }
         }
     }
-
+    //normal select
     .custom-select {
         border: 1px solid #1b2e4b;
         color: #009688;
@@ -437,6 +437,41 @@ body.dark {
     .form-control:disabled,
     .form-control[readonly],
     .custom-select:disabled {
+        background-color: #3b3f5c !important;
+        cursor: no-drop;
+        color: #d3d3d3 !important;
+    }
+    //phone number
+    
+    //country select
+    .country-select {
+        border: 1px solid #1b2e4b;
+        color: #009688;
+        background: #1b2e4b;
+        height: 47px;
+        width: 100%;
+        border-radius: 5px;
+        padding-left: 15px;
+    
+        &:focus {
+            border-color: #3b3f5c;
+            color: #25d5e4;
+            background-color: #1b2e4b;
+            box-shadow: none !important;
+        }
+        &:disabled {
+            background: #1b2e4b
+                url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat
+                right 0.75rem (center / 8px) 10px;
+        }
+        &.is-invalid,
+        &:invalid {
+            border-color: #dc3545;
+        }
+    }
+    .form-control:disabled,
+    .form-control[readonly],
+    .country-select:disabled {
         background-color: #3b3f5c !important;
         cursor: no-drop;
         color: #d3d3d3 !important;

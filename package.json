@@ -3,6 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
+        "get-theme": "maz get-theme",
         "serve": "vue-cli-service serve --open",
         "dev": "vue-cli-service serve --open",
         "build": "vue-cli-service build",
@@ -24,6 +25,7 @@
         "highlight.js": "^11.0.1",
         "jspdf": "^2.3.1",
         "jspdf-autotable": "^3.5.15",
+        "maz-ui": "^2.3.13",
         "moment": "^2.29.1",
         "perfect-scrollbar": "^1.5.1",
         "portal-vue": "^2.1.7",
@@ -33,6 +35,7 @@
         "vue-apexcharts": "^1.6.1",
         "vue-clipboard2": "^0.3.1",
         "vue-cool-lightbox": "^2.7.4",
+        "vue-country-region-select": "^2.0.16",
         "vue-easymde": "^2.0.0",
         "vue-flatpickr-component": "^8.1.7",
         "vue-form-wizard": "^0.8.4",
@@ -41,6 +44,7 @@
         "vue-meta": "^2.4.0",
         "vue-multiselect": "^2.1.6",
         "vue-number-animation": "^1.1.1",
+        "vue-phone-number-input": "^1.1.12",
         "vue-quill-editor": "^3.0.6",
         "vue-router": "^3.2.0",
         "vue-scrollactive": "^0.9.3",
@@ -57,6 +61,7 @@
         "@vue/cli-plugin-vuex": "~4.5.0",
         "@vue/cli-service": "~4.5.0",
         "babel-eslint": "^10.1.0",
+        "babel-plugin-component": "^1.1.1",
         "eslint": "^6.7.2",
         "eslint-plugin-vue": "^6.2.2",
         "sass": "^1.35.1",
@@ -82,4 +87,5 @@
         "last 2 versions",
         "not dead"
     ]
+    
 }

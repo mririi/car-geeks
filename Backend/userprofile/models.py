@@ -6,10 +6,12 @@ from django.contrib.auth.models import User
 class Userprofile(models.Model):
   firstname = models.CharField(max_length=200,blank=True,null=True)
   lastname = models.CharField(max_length=200,blank=True,null=True)
-  adresse = models.CharField(max_length=200,blank=True,null=True)
+  address = models.CharField(max_length=200,blank=True,null=True)
+  country = models.CharField(max_length=200,blank=True,null=True)
   email = models.CharField(max_length=200,blank=True,null=True)
   age = models.IntegerField(default=0)
   tel = models.IntegerField(default=0)
+  bio = models.TextField(default="",blank=True,null=True)
   nbquestions = models.IntegerField(default=0)
   nbreplies = models.IntegerField(default=0)
   nblikes = models.IntegerField(default=0)
