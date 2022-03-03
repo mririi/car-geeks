@@ -83,13 +83,10 @@
     <div class="border-left col-4 pl-4">
     <h4>Preferences</h4>
     <h5>Question Category:</h5>
-    <b-select value="Default select">
-    <b-select-option value="Default select">Select Category</b-select-option>
-    <b-select-option value="One">One</b-select-option>
-    <b-select-option value="Two">Two</b-select-option>
-    <b-select-option value="Three">Three</b-select-option>
+    <b-select v-model="form.category" value="Default select">
+    <b-select-option value="0">Select Category</b-select-option>
+    <b-select-option v-for="c in Questioncategories" :key="c.id" :value="c.id">{{ c.typeC }}</b-select-option>
 </b-select>
-           
 
 </div>
     </b-form-row>
@@ -138,6 +135,8 @@ import '@/assets/sass/scrollspyNav.scss';
                 tel:'',
                 country:'',
                 userU:'',
+                //pref
+                category:0,
             },
             is_submit_form1: false,
             ok:false,
@@ -155,18 +154,23 @@ import '@/assets/sass/scrollspyNav.scss';
         computed: {
     ...mapGetters({
       Users: "StateUsers",
-      User: "StateUser"
+      User: "StateUser",
+      Questioncategories:"StateQuestioncategories",
       })},
         methods: {
-            ...mapActions(["GetUsers"]),
+            ...mapActions(["GetUsers","GetQuestioncategories"]),
       //upload image
     onFileChanged(event) {
       this.image = event.target.files[0];
     },
     onComplete: function(){
         this.is_submit_form1 = true;
-            if (this.form.firstname && this.form.lastname && this.form.age && this.form.address && this.form.email && this.form.country && this.form.phone) {
-                    //form validated success
+            if (this.form.firstname &&
+             this.form.lastname &&
+              this.form.age &&
+               this.form.address &&
+                this.form.email ) 
+            {
             for (let u in this.Users) {
           if (this.Users[u].username == this.User) {
             this.form.userU = this.Users[u];
@@ -184,11 +188,11 @@ import '@/assets/sass/scrollspyNav.scss';
         formdata.append("tel", this.form.tel);
         formdata.append("country", this.form.country);
         formdata.append("userU", this.form.userU.id);
-        //
-        console.log(this.form)
-         axios.post("/userprofile/userprofile-create/", formdata);
-                    this.$bvToast.toast('Form submitted successfully.', { headerClass: 'd-none', bodyClass: 'toast-success', toaster: 'b-toaster-top-center', autohidedelay: 2000 })
-                }
+         axios.post("/userprofile/userprofile-create/", formdata);         
+        //axios.post("/preferences/preferences-create/", {userprofilePref:this.form.userU.id,categoryPref:this.form.category});
+            this.$router.push("/")
+            }
+            
             },
             email_validate(email) {
                 const regexp = /^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$/;
@@ -199,7 +203,8 @@ import '@/assets/sass/scrollspyNav.scss';
             
     created() {
     this.GetUsers();
-    console.log(this.User)
+    this.GetQuestioncategories()
+ 
     }
     };
 </script>

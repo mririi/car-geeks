@@ -6,7 +6,7 @@
           <div class="page-header">
             <nav class="breadcrumb-one" aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item active" aria-current="page"><span>Questions</span></li>
+                <li class="breadcrumb-item active" aria-current="page"><span>Question Page</span></li>
               </ol>
             </nav>
           </div>
@@ -19,18 +19,18 @@
           <b-media>
             <template #aside>
               <div class="w-img">
-                <img src="@/assets/images/profile-19.jpeg" alt="avatar" />
+                <img :src="'http://127.0.0.1:8000' + userprofile.imageU" alt="avatar" />
               </div>
             </template>
-            <h6>Jimmy Turner</h6>
-            <p class="meta-date-time">Monday, Nov 18</p>
-            <h4 class="mt-4">TitleQ</h4>
+            <h6>{{userprofile.firstname}} {{userprofile.lastname}}</h6>
+            <p class="meta-date-time">{{question.dateQ | formatDate}}</p>
+            <h4 class="mt-4">{{question.titleQ}}</h4>
           </b-media>
         </div>
         <div class="widget-content">
-          <p>"Duis aute irure dolor" in reprehenderit in voluptate velit esse cillum "dolore eu fugiat" nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
+          <p>{{question.contentQ}}</p>
           <div class="widget-content mb-5">
-            <img src="https://i.gaw.to/vehicles/photos/40/20/402013-2020-ford-ranger.jpg?1024x640" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
+            <img :src="'http://127.0.0.1:8000' + question.imageQ" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
           </div>
           <div class="w-action">
             <div class="card-like ml-4">
@@ -48,7 +48,7 @@
               >
                 <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
               </svg>
-              <span>551 Likes</span>
+              <span>{{question.nblikes}} Likes</span>
             </div>
             <div class="card-like mr-4">
               <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
@@ -84,20 +84,24 @@
                 <h5 class="mt-4 ml-4">Answers</h5>
                 <div class="panel-body mb-3 pill-justify-right">
                   <b-tabs pills nav-class=" justify-content-end mb-5">
-                    <b-tab title="Default" active>
-                      <div class="panel-body notation-text-icon">
+                    <b-tab v-for="rep in Replies" :key="rep.id" title="Default" active>
+                      <div v-if="rep.questionRep==question.id" class="panel-body notation-text-icon">
+                        
                         <b-media>
-                          <template #aside>
-                            <img class="rounded mr-2" src="@/assets/images/profile-4.jpeg" width="40px" alt="pic1" />
-                          </template>
-                          <h6 class="">Samira</h6>
-                          <p class="meta-date-time media-text mb-4">Monday, Nov 18</p>
+                          <div v-for="u in Userprofiles" :key="u.id">
+                          <div v-if="u.id==rep.userprofileRep">
+                            <div class="float-left">
+                            <img class="rounded mr-2" :src="'http://127.0.0.1:8000' + u.imageU" width="40px" alt="pic1" />
+                            </div>
+                          <h6 class="">{{u.firstname}} {{u.lastname}}</h6>
+                          </div>
+                          </div>
+                          <p class="meta-date-time media-text mb-4">{{rep.dateR | formatDate}}</p>
                           <p class="media-text"> 
-                            Sed dapibus nulla elementum, rutrum neque eu, gravida neque. Fusce condimentum cursus mauris et ornare. Mauris fermentum mi id sollicitudin viverra. Aenean dignissim sed
-                            ante eget dapibus.
+                            {{rep.contentR}}
                           </p>
                           <div class="widget-content mb-4">
-                            <img src="https://i.gaw.to/content/photos/40/87/408765_2020_Ford_Ranger.jpg" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
+                            <img :src="'http://127.0.0.1:8000' + rep.imageR" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
                           </div>
                           <div class="media-notation float-right">
                             <a href="javascript:void(0);" class="mr-2"
@@ -115,7 +119,7 @@
                               >
                                 <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
                               </svg>
-                              50 likes
+                              {{ rep.nblikesR }} likes
                             </a>
                             <a href="javascript:void(0);" class="mr-2"
                               ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1792 1536">
@@ -124,7 +128,7 @@
                                   d="M896 128q-204 0-381.5 69.5T232.5 385T128 640q0 112 71.5 213.5T401 1029l87 50l-27 96q-24 91-70 172q152-63 275-171l43-38l57 6q69 8 130 8q204 0 381.5-69.5t282-187.5T1664 640t-104.5-255t-282-187.5T896 128zm896 512q0 174-120 321.5t-326 233t-450 85.5q-70 0-145-8q-198 175-460 242q-49 14-114 22h-5q-15 0-27-10.5t-16-27.5v-1q-3-4-.5-12t2-10t4.5-9.5l6-9l7-8.5l8-9q7-8 31-34.5t34.5-38t31-39.5t32.5-51t27-59t26-76q-157-89-247.5-220T0 640q0-174 120-321.5t326-233T896 0t450 85.5t326 233T1792 640z"
                                 />
                               </svg>
-                              25 comments
+                              {{rep.nbCommentR}} comments
                             </a>
                             <a href="javascript:void(0);" class=""
                               ><svg
@@ -412,18 +416,58 @@
 </template>
 
 <script>
+
+import axios from 'axios'
+import '@/assets/sass/widgets/widgets.scss';
 import { mapGetters, mapActions } from 'vuex';
 export default {
-  created: function () {
-    this.GetQuestions();
+  data(){
+    return{
+      question:[],
+      userprofile:[],
+    }
   },
   computed: {
     ...mapGetters({
       Questions: 'StateQuestions',
+      Replies:'StateReplies',
+      Userprofiles:'StateUserprofiles'
     }),
   },
   methods: {
-    ...mapActions(['GetQuestions']),
+    ...mapActions(['GetQuestions','GetReplies','GetUserprofiles','CreateReply','CreateComment']),
+  },
+  created() {
+    //this.GetComments();
+    this.GetQuestions();
+    this.GetReplies();
+    //this.GetUsers();
+    this.GetUserprofiles();
+    
+
+    for (let u in this.Users) {
+      if (this.Users[u].username == this.User) {
+        this.CurrentUser = this.Users[u];
+      }
+    }
+    /*for (let u in this.Userprofiles) {
+      if (this.Userprofiles[u].userU == this.CurrentUser.id) {
+        this.CurrentUserProfile = this.Userprofiles[u];
+        //this.comment.userprofileCo = this.Userprofiles[u].id;
+      }
+    }*/
+    axios
+      .get("/question/question-detail/" + this.$route.params.id + "/")
+      .then((response) => {
+        this.question = response.data;
+        axios.get("/userprofile/userprofile-detail/" + this.question.userprofileQ + "/")
+      .then((response) => {
+        this.userprofile = response.data;
+      })
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 };
 </script>

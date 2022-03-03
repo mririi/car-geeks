@@ -69,13 +69,7 @@
     }
 </style>
 <script>
-import moment from "moment";
-import Vue from "vue";
-Vue.filter("formatDate", function (value) {
-  if (value) {
-    return moment(String(value)).format("DD MMMM YYYY H:mm");
-  }
-});
+
 import '@/assets/sass/components/cards/card.scss';
 import { mapGetters, mapActions } from "vuex";
 export default {

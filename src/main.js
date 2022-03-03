@@ -33,7 +33,13 @@ import VueMeta from 'vue-meta';
 Vue.use(VueMeta, {
     refreshOnceOnNavigation: true
 });
-
+//Date format
+import moment from "moment";
+Vue.filter("formatDate", function (value) {
+  if (value) {
+    return moment(String(value)).format("DD MMMM YYYY H:mm");
+  }
+});
 //Sweetalert
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';

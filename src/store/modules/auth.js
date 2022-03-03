@@ -245,9 +245,6 @@ const mutations = {
   setUser(state, username) {
     state.user = username;
   },
-  setCountries(state, list) {
-    state.countryList = list;
-  },
   setUsers(state, users) {
     state.users = users;
   },
