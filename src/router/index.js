@@ -178,7 +178,9 @@ const routes = [
         path: '/auth/userinfo',
         name: 'userinfo',
         component: () => import( '../views/auth/stepper_userinfo.vue'),
-        meta: { layout: 'auth' }
+        meta: { layout: 'auth',
+            requiresAuth: true
+           }
     },
     {
         path: '/auth/register-boxed',
@@ -232,7 +234,10 @@ const routes = [
      {
         path: '/addquestion',
         name: 'addquestion',
-        component: () => import( '../views/Questions/AddQuestion.vue')
+        component: () => import( '../views/Questions/AddQuestion.vue'),
+        meta: {
+            requiresAuth: true
+          }
         
     },
     //Question Page
@@ -592,5 +597,15 @@ router.beforeEach((to, from, next) => {
     }
     next(true);
 });
-
+router.beforeEach((to, from, next) => {
+    if (to.matched.some((record) => record.meta.requiresAuth)) {
+      if (store.getters.isAuthenticated) {
+        next();
+        return;
+      }
+      next("/auth/login");
+    } else {
+      next();
+    }
+  });
 export default router;

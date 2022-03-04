@@ -45,8 +45,8 @@
                 <div class="text-center">
                     <img src="@/assets/images/features_overview.svg" alt="..." class="img-fluid" />
                 </div>
-                <h5 class="mb-0 text-center">TEMPLATE CUSTOMIZER</h5>
-                <p class="text-center">Set preferences that will be cookied for your live preview demonstration.</p>
+                <h5 class="mb-0 text-center">CUSTOMIZER</h5>
+                <p class="text-center">Set preferences that will be cookied for you.</p>
                 <hr />
 
                 <h6 class="mb-1">Color Scheme</h6>

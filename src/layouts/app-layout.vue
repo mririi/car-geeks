@@ -17,10 +17,12 @@
 
             <!--  BEGIN SIDEBAR  -->
             <Sidebar></Sidebar>
+            
             <!--  END SIDEBAR  -->
        
             <!--  BEGIN CONTENT AREA  -->
             <div id="content" class="main-content">
+                
                 <router-view>
                     <!-- BEGIN LOADER -->
                     <div id="load_screen">
@@ -32,9 +34,10 @@
                     </div>
                     <!--  END LOADER -->
                 </router-view>
-
+                
                 <!-- BEGIN FOOTER -->
                 <Footer/>
+                
                 <!-- END FOOTER -->
             </div>
             <!--  END CONTENT AREA  -->
@@ -55,7 +58,7 @@ import Footer from '@/components/layout/footer.vue';
             Header,
             Sidebar,
             appSettings,
-                Footer
+            Footer
         },
         data() {
             return {};
