@@ -24,7 +24,7 @@
                             
                             color="#4361ee">
                                 <tab-content title="More Informations"  :before-change="beforeTabSwitch"  icon="far fa-user">
-                                    <b-form @submit.prevent="submit">
+                                    <b-form>
     <b-form-row class="mb-4">
         <b-form-group label="First name" class="col-md-4 ">
             <b-input type="text" placeholder="First name" v-model="form.firstname"  :class="[is_submit_form1 ? (form.firstname ? 'is-valid' : 'is-invalid') : '']"></b-input>
@@ -89,7 +89,6 @@
                                 </tab-content>
                                 <tab-content title="Preferences" icon="far fa-heart">
                         <div class="col-4 pl-4">
-                            <h4>Preferences</h4>
                             <h5>Question Category:</h5>
                             <b-select v-model="form.category" value="Default select">
                             <b-select-option value="0">Select Category</b-select-option>
@@ -138,12 +137,13 @@ import '@/assets/sass/scrollspyNav.scss';
                 address:'',
                 tel:'',
                 country:'',
-                userU:null,
+                userU:[],
                 //pref
                 category:0,
                 //role
                 roleU:null
             },
+            CurrentUser:[],
             is_submit_form1: false,
             ok:false,
             image: null,
@@ -163,15 +163,21 @@ import '@/assets/sass/scrollspyNav.scss';
       User: "StateUser",
       Questioncategories:"StateQuestioncategories",
       Userprofiles:"StateUserprofiles",
-      Roles:"StateRoles"
+      Roles:"StateRoles",
+      Preferences:"StatePreferences"
       })},
         methods: {
-            ...mapActions(["CreateRole","GetRoles","GetUsers","CreateUserprofile","GetUserprofiles","GetQuestioncategories"]),
+            ...mapActions(["CreateRole","CreatePreference","GetPreferences","GetRoles","GetUsers","CreateUserprofile","GetUserprofiles","GetQuestioncategories"]),
       //upload image
     onFileChanged(event) {
       this.image = event.target.files[0];
     },
-    beforeTabSwitch: async function(){
+    beforeTabSwitch: function(){
+        for (let u in this.Users) {
+          if (this.Users[u].username == this.User) {
+            this.form.userU = this.Users[u];
+        }
+    }
         this.is_submit_form1 = true;
             if (this.form.firstname &&
              this.form.lastname &&
@@ -181,14 +187,12 @@ import '@/assets/sass/scrollspyNav.scss';
                 this.form.tel)
             {
         if (this.form.userU.is_superuser){
-        await this.CreateRole({userRole:this.form.userU.id,admin:true})
-        }
+        this.CreateRole({userRole:this.form.userU.id,admin:true})
         for (let r in this.Roles){
             if(this.Roles[r].userRole==this.form.userU.id){
                 this.form.roleU=this.Roles[r].id
-                console.log(this.Roles);
             }
-        }
+        }}
           var formdata = new FormData();
         if (this.image != null) {
           formdata.append("imageU", this.image);
@@ -218,14 +222,20 @@ import '@/assets/sass/scrollspyNav.scss';
         return true;
             }
             else{  
-                return false;}
-
-      
+                return false;
+            }
     },
-    onComplete: function(){
+    onComplete: async function(){
          for(let u in this.Userprofiles){
              if(this.Userprofiles[u].userU==this.form.userU.id){
-                axios.post("/preferences/preferences-create/", {userprofilePref:this.Userprofiles[u].id,categoryPref:this.form.category,brandPref:null});
+                await this.CreatePreference({userprofilePref:this.Userprofiles[u].id,categoryPref:this.form.category,brandPref:null});
+                console.log(this.Preferences)
+                for (let p in this.Preferences){
+                    if(this.Preferences[p].userprofilePref==this.Userprofiles[u].id){
+                        console.log(this.Preferences)
+                        axios.put("/userprofile/userprofile-update/"+this.Userprofiles[u].id+"/",{preferencesU:this.Preferences[p].id})
+                    }
+                }
              }
          }
             this.$router.push("/")
@@ -242,16 +252,19 @@ import '@/assets/sass/scrollspyNav.scss';
     this.GetQuestioncategories()
     this.GetUserprofiles()
     this.GetRoles()
+    this.GetPreferences()
+    console.log(this.Users+"kkk"+this.User)
     for (let u in this.Users) {
           if (this.Users[u].username == this.User) {
-            this.form.userU = this.Users[u];
-          }
-        }
-    for(let u in this.Userprofiles){
-        if(this.Userprofiles[u].userU==this.form.userU.id){
-           this.$router.push("/") 
+            this.CurrentUser = this.Users[u];
+            for(let u in this.Userprofiles){
+        if(this.Userprofiles[u].userU==this.CurrentUser.id){
+           this.$router.push("/questions") 
         }
     }
+          }
+        }
+    
     }
 };
 </script>

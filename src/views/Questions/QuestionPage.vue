@@ -48,7 +48,7 @@
               >
                 <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
               </svg>
-              <span>{{ question.nblikes }} Likes</span>
+              <span @click="like">{{ question.nblikes }} Likes</span>
             </div>
             <div class="card-like mr-4">
               <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
@@ -101,19 +101,19 @@
                             <div v-for="u in Userprofiles" :key="u.id">
                               <div v-if="u.id == rep.userprofileRep">
                                 <div class="float-left">
-                                  <img class="rounded mr-2" :src="'http://127.0.0.1:8000' + u.imageU" width="40px" alt="pic1" />
+                                  <b-avatar class="mr-3" :square="true" size="3rem" :src="'http://127.0.0.1:8000' + u.imageU" width="40px" />
                                 </div>
                                 <h6 class="">{{ u.firstname }} {{ u.lastname }}</h6>
                               </div>
                             </div>
                             <p class="meta-date-time media-text mb-4">{{ rep.dateR | formatDate }}</p>
-                            <h5 class="media-text ml-5 mb-5">
+                            <h5 class="media-text ml-5 mb-1">
                               {{ rep.contentR }}
                             </h5>
                             <div v-if="rep.imageR != null" class="widget-content mb-4">
                               <img :src="'http://127.0.0.1:8000' + rep.imageR" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
                             </div>
-                            <div class="media-notation float-right">
+                            <div class="media-notation mb-4 float-right">
                               <a href="javascript:void(0);" class="mr-2"
                                 ><svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -157,6 +157,7 @@
                                 </svg>
                                 <span v-b-modal.registerModal1>Add a comment</span>
                               </a>
+                              
                               <!-- Comment Modal -->
                               <b-modal id="registerModal1" hide-footer title="Add Comment" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
                                 <form class="mt-0">
@@ -175,6 +176,7 @@
                               </b-modal>
                             </div>
                           </b-media>
+                          <hr width="90%">
                         </div>
                       </div>
                     </b-tab>
@@ -439,10 +441,18 @@ export default {
       userprofile: [],
       userprofileRep: [],
       CurrentUserProfile:[],
+      CurrentUser:[],
       replies: {
         contentR: '',
+        questionRep:'',
       },
       image: null,
+       vote: {
+        questionVo: "",
+        userprofileVo: "",
+        replyVo: "",
+        like:false,
+      },
     };
   },
   computed: {
@@ -450,15 +460,70 @@ export default {
       Questions: 'StateQuestions',
       Replies: 'StateReplies',
       Userprofiles: 'StateUserprofiles',
+      User: "StateUser",
+      Users: "StateUsers",
+      Votes: "StateVotes",
     }),
   },
   methods: {
-    ...mapActions(['GetQuestions', 'GetReplies', 'GetUserprofiles', 'CreateReply', 'CreateComment']),
+    ...mapActions(['GetQuestions','GetUsers',"GetVotes","CreateVote", 'GetReplies', 'GetUserprofiles', 'CreateReply', 'CreateComment']),
     onFileChanged(event) {
       this.image = event.target.files[0];
     },
-
+    like() {
+      this.GetVotes();
+      this.vote.questionVo = this.$route.params.id;
+      this.vote.userprofileVo = this.CurrentUserProfile.id;
+      console.log("question"+this.vote.questionVo+" user is "+ this.vote.userprofileVo)
+      let nb = 0;
+      for (let v in this.Votes) {
+        if (this.Votes[v].userprofileVo == this.CurrentUserProfile.id && this.Votes[v].questionVo==this.$route.params.id) {
+          nb = nb + 1;
+        }
+      }
+      
+      if (nb == 0) {
+            axios.put("/question/question-update/" + this.$route.params.id + "/", {
+              nblikes: (this.question.nblikes += 1),
+            });
+            this.vote.like=true
+            this.CreateVote(this.vote);
+            console.log("nb==0 is done "+this.vote)
+          }
+      
+      if (this.Votes.length != 0) {
+        this.GetVotes();
+        for (let v in this.Votes) {
+			if (
+            this.Votes[v].questionVo == this.$route.params.id &&
+            this.Votes[v].userprofileVo == this.CurrentUserProfile.id &&
+            this.Votes[v].like == true
+          ) {
+            axios.put("/question/question-update/" + this.$route.params.id + "/", {
+              nblikes: (this.question.nblikes -=1),
+            });
+            axios.post("/vote/vote-update/" + this.Votes[v].id + "/", {
+              like:false
+            });
+            console.log(this.Votes[v])
+          console.log("if in for up")
+          }
+        }
+      } else {
+        axios.put("/question/question-update/" + this.$route.params.id + "/", {
+          nblikes: (this.question.nblikes += 1),
+        });
+		this.vote.voteup = true;
+		this.vote.votedown = false;
+        this.CreateVote(this.vote);
+        console.log("last else in up")
+      }
+      this.GetVotes();
+    },
+      
+     
     async reply() {
+      console.log(this.replies.contentR)
       try {
         for (let u in this.Userprofiles) {
           if (this.Userprofiles[u].userU == this.CurrentUser.id) {
@@ -466,13 +531,13 @@ export default {
             this.CurrentUserProfile = this.Userprofiles[u];
           }
         }
-
+         
         var formdata = new FormData();
         if (this.image != null) {
           formdata.append('imageR', this.image);
         }
         formdata.append('contentR', this.replies.contentR);
-        formdata.append('questionRep', this.$route.params.id);
+        formdata.append('questionRep', this.questionRep);
         formdata.append('userprofileRep', this.userprofileRep);
         await this.CreateReply(formdata);
         await axios.put('/question/question-update/' + this.$route.params.id + '/', {
@@ -503,8 +568,11 @@ export default {
     //this.GetComments();
     this.GetQuestions();
     this.GetReplies();
-    //this.GetUsers();
+    this.GetUsers();
     this.GetUserprofiles();
+    this.CreateReply();
+    this.GetVotes();
+    this.CreateVote();
 
     for (let u in this.Users) {
       if (this.Users[u].username == this.User) {
@@ -523,6 +591,7 @@ export default {
         this.question = response.data;
         axios.get('/userprofile/userprofile-detail/' + this.question.userprofileQ + '/').then((response) => {
           this.userprofile = response.data;
+          this.questionRep = this.question.id;
         });
       })
       .catch((err) => {

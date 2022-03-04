@@ -3,8 +3,7 @@ from django.db import models
 # Create your models here.
 
 class Vote(models.Model):
-  voteup=models.BooleanField(default=False)
-  votedown=models.BooleanField(default=False)
+  like=models.BooleanField(default=False)
   dateCreationVo = models.DateTimeField(auto_now_add=True)
   replyVo = models.ForeignKey('reply.Reply',on_delete=models.CASCADE,null=True, blank=True)
   questionVo = models.ForeignKey('question.Question',on_delete=models.CASCADE,null=True, blank=True)

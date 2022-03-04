@@ -13,10 +13,49 @@
                 </li>
             </ul>
         </portal>
-        
+        <div>
+      <div
+        v-b-toggle.collapse-1
+        class="mt-4"
+        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="22" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill="currentColor" d="M22 33V19.5L33.47 8A1.81 1.81 0 0 0 34 6.7V5a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1.67a1.79 1.79 0 0 0 .53 1.27L14 19.58v10.2Z" class="clr-i-solid clr-i-solid-path-1"/><path fill="currentColor" d="M33.48 4h-31a.52.52 0 0 0-.48.52v1.72a1.33 1.33 0 0 0 .39.95l12 12v10l7.25 3.61V19.17l12-12a1.35 1.35 0 0 0 .36-.91V4.52a.52.52 0 0 0-.52-.52Z" class="clr-i-solid clr-i-solid-path-1"/><path fill="none" d="M0 0h36v36H0z"/></svg> <span class="h6">Filter</span>  </div>
+      <b-collapse id="collapse-1" >
+        <b-card
+          class="
+            bg-transparent
+            border-0 border-white
+            w-25 ml-3
+            default
+            mt-2
+            mb-2
+          "
+        >
+          <b-form-group
+            class=""
+            label="Categories : "
+            v-slot="{ ariaDescribedby }"
+          >
+            <b-form-checkbox-group
+              id="checkbox-group-2"
+              v-model="category"
+              :aria-describedby="ariaDescribedby"
+              name="flavour-a1"
+              
+            >
+              <div v-for="c in Questioncategories" :key="c.id">
+                <b-form-checkbox class="" :value="c.id">
+                  {{c.typeC}}
+                </b-form-checkbox>
+              </div>
+            </b-form-checkbox-group>
+          </b-form-group>
+        </b-card>
+      </b-collapse>
+    </div>
         <div class="row layout-top-spacing">
+            
             <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                        <div class="panel-body" v-for="q in Questions" :key="q.id">
+                
+                        <div class="panel-body" v-for="q in filterByCategory" :key="q.id">
                             <b-card class="component-card_9" v-if="q.accepted==true" >
                                 
                                 <p class="meta-date mb-3">{{q.dateQ | formatDate}}</p>
@@ -86,26 +125,99 @@ export default {
   },
   data() {
     return {
-      
+      search:'',
+      category:[],
      
     };
   },
   created: function () {
     this.GetQuestions()
     this.GetUserprofiles()
+    this.GetQuestioncategories()
   },
   computed: {
     ...mapGetters({
       Questions: "StateQuestions",
-      Userprofiles: "StateUserprofiles"
-      
+      Userprofiles: "StateUserprofiles",
+      Questioncategories:"StateQuestioncategories"
     }),
+    filteredList() {
+      return this.Questions.filter((question) => {
+        return question.titleQ.toLowerCase().includes(this.search.toLowerCase());
+      });
+    },
+    filterByCategory: function () {
+      if (this.category != "") {
+        return this.filteredList.filter((question) =>
+          this.category.includes(question.categoryQ)
+        );
+      } else return this.filteredList;
+    },
   },
   methods: {
     ...mapActions([
       "GetQuestions",
       "GetUserprofiles",
+      "GetQuestioncategories"
     ]),
   },
 };
 </script>
+<style scoped>
+.search-box{
+  width: fit-content;
+  height: fit-content;
+  position: relative;
+}
+.input-search{
+  height: 50px;
+  width: 50px;
+  border-style: none;
+  padding: 10px;
+  font-size: 18px;
+  letter-spacing: 2px;
+  outline: none;
+  border-radius: 25px;
+  transition: all .5s ease-in-out;
+  background-color: #25c2a0;
+  padding-right: 40px;
+  color:#fff;
+}
+.input-search::placeholder{
+  color:rgba(255,255,255,.5);
+  font-size: 18px;
+  letter-spacing: 2px;
+  font-weight: 100;
+}
+.btn-search{
+  width: 50px;
+  height: 50px;
+  border-style: none;
+  font-size: 20px;
+  font-weight: bold;
+  outline: none;
+  cursor: pointer;
+  border-radius: 50%;
+  position: absolute;
+  right: 0px;
+  color:#ffffff ;
+  background-color:transparent;
+  pointer-events: painted;  
+}
+.btn-search:focus ~ .input-search{
+  width: 400px;
+  border-radius: 0px;
+  background-color: transparent;
+  border-bottom:1px solid #25c2a0;
+  border-radius: 10px ;
+  transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+}
+.input-search:focus{
+  width: 400px;
+  border-radius: 0px;
+  background-color: transparent;
+  border-bottom:1px solid #25c2a0;
+  border-radius: 10px ;
+  transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+}
+</style>
