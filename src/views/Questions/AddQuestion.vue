@@ -41,8 +41,8 @@
                       <b-file @change="onFileChanged"></b-file>
                     </div>
 
-                    <b-select value="Default select">
-                      <b-select-option value="Default select">Select Category</b-select-option>
+                    <b-select value="Default select" v-model="form.categoryQ">
+                      <b-select-option value="Default select" >Select Category</b-select-option>
                       <b-select-option v-for="c in Questioncategories" :key="c.id" :value="c.id">{{c.typeC}}</b-select-option>
                        
                     </b-select>

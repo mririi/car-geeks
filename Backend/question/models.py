@@ -5,7 +5,6 @@ from django.db import models
 class Question(models.Model):
   titleQ = models.CharField(max_length=200,null=True,blank=True)
   contentQ = models.TextField(unique=True,null=True,blank=True)
-  pending = models.BooleanField(default=True)
   accepted = models.BooleanField(default=False)
   nblikes = models.IntegerField(default=0)
   nbrep = models.IntegerField(default=0)

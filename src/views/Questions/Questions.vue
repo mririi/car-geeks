@@ -16,21 +16,23 @@
         
         <div class="row layout-top-spacing">
             <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                        <div class="panel-body">
-                            <b-card class="component-card_9" v-for="q in Questions" :key="q.id">
-                                <p class="meta-date">{{q.dateQ | formatDate}}</p>
+                        <div class="panel-body" v-for="q in Questions" :key="q.id">
+                            <b-card class="component-card_9" v-if="q.accepted==true" >
+                                
+                                <p class="meta-date mb-3">{{q.dateQ | formatDate}}</p>
 
-                               <router-link :to="'questionpage/'+q.id"> <b-card-title title-tag="h5">{{q.titleQ}}</b-card-title></router-link>
-                                <b-card-text>{{q.contentQ}}</b-card-text>
+                               <router-link :to="'questionpage/'+q.id"> <b-card-title class="ml-4" title-tag="h4">{{q.titleQ}}</b-card-title></router-link>
+                                <b-card-text class="ml-4">{{q.contentQ}}</b-card-text>
 
                                 <div class="meta-info">
                                     <div class="meta-user">
-                                        <div class="avatar avatar-sm">
-                                            <span class="avatar-title rounded-circle">AG</span>
+                                    <div  v-for="p in Userprofiles" :key="p.id">
+                                        <div class="avatar avatar-sm" v-if="p.id==q.userprofileQ">
+                                            <b-avatar :src="'http://127.0.0.1:8000'+p.imageU" class="avatar-title rounded-circle"></b-avatar>
                                         </div>
-                                        <div class="user-name">{{q.userprofileQ}}</div>
+                                        
                                     </div>
-
+                                    <div class="user-name">{{q.userprofileQ}}</div></div>
                                     <div class="meta-action">
                                         <div class="meta-likes">
                                             <svg
@@ -55,7 +57,10 @@
                                             {{q.nbrep}}
                                         </div>
                                     </div>
+                                    
+                                    
                                 </div>
+                              
                             </b-card>
 
                             </div>
@@ -69,13 +74,7 @@
     }
 </style>
 <script>
-import moment from "moment";
-import Vue from "vue";
-Vue.filter("formatDate", function (value) {
-  if (value) {
-    return moment(String(value)).format("DD MMMM YYYY H:mm");
-  }
-});
+
 import '@/assets/sass/components/cards/card.scss';
 import { mapGetters, mapActions } from "vuex";
 
@@ -92,18 +91,20 @@ export default {
     };
   },
   created: function () {
-    this.GetQuestions();
-   
+    this.GetQuestions()
+    this.GetUserprofiles()
   },
   computed: {
     ...mapGetters({
       Questions: "StateQuestions",
+      Userprofiles: "StateUserprofiles"
       
     }),
   },
   methods: {
     ...mapActions([
       "GetQuestions",
+      "GetUserprofiles",
     ]),
   },
 };

@@ -4,4 +4,4 @@ from django.contrib import admin
 
 from .models import Cartype
 
-admin.site.register(Cartype)
+#admin.site.register(Cartype)
