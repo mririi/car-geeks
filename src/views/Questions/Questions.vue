@@ -25,12 +25,13 @@
 
                                 <div class="meta-info">
                                     <div class="meta-user">
-                                        <div class="avatar avatar-sm">
-                                            <span class="avatar-title rounded-circle">AG</span>
+                                    <div  v-for="p in Userprofiles" :key="p.id">
+                                        <div class="avatar avatar-sm" v-if="p.id==q.userprofileQ">
+                                            <span class="avatar-title rounded-circle"><img :src="'http://127.0.0.1:8000' + p.imageU" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" alt="logo" /></span>
                                         </div>
-                                        <div class="user-name">{{q.userprofileQ}}</div>
+                                        
                                     </div>
-
+                                    <div class="user-name">{{q.userprofileQ}}</div></div>
                                     <div class="meta-action">
                                         <div class="meta-likes">
                                             <svg
@@ -55,6 +56,8 @@
                                             {{q.nbrep}}
                                         </div>
                                     </div>
+                                    
+                                    
                                 </div>
                             </b-card>
 
@@ -84,18 +87,20 @@ export default {
     };
   },
   created: function () {
-    this.GetQuestions();
-   
+    this.GetQuestions()
+    this.GetUserprofiles()
   },
   computed: {
     ...mapGetters({
       Questions: "StateQuestions",
+      Userprofiles: "StateUserprofiles"
       
     }),
   },
   methods: {
     ...mapActions([
       "GetQuestions",
+      "GetUserprofiles",
     ]),
   },
 };

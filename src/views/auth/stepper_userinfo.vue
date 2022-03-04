@@ -19,12 +19,11 @@
                 <div class="panel br-4">
                     <div class="panel-body">
                         
-                            <form-wizard title="" @on-complete="onComplete" subtitle=""  class="circle" 
+                            <form-wizard title="" @on-complete="onComplete" subtitle="" shape="circle" 
                             
-                            error-color="#e74c3c"
+                            
                             color="#4361ee">
-                                <h4 class="text-center mt-2 mb-3">More Informations</h4>
-                                <tab-content title="" icon="far fa-user">
+                                <tab-content title="More Informations"  :before-change="beforeTabSwitch"  icon="far fa-user">
                                     <b-form @submit.prevent="submit">
     <b-form-row class="mb-4">
         <b-form-group label="First name" class="col-md-4 ">
@@ -52,19 +51,22 @@
         </b-form-group>
         <b-form-group label="Phone Number" class="col-md-6">
             <MazPhoneNumberInput Black
-    v-model="form.tel"
+    v-model="form.tel" :class="[is_submit_form1 ? (form.tel  ? 'is-valid' : 'is-invalid') : '']"
   /> 
+  <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
+        <b-form-invalid-feedback :class="{'d-block' : is_submit_form1 && !form.tel}">Please fill the Phone number</b-form-invalid-feedback>
+        
              </b-form-group>
     </b-form-row>
     <hr>
     <b-form-row class="mb-4">
       <b-form-group class="col-md-6" label="Address">
-        <b-input placeholder="1234 Main St" v-model="form.address" :class="[is_submit_form1 ? (form.address ? 'is-valid' : 'is-invalid') : '']"></b-input>
-    <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
-    <b-form-invalid-feedback :class="{'d-block' : is_submit_form1 && !form.address}">Please fill the Address</b-form-invalid-feedback>
+        <b-input placeholder="1234 Main St" v-model="form.address" ></b-input>
     </b-form-group>  
      <b-form-group class="col-md-6" label="Country">
-         <country-select class="country-select" v-model="form.country" :country="form.country" topCountry="US" />
+         <country-select class="country-select" v-model="form.country" :country="form.country" topCountry="US" :class="[is_submit_form1 ? (form.country ? 'is-valid' : 'is-invalid') : '']" />
+     <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
+    <b-form-invalid-feedback :class="{'d-block' : is_submit_form1 && !form.country}">Please fill the Country</b-form-invalid-feedback>
      </b-form-group> 
     </b-form-row>
     <hr>
@@ -80,20 +82,22 @@
                                 
                             </div>
                             
-    <div class="border-left col-4 pl-4">
-    <h4>Preferences</h4>
-    <h5>Question Category:</h5>
-    <b-select v-model="form.category" value="Default select">
-    <b-select-option value="0">Select Category</b-select-option>
-    <b-select-option v-for="c in Questioncategories" :key="c.id" :value="c.id">{{ c.typeC }}</b-select-option>
-</b-select>
-
-</div>
+    
     </b-form-row>
 
 </b-form>
                                 </tab-content>
-                                    
+                                <tab-content title="Preferences" icon="far fa-heart">
+                        <div class="col-4 pl-4">
+                            <h4>Preferences</h4>
+                            <h5>Question Category:</h5>
+                            <b-select v-model="form.category" value="Default select">
+                            <b-select-option value="0">Select Category</b-select-option>
+                            <b-select-option v-for="c in Questioncategories" :key="c.id" :value="c.id">{{ c.typeC }}</b-select-option>
+                        </b-select>
+                        
+                        </div>
+                                </tab-content>
                             
                             </form-wizard>
                         </div>
@@ -137,6 +141,8 @@ import '@/assets/sass/scrollspyNav.scss';
                 userU:'',
                 //pref
                 category:0,
+                //role
+                roleU:null
             },
             is_submit_form1: false,
             ok:false,
@@ -156,25 +162,32 @@ import '@/assets/sass/scrollspyNav.scss';
       Users: "StateUsers",
       User: "StateUser",
       Questioncategories:"StateQuestioncategories",
+      Userprofiles:"StateUserprofiles",
+      Roles:"StateRoles"
       })},
         methods: {
-            ...mapActions(["GetUsers","GetQuestioncategories"]),
+            ...mapActions(["CreateRole","GetRoles","GetUsers","CreateUserprofile","GetUserprofiles","GetQuestioncategories"]),
       //upload image
     onFileChanged(event) {
       this.image = event.target.files[0];
     },
-    onComplete: function(){
+    beforeTabSwitch: async function(){
         this.is_submit_form1 = true;
             if (this.form.firstname &&
              this.form.lastname &&
               this.form.age &&
-               this.form.address &&
-                this.form.email ) 
+               this.form.country &&
+                this.form.email &&
+                this.form.tel)
             {
-            for (let u in this.Users) {
-          if (this.Users[u].username == this.User) {
-            this.form.userU = this.Users[u];
-          }
+        if (this.form.userU.is_superuser){
+        await this.CreateRole({userRole:this.form.userU.id,admin:true})
+        }
+        for (let r in this.Roles){
+            if(this.Roles[r].userRole==this.form.userU.id){
+                this.form.roleU=this.Roles[r].id
+                console.log(this.Roles);
+            }
         }
           var formdata = new FormData();
         if (this.image != null) {
@@ -187,12 +200,35 @@ import '@/assets/sass/scrollspyNav.scss';
         formdata.append("age", this.form.age);
         formdata.append("tel", this.form.tel);
         formdata.append("country", this.form.country);
+        if (this.form.roleU!=null){
+        formdata.append("roleU", this.form.roleU);
+        }
         formdata.append("userU", this.form.userU.id);
-         axios.post("/userprofile/userprofile-create/", formdata);         
-        //axios.post("/preferences/preferences-create/", {userprofilePref:this.form.userU.id,categoryPref:this.form.category});
-            this.$router.push("/")
+        //
+        for (let u in this.Userprofiles){
+            if (this.Userprofiles[u].userU==this.form.userU.id){
+                axios.put("/userprofile/userprofile-update/"+this.Userprofiles[u].id+"/",formdata)
+                this.ok=true
             }
-            
+        }
+        if(this.ok==false){
+            console.log(this.form)
+        this.CreateUserprofile(formdata);
+        }
+        return true;
+            }
+            else{  
+                return false;}
+
+      
+    },
+    onComplete: function(){
+         for(let u in this.Userprofiles){
+             if(this.Userprofiles[u].userU==this.form.userU.id){
+                axios.post("/preferences/preferences-create/", {userprofilePref:this.Userprofiles[u].id,categoryPref:this.form.category,brandPref:null});
+             }
+         }
+            this.$router.push("/")
             },
             email_validate(email) {
                 const regexp = /^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$/;
@@ -202,9 +238,20 @@ import '@/assets/sass/scrollspyNav.scss';
    
             
     created() {
-    this.GetUsers();
+    this.GetUsers()
     this.GetQuestioncategories()
- 
+    this.GetUserprofiles()
+    this.GetRoles()
+    for (let u in this.Users) {
+          if (this.Users[u].username == this.User) {
+            this.form.userU = this.Users[u];
+          }
+        }
+    for(let u in this.Userprofiles){
+        if(this.Userprofiles[u].userU==this.form.userU.id){
+           this.$router.push("/") 
+        }
     }
-    };
+    }
+};
 </script>

@@ -104,7 +104,10 @@ const actions = {
     let response = await axios.get("user/users/");
     commit("setUsers", response.data);
   },
-  
+  async CreateUserprofile({ dispatch }, profile) {
+    await axios.post("/userprofile/userprofile-create/", profile);
+    return await dispatch("GetUserprofiles");
+  },
   async GetUserprofiles({ commit }) {
     let response = await axios.get("userprofile/userprofile-list/");
     commit("setUserprofiles", response.data);

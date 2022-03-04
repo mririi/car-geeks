@@ -4,4 +4,4 @@ from django.contrib import admin
 
 from .models import Carengine
 
-admin.site.register(Carengine)
+#admin.site.register(Carengine)

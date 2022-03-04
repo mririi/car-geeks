@@ -6,7 +6,8 @@
                 <ul class="navbar-item theme-brand flex-row text-center">
                     <li class="nav-item theme-logo">
                         <router-link to="/">
-                            <img src="@/assets/images/logo.svg" class="navbar-logo" alt="logo" />
+                        <img src="@/assets/images/logo.svg" class="navbar-logo" alt="logo" />
+                            
                         </router-link>
                     </li>
                     <li class="nav-item theme-text">
@@ -350,7 +351,7 @@
 
                     <b-dropdown toggle-tag="a" variant="icon-only" toggle-class="user nav-link" class="nav-item user-profile-dropdown" :right="true">
                         <template #button-content>
-                            <img src="@/assets/images/profile-16.jpeg" alt="avatar" />
+                            <img :src="'http://127.0.0.1:8000' + Userprofile.imageU" class="navbar-logo" alt="logo" />
                         </template>
 
                         <b-dropdown-item to="/users/profile">
@@ -1051,17 +1052,29 @@
     </div>
 </template>
 <script>
+import { mapGetters, mapActions } from "vuex";
     export default {
         data() {
             return {
                 selectedLang: null,
-                countryList: this.$store.state.countryList
+                countryList: this.$store.state.countryList,
+                Userprofile:[],
+                CurrentUser:[]
             };
         },
         mounted() {
             this.selectedLang = this.$appSetting.toggleLanguage();
 
             this.toggleMode();
+        },
+        computed: {
+            ...mapGetters({
+            Questions: "StateQuestions",
+            Userprofiles: "StateUserprofiles",
+            Users:"StateUsers",
+            User:"StateUser"
+            
+            }),
         },
         methods: {
             toggleMode(mode) {
@@ -1071,7 +1084,31 @@
             changeLanguage(item) {
                 this.selectedLang = item;
                 this.$appSetting.toggleLanguage(item);
+            },
+        ...mapActions([
+      "GetQuestions",
+      "GetUserprofiles",
+      "GetUsers",
+    ]),
+        },
+        created: function () {
+    this.GetQuestions()
+    this.GetUserprofiles()
+    this.GetUsers()
+    console.log(this.User)
+    for (let u in this.Users) {
+        
+          if (this.Users[u].username == this.User) {
+            this.CurrentUser = this.Users[u];
+          }
+        }
+    for (let u in this.Userprofiles){
+        {
+            if(this.Userprofiles[u].userU==this.CurrentUser.id){
+                this.Userprofile=this.Userprofiles[u]
             }
         }
+    }
+  },
     };
 </script>

@@ -4,4 +4,4 @@ from django.contrib import admin
 
 from .models import Carenergy
 
-admin.site.register(Carenergy)
+#admin.site.register(Carenergy)
