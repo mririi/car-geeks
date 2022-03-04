@@ -201,8 +201,8 @@
             <div class="footer-nav-col">
                 <div class="footer-links-title"><a href="#">Questions</a></div>
                 <ul class="footer-links">
-                    <li class="footer-link-item"><a href="#" class="footer-link">Add Question</a></li>
-                    <li class="footer-link-item"><a href="#" class="footer-link">Explore Questions</a></li>
+                    <li class="footer-link-item"><a href="/addquestion" class="footer-link">Add Question</a></li>
+                    <li class="footer-link-item"><a href="/questions" class="footer-link">Explore Questions</a></li>
                     
                 </ul>
             </div>
@@ -210,7 +210,7 @@
                 <div class="footer-links-title"><a href="#">Services</a></div>
                 <ul class="footer-links">
                     <li class="footer-link-item"><a href="#" class="footer-link">Add Service</a></li>
-                    <li class="footer-link-item"><a href="#" class="footer-link">Explore Services</a></li>
+                    <li class="footer-link-item"><a href="/services" class="footer-link">Explore Services</a></li>
                 </ul>
             </div>
            

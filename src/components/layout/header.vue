@@ -410,7 +410,7 @@
                             Lock Screen
                         </b-dropdown-item>
                         <b-dropdown-divider></b-dropdown-divider>
-                        <b-dropdown-item to="/auth/login">
+                        <b-dropdown-item  to="/auth/login">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="24"
@@ -427,7 +427,7 @@
                                 <polyline points="16 17 21 12 16 7"></polyline>
                                 <line x1="21" y1="12" x2="9" y2="12"></line>
                             </svg>
-                            Sign Out
+                           <span @click="logout">Sign Out</span> 
                         </b-dropdown-item>
                     </b-dropdown>
                 </div>
@@ -1071,7 +1071,11 @@
             changeLanguage(item) {
                 this.selectedLang = item;
                 this.$appSetting.toggleLanguage(item);
-            }
+            },
+            async logout() {
+      await this.$store.dispatch("LogOut");
+      this.$router.push("/auth/login-boxed");
+    },
         }
     };
 </script>

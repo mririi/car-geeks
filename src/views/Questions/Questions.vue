@@ -13,7 +13,7 @@
                 </li>
             </ul>
         </portal>
-
+        
         <div class="row layout-top-spacing">
             <div class="col-xl-12 col-md-12 col-sm-12 col-12">
                         <div class="panel-body">
@@ -78,9 +78,11 @@ Vue.filter("formatDate", function (value) {
 });
 import '@/assets/sass/components/cards/card.scss';
 import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "Questions",
   components: {
+  
     
   },
   data() {

@@ -18,7 +18,7 @@
             <!--  BEGIN SIDEBAR  -->
             <Sidebar></Sidebar>
             <!--  END SIDEBAR  -->
-
+       
             <!--  BEGIN CONTENT AREA  -->
             <div id="content" class="main-content">
                 <router-view>
@@ -34,6 +34,7 @@
                 </router-view>
 
                 <!-- BEGIN FOOTER -->
+                <Footer/>
                 <!-- END FOOTER -->
             </div>
             <!--  END CONTENT AREA  -->
@@ -48,11 +49,13 @@
     import Header from '@/components/layout/header.vue';
     import Sidebar from '@/components/layout/sidebar.vue';
     import appSettings from '@/components/app-settings.vue';
+import Footer from '@/components/layout/footer.vue';
     export default {
         components: {
             Header,
             Sidebar,
-            appSettings
+            appSettings,
+                Footer
         },
         data() {
             return {};

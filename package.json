@@ -52,7 +52,8 @@
         "vue2-google-maps": "^0.10.7",
         "vue2-perfect-scrollbar": "^1.5.0",
         "vuedraggable": "^2.24.3",
-        "vuex": "^3.4.0"
+        "vuex": "^3.4.0",
+        "vuex-persistedstate": "^4.1.0"
     },
     "devDependencies": {
         "@vue/cli-plugin-babel": "~4.5.0",
@@ -87,5 +88,4 @@
         "last 2 versions",
         "not dead"
     ]
-    
 }

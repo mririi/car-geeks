@@ -411,7 +411,9 @@
   </div>
 </template>
 
+
 <script>
+import '@/assets/sass/widgets/widgets.scss';
 import { mapGetters, mapActions } from 'vuex';
 export default {
   created: function () {
