@@ -111,7 +111,7 @@ export default {
         }
       }
       if (existuserprofile==false){
-        this.$router.push('/userinfo')
+        this.$router.push('/auth/userinfo')
       }
   },
     methods: {

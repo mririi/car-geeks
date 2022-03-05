@@ -34,29 +34,11 @@
                         </svg>
                     </a>
                 </div>
-                <ul class="navbar-item flex-row ml-md-0 ml-auto">
-                    <li class="nav-item align-self-center search-animated" :class="{ 'show-search': $store.state.is_show_search }">
-                        <svg
-                            @click="$store.commit('toggleSearch', !$store.state.is_show_search)"
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-search toggle-search"
-                        >
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                        </svg>
-                        <form class="form-inline search-full form-inline search" :class="{ 'input-focused': $store.state.is_show_search }">
-                            <div class="search-bar">
-                                <input type="text" class="form-control search-form-control ml-lg-auto" placeholder="Search..." />
-                            </div>
-                        </form>
+                <ul class="uppercase tracking-wide font-bold w-full block flex-grow lg:flex lg:flex-initial lg:w-auto items-center mt-8 lg:mt-0" :class="menuOpen ? 'block': 'hidden'">
+                    
+                    <li class="mr-12 mb-6 lg:mb-0" >
+                        <SearchComponent/>
+                        
                     </li>
                 </ul>
 
@@ -1053,14 +1035,19 @@
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex";
+import SearchComponent from '@/components/SearchComponent'
     export default {
         data() {
             return {
                 selectedLang: null,
                 countryList: this.$store.state.countryList,
                 Userprofile:[],
-                CurrentUser:[]
+                CurrentUser:[],
+                menuOpen: false,
             };
+        },
+        components: {
+            SearchComponent,
         },
         mounted() {
             this.selectedLang = this.$appSetting.toggleLanguage();
@@ -1077,6 +1064,9 @@ import { mapGetters, mapActions } from "vuex";
             }),
         },
         methods: {
+            toggleMenu() {
+             this.menuOpen = !this.menuOpen
+            },
             toggleMode(mode) {
                 this.$appSetting.toggleMode(mode);
             },

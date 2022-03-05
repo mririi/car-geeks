@@ -15,4 +15,4 @@ class Question(models.Model):
   
   
   def __str__(self):
-    return 'Question de '+self.userprofileQ.__str__()
+    return 'Question with title '+self.titleQ+' asked by '+self.userprofileQ.__str__()
