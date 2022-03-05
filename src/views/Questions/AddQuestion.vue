@@ -146,6 +146,7 @@ export default {
         throw "Il ya un error!"
       }
     },
+    
     },
     computed: {
     ...mapGetters({ Questioncategories:"StateQuestioncategories",Userprofiles:"StateUserprofiles", User: "StateUser",Users: "StateUsers"}),

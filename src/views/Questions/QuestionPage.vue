@@ -84,7 +84,7 @@
                     <b-file @change="onFileChanged"></b-file>
                   </div>
                 </div>
-                <b-button variant="primary" block class="mt-2 mb-2" @click="reply">Submit</b-button>
+                <b-button variant="primary" block class="mt-2 mb-2" @click="reply();$bvModal.hide('exampleModalCenter')">Submit</b-button>
               </form>
             </b-modal>
           </div>

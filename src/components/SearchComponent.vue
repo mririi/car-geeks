@@ -8,7 +8,7 @@
       <input
         type="text"
         placeholder="Search (Press  &quot;/&quot; to focus)"
-        class="form-control search-form-control ml-lg-auto"
+        class="col-lg-8 col-md-8 col-sm-9 filtered-list-search-live mx-auto w-100 product-search br-30 mt-3"
         v-model="query"
         @blur="searchResultsVisible = false"
         @focus="searchResultsVisible = true"
@@ -21,7 +21,7 @@
         @keydown.enter="gotoLink"
       >
       <div class="absolute top-0 ml-3" style="top:10px">
-        <svg fill="currentColor" class="text-gray-500 h-5 w-5" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"></path></svg>
+       
       </div>
       <div
         v-if="query.length > 0"
