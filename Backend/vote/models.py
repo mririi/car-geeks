@@ -10,5 +10,5 @@ class Vote(models.Model):
   userprofileVo = models.ForeignKey('userprofile.Userprofile',on_delete=models.CASCADE,null=True, blank=True)
 
   def __str__(self):
-    return 'Vote de '+self.userprofileVo.__str__()+' sur '+self.questionVo.__str__()+' ou sur '+self.reponseVo.__str__()
+    return 'Vote de '+self.userprofileVo.__str__()+' sur '+self.questionVo.__str__()+' ou sur '+self.replyVo.__str__()
   

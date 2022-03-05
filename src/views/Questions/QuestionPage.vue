@@ -48,7 +48,7 @@
               >
                 <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
               </svg>
-              <span @click="like">{{ question.nblikes }} Likes</span>
+              <span @click="like()">{{ question.nblikes }} Likes</span>
             </div>
             <div class="card-like mr-4">
               <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
@@ -450,7 +450,6 @@ export default {
        vote: {
         questionVo: "",
         userprofileVo: "",
-        replyVo: "",
         like:false,
       },
     };
@@ -470,34 +469,84 @@ export default {
     onFileChanged(event) {
       this.image = event.target.files[0];
     },
-    like() {
-      this.GetVotes();
-      this.vote.questionVo = this.$route.params.id;
+    async like() {
+      
+      this.vote.questionVo = this.question.id;
       this.vote.userprofileVo = this.CurrentUserProfile.id;
-      console.log("question"+this.vote.questionVo+" user is "+ this.vote.userprofileVo)
-      let nb = 0;
+      if(this.Votes.length==0)
+      {
+           axios.put("/question/question-update/" + this.$route.params.id + "/", {
+              nblikes: (this.question.nblikes += 1),
+            });
+            this.vote.like=true
+            this.CreateVote(this.vote);
+            console.log("vote feragh is done "+this.vote)
+      }
+
+       for (let v in this.Votes) {
+          if(this.Votes[v].userprofileVo == this.CurrentUserProfile.id && this.Votes[v].questionVo==this.question.id && this.Votes[v].like==true)
+          {
+            this.vote.like=false
+          axios.put("/question/question-update/" + this.$route.params.id + "/", {
+              nblikes: (this.question.nblikes -=1),
+            });
+            axios.post("/vote/vote-update/" + this.Votes[v].id + "/", {
+              like:this.vote.like
+            });
+          }
+       }
+
+       for (let v in this.Votes) {
+          if(this.Votes[v].userprofileVo == this.CurrentUserProfile.id && this.Votes[v].questionVo==this.question.id &&this.Votes[v].like==false)
+          {
+            this.vote.like=true
+          axios.put("/question/question-update/" + this.$route.params.id + "/", {
+              nblikes: (this.question.nblikes +=1),
+            });
+            axios.post("/vote/vote-update/" + this.Votes[v].id + "/", {
+              like:this.vote.like
+            });
+          }
+       }
+
+      /*let nb = 0;
       for (let v in this.Votes) {
-        if (this.Votes[v].userprofileVo == this.CurrentUserProfile.id && this.Votes[v].questionVo==this.$route.params.id) {
+        if (this.Votes[v].userprofileVo == this.CurrentUserProfile.id && this.Votes[v].questionVo==this.question.id) {
+          this.vote.like=true
+          axios.put("/question/question-update/" + this.$route.params.id + "/", {
+              nblikes: (this.question.nblikes -=1),
+            });
+            axios.post("/vote/vote-update/" + this.Votes[v].id + "/", {
+              like:this.vote.like
+            });
           nb = nb + 1;
+        }else
+        {
+           axios.put("/question/question-update/" + this.$route.params.id + "/", {
+              nblikes: (this.question.nblikes +=1),
+            });
+            axios.post("/vote/vote-update/" + this.Votes[v].id + "/", {
+              like:true
+            });
         }
       }
       
-      if (nb == 0) {
+    if (nb == 0) {
             axios.put("/question/question-update/" + this.$route.params.id + "/", {
               nblikes: (this.question.nblikes += 1),
             });
             this.vote.like=true
             this.CreateVote(this.vote);
             console.log("nb==0 is done "+this.vote)
+            nb=nb+1
           }
-      
+      /*
       if (this.Votes.length != 0) {
         this.GetVotes();
         for (let v in this.Votes) {
 			if (
             this.Votes[v].questionVo == this.$route.params.id &&
-            this.Votes[v].userprofileVo == this.CurrentUserProfile.id &&
-            this.Votes[v].like == true
+            this.Votes[v].userprofileVo == this.CurrentUserProfile.id
           ) {
             axios.put("/question/question-update/" + this.$route.params.id + "/", {
               nblikes: (this.question.nblikes -=1),
@@ -513,12 +562,12 @@ export default {
         axios.put("/question/question-update/" + this.$route.params.id + "/", {
           nblikes: (this.question.nblikes += 1),
         });
-		this.vote.voteup = true;
-		this.vote.votedown = false;
+        this.vote.like = true;
+		
         this.CreateVote(this.vote);
         console.log("last else in up")
       }
-      this.GetVotes();
+      this.GetVotes();*/
     },
       
      
@@ -572,19 +621,19 @@ export default {
     this.GetUserprofiles();
     this.CreateReply();
     this.GetVotes();
-    this.CreateVote();
+    
 
     for (let u in this.Users) {
       if (this.Users[u].username == this.User) {
         this.CurrentUser = this.Users[u];
       }
     }
-    /*for (let u in this.Userprofiles) {
+    for (let u in this.Userprofiles) {
       if (this.Userprofiles[u].userU == this.CurrentUser.id) {
         this.CurrentUserProfile = this.Userprofiles[u];
         //this.comment.userprofileCo = this.Userprofiles[u].id;
       }
-    }*/
+    }
     axios
       .get('/question/question-detail/' + this.$route.params.id + '/')
       .then((response) => {
