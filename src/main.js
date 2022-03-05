@@ -3,6 +3,7 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import axios from "axios";
+//import './index.css'
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = "http://127.0.0.1:8000/";
 //bootstrap vue
@@ -10,6 +11,13 @@ import { BootstrapVue } from 'bootstrap-vue';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 Vue.use(BootstrapVue);
 
+
+//
+import VueCompositionAPI from '@vue/composition-api'
+Vue.use(VueCompositionAPI)
+//
+import VueFuse from 'vue-fuse'
+Vue.use(VueFuse)
 //phone number
 import MazPhoneNumberInput from 'maz-ui'
 Vue.use(MazPhoneNumberInput)
