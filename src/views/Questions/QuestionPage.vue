@@ -99,6 +99,29 @@
                     <b-tab title="Default" active>
                       <div v-for="rep in Replies" :key="rep.id">
                         <div v-if="rep.questionRep == question.id" class="panel-body notation-text-icon">
+                          <!--repmodif-->
+                          <b-modal :id="'modalmodifrep'+rep.id" hide-footer title="Modify Answer" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
+              <form class="mt-0">
+                <div class="form-group">
+                  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="m21.558 3.592l-1.15-1.15a1.49 1.49 0 0 0-2.12 0L13 7.731V11h3.27l5.288-5.288a1.49 1.49 0 0 0 0-2.12ZM15.579 9.45h-1.03V8.42L18 4.973l1.03 1.03Z" />
+                    <path fill="currentColor" d="M19 19H5V5h6V3H5a2.006 2.006 0 0 0-2 2v14a2.006 2.006 0 0 0 2 2h14a2.006 2.006 0 0 0 2-2v-6h-2Z" />
+                  </svg>
+                  <b-form-textarea type="text" v-model="rep.contentR" class="mb-2" placeholder="Enter your reply content here"></b-form-textarea>
+                  <div class="mt-4 mb-5">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mb-1" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                      <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                        <path d="M2 6a4 4 0 0 1 4-4h12a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V6Z" />
+                        <circle cx="8.5" cy="8.5" r="2.5" />
+                        <path d="M14.526 12.621L6 22h12.133A3.867 3.867 0 0 0 22 18.133V18c0-.466-.175-.645-.49-.99l-4.03-4.395a2 2 0 0 0-2.954.006Z" />
+                      </g>
+                    </svg>
+                    <b-file @change="onFileChanged"></b-file>
+                  </div>
+                </div>
+                <b-button variant="primary" block class="mt-2 mb-2" @click="replyModif(rep);$bvModal.hide(modalModifReplyId(rep.id))">Submit</b-button>
+              </form>
+            </b-modal>
                           <b-media>
                             <div v-for="u in Userprofiles" :key="u.id">
                               <div v-if="u.id == rep.userprofileRep">
@@ -107,6 +130,31 @@
                                 </div>
                                 <h6 class="">{{ u.firstname }} {{ u.lastname }}</h6>
                               </div>
+                            </div>
+                            <div v-if="CurrentUserProfile.id == rep.userprofileRep">
+                            <b-dropdown variant="icon-only" dropleft toggle-tag="a" class="mb-4 mr-2 custom-dropdown float-right">
+                              <template #button-content>
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  style="width: 24px; height: 24px"
+                                  width="24"
+                                  height="24"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  class="feather feather-more-vertical"
+                                >
+                                  <circle cx="12" cy="12" r="1"></circle>
+                                  <circle cx="12" cy="5" r="1"></circle>
+                                  <circle cx="12" cy="19" r="1"></circle>
+                                </svg>
+                              </template>
+                              <b-dropdown-item v-b-modal="modalModifReplyId(rep.id)">Modify</b-dropdown-item>
+                              <b-dropdown-item @click="deleteReply(rep.id)">Delete</b-dropdown-item>
+                            </b-dropdown>
                             </div>
                             <p class="meta-date-time media-text mb-4">{{ rep.dateR | formatDate }}</p>
                             <h5 class="media-text ml-5 mb-1">
@@ -157,11 +205,12 @@
                                 >
                                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                                 </svg>
-                                <span v-b-modal.registerModal1>Add a comment</span>
+                                <span v-b-modal="modalId(rep.id)">Add a comment</span>
                               </a>
                               
                               <!-- Comment Modal -->
-                              <b-modal id="registerModal1" hide-footer title="Add Comment" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
+                  
+                              <b-modal :id="'modal' + rep.id" hide-footer title="Add Comment" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
                                 <form class="mt-0">
                                   <div class="form-group">
                                     <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
@@ -171,16 +220,65 @@
                                       />
                                       <path fill="currentColor" d="M19 19H5V5h6V3H5a2.006 2.006 0 0 0-2 2v14a2.006 2.006 0 0 0 2 2h14a2.006 2.006 0 0 0 2-2v-6h-2Z" />
                                     </svg>
-                                    <b-form-textarea type="text" class="mb-2" placeholder="Enter your comment here"></b-form-textarea>
+                                    <b-form-textarea type="text" class="mb-2" v-model="comment.contentCo" placeholder="Enter your comment here"></b-form-textarea>
                                   </div>
-                                  <b-button variant="primary" block class="mt-2 mb-2" @click="$bvModal.hide('registerModal1')">Submit</b-button>
+                                  <b-button variant="primary" block class="mt-2 mb-2" @click="$bvModal.hide(modalId(rep.id));commentaire(rep)">Submit</b-button>
                                 </form>
                               </b-modal>
+                              
+                  
                             </div>
                           </b-media>
                           <hr width="90%">
+                          <div v-for="c in Comments" :key="c.id">
+                              <div v-if="c.replyCo==rep.id">
+                                      <b-dropdown variant="icon-only" dropleft toggle-tag="a" class="mb-4 mr-2 custom-dropdown float-right">
+                      <template #button-content>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          style="width: 24px; height: 24px"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="feather feather-more-vertical"
+                        >
+                          <circle cx="12" cy="12" r="1"></circle>
+                          <circle cx="12" cy="5" r="1"></circle>
+                          <circle cx="12" cy="19" r="1"></circle>
+                        </svg>
+                      </template>
+                      <b-modal :id="'modall' + c.id" hide-footer title="Modify Comment" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
+                                <form class="mt-0">
+                                  <div class="form-group">
+                                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                      <path
+                                        fill="currentColor"
+                                        d="m21.558 3.592l-1.15-1.15a1.49 1.49 0 0 0-2.12 0L13 7.731V11h3.27l5.288-5.288a1.49 1.49 0 0 0 0-2.12ZM15.579 9.45h-1.03V8.42L18 4.973l1.03 1.03Z"
+                                      />
+                                      <path fill="currentColor" d="M19 19H5V5h6V3H5a2.006 2.006 0 0 0-2 2v14a2.006 2.006 0 0 0 2 2h14a2.006 2.006 0 0 0 2-2v-6h-2Z" />
+                                    </svg>
+                                    <b-form-textarea type="text" class="mb-2" v-model="c.contentCo" placeholder="Modify your comment here"></b-form-textarea>
+                                  </div>
+                                  <b-button variant="primary" block class="mt-2 mb-2" @click="$bvModal.hide(modallId(c.id)); commentModif(c)">Modify</b-button>
+                                </form>
+                              </b-modal>
+                      <b-dropdown-item v-b-modal="modallId(c.id)">Modify</b-dropdown-item>
+                      <b-dropdown-item @click="deleteComment(c)">Delete</b-dropdown-item>
+                    </b-dropdown>
+                    <p class="float-right">{{c.dateCo |formatDate}}</p>
+                               <p class="ml-5"> {{c.contentCo}}</p>
+                  </div>
+                                
+                               
+                            </div>
                         </div>
                       </div>
+                      <hr width="90%">
                     </b-tab>
                     <b-tab title="Newest">
                       <div class="panel-body notation-text-icon">
@@ -420,6 +518,7 @@
                       </div>
                     </b-tab>
                   </b-tabs>
+                  
                 </div>
               </div>
             </div>
@@ -443,6 +542,12 @@ export default {
       userprofile: [],
       userprofileRep: [],
       CurrentUserProfile:[],
+      replyy:[],
+      comment: {
+        contentCo: "",
+        replyCo: "",
+        userprofileCo: "",
+      },
       CurrentUser:[],
       likedd:false,
       likes:0,
@@ -466,10 +571,11 @@ export default {
       User: "StateUser",
       Users: "StateUsers",
       Votes: "StateVotes",
+      Comments: "StateComments"
     }),
   },
   methods: {
-    ...mapActions(['GetQuestions','GetUsers',"GetVotes","CreateVote", 'GetReplies', 'GetUserprofiles', 'CreateReply', 'CreateComment']),
+    ...mapActions(['GetComments','GetQuestions','GetUsers',"GetVotes","CreateVote", 'GetReplies', 'GetUserprofiles', 'CreateReply', 'CreateComment']),
     onFileChanged(event) {
       this.image = event.target.files[0];
     },
@@ -492,10 +598,66 @@ export default {
         });
         this.likedd=true
     },
-      
-     
+       deleteReply(id) {
+      this.$swal({
+        icon: 'warning',
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        showCancelButton: true,
+        confirmButtonText: 'Delete',
+        padding: '2em',
+      }).then((result) => {
+        if (result.value) {
+          axios.delete(`http://127.0.0.1:8000/reply/reply-delete/${id}/`);
+        axios.put(
+          "/userprofile/userprofile-update/" + this.CurrentUserProfile.id + "/",
+          { nbreplies: (this.CurrentUserProfile.nbreplies -= 1) }
+        );
+        axios.put("/question/question-update/" + this.$route.params.id + "/", {
+          nbrep: (this.question.nbrep -= 1),
+        });
+          this.$swal('Deleted!', 'Your reply has been deleted.', 'success');
+          this.$router.go();
+        }
+      });
+    },
+    deleteComment(c) {
+      this.$swal({
+        icon: 'warning',
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        showCancelButton: true,
+        confirmButtonText: 'Delete',
+        padding: '2em',
+      }).then((result) => {
+        if (result.value) {
+          axios.get(`http://127.0.0.1:8000/reply/reply-details/${c.replyCo}/`).then((response) => {
+          this.replyy = response.data;
+        });
+          axios.delete(`http://127.0.0.1:8000/comment/comment-delete/${c.id}/`);
+          axios.post("/reply/reply-update/" + c.replyCo + "/", {
+          nbCommentR: (this.replyy.nbCommentR -= 1),
+        });
+          this.$swal('Deleted!', 'Your reply has been deleted.', 'success');
+          this.$router.go();
+        }
+      });
+    },
+     async replyModif(r) {
+      try {
+        this.replies.contentR=r.contentR
+        var formdata = new FormData();
+        if (this.image != null) {
+          formdata.append('imageR', this.image);
+        }
+        formdata.append('contentR', this.replies.contentR);
+        await axios.post("/reply/reply-update/" + r.id + "/", formdata);
+        this.GetReplies();
+      } catch (error) {
+        throw "Il ya un errora !";
+      }
+    },
     async reply() {
-      console.log(this.replies.contentR)
       try {
         for (let u in this.Userprofiles) {
           if (this.Userprofiles[u].userU == this.CurrentUser.id) {
@@ -534,6 +696,46 @@ export default {
       } catch (error) {
         throw 'Il ya un error!';
       }
+      
+    },
+    async commentaire(rep) {
+      axios
+        .get("/reply/reply-detail/" + rep.id + "/")
+        .then((response) => {
+          this.replyy = response.data;
+        });
+      this.comment.replyCo = rep.id;
+      try {
+        await this.CreateComment(this.comment);
+        await axios.post("/reply/reply-update/" + rep.id + "/", {
+          nbCommentR: (this.replyy.nbCommentR += 1),
+        });
+        this.GetReplies();
+      } catch (error) {
+        throw "Il ya un errora !";
+      }
+    },
+    async commentModif(c) {
+      try {
+        this.comment.contentCo=c.contentCo
+        await axios.post(
+          "/comment/comment-update/" + c.id + "/",
+          { contentCo: this.comment.contentCo }
+        );
+        this.GetReplies();
+        this.GetComments();
+      } catch (error) {
+        throw "Il ya un errora !";
+      }
+    },
+    modalId(i) {
+      return 'modal' + i;
+    },
+    modallId(id) {
+      return 'modall' + id;
+    },
+    modalModifReplyId(id) {
+      return 'modalmodifrep' + id;
     },
   },
   created() {
@@ -544,7 +746,7 @@ export default {
     this.GetUserprofiles();
     this.CreateReply();
     this.GetVotes();
-    
+    this.GetComments();
     for (let u in this.Users) {
           if (this.Users[u].username == this.User) {
             this.CurrentUser = this.Users[u];
@@ -553,7 +755,7 @@ export default {
            this.CurrentUserProfile=this.Userprofiles[p]
            this.vote.questionVo = this.$route.params.id;
         this.vote.userprofileVo = this.CurrentUserProfile.id;
-        
+        this.comment.userprofileCo=this.CurrentUserProfile.id;
         }
     }
           }

@@ -13,4 +13,4 @@ class Reply(models.Model):
   voteRep = models.ForeignKey('vote.Vote',on_delete=models.CASCADE,null=True,blank=True)
 
   def __str__(self):
-    return 'Reply de '+self.userprofileRep.__str__()
+    return 'Reply de '+self.userprofileRep.__str__()+' with title : '+self.contentR.__str__()

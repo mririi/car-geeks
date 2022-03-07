@@ -18,7 +18,7 @@
       <div class="col-xl-12 col-md-12 col-sm-12 col-12">
         <div class="panel-body">
           <div class="row">
-            <div id="flRegistrationForm" class="col-lg-10 layout-spacing">
+            <div id="flRegistrationForm" class="col-lg-12 layout-spacing">
               <div class="statbox panel box box-shadow">
                 <div class="panel-heading">
                   <div class="row">
@@ -29,25 +29,26 @@
                 </div>
                 <div class="panel-body">
                   <b-form>
-                    <b-form-group class="mb-4">
+                    <label >Question title <span style="color:red">*</span></label>
+                    <b-form-group class="mb-3">
                       <b-input type="text" placeholder="Question title " v-model="form.titleQ" :class="[is_submit_form1 ? (form.titleQ ? 'is-valid' : 'is-invalid') : '']"></b-input>
                       <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
                       <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.titleQ }">Please fill the Address</b-form-invalid-feedback>
                     </b-form-group>
-                    <b-form-group class="mb-4">
+                    <label >Question details <span style="color:red">*</span></label>
+                    <b-form-group class="mb-3">
                       <b-textarea rows="4" type="text" v-model="form.contentQ" placeholder="Question details"></b-textarea>
                     </b-form-group>
-                    <div class="mb-5">
+                    <label >Insert image</label>
+                    <div class="mb-4">
                       <b-file @change="onFileChanged"></b-file>
                     </div>
-
+                    <label >Select Category <span style="color:red">*</span></label>
                     <b-select value="Default select" v-model="form.categoryQ">
-                      <b-select-option value="Default select" >Select Category</b-select-option>
                       <b-select-option v-for="c in Questioncategories" :key="c.id" :value="c.id">{{c.typeC}}</b-select-option>
-                       
                     </b-select>
-                   
-                    <b-button  @click="submit" variant="primary" class="mt-4">Submit</b-button>
+                     <small id="emailHelp2" class="form-text text-muted mt-3"><span style="color:red">*</span> Required Fields</small>
+                    <b-button  @click="submit" variant="primary" class="mt-4 justfiy-content-end">Submit</b-button>
                   </b-form>
                 </div>
               </div>

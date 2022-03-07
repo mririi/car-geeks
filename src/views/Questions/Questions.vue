@@ -80,7 +80,7 @@
                     <circle cx="12" cy="19" r="1"></circle>
                   </svg>
                 </template>
-                <b-dropdown-item>Modify</b-dropdown-item>
+                <b-dropdown-item :href="'/updatequestion/'+q.id">Modify</b-dropdown-item>
                 <b-dropdown-item @click="deleteQuestion(q.id)">Delete</b-dropdown-item>
               </b-dropdown>
             </div>

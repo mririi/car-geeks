@@ -240,6 +240,15 @@ const routes = [
           }
         
     },
+     //Update Question
+     {
+        path: "/updatequestion/:id",
+        name: "UpdateQuestion",
+        component: () => import( '../views/Questions/UpdateQuestion.vue'),
+        meta: {
+          requiresAuth: true
+        }
+      },
     //Question Page
     {
         path: '/questionpage/:id',
