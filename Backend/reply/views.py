@@ -22,7 +22,7 @@ def apiOverview(request):
 
 @api_view(['GET'])
 def replyList(request):
-	replys = Reply.objects.all().order_by('id')
+	replys = Reply.objects.all().order_by('-dateR')
 	serializer = ReplySerializer(replys, many=True)
 	return Response(serializer.data)
 

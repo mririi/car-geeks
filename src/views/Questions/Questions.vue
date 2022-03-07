@@ -56,7 +56,7 @@
     </div>
 
     <div class="row layout-top-spacing">
-      <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-5">
+      <div class="col-xl-12 col-md-12 col-sm-12 col-12 ">
         <div class="panel-body" v-for="q in filterByCategory" :key="q.id">
           <b-card class="component-card_9" v-if="q.accepted == true">
             <div v-if="CurrentUserProfile.id == q.userprofileQ">
