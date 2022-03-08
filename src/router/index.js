@@ -601,7 +601,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if (to.meta && to.meta.layout && to.meta.layout == 'auth') {
         store.commit('setLayout', 'auth');
-    } else {
+    } else  {
         store.commit('setLayout', 'app');
     }
     next(true);
