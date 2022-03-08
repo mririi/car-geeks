@@ -20,7 +20,7 @@
           
           class="mt-5 ml-5 mb-3"
           >
-          <b-button variant="primary" class="mt-5">
+          <b-button v-show="isLoggedIn" variant="primary" class="mt-5">
           Ask a question</b-button></router-link
         >
       </div>
@@ -51,6 +51,7 @@ export default {
     this.nbQ = this.Questions.length;
     this.nbR = this.Replies.length;
     this.nbU = this.Userprofiles.length;
+    
   },
   methods: {
     toggleCollapseShow: function (classes) {
@@ -75,6 +76,9 @@ export default {
       Replies: "StateReplies",
       Userprofiles: "StateUserprofiles",
     }),
+    isLoggedIn: function () {
+      return this.$store.getters.isAuthenticated;
+    },
   },
 };
 </script>

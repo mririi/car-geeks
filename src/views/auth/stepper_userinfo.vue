@@ -230,7 +230,7 @@ export default {
           }
         }
       }
-      this.$router.push('/');
+      this.$router.push('/questions');
     },
     email_validate(email) {
       const regexp = /^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$/;

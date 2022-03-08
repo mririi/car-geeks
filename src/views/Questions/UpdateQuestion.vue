@@ -28,16 +28,18 @@
                   </div>
                 </div>
                 <div class="panel-body">
-                  <b-form>
+                  <b-form novalidate @submit.prevent="submit">
                     <label>Question title</label>
                     <b-form-group class="mb-3">
-                      <b-input type="text" placeholder="Question title " v-model="form.titleQ" :class="[is_submit_form1 ? (form.titleQ ? 'is-valid' : 'is-invalid') : '']"></b-input>
+                      <b-input type="text" placeholder="Question title " v-model="form.titleQ" :class="[is_submit_form1 ? (form.titleQ && form.titleQ.length<100 && form.titleQ.length>15 ? 'is-valid' : 'is-invalid') : '']"></b-input>
                       <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
-                      <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.titleQ }">Please fill the Address</b-form-invalid-feedback>
+                      <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.titleQ }">Please Enter content between 15 and 100 characters</b-form-invalid-feedback>
                     </b-form-group>
                     <label>Question details</label>
                     <b-form-group class="mb-3">
-                      <b-textarea rows="4" type="text" v-model="form.contentQ" placeholder="Question details"></b-textarea>
+                      <b-textarea rows="4" type="text" v-model="form.contentQ" placeholder="Question details" :class="[is_submit_form1 ? (form.contentQ && form.contentQ.length<500 && form.contentQ.length>25 ? 'is-valid' : 'is-invalid') : '']"></b-textarea>
+                    <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
+                      <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.contentQ }">Please Enter content between 25 and 500 characters</b-form-invalid-feedback>
                     </b-form-group>
                     <label>Question image</label>
                     <div class="mb-4">
@@ -45,9 +47,10 @@
                     </div>
                     <label>Question Category</label>
                     <b-select value="Default select" v-model="form.categoryQ">
-                      <b-select-option value="Default select">Select Category</b-select-option>
                       <b-select-option v-for="c in Questioncategories" :key="c.id" :value="c.id">{{ c.typeC }}</b-select-option>
                     </b-select>
+                    <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
+                      <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.categoryQ }">Please fill the Category</b-form-invalid-feedback>
                     <b-button @click="submit" variant="primary" class="mt-4 col-lg-3 ">Submit</b-button>
                   </b-form>
                 </div>
@@ -86,7 +89,7 @@ export default {
         titleQ: '',
         contentQ: '',
         userprofileQ: '',
-        categoryQ: '',
+        categoryQ: 0,
       },
       image: null,
       uprofile: [],
@@ -124,6 +127,10 @@ export default {
     ...mapActions(['GetQuestioncategories', 'CreateQuestion', 'GetUsers', 'GetUserprofiles']),
     async submit() {
       try {
+        this.is_submit_form1 = true;
+                if (this.form.titleQ && this.form.titleQ.length<100 && this.form.titleQ.length>15 &&
+                  this.form.contentQ && this.form.contentQ.length<500 && this.form.contentQ.length>25 
+                ) {
         var formdata = new FormData();
         if (this.image != null) {
           formdata.append('imageQ', this.image);
@@ -134,7 +141,7 @@ export default {
         formdata.append('accepted', false);
         axios.put('/question/question-update/' + this.$route.params.id + '/', formdata);
         this.$router.push('/questions');
-        this.$router.go();
+        }
       } catch (error) {
         throw 'Il ya un error!';
       }

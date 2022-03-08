@@ -8,8 +8,9 @@
             Question and Answer website for cars professional and enthusiast.
         </p>
         <div class="hero-options">
-            <a href="/auth/register" class="btn btn-developers">Get Started !</a>
-            <a href="/auth/login-boxed" class="btn btn-businesses">Sign In</a>
+            <a v-show="!isLoggedIn" href="/auth/register" class="btn btn-developers">Get Started !</a>
+            <a v-show="!isLoggedIn" href="/auth/login-boxed" class="btn btn-businesses">Sign In</a>
+            <a v-show="isLoggedIn" href="/addquestion" class="btn btn-developers">Ask a Question !</a>
         </div>
     </div>
 </section>
@@ -249,7 +250,11 @@
 
 <script>
 export default {
-
+computed: {
+    isLoggedIn: function () {
+      return this.$store.getters.isAuthenticated;
+    },
+  },
 }
 </script>
 
