@@ -65,7 +65,7 @@
 </template>
 
 <script>
-    import { mapActions } from "vuex";
+    import { mapActions,mapGetters } from "vuex";
     import '@/assets/sass/authentication/auth-boxed.scss';
     export default {
         metaInfo: { title: 'Login' },
@@ -82,12 +82,14 @@
         mounted() {
         },
         created: function() {
-            console.log("hey")
+            this.GetUsers();
+            this.GetUserprofiles();
         },
         computed: {
+        ...mapGetters({ Userprofiles: 'StateUserprofiles', Users: 'StateUsers' }),
         },
         methods: {
-            ...mapActions(["LogIn"]),
+            ...mapActions(["LogIn","GetUsers","GetUserprofiles"]),
             set_pwd_type() {
                         if (this.pwd_type == 'password') { this.pwd_type = 'text'; } else { this.pwd_type = 'password'; }
                     },
@@ -97,8 +99,24 @@
             User.append("password", this.form.password);
             try {
                 await this.LogIn(User);
+                
+                for (let u in this.Users) {
+      if (this.Users[u].username == this.form.username) {
+        this.CurrentUser = this.Users[u];
+      }
+    }
+    let existuserprofile = false;
+    for (let uu in this.Userprofiles) {
+      if (this.Userprofiles[uu].userU == this.CurrentUser.id) {
+        existuserprofile = true;
+      }
+    }
+    if (existuserprofile == false) {
+      this.$router.push('/auth/userinfo');
+    }else{
                 this.$router.push("/questions");
                 this.valid=true
+    }
             } catch (error) {
                 console.log(error)
                 this.valid=false

@@ -41,7 +41,6 @@
                 <!-- END FOOTER -->
             </div>
             <!--  END CONTENT AREA  -->
-           <rightsidebar/>
             <!-- BEGIN APP SETTING LAUNCHER -->
             <app-settings />
             <!-- END APP SETTING LAUNCHER -->
@@ -53,14 +52,12 @@
     import Sidebar from '@/components/layout/sidebar.vue';
     import appSettings from '@/components/app-settings.vue';
 //import Footer from '@/components/layout/footer.vue';
-import Rightsidebar from '@/components/layout/rightsidebar.vue';
     export default {
         components: {
             Header,
             Sidebar,
             appSettings,
             
-                Rightsidebar
         },
         data() {
             return {};

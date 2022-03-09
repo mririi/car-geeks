@@ -174,7 +174,6 @@
                                 <div v-for="v in Votes" :key="v.id">
                                   <div v-if="v.replyVo == rep.id && v.userprofileVo == rep.userprofileRep">
                                     <svg
-                                      v-show="likeddR == true"
                                       @click="dlikedreply(rep)"
                                       xmlns="http://www.w3.org/2000/svg"
                                       aria-hidden="true"
