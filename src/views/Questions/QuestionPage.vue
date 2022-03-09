@@ -161,7 +161,6 @@
                                 <h6 class="">{{ u.firstname }} {{ u.lastname }}</h6>
                               </div>
                             </div>
-                            <div v-if="CurrentUserProfile.id == rep.userprofileRep"></div>
                             <p class="meta-date-time media-text mb-4">{{ rep.dateR | formatDate }}</p>
                             <h5 class="media-text ml-5 mb-1">
                               {{ rep.contentR }}
@@ -235,7 +234,7 @@
                                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                                 </svg>
                                 <span v-if="isLoggedIn">
-                                <span v-b-modal="modalCreateCommentNewest(rep.id)">Add a comment</span>
+                                <span v-b-modal="modalCreateCommentRight(rep.id)">Add a comment</span>
                                 </span>
                                 <span v-else>
                                  <a href="/auth/login"> <span>Add a comment</span></a>
@@ -244,7 +243,7 @@
 
                               <!-- Comment Modal -->
 
-                              <b-modal :id="'modalCreateCommentNewest' + rep.id" hide-footer title="Add Comment" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
+                              <b-modal :id="'modalCreateCommentRight' + rep.id" hide-footer title="Add Comment" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
                                 <form class="mt-0">
                                   <div class="form-group">
                                     <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
@@ -261,7 +260,7 @@
                                     block
                                     class="mt-2 mb-2"
                                     @click="
-                                      $bvModal.hide(modalCreateCommentNewest(rep.id));
+                                      $bvModal.hide(modalCreateCommentRight(rep.id));
                                       commentaire(rep);
                                     "
                                     >Submit</b-button
@@ -274,6 +273,7 @@
                           <hr width="90%" />
                           <div v-for="c in Comments" :key="c.id">
                             <div v-if="c.replyCo == rep.id">
+                              <div v-if="CurrentUserProfile.id == c.userprofileCo">
                               <b-dropdown variant="icon-only" dropleft toggle-tag="a" class="mb-4 mr-2 custom-dropdown float-right">
                                 <template #button-content>
                                   <svg
@@ -294,7 +294,7 @@
                                     <circle cx="12" cy="19" r="1"></circle>
                                   </svg>
                                 </template>
-                                <b-modal :id="'modalModifCommentNewest' + c.id" hide-footer title="Modify Comment" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
+                                <b-modal :id="'modalModifCommentRight' + c.id" hide-footer title="Modify Comment" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
                                   <form class="mt-0">
                                     <div class="form-group">
                                       <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
@@ -311,16 +311,17 @@
                                       block
                                       class="mt-2 mb-2"
                                       @click="
-                                        $bvModal.hide(modalModifCommentNewest(c.id));
+                                        $bvModal.hide(modalModifCommentRight(c.id));
                                         commentModif(c);
                                       "
                                       >Modify</b-button
                                     >
                                   </form>
                                 </b-modal>
-                                <b-dropdown-item v-b-modal="modalModifCommentNewest(c.id)">Modify</b-dropdown-item>
+                                <b-dropdown-item v-b-modal="modalModifCommentRight(c.id)">Modify</b-dropdown-item>
                                 <b-dropdown-item @click="deleteComment(c)">Delete</b-dropdown-item>
                               </b-dropdown>
+                            </div>
                               <p class="float-right">{{ c.dateCo | formatDate }}</p>
                               <p class="ml-5">{{ c.contentCo }}</p>
                             </div>
@@ -506,9 +507,9 @@
                             </div>
                           </b-media>
                           <hr width="90%" />
-                          
                           <div v-for="c in Comments" :key="c.id">
                             <div v-if="c.replyCo == rep.id">
+                              <div v-if="CurrentUserProfile.id == c.userprofileCo">
                               <b-dropdown v-if="CurrentUserProfile.id==c.userprofileCo " variant="icon-only" dropleft toggle-tag="a" class="mr-2 custom-dropdown float-right">
                                 <template #button-content>
                                   <svg
@@ -529,7 +530,7 @@
                                     <circle cx="12" cy="19" r="1"></circle>
                                   </svg>
                                 </template>
-                                <b-modal :id="'modalModifCommentOldest' + c.id" hide-footer title="Modify Comment" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
+                                <b-modal :id="'modalModifCommentNewest' + c.id" hide-footer title="Modify Comment" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
                                   <form class="mt-0">
                                     <div class="form-group">
                                       <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
@@ -546,16 +547,17 @@
                                       block
                                       class="mt-2 mb-2"
                                       @click="
-                                        $bvModal.hide(modalModifCommentOldest(c.id));
+                                        $bvModal.hide(modalModifCommentNewest(c.id));
                                         commentModif(c);
                                       "
                                       >Modify</b-button
                                     >
                                   </form>
                                 </b-modal>
-                                <b-dropdown-item v-b-modal="modalModifCommentOldest(c.id)">Modify</b-dropdown-item>
+                                <b-dropdown-item v-b-modal="modalModifCommentNewest(c.id)">Modify</b-dropdown-item>
                                 <b-dropdown-item @click="deleteComment(c)">Delete</b-dropdown-item>
                               </b-dropdown>
+                              </div>
                               <p class="float-right mr-4" style="font-size:10px;">{{ c.dateCo | formatDate }}</p>
                               <p class="ml-5">{{ c.contentCo }}</p>
                               <hr width="90%"/>
@@ -706,7 +708,7 @@
                                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                                 </svg>
                                 <span v-if="isLoggedIn">
-                                <span v-b-modal="modalCreateCommentNewest(rep.id)">Add a comment</span>
+                                <span v-b-modal="modalCreateCommentOldest(rep.id)">Add a comment</span>
                                 </span>
                                 <span v-else>
                                  <a href="/auth/login"> <span>Add a comment</span></a>
@@ -744,7 +746,7 @@
                           <hr width="90%" />
                           <div v-for="c in Comments" :key="c.id">
                             <div v-if="c.replyCo == rep.id">
-                              
+                              <div v-if="CurrentUserProfile.id == c.userprofileCo">
                               <b-dropdown variant="icon-only" dropleft toggle-tag="a" class="mb-4 mr-2 custom-dropdown float-right">
                                 <template #button-content>
                                   <svg
@@ -765,7 +767,8 @@
                                     <circle cx="12" cy="19" r="1"></circle>
                                   </svg>
                                 </template>
-                                <b-modal :id="'modalModifCommentMost' + c.id" hide-footer title="Modify Comment" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
+                                
+                                <b-modal :id="'modalModifCommentOldest' + c.id" hide-footer title="Modify Comment" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
                                   <form class="mt-0">
                                     <div class="form-group">
                                       <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
@@ -782,16 +785,18 @@
                                       block
                                       class="mt-2 mb-2"
                                       @click="
-                                        $bvModal.hide(modalModifCommentMost(c.id));
+                                        $bvModal.hide(modalModifCommentOldest(c.id));
                                         commentModif(c);
                                       "
                                       >Modify</b-button
                                     >
                                   </form>
                                 </b-modal>
-                                <b-dropdown-item v-b-modal="modalModifCommentMost(c.id)">Modify</b-dropdown-item>
+                                
+                                <b-dropdown-item v-b-modal="modalModifCommentOldest(c.id)">Modify</b-dropdown-item>
                                 <b-dropdown-item @click="deleteComment(c)">Delete</b-dropdown-item>
                               </b-dropdown>
+                              </div>
                               <p class="float-right">{{ c.dateCo | formatDate }}</p>
                               <p class="ml-5">{{ c.contentCo }}</p>
                             </div>
@@ -940,7 +945,7 @@
                                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                                 </svg>
                                 <span v-if="isLoggedIn">
-                                <span v-b-modal="modalCreateCommentNewest(rep.id)">Add a comment</span>
+                                <span v-b-modal="modalCreateCommentMost(rep.id)">Add a comment</span>
                                 </span>
                                 <span v-else>
                                  <a href="/auth/login"> <span>Add a comment</span></a>
@@ -949,7 +954,7 @@
 
                               <!-- Comment Modal -->
 
-                              <b-modal :id="'modalCreateCommentRight' + rep.id" hide-footer title="Add Comment" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
+                              <b-modal :id="'modalCreateCommentMost' + rep.id" hide-footer title="Add Comment" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
                                 <form class="mt-0">
                                   <div class="form-group">
                                     <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
@@ -966,7 +971,7 @@
                                     block
                                     class="mt-2 mb-2"
                                     @click="
-                                      $bvModal.hide(modalCreateCommentRight(rep.id));
+                                      $bvModal.hide(modalCreateCommentMost(rep.id));
                                       commentaire(rep);
                                     "
                                     >Submit</b-button
@@ -978,6 +983,7 @@
                           <hr width="90%" />
                           <div  v-for="c in Comments" :key="c.id">
                             <div v-if="c.replyCo == rep.id">
+                              <div v-if="CurrentUserProfile.id == c.userprofileCo">
                               <b-dropdown variant="icon-only" dropleft toggle-tag="a" class="mb-4 mr-2 custom-dropdown float-right">
                                 <template #button-content>
                                   <svg
@@ -998,7 +1004,7 @@
                                     <circle cx="12" cy="19" r="1"></circle>
                                   </svg>
                                 </template>
-                                <b-modal :id="'modalModifCommentRight' + c.id" hide-footer title="Modify Comment" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
+                                <b-modal :id="'modalModifCommentMost' + c.id" hide-footer title="Modify Comment" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
                                   <form class="mt-0">
                                     <div class="form-group">
                                       <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
@@ -1015,16 +1021,17 @@
                                       block
                                       class="mt-2 mb-2"
                                       @click="
-                                        $bvModal.hide(modalModifCommentRight(c.id));
+                                        $bvModal.hide(modalModifCommentMost(c.id));
                                         commentModif(c);
                                       "
                                       >Modify</b-button
                                     >
                                   </form>
                                 </b-modal>
-                                <b-dropdown-item v-b-modal="modalModifCommentRight(c.id)">Modify</b-dropdown-item>
+                                <b-dropdown-item v-b-modal="modalModifCommentMost(c.id)">Modify</b-dropdown-item>
                                 <b-dropdown-item @click="deleteComment(c)">Delete</b-dropdown-item>
                               </b-dropdown>
+                              </div>
                               <p class="float-right">{{ c.dateCo | formatDate }}</p>
                               <p class="ml-5">{{ c.contentCo }}</p>
                             </div>
@@ -1057,7 +1064,7 @@ export default {
       userprofileRep: [],
       CurrentUserProfile: [],
       commentsToShow: 3,
-      replyy: [],
+      replydetails: [],
       comment: {
         contentCo: '',
         replyCo: '',
@@ -1167,6 +1174,7 @@ export default {
       });
     },
     deleteComment(c) {
+      let replydetails=[]
       this.$swal({
         icon: 'warning',
         title: 'Are you sure?',
@@ -1176,13 +1184,14 @@ export default {
         padding: '2em',
       }).then((result) => {
         if (result.value) {
-          axios.get(`http://127.0.0.1:8000/reply/reply-details/${c.replyCo}/`).then((response) => {
-            this.replyy = response.data;
+          axios.get('/reply/reply-detail/' + c.replyCo + '/').then((response) => {
+         replydetails = response.data;
+         
+          axios.post('/reply/reply-update/' + c.replyCo + '/', {
+            nbCommentR: (replydetails.nbCommentR -= 1),
           });
+        });
           axios.delete(`http://127.0.0.1:8000/comment/comment-delete/${c.id}/`);
-          axios.post('/reply/reply-update/' + this.replyy.id + '/', {
-            nbCommentR: (this.replyy.nbCommentR -= 1),
-          });
           this.$swal('Deleted!', 'Your comment has been deleted.', 'success');
           this.$router.go();
         }
@@ -1232,15 +1241,16 @@ export default {
     },
     async commentaire(rep) {
       axios.get('/reply/reply-detail/' + rep.id + '/').then((response) => {
-        this.replyy = response.data;
+        this.replydetails = response.data;
       });
       this.comment.replyCo = rep.id;
       try {
         await this.CreateComment(this.comment);
         await axios.post('/reply/reply-update/' + rep.id + '/', {
-          nbCommentR: (this.replyy.nbCommentR += 1),
+          nbCommentR: (this.replydetails.nbCommentR += 1),
         });
         this.GetReplies();
+        this.comment.contentCo=''
       } catch (error) {
         throw 'Il ya un errora !';
       }
@@ -1290,8 +1300,8 @@ export default {
     modalCreateCommentRight(i) {
       return 'modalCreateCommentRight' + i;
     },
-    modalModifCommentRight(id) {
-      return 'modalModifCommentRight' + id;
+    modalModifCommentRight(i) {
+      return 'modalModifCommentRight' + i;
     },
   },
   created() {
