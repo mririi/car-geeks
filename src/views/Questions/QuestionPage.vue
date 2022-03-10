@@ -507,7 +507,7 @@
                             </div>
                           </b-media>
                           <hr width="90%" />
-                          
+    
                           <div v-for="c in Comments" :key="c.id">
                             <div v-if="c.replyCo == rep.id">
                               <b-dropdown v-if="CurrentUserProfile.id==c.userprofileCo " variant="icon-only" dropleft toggle-tag="a" class="mr-2 custom-dropdown float-right">
@@ -557,12 +557,12 @@
                                 <b-dropdown-item v-b-modal="modalModifCommentOldest(c.id)">Modify</b-dropdown-item>
                                 <b-dropdown-item @click="deleteComment(c)">Delete</b-dropdown-item>
                               </b-dropdown>
-                              <p class="float-right mr-4" style="font-size:10px;">{{ c.dateCo | formatDate }}</p>
-                              <p class="ml-5">{{ c.contentCo }}</p>
-                              <hr width="90%"/>
+                              <p class="float-right t-time mr-4" style="font-size:10px;">{{ c.dateCo | formatDate }}</p>
+                              <p class="ml-5 t-text">{{ c.contentCo }} - <span v-for="u in Userprofiles" :key="u.id"> <span v-if="u.id==c.userprofileCo" style="color:hsl(206deg 65% 51%)"> {{u.firstname}} {{u.lastname}}</span></span></p>
+                              <hr v-if="rep.nbCommentR!=0" width="90%"/>                   
                             </div>
                           </div>
-                          
+                           
                         </div>
                       </div>
                       

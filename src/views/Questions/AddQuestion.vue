@@ -153,6 +153,8 @@ export default {
         await this.CreateQuestion(formdata);
         await axios.put('/userprofile/userprofile-update/' + this.form.userprofileQ +'/',{nbquestions:this.uprofile.nbquestions+=1})
         this.$router.push("/questions");
+      
+        
         }
       } catch (error) {
         throw "Il ya un error!"
