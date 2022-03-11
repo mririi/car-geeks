@@ -10,6 +10,7 @@ axios.defaults.baseURL = "http://127.0.0.1:8000/";
 import { BootstrapVue } from 'bootstrap-vue';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 Vue.use(BootstrapVue);
+
 ///google auth
 import GoogleAuth from '@/config/google_oAuth.js'
 const gauthOption = {
@@ -18,6 +19,7 @@ const gauthOption = {
   prompt: 'select_account'
 }
 Vue.use(GoogleAuth, gauthOption)
+
 
 //
 import VueCompositionAPI from '@vue/composition-api'
