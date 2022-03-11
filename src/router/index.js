@@ -228,7 +228,8 @@ const routes = [
     {
         path: '/questions',
         name: 'questions',
-        component: () => import( '../views/Questions/Questions.vue')
+        component: () => import( '../views/Questions/Questions.vue'),
+        meta: { layout: 'question' }
     },
      //Add Question
      {
@@ -236,8 +237,8 @@ const routes = [
         name: 'addquestion',
         component: () => import( '../views/Questions/AddQuestion.vue'),
         meta: {
-            requiresAuth: true
-          }
+            requiresAuth: true,
+        }
         
     },
      //Update Question
@@ -246,14 +247,18 @@ const routes = [
         name: "UpdateQuestion",
         component: () => import( '../views/Questions/UpdateQuestion.vue'),
         meta: {
-          requiresAuth: true
+          requiresAuth: true,
+          layout: 'question'
         }
       },
     //Question Page
     {
         path: '/questionpage/:id',
         name: 'questionpage',
-        component: () => import( '../views/Questions/QuestionPage.vue')
+        component: () => import( '../views/Questions/QuestionPage.vue'),
+        meta: {
+            layout: 'question'
+          }
     },
     //Services
     {
@@ -601,7 +606,9 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if (to.meta && to.meta.layout && to.meta.layout == 'auth') {
         store.commit('setLayout', 'auth');
-    } else  {
+    } else if (to.meta && to.meta.layout && to.meta.layout == 'question') {
+        store.commit('setLayout', 'question');
+    }else{
         store.commit('setLayout', 'app');
     }
     next(true);

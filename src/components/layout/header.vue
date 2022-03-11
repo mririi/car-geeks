@@ -6,7 +6,7 @@
                 <ul class="navbar-item theme-brand flex-row text-center">
                     <li class="nav-item theme-logo">
                         <router-link to="/">
-                        <img src="@/assets/images/logo.svg" class="navbar-logo" alt="logo" />
+                        <img src="@/assets/images/Car Geeks.svg" class="navbar-logo" alt="logo" />
                             
                         </router-link>
                     </li>
@@ -34,7 +34,7 @@
                         </svg>
                     </a>
                 </div>
-                <ul class="navbar-item flex-row ml-md-0 ml-auto">
+                <ul class="navbar-item flex-row ">
                     <li class="nav-item align-self-center search-animated" :class="{ 'show-search': $store.state.is_show_search }">
                         <svg
                             @click="$store.commit('toggleSearch', !$store.state.is_show_search)"
@@ -54,11 +54,58 @@
                         </svg>
                         <form class="form-inline search-full form-inline search" :class="{ 'input-focused': $store.state.is_show_search }">
                             <div class="search-bar">
-                                <input type="text" class="form-control search-form-control ml-lg-auto" placeholder="Search..." />
+                                <input type="text" class="form-control search-form-control ml-lg-auto"
+                                    placeholder="Search (Press  &quot;/&quot; to focus)"
+                                    v-model="query"
+                                    @blur="searchResultsVisible = false"
+                                    @focus="searchResultsVisible = true"
+                                    @keydown.esc="searchResultsVisible = false"
+                                    @input="softReset"
+                                    ref="search"
+                                    @keyup="performSearch"
+                                    @keydown.up.prevent="highlightPrevious"
+                                    @keydown.down.prevent="highlightNext"
+                                    @keydown.enter="gotoLink"
+                                                            />
                             </div>
+
                         </form>
                     </li>
+                    <li style="margin-top:150px;margin-right:350px;">                            <div
+                                v-if="query.length > 0"
+                                class=" text-2xl  cursor-pointer text-gray-600 hover:text-gray-800"
+                                
+                                @click="reset"
+                            >
+                                &times;
+                            </div>
+                            
+                            <transition name="fade">
+                            <div v-if="query.length > 0 && searchResultsVisible" class="bg-white border text-left rounded-lg mt-5" style="max-height: 50rem;max-width:15rem">
+                                <div class="flex flex-col" ref="results">
+                                <a
+                                    v-for="(question, index) in searchResults"
+                                    :key="index"
+                                    :href="'/questionpage/'+question.item.id"
+                                    @mousedown.prevent="searchResultsVisible = true"
+                                    class="border-b border-gray-400 text-xl cursor-pointer p-4 hover:bg-blue-100"
+                                    :class="{ 'bg-blue-100': index === highlightedIndex }"
+                                >
+                                    {{ question.item.titleQ }}
+
+                                    <span class=" font-normal text-sm ">{{ question.item.contentQ }}</span>
+                                </a>
+
+                                <div v-if="searchResults.length === 0" class="font-normal w-full border-b cursor-pointer p-4">
+                                    <p class="my-0">No results for '<strong>{{ query }}</strong>'</p>
+                                </div>
+                                </div>
+                            </div>
+                            
+                            </transition>
+                    </li>
                 </ul>
+                
 
                 <div class="navbar-item flex-row ml-md-auto">
                     <div class="dark-mode d-flex align-items-center">
@@ -1061,6 +1108,20 @@ import { mapGetters, mapActions } from "vuex";
                 countryList: this.$store.state.countryList,
                 Userprofile:[],
                 CurrentUser:[],
+                query: '',
+                searchResultsVisible: false,
+                searchResults: [],
+                highlightedIndex: 0,
+                options: {
+                    shouldSort: true,
+                    includeMatches: true,
+                    threshold: 0.5,
+                    location: 0,
+                    distance: 500,
+                    maxPatternLength: 32,
+                    minMatchCharLength: 1,
+                    keys: ['titleQ', 'contentQ']
+                },
                 menuOpen: false,
             };
         },
@@ -1082,6 +1143,46 @@ import { mapGetters, mapActions } from "vuex";
             }),
         },
         methods: {
+            reset() {
+      this.query = ''
+      this.highlightedIndex = 0
+    },
+    softReset() {
+      this.searchResultsVisible = true
+      this.highlightedIndex = 0
+    },
+    focusSearch(e) {
+      if (e.key === '/') {
+        this.$refs.search.focus()
+      }
+    },
+    performSearch() {
+      this.$search(this.query, this.Questions, this.options)
+        .then(results => {
+          this.searchResults = results
+        })
+    },
+    highlightPrevious() {
+      if (this.highlightedIndex > 0) {
+        this.highlightedIndex = this.highlightedIndex - 1
+        this.scrollIntoView()
+      }
+    },
+    highlightNext() {
+      if (this.highlightedIndex < this.searchResults.length - 1) {
+        this.highlightedIndex = this.highlightedIndex + 1
+        this.scrollIntoView()
+      }
+    },
+    scrollIntoView() {
+      this.$refs.results.children[this.highlightedIndex].scrollIntoView({ block: 'nearest' })
+    },
+    gotoLink() {
+      if (this.searchResults[this.highlightedIndex]) {
+        window.location = this.searchResults[this.highlightedIndex].item.path
+      }
+    },
+    ///
             toggleMenu() {
              this.menuOpen = !this.menuOpen
             },

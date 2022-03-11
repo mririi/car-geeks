@@ -7,8 +7,9 @@
     // layouts
     import appLayout from './layouts/app-layout.vue';
     import authLayout from './layouts/auth-layout.vue';
-
+    
     import '@/assets/sass/app.scss';
+import questionLayout from './layouts/question-layout.vue';
 
     export default {
         metaInfo: {
@@ -17,7 +18,8 @@
         },
         components: {
             app: appLayout,
-            auth: authLayout
+            auth: authLayout,
+            question: questionLayout
         },
         computed: {
             layout() {
