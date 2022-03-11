@@ -195,7 +195,7 @@ const routes = [
         meta: { layout: 'auth' }
     },
     {
-        path: '/auth/pass-recovery-boxed',
+        path: '/api/password_reset/',
         name: 'pass-recovery-boxed',
         component: () => import(/* webpackChunkName: "auth-pass-recovery-boxed" */ '../views/auth/pass_recovery_boxed.vue'),
         meta: { layout: 'auth' }

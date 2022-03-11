@@ -11,14 +11,16 @@ import { BootstrapVue } from 'bootstrap-vue';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 Vue.use(BootstrapVue);
 
-import GAuth from 'vue-google-oauth2'
+///google auth
+import GoogleAuth from '@/config/google_oAuth.js'
 const gauthOption = {
   clientId: '788539964752-tav6glssl8j94jisgn05khttbu4rslja.apps.googleusercontent.com',
   scope: 'profile email',
-  prompt: 'consent',
-  fetch_basic_profile:true
+  prompt: 'select_account'
 }
-Vue.use(GAuth, gauthOption)
+Vue.use(GoogleAuth, gauthOption)
+
+
 //
 import VueCompositionAPI from '@vue/composition-api'
 Vue.use(VueCompositionAPI)

@@ -49,6 +49,7 @@
 <script>
 import emailjs from 'emailjs-com';
 import '@/assets/sass/authentication/auth-boxed.scss';
+import axios from 'axios';
 export default {
   data() {
     return {
@@ -59,6 +60,12 @@ export default {
   mounted() {},
   methods: {
     sendEmail() {
+      axios.post('/api/password_reset/',this.email).then((res) => {
+        status = res.status;
+      });
+
+     if(res.status=="200")
+     {
       var templateParams = {
         email: this.email,
       };
@@ -71,6 +78,7 @@ export default {
           console.log('FAILED...', error);
         }
       );
+     }
     },
   },
 };
