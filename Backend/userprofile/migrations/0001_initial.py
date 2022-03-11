@@ -13,7 +13,6 @@ class Migration(migrations.Migration):
         ('badge', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('role', '0001_initial'),
-        ('preferences', '0001_initial'),
     ]
 
     operations = [
@@ -34,7 +33,6 @@ class Migration(migrations.Migration):
                 ('dateinscrit', models.DateTimeField(auto_now_add=True)),
                 ('imageU', models.ImageField(blank=True, null=True, upload_to='images/')),
                 ('badgeU', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='badge.Badge')),
-                ('preferencesU', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='preferences.Preferences')),
                 ('roleU', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='role.Role')),
                 ('userU', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],

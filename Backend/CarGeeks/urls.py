@@ -12,7 +12,6 @@ urlpatterns = [
     path('questioncategory/',include('questioncategory.urls')),
     path('comment/',include('comment.urls')),
     path('evaluation/',include('evaluation.urls')),
-    path('brand/',include('brand.urls')),
     path('preferences/',include('preferences.urls')),
     path('reclamation/',include('reclamation.urls')),
     path('notification/',include('notifications.urls')),
@@ -23,12 +22,9 @@ urlpatterns = [
     path('userprofile/',include('userprofile.urls')),
     path('car/',include('car.urls')),
     path('vote/',include('vote.urls')),
-    path('cartype/',include('cartype.urls')),
-    path('carenergy/',include('carenergy.urls')),
-    path('carengine/',include('carengine.urls')),
-    path('carmodele/',include('carmodele.urls')),
     path('userentreprise/',include('userentreprise.urls')),
     path('auth/', obtain_auth_token),
+    path('api/password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
 ]
 if settings.DEBUG:
         urlpatterns += static(settings.MEDIA_URL,

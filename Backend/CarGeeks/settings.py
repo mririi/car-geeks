@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     "badge",
     "questioncategory",
     "evaluation",
-    "brand",
     "preferences",
     "reclamation",
     "service",
@@ -57,10 +56,7 @@ INSTALLED_APPS = [
     "role",
     "comment",
     "vote",
-    "cartype",
-    "carenergy",
-    "carmodele",
-    "carengine",
+    "django_rest_passwordreset",
     "notifications",
 ]
 
@@ -157,3 +153,4 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

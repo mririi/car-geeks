@@ -1,7 +1,9 @@
 import axios from 'axios'
-
+import { setStore, getStore } from '@/config/utils'
+const user = getStore('user')
 
 const state = {
+  loginUser: user,
   //USERS
   user: null,
   users:null,
@@ -34,6 +36,9 @@ const state = {
 };
 
 const getters = {
+  getLoginUserInfo(state) {
+    return state.loginUser
+  },
   //USERS
   StateCountrylist: (state) => state.countryList,
   isAuthenticated: (state) => !!state.user,
@@ -244,6 +249,12 @@ const actions = {
 };
 
 const mutations = {
+  setLoginUser(state, user) {
+    state.loginUser = user
+    state.user=user.google.user.username
+    setStore('user', user)
+    
+  },
   //USERS
   setUser(state, username) {
     state.user = username;

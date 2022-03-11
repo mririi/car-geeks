@@ -40,16 +40,6 @@
                   </b-form-row>
                   <hr />
                   <b-form-row class="mb-4">
-                    <b-form-group label="Email" class="col-md-6">
-                      <b-input
-                        placeholder="Email@email.com"
-                        type="email"
-                        v-model="form.email"
-                        :class="[is_submit_form1 ? (form.email && email_validate(form.email) ? 'is-valid' : 'is-invalid') : '']"
-                      ></b-input>
-                      <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
-                      <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.email }">Please fill the email</b-form-invalid-feedback>
-                    </b-form-group>
                     <b-form-group label="Phone Number" class="col-md-6">
                       <MazPhoneNumberInput Black v-model="form.tel" :class="[is_submit_form1 ? (form.tel ? 'is-valid' : 'is-invalid') : '']" />
                       <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
@@ -130,7 +120,6 @@ export default {
         firstname: '',
         lastname: '',
         age: '',
-        email: '',
         address: '',
         tel: '',
         country: '',
@@ -177,7 +166,7 @@ export default {
         }
       }
       this.is_submit_form1 = true;
-      if (this.form.firstname && this.form.lastname && this.form.age && this.form.country && this.form.email && this.form.tel) {
+      if (this.form.firstname && this.form.lastname && this.form.age && this.form.country && this.form.tel) {
         if (this.form.userU.is_superuser) {
           this.CreateRole({ userRole: this.form.userU.id, admin: true });
           for (let r in this.Roles) {
@@ -224,17 +213,12 @@ export default {
           console.log(this.Preferences);
           for (let p in this.Preferences) {
             if (this.Preferences[p].userprofilePref == this.Userprofiles[u].id) {
-              console.log(this.Preferences);
               axios.put('/userprofile/userprofile-update/' + this.Userprofiles[u].id + '/', { preferencesU: this.Preferences[p].id });
             }
           }
         }
       }
       this.$router.push('/questions');
-    },
-    email_validate(email) {
-      const regexp = /^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$/;
-      return regexp.test(email);
     },
   },
 
@@ -244,7 +228,6 @@ export default {
     this.GetUserprofiles();
     this.GetRoles();
     this.GetPreferences();
-    console.log(this.Users + 'kkk' + this.User);
     for (let u in this.Users) {
       if (this.Users[u].username == this.User) {
         this.CurrentUser = this.Users[u];

@@ -57,7 +57,6 @@
             Header,
             Sidebar,
             appSettings,
-            
         },
         data() {
             return {};
