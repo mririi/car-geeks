@@ -10,6 +10,7 @@ class Reply(models.Model):
   imageR = models.ImageField(upload_to='images/',null=True, blank=True)
   userprofileRep = models.ForeignKey('userprofile.Userprofile',on_delete=models.CASCADE,null=True,blank=True)
   checked=models.BooleanField(default=False)
+  accepted = models.BooleanField(default=False)
   questionRep = models.ForeignKey('question.Question',on_delete=models.CASCADE,null=True,blank=True)
   voteRep = models.ForeignKey('vote.Vote',on_delete=models.CASCADE,null=True,blank=True)
 
