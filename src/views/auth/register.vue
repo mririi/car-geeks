@@ -106,7 +106,7 @@
                   <div class="division">
                     <span>OR</span>
                   </div>
-
+                   
                   <div class="social">
                     <a href="#" class="google-signup" @click.prevent="loginWithGoogle">
                       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">

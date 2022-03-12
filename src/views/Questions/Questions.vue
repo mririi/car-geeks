@@ -101,7 +101,7 @@
                 </div>
                 <div v-for="p in Userprofiles" :key="p.id">
                   <div v-if="p.id == q.userprofileQ">
-                    <div class="user-name mt-2">{{ p.firstname }} {{ p.lastname }}</div>
+                 <router-link :to="'/profile/'+p.id" >  <div class="user-name mt-2">{{ p.firstname }} {{ p.lastname }}</div></router-link>
                   </div>
                 </div>
               </div>
@@ -134,7 +134,7 @@
 }
 </style>
 <script>
-//import '@/assets/sass/elements/search.scss'
+
 import '@/assets/sass/components/cards/card.scss';
 import { mapGetters, mapActions } from 'vuex';
 import axios from 'axios';

@@ -400,8 +400,8 @@
                         <template #button-content>
                             <img :src="'http://127.0.0.1:8000' + Userprofile.imageU" class="navbar-logo"  />
                         </template>
-
-                        <b-dropdown-item to="/users/profile">
+                         
+                        <b-dropdown-item :to="'/profile/' + Userprofile.id">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="24"

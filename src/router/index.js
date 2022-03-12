@@ -367,12 +367,12 @@ const routes = [
 
     //users
     {
-        path: '/users/profile',
+        path: '/profile/:id',
         name: 'profile',
         component: () => import(/* webpackChunkName: "users-profile" */ '../views/users/profile.vue')
     },
     {
-        path: '/users/account-setting',
+        path: '/profile-edit/:id',
         name: 'account-setting',
         component: () => import(/* webpackChunkName: "users-account-setting" */ '../views/users/account_setting.vue')
     },

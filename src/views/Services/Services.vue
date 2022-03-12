@@ -58,7 +58,7 @@
             <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
                 
                    <div class="fq-article-section">
-                  
+                   <h2>Services</h2>
                     <div class="row">
                         <div v-for="s in filterByCategory" :key="s.id" class="col-lg-3 col-md-6 mb-lg-0 mb-4 text-center">
                           <div v-if="s.accepted==true">
@@ -79,6 +79,7 @@
                             </b-card></a>
                             </div>
                         </div>
+                        
                     </div>
 
                 
@@ -94,6 +95,7 @@
     }
 </style>
 <script>
+import '@/assets/sass/pages/faq/faq.scss'
 import { mapGetters, mapActions } from 'vuex';
     export default {
         metaInfo: { title: 'Services' },
