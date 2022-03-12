@@ -54,32 +54,34 @@ export default {
   data() {
     return {
       email: '',
+      result:[]
     };
   },
   metaInfo: { title: 'Password Recovery Boxed' },
   mounted() {},
   methods: {
-    sendEmail() {
-      axios.post('/api/password_reset/',this.email).then((res) => {
-        status = res.status;
-      });
-
-     if(res.status=="200")
+   sendEmail() {
+      let result=[]
+      axios.post('/api/password_reset/',{email:this.email}).then((res) => {
+        result = res.data;
+        console.log(result.status)
+        if(result.status==="OK")
      {
       var templateParams = {
         email: this.email,
+        
       };
-
       emailjs.send('service_mbc13jf', 'template_jo628km', templateParams, 'qI8OZpK-1liHehAv8').then(
         function (response) {
-          console.log('SUCCESS!', response.status, response.text);
+          console.log('SUCCESS!', response.status);
         },
         function (error) {
           console.log('FAILED...', error);
         }
       );
      }
-    },
+      });
+   }
   },
 };
 </script>
