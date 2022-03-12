@@ -160,11 +160,12 @@
                               <img :src="'http://127.0.0.1:8000' + rep.imageR" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
                             </div>
                             <div class="media-notation mb-4 float-right">
-                              <a href="javascript:void(0);" class="mr-2">
-                                <div v-if="Votes.includes(rep.id)">
-                                  {{ rep.id }}
-                                </div>
-                                <svg
+                              <a href="javascript:void(0);" class="mr-2"
+                              
+                                >
+                                  <span v-if="checkforlike(rep.id)==true">
+                                  <svg
+                                  
                                   @click="deletelikedreply(rep)"
                                   xmlns="http://www.w3.org/2000/svg"
                                   aria-hidden="true"
@@ -179,24 +180,24 @@
                                     d="M128 447.1v-224c0-17.67-14.33-31.1-32-31.1H32c-17.67 0-32 14.33-32 31.1v223.1c0 17.67 14.33 31.1 32 31.1h64c17.7 1.8 32-11.7 32-30.2zm384-223c0-26.5-21.48-47.98-48-47.98H317.5c22.77-37.91 34.52-80.88 34.52-96.02C352 56.52 333.5 32 302.5 32c-63.13 0-26.36 76.15-108.2 141.6l-16.3 13c-11.8 9.5-17.8 23.4-17.9 37.4c-.023.023 0 0 0 0l-.1 160c0 15.1 7.113 29.33 19.2 38.39l34.14 25.59C241 468.8 274.7 480 309.3 480H368c26.52 0 48-21.47 48-47.98c0-3.635-.48-7.143-1.246-10.55C434 415.2 448 397.4 448 376c0-9.148-2.697-17.61-7.139-24.88C463.1 347 480 327.5 480 304.1c0-12.5-4.893-23.78-12.72-32.32C492.2 270.1 512 249.5 512 224.1z"
                                   />
                                 </svg>
-                                <div>
-                                  <!--<svg
-                                      v-show="!likedReply"
-                                      @click="likedreply(rep)"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      aria-hidden="true"
-                                      role="img"
-                                      width="24"
-                                      height="24"
-                                      preserveAspectRatio="xMidYMid meet"
-                                      viewBox="0 0 512 512"
-                                    >
-                                      <path
-                                        fill="currentColor"
-                                        d="M96 191.1H32c-17.67 0-32 14.33-32 31.1v223.1c0 17.67 14.33 31.1 32 31.1h64c17.67 0 32-14.33 32-31.1V223.1c0-16.8-14.3-32-32-32zM512 227c0-36.89-30.05-66.92-66.97-66.92h-99.86C354.7 135.1 360 113.5 360 100.8c0-33.8-26.2-68.78-70.06-68.78c-46.61 0-59.36 32.44-69.61 58.5c-31.66 80.5-60.33 66.39-60.33 93.47c0 12.84 10.36 23.99 24.02 23.99a23.88 23.88 0 0 0 14.97-5.26c76.76-61.37 57.97-122.7 90.95-122.7c16.08 0 22.06 12.75 22.06 20.79c0 7.404-7.594 39.55-25.55 71.59a23.934 23.934 0 0 0-3.066 11.72c0 13.92 11.43 23.1 24 23.1h137.6C455.5 208.1 464 216.6 464 227c0 9.809-7.766 18.03-17.67 18.71c-12.66.86-22.36 11.4-22.36 23.94c0 15.47 11.39 15.95 11.39 28.91c0 25.37-35.03 12.34-35.03 42.15c0 11.22 6.392 13.03 6.392 22.25c0 22.66-29.77 13.76-29.77 40.64c0 4.515 1.11 5.961 1.11 9.456c0 10.45-8.516 18.95-18.97 18.95h-52.53c-25.62 0-51.02-8.466-71.5-23.81l-36.66-27.51a23.851 23.851 0 0 0-14.38-4.811c-13.85 0-24.03 11.38-24.03 24.04c0 7.287 3.312 14.42 9.596 19.13l36.67 27.52C235 468.1 270.6 480 306.6 480h52.53c35.33 0 64.36-27.49 66.8-62.2c17.77-12.23 28.83-32.51 28.83-54.83a65.97 65.97 0 0 0-.64-9.122c17.84-12.15 29.28-32.58 29.28-55.28a66.33 66.33 0 0 0-1.876-15.64C499.9 270.1 512 250.2 512 227z"
-                                      />
-                                    </svg>-->
-                                </div>
+                                  </span>
+                                  <span v-else>
+                                <svg
+                                  @click="likedreply(rep)"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  aria-hidden="true"
+                                  role="img"
+                                  width="24"
+                                  height="24"
+                                  preserveAspectRatio="xMidYMid meet"
+                                  viewBox="0 0 512 512"
+                                >
+                                  <path
+                                    fill="currentColor"
+                                    d="M96 191.1H32c-17.67 0-32 14.33-32 31.1v223.1c0 17.67 14.33 31.1 32 31.1h64c17.67 0 32-14.33 32-31.1V223.1c0-16.8-14.3-32-32-32zM512 227c0-36.89-30.05-66.92-66.97-66.92h-99.86C354.7 135.1 360 113.5 360 100.8c0-33.8-26.2-68.78-70.06-68.78c-46.61 0-59.36 32.44-69.61 58.5c-31.66 80.5-60.33 66.39-60.33 93.47c0 12.84 10.36 23.99 24.02 23.99a23.88 23.88 0 0 0 14.97-5.26c76.76-61.37 57.97-122.7 90.95-122.7c16.08 0 22.06 12.75 22.06 20.79c0 7.404-7.594 39.55-25.55 71.59a23.934 23.934 0 0 0-3.066 11.72c0 13.92 11.43 23.1 24 23.1h137.6C455.5 208.1 464 216.6 464 227c0 9.809-7.766 18.03-17.67 18.71c-12.66.86-22.36 11.4-22.36 23.94c0 15.47 11.39 15.95 11.39 28.91c0 25.37-35.03 12.34-35.03 42.15c0 11.22 6.392 13.03 6.392 22.25c0 22.66-29.77 13.76-29.77 40.64c0 4.515 1.11 5.961 1.11 9.456c0 10.45-8.516 18.95-18.97 18.95h-52.53c-25.62 0-51.02-8.466-71.5-23.81l-36.66-27.51a23.851 23.851 0 0 0-14.38-4.811c-13.85 0-24.03 11.38-24.03 24.04c0 7.287 3.312 14.42 9.596 19.13l36.67 27.52C235 468.1 270.6 480 306.6 480h52.53c35.33 0 64.36-27.49 66.8-62.2c17.77-12.23 28.83-32.51 28.83-54.83a65.97 65.97 0 0 0-.64-9.122c17.84-12.15 29.28-32.58 29.28-55.28a66.33 66.33 0 0 0-1.876-15.64C499.9 270.1 512 250.2 512 227z"
+                                  />
+                                </svg>
+                                  </span>
                                 {{ rep.nblikesR }} likes
                               </a>
                               <a href="javascript:void(0);" class="mr-2"
@@ -263,7 +264,7 @@
                           <hr width="90%" />
                           <div v-if="showMore==false">
                           <div v-for="(c,index) in Comments" :key="c.id">
-                            <div v-if="index <= 2">
+                            <div v-if="index <= 3">
                             <div v-if="c.replyCo == rep.id">
                               <div v-if="CurrentUserProfile.id == c.userprofileCo">
                                 <b-dropdown variant="icon-only" dropleft toggle-tag="a" class="mb-4 mr-2 custom-dropdown float-right">
@@ -378,20 +379,18 @@
                           </div>
                           </div>
                         </div>
-                        
                       </div>
                       <div v-if="showMore==false">
                         <b-button @click="showMore=true">Show More</b-button>
-                      </div >
+                      </div>
                       <div v-else>
                         <b-button @click="showMore=false">Show Less</b-button>
                       </div>
-                      
                     </b-tab>
 
                     <b-tab title="Newest" active>
                       <div v-for="rep in Replies" :key="rep.id">
-                        <div v-if="rep.questionRep == question.id" class="panel-body notation-text-icon">
+                        <div v-if="rep.questionRep == question.id && rep.accepted==true" class="panel-body notation-text-icon">
                           <!--repmodif-->
                           <b-modal :id="'modalModifReplyNewest' + rep.id" hide-footer title="Modify Answer" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
                             <form class="mt-0">
@@ -469,25 +468,9 @@
                               <img :src="'http://127.0.0.1:8000' + rep.imageR" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
                             </div>
                             <div class="media-notation mb-4 float-right">
-                              <a href="javascript:void(0);" class="mr-2"
-                                ><svg
-                                  v-show="likedReply == false"
-                                  @click="likedreply(rep)"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  aria-hidden="true"
-                                  role="img"
-                                  width="24"
-                                  height="24"
-                                  preserveAspectRatio="xMidYMid meet"
-                                  viewBox="0 0 512 512"
-                                >
-                                  <path
-                                    fill="currentColor"
-                                    d="M96 191.1H32c-17.67 0-32 14.33-32 31.1v223.1c0 17.67 14.33 31.1 32 31.1h64c17.67 0 32-14.33 32-31.1V223.1c0-16.8-14.3-32-32-32zM512 227c0-36.89-30.05-66.92-66.97-66.92h-99.86C354.7 135.1 360 113.5 360 100.8c0-33.8-26.2-68.78-70.06-68.78c-46.61 0-59.36 32.44-69.61 58.5c-31.66 80.5-60.33 66.39-60.33 93.47c0 12.84 10.36 23.99 24.02 23.99a23.88 23.88 0 0 0 14.97-5.26c76.76-61.37 57.97-122.7 90.95-122.7c16.08 0 22.06 12.75 22.06 20.79c0 7.404-7.594 39.55-25.55 71.59a23.934 23.934 0 0 0-3.066 11.72c0 13.92 11.43 23.1 24 23.1h137.6C455.5 208.1 464 216.6 464 227c0 9.809-7.766 18.03-17.67 18.71c-12.66.86-22.36 11.4-22.36 23.94c0 15.47 11.39 15.95 11.39 28.91c0 25.37-35.03 12.34-35.03 42.15c0 11.22 6.392 13.03 6.392 22.25c0 22.66-29.77 13.76-29.77 40.64c0 4.515 1.11 5.961 1.11 9.456c0 10.45-8.516 18.95-18.97 18.95h-52.53c-25.62 0-51.02-8.466-71.5-23.81l-36.66-27.51a23.851 23.851 0 0 0-14.38-4.811c-13.85 0-24.03 11.38-24.03 24.04c0 7.287 3.312 14.42 9.596 19.13l36.67 27.52C235 468.1 270.6 480 306.6 480h52.53c35.33 0 64.36-27.49 66.8-62.2c17.77-12.23 28.83-32.51 28.83-54.83a65.97 65.97 0 0 0-.64-9.122c17.84-12.15 29.28-32.58 29.28-55.28a66.33 66.33 0 0 0-1.876-15.64C499.9 270.1 512 250.2 512 227z"
-                                  />
-                                </svg>
-                                <svg
-                                  v-show="likedReply == true"
+                              <a href="javascript:void(0);" class="">
+                                  <span v-if="checkforlike(rep.id)==true">
+                                  <svg
                                   @click="deletelikedreply(rep)"
                                   xmlns="http://www.w3.org/2000/svg"
                                   aria-hidden="true"
@@ -502,6 +485,24 @@
                                     d="M128 447.1v-224c0-17.67-14.33-31.1-32-31.1H32c-17.67 0-32 14.33-32 31.1v223.1c0 17.67 14.33 31.1 32 31.1h64c17.7 1.8 32-11.7 32-30.2zm384-223c0-26.5-21.48-47.98-48-47.98H317.5c22.77-37.91 34.52-80.88 34.52-96.02C352 56.52 333.5 32 302.5 32c-63.13 0-26.36 76.15-108.2 141.6l-16.3 13c-11.8 9.5-17.8 23.4-17.9 37.4c-.023.023 0 0 0 0l-.1 160c0 15.1 7.113 29.33 19.2 38.39l34.14 25.59C241 468.8 274.7 480 309.3 480H368c26.52 0 48-21.47 48-47.98c0-3.635-.48-7.143-1.246-10.55C434 415.2 448 397.4 448 376c0-9.148-2.697-17.61-7.139-24.88C463.1 347 480 327.5 480 304.1c0-12.5-4.893-23.78-12.72-32.32C492.2 270.1 512 249.5 512 224.1z"
                                   />
                                 </svg>
+                                  </span>
+                                  <span v-else>
+                                <svg
+                                  @click="likedreply(rep)"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  aria-hidden="true"
+                                  role="img"
+                                  width="24"
+                                  height="24"
+                                  preserveAspectRatio="xMidYMid meet"
+                                  viewBox="0 0 512 512"
+                                >
+                                  <path
+                                    fill="currentColor"
+                                    d="M96 191.1H32c-17.67 0-32 14.33-32 31.1v223.1c0 17.67 14.33 31.1 32 31.1h64c17.67 0 32-14.33 32-31.1V223.1c0-16.8-14.3-32-32-32zM512 227c0-36.89-30.05-66.92-66.97-66.92h-99.86C354.7 135.1 360 113.5 360 100.8c0-33.8-26.2-68.78-70.06-68.78c-46.61 0-59.36 32.44-69.61 58.5c-31.66 80.5-60.33 66.39-60.33 93.47c0 12.84 10.36 23.99 24.02 23.99a23.88 23.88 0 0 0 14.97-5.26c76.76-61.37 57.97-122.7 90.95-122.7c16.08 0 22.06 12.75 22.06 20.79c0 7.404-7.594 39.55-25.55 71.59a23.934 23.934 0 0 0-3.066 11.72c0 13.92 11.43 23.1 24 23.1h137.6C455.5 208.1 464 216.6 464 227c0 9.809-7.766 18.03-17.67 18.71c-12.66.86-22.36 11.4-22.36 23.94c0 15.47 11.39 15.95 11.39 28.91c0 25.37-35.03 12.34-35.03 42.15c0 11.22 6.392 13.03 6.392 22.25c0 22.66-29.77 13.76-29.77 40.64c0 4.515 1.11 5.961 1.11 9.456c0 10.45-8.516 18.95-18.97 18.95h-52.53c-25.62 0-51.02-8.466-71.5-23.81l-36.66-27.51a23.851 23.851 0 0 0-14.38-4.811c-13.85 0-24.03 11.38-24.03 24.04c0 7.287 3.312 14.42 9.596 19.13l36.67 27.52C235 468.1 270.6 480 306.6 480h52.53c35.33 0 64.36-27.49 66.8-62.2c17.77-12.23 28.83-32.51 28.83-54.83a65.97 65.97 0 0 0-.64-9.122c17.84-12.15 29.28-32.58 29.28-55.28a66.33 66.33 0 0 0-1.876-15.64C499.9 270.1 512 250.2 512 227z"
+                                  />
+                                </svg>
+                                  </span>
                                 {{ rep.nblikesR }} likes
                               </a>
                               <a href="javascript:void(0);" class="mr-2"
@@ -626,7 +627,7 @@
                     </b-tab>
                     <b-tab title="Oldest">
                       <div v-for="rep in oldestreplies" :key="rep.id">
-                        <div v-if="rep.questionRep == question.id" class="panel-body notation-text-icon">
+                        <div v-if="rep.questionRep == question.id && rep.accepted==true" class="panel-body notation-text-icon">
                           <!--repmodif-->
                           <b-modal :id="'modalModifReplyOldest' + rep.id" hide-footer title="Modify Answer" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
                             <form class="mt-0">
@@ -705,24 +706,11 @@
                             </div>
                             <div class="media-notation mb-4 float-right">
                               <a href="javascript:void(0);" class="mr-2"
-                                ><svg
-                                  v-show="likedReply == false"
-                                  @click="likedreply(rep)"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  aria-hidden="true"
-                                  role="img"
-                                  width="24"
-                                  height="24"
-                                  preserveAspectRatio="xMidYMid meet"
-                                  viewBox="0 0 512 512"
+                              
                                 >
-                                  <path
-                                    fill="currentColor"
-                                    d="M96 191.1H32c-17.67 0-32 14.33-32 31.1v223.1c0 17.67 14.33 31.1 32 31.1h64c17.67 0 32-14.33 32-31.1V223.1c0-16.8-14.3-32-32-32zM512 227c0-36.89-30.05-66.92-66.97-66.92h-99.86C354.7 135.1 360 113.5 360 100.8c0-33.8-26.2-68.78-70.06-68.78c-46.61 0-59.36 32.44-69.61 58.5c-31.66 80.5-60.33 66.39-60.33 93.47c0 12.84 10.36 23.99 24.02 23.99a23.88 23.88 0 0 0 14.97-5.26c76.76-61.37 57.97-122.7 90.95-122.7c16.08 0 22.06 12.75 22.06 20.79c0 7.404-7.594 39.55-25.55 71.59a23.934 23.934 0 0 0-3.066 11.72c0 13.92 11.43 23.1 24 23.1h137.6C455.5 208.1 464 216.6 464 227c0 9.809-7.766 18.03-17.67 18.71c-12.66.86-22.36 11.4-22.36 23.94c0 15.47 11.39 15.95 11.39 28.91c0 25.37-35.03 12.34-35.03 42.15c0 11.22 6.392 13.03 6.392 22.25c0 22.66-29.77 13.76-29.77 40.64c0 4.515 1.11 5.961 1.11 9.456c0 10.45-8.516 18.95-18.97 18.95h-52.53c-25.62 0-51.02-8.466-71.5-23.81l-36.66-27.51a23.851 23.851 0 0 0-14.38-4.811c-13.85 0-24.03 11.38-24.03 24.04c0 7.287 3.312 14.42 9.596 19.13l36.67 27.52C235 468.1 270.6 480 306.6 480h52.53c35.33 0 64.36-27.49 66.8-62.2c17.77-12.23 28.83-32.51 28.83-54.83a65.97 65.97 0 0 0-.64-9.122c17.84-12.15 29.28-32.58 29.28-55.28a66.33 66.33 0 0 0-1.876-15.64C499.9 270.1 512 250.2 512 227z"
-                                  />
-                                </svg>
-                                <svg
-                                  v-show="likedReply == true"
+                                  <span v-if="checkforlike(rep.id)==true">
+                                  <svg
+                                  
                                   @click="deletelikedreply(rep)"
                                   xmlns="http://www.w3.org/2000/svg"
                                   aria-hidden="true"
@@ -737,6 +725,24 @@
                                     d="M128 447.1v-224c0-17.67-14.33-31.1-32-31.1H32c-17.67 0-32 14.33-32 31.1v223.1c0 17.67 14.33 31.1 32 31.1h64c17.7 1.8 32-11.7 32-30.2zm384-223c0-26.5-21.48-47.98-48-47.98H317.5c22.77-37.91 34.52-80.88 34.52-96.02C352 56.52 333.5 32 302.5 32c-63.13 0-26.36 76.15-108.2 141.6l-16.3 13c-11.8 9.5-17.8 23.4-17.9 37.4c-.023.023 0 0 0 0l-.1 160c0 15.1 7.113 29.33 19.2 38.39l34.14 25.59C241 468.8 274.7 480 309.3 480H368c26.52 0 48-21.47 48-47.98c0-3.635-.48-7.143-1.246-10.55C434 415.2 448 397.4 448 376c0-9.148-2.697-17.61-7.139-24.88C463.1 347 480 327.5 480 304.1c0-12.5-4.893-23.78-12.72-32.32C492.2 270.1 512 249.5 512 224.1z"
                                   />
                                 </svg>
+                                  </span>
+                                  <span v-else>
+                                <svg
+                                  @click="likedreply(rep)"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  aria-hidden="true"
+                                  role="img"
+                                  width="24"
+                                  height="24"
+                                  preserveAspectRatio="xMidYMid meet"
+                                  viewBox="0 0 512 512"
+                                >
+                                  <path
+                                    fill="currentColor"
+                                    d="M96 191.1H32c-17.67 0-32 14.33-32 31.1v223.1c0 17.67 14.33 31.1 32 31.1h64c17.67 0 32-14.33 32-31.1V223.1c0-16.8-14.3-32-32-32zM512 227c0-36.89-30.05-66.92-66.97-66.92h-99.86C354.7 135.1 360 113.5 360 100.8c0-33.8-26.2-68.78-70.06-68.78c-46.61 0-59.36 32.44-69.61 58.5c-31.66 80.5-60.33 66.39-60.33 93.47c0 12.84 10.36 23.99 24.02 23.99a23.88 23.88 0 0 0 14.97-5.26c76.76-61.37 57.97-122.7 90.95-122.7c16.08 0 22.06 12.75 22.06 20.79c0 7.404-7.594 39.55-25.55 71.59a23.934 23.934 0 0 0-3.066 11.72c0 13.92 11.43 23.1 24 23.1h137.6C455.5 208.1 464 216.6 464 227c0 9.809-7.766 18.03-17.67 18.71c-12.66.86-22.36 11.4-22.36 23.94c0 15.47 11.39 15.95 11.39 28.91c0 25.37-35.03 12.34-35.03 42.15c0 11.22 6.392 13.03 6.392 22.25c0 22.66-29.77 13.76-29.77 40.64c0 4.515 1.11 5.961 1.11 9.456c0 10.45-8.516 18.95-18.97 18.95h-52.53c-25.62 0-51.02-8.466-71.5-23.81l-36.66-27.51a23.851 23.851 0 0 0-14.38-4.811c-13.85 0-24.03 11.38-24.03 24.04c0 7.287 3.312 14.42 9.596 19.13l36.67 27.52C235 468.1 270.6 480 306.6 480h52.53c35.33 0 64.36-27.49 66.8-62.2c17.77-12.23 28.83-32.51 28.83-54.83a65.97 65.97 0 0 0-.64-9.122c17.84-12.15 29.28-32.58 29.28-55.28a66.33 66.33 0 0 0-1.876-15.64C499.9 270.1 512 250.2 512 227z"
+                                  />
+                                </svg>
+                                  </span>
                                 {{ rep.nblikesR }} likes
                               </a>
                               <a href="javascript:void(0);" class="mr-2"
@@ -863,7 +869,7 @@
                     </b-tab>
                     <b-tab title="Most liked">
                       <div v-for="rep in mostlikedreplies" :key="rep.id">
-                        <div v-if="rep.questionRep == question.id" class="panel-body notation-text-icon">
+                        <div v-if="rep.questionRep == question.id && rep.accepted==true" class="panel-body notation-text-icon">
                           <!--repmodif-->
                           <b-modal :id="'modalModifReplyMost' + rep.id" hide-footer title="Modify Answer" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
                             <form class="mt-0">
@@ -941,25 +947,9 @@
                               <img :src="'http://127.0.0.1:8000' + rep.imageR" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
                             </div>
                             <div class="media-notation mb-4 float-right">
-                              <a href="javascript:void(0);" class="mr-2"
-                                ><svg
-                                  v-show="likedReply == false"
-                                  @click="likedreply(rep)"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  aria-hidden="true"
-                                  role="img"
-                                  width="24"
-                                  height="24"
-                                  preserveAspectRatio="xMidYMid meet"
-                                  viewBox="0 0 512 512"
-                                >
-                                  <path
-                                    fill="currentColor"
-                                    d="M96 191.1H32c-17.67 0-32 14.33-32 31.1v223.1c0 17.67 14.33 31.1 32 31.1h64c17.67 0 32-14.33 32-31.1V223.1c0-16.8-14.3-32-32-32zM512 227c0-36.89-30.05-66.92-66.97-66.92h-99.86C354.7 135.1 360 113.5 360 100.8c0-33.8-26.2-68.78-70.06-68.78c-46.61 0-59.36 32.44-69.61 58.5c-31.66 80.5-60.33 66.39-60.33 93.47c0 12.84 10.36 23.99 24.02 23.99a23.88 23.88 0 0 0 14.97-5.26c76.76-61.37 57.97-122.7 90.95-122.7c16.08 0 22.06 12.75 22.06 20.79c0 7.404-7.594 39.55-25.55 71.59a23.934 23.934 0 0 0-3.066 11.72c0 13.92 11.43 23.1 24 23.1h137.6C455.5 208.1 464 216.6 464 227c0 9.809-7.766 18.03-17.67 18.71c-12.66.86-22.36 11.4-22.36 23.94c0 15.47 11.39 15.95 11.39 28.91c0 25.37-35.03 12.34-35.03 42.15c0 11.22 6.392 13.03 6.392 22.25c0 22.66-29.77 13.76-29.77 40.64c0 4.515 1.11 5.961 1.11 9.456c0 10.45-8.516 18.95-18.97 18.95h-52.53c-25.62 0-51.02-8.466-71.5-23.81l-36.66-27.51a23.851 23.851 0 0 0-14.38-4.811c-13.85 0-24.03 11.38-24.03 24.04c0 7.287 3.312 14.42 9.596 19.13l36.67 27.52C235 468.1 270.6 480 306.6 480h52.53c35.33 0 64.36-27.49 66.8-62.2c17.77-12.23 28.83-32.51 28.83-54.83a65.97 65.97 0 0 0-.64-9.122c17.84-12.15 29.28-32.58 29.28-55.28a66.33 66.33 0 0 0-1.876-15.64C499.9 270.1 512 250.2 512 227z"
-                                  />
-                                </svg>
-                                <svg
-                                  v-show="likedReply == true"
+                              <a href="javascript:void(0);" class="mr-2">
+                                  <span v-if="checkforlike(rep.id)==true">
+                                  <svg
                                   @click="deletelikedreply(rep)"
                                   xmlns="http://www.w3.org/2000/svg"
                                   aria-hidden="true"
@@ -974,6 +964,24 @@
                                     d="M128 447.1v-224c0-17.67-14.33-31.1-32-31.1H32c-17.67 0-32 14.33-32 31.1v223.1c0 17.67 14.33 31.1 32 31.1h64c17.7 1.8 32-11.7 32-30.2zm384-223c0-26.5-21.48-47.98-48-47.98H317.5c22.77-37.91 34.52-80.88 34.52-96.02C352 56.52 333.5 32 302.5 32c-63.13 0-26.36 76.15-108.2 141.6l-16.3 13c-11.8 9.5-17.8 23.4-17.9 37.4c-.023.023 0 0 0 0l-.1 160c0 15.1 7.113 29.33 19.2 38.39l34.14 25.59C241 468.8 274.7 480 309.3 480H368c26.52 0 48-21.47 48-47.98c0-3.635-.48-7.143-1.246-10.55C434 415.2 448 397.4 448 376c0-9.148-2.697-17.61-7.139-24.88C463.1 347 480 327.5 480 304.1c0-12.5-4.893-23.78-12.72-32.32C492.2 270.1 512 249.5 512 224.1z"
                                   />
                                 </svg>
+                                  </span>
+                                  <span v-else>
+                                <svg
+                                  @click="likedreply(rep)"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  aria-hidden="true"
+                                  role="img"
+                                  width="24"
+                                  height="24"
+                                  preserveAspectRatio="xMidYMid meet"
+                                  viewBox="0 0 512 512"
+                                >
+                                  <path
+                                    fill="currentColor"
+                                    d="M96 191.1H32c-17.67 0-32 14.33-32 31.1v223.1c0 17.67 14.33 31.1 32 31.1h64c17.67 0 32-14.33 32-31.1V223.1c0-16.8-14.3-32-32-32zM512 227c0-36.89-30.05-66.92-66.97-66.92h-99.86C354.7 135.1 360 113.5 360 100.8c0-33.8-26.2-68.78-70.06-68.78c-46.61 0-59.36 32.44-69.61 58.5c-31.66 80.5-60.33 66.39-60.33 93.47c0 12.84 10.36 23.99 24.02 23.99a23.88 23.88 0 0 0 14.97-5.26c76.76-61.37 57.97-122.7 90.95-122.7c16.08 0 22.06 12.75 22.06 20.79c0 7.404-7.594 39.55-25.55 71.59a23.934 23.934 0 0 0-3.066 11.72c0 13.92 11.43 23.1 24 23.1h137.6C455.5 208.1 464 216.6 464 227c0 9.809-7.766 18.03-17.67 18.71c-12.66.86-22.36 11.4-22.36 23.94c0 15.47 11.39 15.95 11.39 28.91c0 25.37-35.03 12.34-35.03 42.15c0 11.22 6.392 13.03 6.392 22.25c0 22.66-29.77 13.76-29.77 40.64c0 4.515 1.11 5.961 1.11 9.456c0 10.45-8.516 18.95-18.97 18.95h-52.53c-25.62 0-51.02-8.466-71.5-23.81l-36.66-27.51a23.851 23.851 0 0 0-14.38-4.811c-13.85 0-24.03 11.38-24.03 24.04c0 7.287 3.312 14.42 9.596 19.13l36.67 27.52C235 468.1 270.6 480 306.6 480h52.53c35.33 0 64.36-27.49 66.8-62.2c17.77-12.23 28.83-32.51 28.83-54.83a65.97 65.97 0 0 0-.64-9.122c17.84-12.15 29.28-32.58 29.28-55.28a66.33 66.33 0 0 0-1.876-15.64C499.9 270.1 512 250.2 512 227z"
+                                  />
+                                </svg>
+                                  </span>
                                 {{ rep.nblikesR }} likes
                               </a>
                               <a href="javascript:void(0);" class="mr-2"
@@ -1122,6 +1130,7 @@ export default {
       CurrentUserProfile: [],
       commentsToShow: 3,
       replydetails: [],
+      likedrepliesbythisuser:null,
       comment: {
         contentCo: '',
         replyCo: '',
@@ -1160,6 +1169,18 @@ export default {
     },
   },
   methods: {
+    checkforlike(id){
+      let exist=false
+      for (let v in this.Votes){
+        if(this.Votes[v].replyVo==id && this.Votes[v].userprofileVo==this.CurrentUserProfile.id){
+          exist=true
+          this.showreplylike
+        }
+      }
+      if(exist==false){
+        return false
+      }else{return true}
+    },
     ...mapActions(['GetComments', 'GetQuestions', 'GetUsers', 'GetVotes', 'CreateVote', 'GetReplies', 'GetUserprofiles', 'CreateReply', 'CreateComment']),
     onFileChanged(event) {
       this.image = event.target.files[0];
@@ -1188,23 +1209,21 @@ export default {
     },
     deletelikedreply(rep) {
       for (let v in this.Votes) {
-        if (this.Votes[v].replyVo === this.vote.replyVo && this.Votes[v].userprofileVo === this.vote.userprofileVo) {
+        if (this.Votes[v].replyVo === rep.id && this.Votes[v].userprofileVo === this.CurrentUserProfile.id) {
           axios.delete('/vote/vote-delete/' + this.Votes[v].id + '/');
         }
       }
-
-      axios.put('/reply/reply-update/' + rep.id + '/', {
-        nblikesR: this.rep.nblikesR - 1,
+      axios.post('/reply/reply-update/' + rep.id + '/', {
+        nblikesR: rep.nblikesR - 1,
       });
-      this.likedReply = false;
+      this.$router.go()
     },
     likedreply(rep) {
       this.CreateVote({ replyVo: rep.id, userprofileVo: this.vote.userprofileVo });
 
-      axios.post('/reply/reply-update/' + rep.id + '/', {
-        nblikesR: this.rep.nblikesR + 1,
+      axios.post('/reply/reply-update/' + rep.id + '/', {nblikesR: rep.nblikesR + 1,
       });
-      this.likedReply = true;
+      
     },
     deleteReply(id) {
       this.$swal({
@@ -1366,6 +1385,8 @@ export default {
     this.GetUserprofiles();
     this.GetVotes();
     this.GetComments();
+    //liked replies
+    
     //sort by newest
     this.oldestreplies = this.Replies.reverse();
     this.mostlikedreplies = this.Replies.sort((a, b) => b.nblikesR - a.nblikesR);
@@ -1380,6 +1401,11 @@ export default {
             for (let p in this.Userprofiles) {
               if (this.Userprofiles[p].userU == this.CurrentUser.id) {
                 this.CurrentUserProfile = this.Userprofiles[p];
+                for (let vo in this.Votes){
+                    if(this.CurrentUserProfile.id==this.Votes[vo].userprofileVo && this.Votes[vo].questionVo==null){
+                  this.likedrepliesbythisuser=+this.Votes[vo].replyVo
+                  }
+                  }
                 this.vote.questionVo = this.question.id;
                 this.vote.userprofileVo = this.CurrentUserProfile.id;
                 this.comment.userprofileCo = this.CurrentUserProfile.id;
@@ -1401,6 +1427,7 @@ export default {
       .catch((err) => {
         console.log(err);
       });
+      
   },
 };
 </script>

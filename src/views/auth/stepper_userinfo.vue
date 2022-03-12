@@ -167,14 +167,11 @@ export default {
       }
       this.is_submit_form1 = true;
       if (this.form.firstname && this.form.lastname && this.form.age && this.form.country && this.form.tel) {
-        if (this.form.userU.is_superuser) {
-          this.CreateRole({ userRole: this.form.userU.id, admin: true });
           for (let r in this.Roles) {
             if (this.Roles[r].userRole == this.form.userU.id) {
               this.form.roleU = this.Roles[r].id;
             }
           }
-        }
         var formdata = new FormData();
         if (this.image != null) {
           formdata.append('imageU', this.image);

@@ -130,6 +130,7 @@ export default {
         username: '',
         password: '',
       },
+      exist:false,
       valid: true,
       is_submit_form1: false,
     };
@@ -139,10 +140,10 @@ export default {
     this.GetUserprofiles();
   },
   computed: {
-    ...mapGetters({ Userprofiles: 'StateUserprofiles', Users: 'StateUsers' }),
+    ...mapGetters({Roles: 'StateRoles', Userprofiles: 'StateUserprofiles', Users: 'StateUsers' }),
   },
   methods: {
-    ...mapActions(['LogIn','Register', 'GetUsers', 'GetUserprofiles']),
+    ...mapActions(['LogIn','Register','CreateRole', 'GetRoles', 'GetUsers', 'GetUserprofiles']),
     set_pwd_type() {
       if (this.pwd_type == 'password') {
         this.pwd_type = 'text';
@@ -151,6 +152,7 @@ export default {
       }
     },
     async submit() {
+      
       this.is_submit_form1 = true;
       if (this.form.username && this.form.password) {
         const User = new FormData();
@@ -162,8 +164,15 @@ export default {
           for (let u in this.Users) {
             if (this.Users[u].username == this.form.username) {
               this.CurrentUser = this.Users[u];
+              for (let r in this.Roles){
+                if(this.CurrentUser.id==this.Roles[r].userRole){
+                  this.exist=true
+                }
+              }
+              if(this.exist==false && this.CurrentUser.is_superuser){
+              this.CreateRole({ userRole: this.CurrentUser.id, admin: true });
             }
-          }
+          }}
           let existuserprofile = false;
           for (let uu in this.Userprofiles) {
             if (this.Userprofiles[uu].userU == this.CurrentUser.id) {

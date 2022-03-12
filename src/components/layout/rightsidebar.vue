@@ -15,13 +15,13 @@
       "
     >
       <div class="mt-5">
-        <router-link
-          to="/addquestion"
+        <a
+          href="/addquestion"
           
           class="mt-5 ml-5 mb-3"
           >
           <b-button v-show="isLoggedIn" variant="primary" class="mt-5">
-          Ask a question</b-button></router-link
+          Ask a question</b-button></a
         >
       </div>
 

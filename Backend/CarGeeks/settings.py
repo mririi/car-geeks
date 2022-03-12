@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "userapi",
     "question",
     "car",
+    "emailapp",
     "reply",
     "badge",
     "questioncategory",

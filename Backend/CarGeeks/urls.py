@@ -25,6 +25,7 @@ urlpatterns = [
     path('userentreprise/',include('userentreprise.urls')),
     path('auth/', obtain_auth_token),
     path('api/password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
+    path('emailapp/',include('emailapp.urls'))
 ]
 if settings.DEBUG:
         urlpatterns += static(settings.MEDIA_URL,
