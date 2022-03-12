@@ -64,9 +64,8 @@ export default {
       axios.post('/api/password_reset/',{email:this.email}).then((res) => {
         result = res.data;
         console.log(result.status)
-        if(result.status==="Ok")
+        if(result.status==="OK")
      {
-       console.log("t5al if ")
       var templateParams = {
         email: this.email,
       };
