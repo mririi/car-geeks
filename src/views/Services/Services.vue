@@ -58,19 +58,14 @@
             <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
                 
                    <div class="fq-article-section">
-                   <h2>Services</h2>
                     <div class="row">
-                        <div v-for="s in filterByCategory" :key="s.id" class="col-lg-3 col-md-6 mb-lg-0 mb-4 text-center">
-                          <div v-if="s.accepted==true">
-                          <a :href="'/questions'">  <b-card  :img-src="'http://127.0.0.1:8000' + s.imageS" class="mt-3" img-top img-width="100px" img-height="200px">
+                        <div v-for="s in filterByAccepted" :key="s.id" class="col-lg-4 col-md-6 mb-lg-0 mb-4 text-center">
+                          <a v-if="s.accepted==true" :href="'/questions'">  <b-card  :img-src="'http://127.0.0.1:8000' + s.imageS" class="mt-3" img-top img-width="100px" img-height="200px">
                             <h5 class="card-title">{{s.titleS}}</h5>
                                 <div class="fq-rating mb-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star checked"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star checked"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star checked"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star checked"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star checked"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                                </div>
+                                    <b-form-rating id="rating" v-model="s.nbEval" precision="2" readonly variant="warning" size="lg" class=" bg-transparent border-0">
+                                    </b-form-rating>
+                                    </div>
                                 
                                 <p class="card-text">In {{s.addressS}}</p>
                                 <p class="meta-text">
@@ -79,10 +74,6 @@
                             </b-card></a>
                             </div>
                         </div>
-                        
-                    </div>
-
-                
                     </div>
                 
             </div>
@@ -117,8 +108,13 @@ import { mapGetters, mapActions } from 'vuex';
       User: 'StateUser',
       Users: 'StateUsers',
     }),
+    filterByAccepted() {
+      
+        return this.Services.filter((service) => {return service.accepted==true});
+      
+    },
     filteredList() {
-      return this.Services.filter((service) => {
+      return this.filterByAccepted.filter((service) => {
         return service.titleS.toLowerCase().includes(this.search.toLowerCase());
       });
     },
@@ -131,6 +127,7 @@ import { mapGetters, mapActions } from 'vuex';
         created: function () {
         this.GetServices();
         this.GetServicetypes();
+        
         }
     };
 </script>

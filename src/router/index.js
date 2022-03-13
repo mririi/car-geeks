@@ -264,7 +264,15 @@ const routes = [
     {
         path: '/services',
         name: 'services',
-        component: () => import( '../views/Services/Services.vue')
+        component: () => import( '../views/Services/Services.vue'),
+        meta: {
+            layout: 'service'
+          }
+    },
+    {
+        path: '/addservice',
+        name: 'addservice',
+        component: () => import( '../views/Services/AddService.vue')
     },
     //elements
     {
@@ -608,7 +616,9 @@ router.beforeEach((to, from, next) => {
         store.commit('setLayout', 'auth');
     } else if (to.meta && to.meta.layout && to.meta.layout == 'question') {
         store.commit('setLayout', 'question');
-    }else{
+    } else if (to.meta && to.meta.layout && to.meta.layout == 'service') {
+        store.commit('setLayout', 'service');
+    } else{
         store.commit('setLayout', 'app');
     }
     next(true);

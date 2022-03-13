@@ -12,7 +12,7 @@ class Service(models.Model):
   dateS = models.DateTimeField(auto_now=True)
   imageS = models.ImageField(upload_to='images/',null=True, blank=True)
   userprofileS = models.ForeignKey('userprofile.Userprofile',on_delete=models.CASCADE,null=True,blank=True)
-  evaluationS = models.ForeignKey('evaluation.Evaluation',on_delete=models.CASCADE,null=True,blank=True)
   typeS = models.ForeignKey('servicetype.Servicetype',on_delete=models.CASCADE,null=True,blank=True)
+  nbEval=models.IntegerField(default=0)
   def __str__(self):
     return self.titleS
