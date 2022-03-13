@@ -10,6 +10,7 @@
     
     import '@/assets/sass/app.scss';
 import questionLayout from './layouts/question-layout.vue';
+import serviceLayout from './layouts/service-layout.vue';
 
     export default {
         metaInfo: {
@@ -19,7 +20,8 @@ import questionLayout from './layouts/question-layout.vue';
         components: {
             app: appLayout,
             auth: authLayout,
-            question: questionLayout
+            question: questionLayout,
+            service: serviceLayout
         },
         computed: {
             layout() {

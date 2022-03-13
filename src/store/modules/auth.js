@@ -213,6 +213,10 @@ const actions = {
     let response = await axios.get("service/service-list/");
     commit("setServices", response.data);
   },
+  async CreateService({ dispatch }, service) {
+    await axios.post("/service/service-create/", service);
+    return await dispatch("GetServices");
+  },
   async CreateServicetype({ dispatch }, servicetype) {
     await axios.post("/servicetype/servicetype-create/", servicetype);
     return await dispatch("GetServicetypes");
