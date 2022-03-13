@@ -22,7 +22,7 @@
             <div class="panel-body">
               <div class="d-flex justify-content-between">
                 <h3 class="">Profile</h3>
-                <router-link :to="'/profile-edit/' + userprofile.id" v-if="CurrentUserprofile.id==userprofile.id" class="mt-2 edit-profile">
+                <router-link :to="'/profile-edit/' + userprofile.id" v-if="CurrentUserprofile.id == userprofile.id" class="mt-2 edit-profile">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -84,7 +84,7 @@
                       >{{ userprofile.country }}
                     </li>
                     <li class="contacts-block__item">
-                      <a :href="'mailto:'+userprofile.email" target="_blank"
+                      <a :href="'mailto:' + userprofile.email" target="_blank"
                         ><svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="24"
@@ -121,17 +121,30 @@
                       </svg>
                       {{ userprofile.tel }}
                     </li>
-                   
                   </ul>
                 </div>
+                <div class="education ml-4 col-lg-8" > 
+                 <span class="ml-4">Rate this profile</span> 
+                     <b-form-rating id="rating" v-b-modal.Rating  v-model="average" precision="2" show-value-max readonly  show-value color="primary" size="lg" class="mb-2 bg-transparent border-0">
+                </b-form-rating>
+                </div>
               </div>
+              
             </div>
+             
           </div>
+         
         </div>
-
-        
       </div>
-
+         <b-modal id="Rating" :title="'Rate '+userprofile.firstname + ' '+ userprofile.lastname" centered>
+    
+    <b-form-rating id="rating" v-model="average" precision="2" show-value-max   show-value color="primary" size="lg" class="mb-2 bg-transparent border-0">
+                </b-form-rating>
+    <template #modal-footer>
+        
+        <b-button variant="primary">Submit your rating</b-button>
+    </template>
+</b-modal>
       <div class="col-xl-8 col-lg-6 col-md-7 col-sm-12 layout-top-spacing">
         <div class="skills layout-spacing">
           <div class="panel">
@@ -151,14 +164,13 @@
           </div>
         </div>
 
-        <div class="bio layout-spacing" v-if="userprofile.bio.length!=0">
+        <div class="bio layout-spacing" v-if="userprofile.bio.length != 0">
           <div class="panel">
             <div class="panel-body">
               <h3 class="">Bio</h3>
               <p>
                 {{ userprofile.bio }}
               </p>
-
             </div>
           </div>
         </div>
@@ -203,13 +215,66 @@
         </div>
       </div>
     </div>
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+      <div class="widget widget-recent-orders">
+        <div class="widget-heading">
+          <h5>Related Profile</h5>
+          <div class="row mr-1 float-right">
+            <div class="col-lg-12 col-md-12 col-sm-12 filtered-list-search-live mx-auto">
+              <b-form class="form-inline my-2 my-lg-0 justify-content-center" @submit.prevent="search">
+                <div class="w-100">
+                  <b-input v-model="search" class="w-100 product-search br-25" placeholder="Search Profiles" @keyup="search"></b-input>
+                </div>
+              </b-form>
+            </div>
+          </div>
+        </div>
+        <div class="widget-content">
+          <b-table-simple responsive>
+            <b-thead>
+              <b-tr>
+                <b-th><div class="th-content">User</div></b-th>
+                <b-th><div class="th-content">Email</div></b-th>
+                <b-th><div class="th-content">Phone</div></b-th>
+                <b-th><div class="th-content th-heading">Country</div></b-th>
+                <b-th><div class="th-content">Questions number</div></b-th>
+              </b-tr>
+            </b-thead>
+            <b-tbody>
+              <b-tr v-for="u in filteredList" :key="u.id">
+                <b-td
+                  ><div class="td-content">
+                    <img :src="'http://127.0.0.1:8000' + u.imageU" alt="avatar" /><span>{{ u.firstname }} {{ u.lastname }} </span>
+                  </div></b-td
+                >
+                <b-td
+                  ><div class="td-content text-primary">{{ u.email }}</div></b-td
+                >
+                <b-td
+                  ><div class="td-content">{{ u.tel }}</div></b-td
+                >
+                <b-td
+                  ><div class="td-content">
+                    <span>{{ u.country }}</span>
+                  </div></b-td
+                >
+                <b-td
+                  ><div class="td-content ml-5">{{ u.nbquestions }}</div></b-td
+                >
+              </b-tr>
+            </b-tbody>
+          </b-table-simple>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import '@/assets/sass/scrollspyNav.scss';
+import '@/assets/sass/widgets/widgets.scss';
 import '@/assets/sass/users/user-profile.scss';
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from 'vuex';
 import axios from 'axios';
 export default {
   metaInfo: { title: 'User Profile' },
@@ -217,12 +282,13 @@ export default {
     return {
       CurrentUser: [],
       userprofile: [],
-      CurrentUserprofile:[],
+      CurrentUserprofile: [],
+      search: '',
     };
   },
   mounted() {},
   methods: {
-       ...mapActions(["GetUsers","GetCars", "GetUserprofiles"]),
+    ...mapActions(['GetUsers', 'GetCars', 'GetUserprofiles']),
   },
   computed: {
     ...mapGetters({
@@ -232,6 +298,16 @@ export default {
     }),
     isLoggedIn: function () {
       return this.$store.getters.isAuthenticated;
+    },
+    filteredList() {
+      return this.Userprofiles.filter((profile) => {
+        return (
+          profile.firstname.toLowerCase().includes(this.search.toLowerCase()) ||
+          profile.lastname.toLowerCase().includes(this.search.toLowerCase()) ||
+          profile.email.toLowerCase().includes(this.search.toLowerCase()) ||
+          profile.country.toLowerCase().includes(this.search.toLowerCase())
+        );
+      });
     },
   },
   created: function () {
@@ -243,12 +319,10 @@ export default {
         this.CurrentUser = this.Users[u];
       }
     }
-    for (let p in this.Userprofiles)
-    {
-        if(this.Userprofiles[p].userU==this.CurrentUser.id)
-        {
-            this.CurrentUserprofile=this.Userprofiles[p]
-        }
+    for (let p in this.Userprofiles) {
+      if (this.Userprofiles[p].userU == this.CurrentUser.id) {
+        this.CurrentUserprofile = this.Userprofiles[p];
+      }
     }
     axios.get('/userprofile/userprofile-detail/' + this.$route.params.id + '/').then((response) => {
       this.userprofile = response.data;

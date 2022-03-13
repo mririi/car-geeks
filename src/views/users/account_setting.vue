@@ -93,7 +93,8 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label for="country">Country</label>
-                            <country-select class="country-select" v-model="form.country" />
+                            <country-select class="country-select"  :country="form.country"
+                        v-model="form.country" />
                           </div>
                         </div>
                         <div class="col-md-6">
@@ -157,6 +158,7 @@ export default {
         email: '',
         tel: '',
       },
+      image:null,
       CurrentUser: [],
       userprofile: [],
       reset: [],
@@ -192,15 +194,16 @@ export default {
   mounted() {},
   methods: {
     change_file(event) {
-      this.selected_file = event.target.files[0];
+      this.selected_file = URL.createObjectURL(event.target.files[0]);
+      this.image=event.target.files[0]
     },
     updateProfile() {
       try {
         this.is_submit_form1 = true;
         if (this.form.firstname && this.form.firstname.length != 0 && this.form.lastname && this.form.lastname.length != 0 && this.form.tel && this.form.tel.length!=0) {
           var formdata = new FormData();
-          if (this.selected_file != null) {
-            formdata.append('imageU', this.selected_file);
+          if (this.image != null) {
+            formdata.append('imageU', this.image);
           }
           formdata.append('lastname', this.form.lastname);
           formdata.append('firstname', this.form.firstname);
