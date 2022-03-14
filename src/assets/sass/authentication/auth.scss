@@ -242,10 +242,11 @@ body {
         min-height: auto;
         height: 100vh;
         width: 50%;
+        float: left;
 
         .l-image {
             background-image: url(https://cdn.pixabay.com/photo/2015/12/10/16/39/shield-1086703_960_720.png);
-            position: absolute;
+            
             top: 0;
             left: 0;
             width: 100%;

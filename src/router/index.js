@@ -200,24 +200,28 @@ const routes = [
         component: () => import(/* webpackChunkName: "auth-pass-recovery-boxed" */ '../views/auth/pass_recovery_boxed.vue'),
         meta: { layout: 'auth' }
     },
+    //Login
     {
         path: '/auth/login',
         name: 'login',
         component: () => import(/* webpackChunkName: "auth-login" */ '../views/auth/login.vue'),
         meta: { layout: 'auth' }
     },
+    //Register
     {
         path: '/auth/register',
         name: 'register',
         component: () => import(/* webpackChunkName: "auth-register" */ '../views/auth/register.vue'),
         meta: { layout: 'auth' }
     },
+    //Service Details
     {
-        path: '/auth/lockscreen',
-        name: 'lockscreen',
-        component: () => import(/* webpackChunkName: "auth-lockscreen" */ '../views/auth/lockscreen.vue'),
-        meta: { layout: 'auth' }
+        path: '/servicedetails/:id',
+        name: 'Service Details',
+        component: () => import(/* webpackChunkName: "auth-lockscreen" */ '../views/Services/ServiceDetails.vue'),
+        meta: { layout: 'service' }
     },
+   
     {
         path: '/auth/pass-recovery',
         name: 'pass-recovery',
