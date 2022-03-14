@@ -59,6 +59,14 @@
       <div class="col-xl-12 col-md-12 col-sm-12 col-12 ">
         <div class="panel-body" v-for="q in filterByCategory" :key="q.id">
           <b-card class="component-card_9" v-if="q.accepted == true">
+            <div v-for="c in Questioncategories" :key="c.id">
+              <div v-if="c.id==q.categoryQ">
+              <b-card-text class="float-right">
+                <p>{{c.typeC}}</p>
+            </b-card-text>
+              </div>
+            </div>
+            
             <div v-if="CurrentUserProfile.id == q.userprofileQ">
               <b-dropdown variant="icon-only" dropleft toggle-tag="a" class="mb-4 mr-2 custom-dropdown float-right">
                 <template #button-content>

@@ -59,9 +59,15 @@
                 
                    <div class="fq-article-section">
                     <div class="row">
-                        <div v-for="s in filterByAccepted" :key="s.id" class="col-lg-4 col-md-6 mb-lg-0 mb-4 text-center">
-                          <a v-if="s.accepted==true" :href="'/servicedetails/'+s.id">  <b-card  :img-src="'http://127.0.0.1:8000' + s.imageS" class="mt-3" img-top img-width="100px" img-height="200px">
-                            <h5 class="card-title">{{s.titleS}}</h5>
+                        <div v-for="s in filterByCategory" :key="s.id" class="col-lg-4 col-md-6 mb-lg-0 mb-4 text-center">
+                          <a v-if="s.accepted==true" :href="'/servicedetails/'+s.id">  <b-card  :img-src="'http://127.0.0.1:8000' + s.imageS" class="mt-3 cardzoom" img-top img-width="100px" img-height="200px">
+                            <h5 class="card-title">{{s.titleS}}
+                              <div v-for="t in Servicetypes" :key="t.id">
+                                <div v-if="s.typeS==t.id">
+                                <b-badge class="mt-2" variant="warning">{{ t.descT }}</b-badge>
+                                </div>
+                              </div>
+                                </h5>
                                 <div class="fq-rating mb-2">
                                     <b-form-rating id="rating" v-model="s.nbEval" precision="2" readonly variant="warning" size="lg" class=" bg-transparent border-0">
                                     </b-form-rating>
@@ -84,12 +90,15 @@
     .layout-px-spacing {
         min-height: calc(100vh - 170px) !important;
     }
+    .cardzoom:hover{
+      zoom:1.05;
+    }
 </style>
 <script>
 import '@/assets/sass/pages/faq/faq.scss'
 import { mapGetters, mapActions } from 'vuex';
     export default {
-        metaInfo: { title: 'Services' },
+        metaInfo: { name: 'Services' },
         data(){
             return{
                 search:"",

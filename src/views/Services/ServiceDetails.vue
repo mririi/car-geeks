@@ -20,7 +20,7 @@
                   
              </div>   
       <div class="float-child">
-        <img :src="'http://127.0.0.1:8000'+service.imageS" class="img-fluid img-thumbnail" style="height:350px ; width:100%" />
+        <img :src="'http://127.0.0.1:8000'+service.imageS" class="img-fluid img-thumbnail mt-5" style="height:350px ; width:100%" />
       </div>
       <div class="float-child">
         <strong class="card-category ml-4"> <b-badge variant="warning"> {{type.descT}} </b-badge></strong>

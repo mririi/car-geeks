@@ -51,8 +51,6 @@
                     <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
                       <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.addressS }">Please enter an address !</b-form-invalid-feedback>
                     </b-form-group>
-                    
-                    
                     <b-form-group class="mb-3 col-6">
                       <b-input type="text" placeholder="Email " v-model="form.email"  :class="[is_submit_form1 ? (form.email && email_validate(form.email) ? 'is-valid' : 'is-invalid') : '']"></b-input>
                       <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
@@ -60,11 +58,13 @@
                     </b-form-group>
                     </b-form-row>
                     <b-form-row class="mb-1">
+                      <label>Phone Number<span style="color:red">*</span></label>
                     <b-form-group label="Phone Number" class="col-md-6">
                       <b-input type="number" v-model="form.contactS" :class="[is_submit_form1 ? (form.contactS ? 'is-valid' : 'is-invalid') : '']" />
                       <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.contactS }">Please fill the Phone number</b-form-invalid-feedback>
                     </b-form-group>
-                    <b-form-group class="col-md-6" label="Country">
+                    <b-form-group class="col-md-6">
+                      <label>Select Country <span style="color:red">*</span></label>
                       <country-select
                         class="country-select"
                         v-model="form.country"
