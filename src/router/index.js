@@ -107,7 +107,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "pages-helpdesk" */ '../views/pages/helpdesk.vue')
     },
     {
-        path: '/pages/contact-us',
+        path: '/contact-us',
         name: 'contact-us',
         component: () => import(/* webpackChunkName: "pages-contact-us" */ '../views/pages/contact_us.vue')
     },
@@ -277,6 +277,33 @@ const routes = [
         path: '/addservice',
         name: 'addservice',
         component: () => import( '../views/Services/AddService.vue')
+    },
+    //Entreprises
+    {
+        path: '/entreprises',
+        name: 'entreprises',
+        //component: () => import( '../views/Services/Services.vue'),
+        meta: {
+            layout: 'app'
+          }
+    },
+    //News
+    {
+        path: '/news',
+        name: 'news',
+       // component: () => import( '../views/Services/Services.vue'),
+        meta: {
+            layout: 'app'
+          }
+    },
+    //Groups
+    {
+        path: '/groups',
+        name: 'groups',
+        //component: () => import( '../views/Services/Services.vue'),
+        meta: {
+            layout: 'app'
+          }
     },
     //elements
     {
