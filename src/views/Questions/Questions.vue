@@ -23,7 +23,6 @@
           </b-form>
         </div>
       </div>
-
       <div v-b-toggle.collapse-1 class="mt-3 mb-4 col-xl-1">
         <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="22" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36">
           <path
@@ -148,7 +147,6 @@ import { mapGetters, mapActions } from 'vuex';
 import axios from 'axios';
 export default {
   name: 'Questions',
-  components: {},
   data() {
     return {
       search: '',
