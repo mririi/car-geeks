@@ -6,7 +6,7 @@
           <div class="page-header">
             <nav class="breadcrumb-one" aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item active" aria-current="page"><span>Add Service</span></li>
+                <li class="breadcrumb-item active" aria-current="page"><span>Update Service</span></li>
               </ol>
             </nav>
           </div>
@@ -37,7 +37,7 @@
                     </b-form-group>
                     <label >Service details <span style="color:red">*</span></label>
                     <b-form-group class="mb-3">
-                      <b-textarea rows="4" type="text" v-model="form.details" placeholder="Question details" :class="[is_submit_form1 ? (form.details && form.details.length<500 && form.details.length>25 ? 'is-valid' : 'is-invalid') : '']"></b-textarea>
+                      <b-textarea rows="4" type="text" v-model="form.details" placeholder="Service details" :class="[is_submit_form1 ? (form.details && form.details.length<500 && form.details.length>25 ? 'is-valid' : 'is-invalid') : '']"></b-textarea>
                     <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
                       <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.details }">Please enter content between 25 and 500 characters</b-form-invalid-feedback>
                     </b-form-group>
@@ -61,7 +61,7 @@
                     </b-form-row>
                     <b-form-row class="mb-1">
                     <b-form-group label="Phone Number" class="col-md-6">
-                      <MazPhoneNumberInput Black v-model="form.contactS" :class="[is_submit_form1 ? (form.contactS ? 'is-valid' : 'is-invalid') : '']" />
+                      <b-input type="number" v-model="form.contactS" :class="[is_submit_form1 ? (form.contactS ? 'is-valid' : 'is-invalid') : '']" />
                       <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.contactS }">Please fill the Phone number</b-form-invalid-feedback>
                     </b-form-group>
                     <b-form-group class="col-md-6" label="Country">
@@ -118,12 +118,14 @@
 }
 </style>
 <script>
+import axios from 'axios'
 import '@/assets/sass/components/cards/card.scss';
 import '@/assets/sass/forms/file-upload-with-preview.min.css';
 import { mapGetters, mapActions } from 'vuex';
 export default {
-  name: 'Questions',
-  components: {},
+  name: 'UpdateService',
+  props:{
+  },
   data() {
     return {
       form: {
@@ -132,11 +134,12 @@ export default {
         userprofileS:'',
         priceS:null,
         country:'',
-        contactS:'',
+        contactS:0,
         email:'',
         details:'',
         typeS:0
       },
+      mode:false,
       image:null,
       uprofile:[],
       CurrentUser:[],
@@ -163,6 +166,9 @@ export default {
       if (existuserprofile==false){
         this.$router.push('/auth/userinfo')
       }
+      axios.get('/service/service-detail/' + this.$route.params.id + '/').then((response) => {
+      this.form = response.data;
+    });
   },
     methods: {
     email_validate(email) {
@@ -173,7 +179,7 @@ export default {
       this.image = event.target.files[0]
       console.log(this.image)
     },
-    ...mapActions(["GetServicetypes","CreateService","GetUsers","GetUserprofiles"]),
+    ...mapActions(["GetServicetypes","GetUsers","GetUserprofiles"]),
     async submit() {
       try {
         this.is_submit_form1 = true;
@@ -205,7 +211,7 @@ export default {
         formdata.append("details", this.form.details);
         formdata.append("typeS", this.form.typeS);
         formdata.append("userprofileS", this.form.userprofileS);
-        await this.CreateService(formdata);
+        await axios.post('/service/service-update/' + this.$route.params.id + '/',formdata);
         this.$router.push("/services");
         }
       } catch (error) {

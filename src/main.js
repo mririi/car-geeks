@@ -57,6 +57,10 @@ Vue.filter("formatDate", function (value) {
     return moment(String(value)).format("DD MMMM YYYY H:mm");
   }
 });
+//
+import 'vue-phone-number-input/dist/vue-phone-number-input.css';
+
+Vue.component('vue-phone-number-input', VuePhoneNumberInput);
 //Sweetalert
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';

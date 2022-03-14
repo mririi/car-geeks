@@ -272,7 +272,19 @@ const routes = [
     {
         path: '/addservice',
         name: 'addservice',
-        component: () => import( '../views/Services/AddService.vue')
+        component: () => import( '../views/Services/AddService.vue'),
+        meta: {
+            requiresAuth: true,
+          }
+    },
+    {
+        path: '/updateservice/:id',
+        name: 'updateservice',
+        component: () => import( '../views/Services/UpdateService.vue'),
+        meta: {
+            layout: 'service',
+            requiresAuth: true,
+          }
     },
     //elements
     {
