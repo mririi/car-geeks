@@ -255,11 +255,38 @@ const routes = [
           layout: 'question'
         }
       },
-    //Question Page
+    //Question Page(newest)
     {
         path: '/questionpage/:id',
         name: 'questionpage',
         component: () => import( '../views/Questions/QuestionPage.vue'),
+        meta: {
+            layout: 'question'
+          }
+    },
+    //Question Page(oldest)
+    {
+        path: '/questionpageoldest/:id',
+        name: 'questionpageoldest',
+        component: () => import( '../views/Questions/QuestionPage_Oldest.vue'),
+        meta: {
+            layout: 'question'
+          }
+    },
+    //Question Page(oldest)
+    {
+        path: '/questionpagemostliked/:id',
+        name: 'questionpagemostliked',
+        component: () => import( '../views/Questions/QuestionPage_Mostliked.vue'),
+        meta: {
+            layout: 'question'
+          }
+    },
+    //Question Page(oldest)
+    {
+        path: '/questionpagerightanswer/:id',
+        name: 'questionpagerightanswer',
+        component: () => import( '../views/Questions/QuestionPage_Rightanswer.vue'),
         meta: {
             layout: 'question'
           }
