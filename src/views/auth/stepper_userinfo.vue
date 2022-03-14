@@ -195,7 +195,6 @@ export default {
           }
         }
         if (this.ok == false) {
-          console.log(this.form);
           this.CreateUserprofile(formdata);
         }
         return true;

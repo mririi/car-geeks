@@ -61,7 +61,7 @@
                     </b-form-row>
                     <b-form-row class="mb-1">
                     <b-form-group label="Phone Number" class="col-md-6">
-                      <MazPhoneNumberInput Black v-model="form.contactS" :class="[is_submit_form1 ? (form.contactS ? 'is-valid' : 'is-invalid') : '']" />
+                      <b-input type="number" v-model="form.contactS" :class="[is_submit_form1 ? (form.contactS ? 'is-valid' : 'is-invalid') : '']" />
                       <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.contactS }">Please fill the Phone number</b-form-invalid-feedback>
                     </b-form-group>
                     <b-form-group class="col-md-6" label="Country">
@@ -92,14 +92,17 @@
                     <b-form-group class="col-6 mb-3">
                       <b-input type="number"  v-model="form.priceS" placeholder="Price" :class="[is_submit_form1 ? (form.priceS ? 'is-valid' : 'is-invalid') : '']" />
                     <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
-                      <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.priceS }">Please Enter an address</b-form-invalid-feedback>
+                      <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.priceS }">Please enter a price !</b-form-invalid-feedback>
                     </b-form-group>
                     
                   </b-form-row>
-                  <label >Insert image</label>
+                  <label >Insert image <span style="color:red">*</span></label>
                     <div class="mb-4">
-                      <b-file @change="onFileChanged"></b-file>
+                      <b-file @change="onFileChanged" :class="[is_submit_form1 ? (image ? 'is-valid' : 'is-invalid') : '']"></b-file>
+                    
                     </div>
+                    <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
+                      <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !image }">Please add an image !</b-form-invalid-feedback>
                      <small id="emailHelp2" class="form-text text-muted mt-3"><span style="color:red">*</span> Required Fields</small>
                     <b-button  @click="submit" variant="primary" class="mt-4 justfiy-content-end">Submit</b-button>
                   </b-form>
@@ -182,7 +185,10 @@ export default {
                   this.form.typeS &&
                   this.form.country &&
                   this.form.contactS &&
-                  this.form.priceS
+                  this.form.priceS &&
+                  this.form.email &&
+                  this.form.details &&
+                  this.image
                 ) {
         for (let u in this.Userprofiles){
       if(this.Userprofiles[u].userU==this.CurrentUser.id)
