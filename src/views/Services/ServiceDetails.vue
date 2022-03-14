@@ -33,7 +33,7 @@
         </p>
         <p class="card-text mb-2 ml-4">{{ service.details }}</p>
         <div class="w-50">
-          <b-form-rating id="rating" v-model="average" v-b-modal.Rating variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
+          <b-form-rating id="rating" v-model="average"  v-b-modal.Rating variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
         </div>
         <h6 class="mb-4 ml-4">
           <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100">
@@ -87,6 +87,7 @@
         </h6>
       </div>
     </b-card>
+    
     <b-modal id="Rating" :title="'Rate ' + service.titleS" centered>
       <b-form-rating id="rating" v-model="nbEval" precision="2" show-value-max show-value variant="warning" size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
 
@@ -110,6 +111,9 @@ export default {
       CurrentUserProfile: [],
       existe: false,
       average: 0,
+      average1:0,
+      average2:0,
+      average3:0,
       nbEval: null,
     };
   },
@@ -154,6 +158,9 @@ export default {
         }
       }
       this.average = sum / nb;
+      axios.post('/service/service-update/'+ this.service.id + '/', {
+          nbEval: this.average
+        });
     });
   },
   methods: {
@@ -166,21 +173,7 @@ export default {
           serviceEval: this.service.id,
           nbEval: this.nbEval,
         });
-        var sum = 0;
-        var nb = 0;
-        for (let e in this.Evaluations) {
-          if (this.Evaluations[e].serviceEval == this.$route.params.id) {
-            sum += this.Evaluations[e].nbEval;
-            nb++;
-          }
-        }
-        this.average = sum / nb;
-
-        axios.put('/service/service-update/', {
-          userprofileEval: this.CurrentUserProfile.id,
-          serviceEval: this.service.id,
-          nbEval: this.nbEval,
-        });
+        
       } else {
         for (let e in this.Evaluations) {
           if (this.Evaluations[e].userprofileEval == this.CurrentUserProfile.id && this.Evaluations[e].serviceEval == this.service.id) {
@@ -188,6 +181,7 @@ export default {
               nbEval: this.nbEval,
             });
             done = true;
+         
           }
         }
         if (done == false) {
@@ -196,6 +190,7 @@ export default {
             serviceEval: this.service.id,
             nbEval: this.nbEval,
           });
+    
         }
       }
       this.$router.go();

@@ -8,7 +8,6 @@ class Userprofile(models.Model):
   lastname = models.CharField(max_length=200,blank=True,null=True)
   address = models.CharField(max_length=200,blank=True,null=True)
   country = models.CharField(max_length=200,blank=True,null=True)
-  email = models.CharField(max_length=200,blank=True,null=True)
   age = models.IntegerField(default=0)
   tel = models.IntegerField(default=0)
   bio = models.TextField(default="",blank=True,null=True)

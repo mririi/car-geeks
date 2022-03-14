@@ -15,6 +15,6 @@ class Service(models.Model):
   imageS = models.ImageField(upload_to='images/',null=True, blank=True)
   userprofileS = models.ForeignKey('userprofile.Userprofile',on_delete=models.CASCADE,null=True,blank=True)
   typeS = models.ForeignKey('servicetype.Servicetype',on_delete=models.CASCADE,null=True,blank=True)
-  nbEval=models.IntegerField(default=0)
+  nbEval=models.DecimalField(max_digits=20,decimal_places=2,null=True,blank=True)
   def __str__(self):
     return self.titleS

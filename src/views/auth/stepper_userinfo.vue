@@ -22,28 +22,29 @@
               <tab-content title="More Informations" :before-change="beforeTabSwitch" icon="far fa-user">
                 <b-form>
                   <b-form-row class="mb-4">
-                    <b-form-group label="First name" class="col-md-4">
+                    <b-form-group label="First name" class="col-md-6">
                       <b-input type="text" placeholder="First name" v-model="form.firstname" :class="[is_submit_form1 ? (form.firstname ? 'is-valid' : 'is-invalid') : '']"></b-input>
                       <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
                       <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.firstname }">Please fill the first name</b-form-invalid-feedback>
                     </b-form-group>
-                    <b-form-group label="Last name" class="col-md-4">
+                    <b-form-group label="Last name" class="col-md-6">
                       <b-input type="text" placeholder="Last name" v-model="form.lastname" :class="[is_submit_form1 ? (form.lastname ? 'is-valid' : 'is-invalid') : '']"></b-input>
                       <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
                       <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.lastname }">Please fill the last name</b-form-invalid-feedback>
                     </b-form-group>
-                    <b-form-group label="Age" class="col-md-4">
-                      <b-input type="number" placeholder="Age" v-model="form.age" :class="[is_submit_form1 ? (form.age ? 'is-valid' : 'is-invalid') : '']"></b-input>
-                      <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
-                      <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.age }">Please fill the age</b-form-invalid-feedback>
-                    </b-form-group>
+                    
                   </b-form-row>
                   <hr />
                   <b-form-row class="mb-4">
                     <b-form-group label="Phone Number" class="col-md-6">
-                      <MazPhoneNumberInput Black v-model="form.tel" :class="[is_submit_form1 ? (form.tel ? 'is-valid' : 'is-invalid') : '']" />
+                      <b-input type="text" placeholder="Phone number" v-model="form.tel" :class="[is_submit_form1 ? (form.tel ? 'is-valid' : 'is-invalid') : '']" />
                       <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
                       <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.tel }">Please fill the Phone number</b-form-invalid-feedback>
+                    </b-form-group>
+                    <b-form-group label="Age" class="col-md-6">
+                      <b-input type="number" placeholder="Age" v-model="form.age" :class="[is_submit_form1 ? (form.age ? 'is-valid' : 'is-invalid') : '']"></b-input>
+                      <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
+                      <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.age }">Please fill the age</b-form-invalid-feedback>
                     </b-form-group>
                   </b-form-row>
                   <hr />
@@ -67,11 +68,14 @@
                   <b-form-row class="mb-4">
                     <div class="custom-file-container col-6" data-upload-id="myFirstImage">
                       <label>Upload Image <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">x</a></label>
+                      <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
+                      <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !image }">Please fill the image !</b-form-invalid-feedback>
+                    
                       <label class="custom-file-container__custom-file">
-                        <input type="file" @change="onFileChanged" class="custom-file-container__custom-file__custom-file-input" accept="image/*" />
+                        <input type="file" @change="onFileChanged" class="custom-file-container__custom-file__custom-file-input" accept="image/*" :class="[is_submit_form1 ? (image ? 'is-valid' : 'is-invalid') : '']" />
                         <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
                         <span class="custom-file-container__custom-file__custom-file-control"></span>
-                      </label>
+                      </label> 
                       <div class="custom-file-container__image-preview"></div>
                     </div>
                   </b-form-row>

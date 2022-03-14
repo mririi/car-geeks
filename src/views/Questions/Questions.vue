@@ -59,12 +59,14 @@
       <div class="col-xl-12 col-md-12 col-sm-12 col-12 ">
         <div class="panel-body" v-for="q in filterByCategory" :key="q.id">
           <b-card class="component-card_9" v-if="q.accepted == true">
+           
+            
             <div v-if="CurrentUserProfile.id == q.userprofileQ">
-              <b-dropdown variant="icon-only" dropleft toggle-tag="a" class="mb-4 mr-2 custom-dropdown float-right">
+              <b-dropdown variant="icon-only"  toggle-tag="a" size="1em" class="mb-4 mr-2 custom-dropdown float-right">
                 <template #button-content>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    style="width: 24px; height: 24px"
+                    style="width: 18px; height: 18px"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
@@ -84,7 +86,13 @@
                 <b-dropdown-item @click="deleteQuestion(q.id)">Delete</b-dropdown-item>
               </b-dropdown>
             </div>
-
+              <div v-for="c in Questioncategories" :key="c.id">
+              <div v-if="c.id==q.categoryQ">
+              <b-card-text class="float-right mr-2">
+                <p>{{c.typeC}}</p>
+            </b-card-text>
+              </div>
+            </div>
             <p class="meta-date mb-3">{{ q.dateQ | formatDate }}</p>
 
             <router-link :to="'questionpage/' + q.id">

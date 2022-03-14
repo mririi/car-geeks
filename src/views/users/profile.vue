@@ -84,7 +84,9 @@
                       >{{ userprofile.country }}
                     </li>
                     <li class="contacts-block__item">
-                      <a :href="'mailto:' + userprofile.email" target="_blank"
+                      <div v-for="user in Users" :key="user.id">
+                        <div v-if="user.id==userprofile.userU">
+                      <a :href="'mailto:' + user.email" target="_blank"
                         ><svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="24"
@@ -99,8 +101,10 @@
                         >
                           <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                           <polyline points="22,6 12,13 2,6"></polyline></svg
-                        >{{ userprofile.email }}</a
+                        >{{ user.email }}</a
                       >
+                      </div>
+                      </div>
                     </li>
                     <li class="contacts-block__item">
                       <svg
@@ -240,15 +244,21 @@
                 <b-th><div class="th-content">Questions number</div></b-th>
               </b-tr>
             </b-thead>
+            
             <b-tbody>
               <b-tr v-for="u in filteredList" :key="u.id">
+                
                 <b-td
-                  ><div class="td-content">
+                  ><a :href="'/profile/'+u.id"><div class="td-content">
                     <img :src="'http://127.0.0.1:8000' + u.imageU" alt="avatar" /><span>{{ u.firstname }} {{ u.lastname }} </span>
-                  </div></b-td
+                  </div></a></b-td
                 >
                 <b-td
-                  ><div class="td-content text-primary">{{ u.email }}</div></b-td
+                  >
+                  <div v-for="user in Users" :key="user.id">
+                  <div v-if="user.id==u.userU" class="td-content text-primary">{{ user.email }}</div>
+                  </div>
+                  </b-td
                 >
                 <b-td
                   ><div class="td-content">{{ u.tel }}</div></b-td
@@ -261,6 +271,7 @@
                 <b-td
                   ><div class="td-content ml-5">{{ u.nbquestions }}</div></b-td
                 >
+                
               </b-tr>
             </b-tbody>
           </b-table-simple>
@@ -304,7 +315,6 @@ export default {
         return (
           profile.firstname.toLowerCase().includes(this.search.toLowerCase()) ||
           profile.lastname.toLowerCase().includes(this.search.toLowerCase()) ||
-          profile.email.toLowerCase().includes(this.search.toLowerCase()) ||
           profile.country.toLowerCase().includes(this.search.toLowerCase())
         );
       });
