@@ -34,7 +34,7 @@
           </div>
           <div class="w-action">
             <div class="card-like ml-4">
-              <span v-if="isLoggedIn">
+              <span v-if="isLoggedIn && CurrentUserProfile.id!=null">
                 <svg
                   v-show="likedQuestion == false"
                   @click="liked()"
@@ -53,7 +53,7 @@
                 </svg>
               </span>
               <span v-else>
-                <a href="/auth/login">
+                <a href="/auth/userinfo">
                   <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
                     <path
                       fill="currentColor"
@@ -93,11 +93,11 @@
                   />
                 </g>
               </svg>
-              <span v-if="isLoggedIn">
+              <span v-if="isLoggedIn && CurrentUserProfile.id!=null">
                 <span v-b-modal.exampleModalCenter>Reply</span>
               </span>
               <span v-else>
-                <a href="/auth/login"> <span>Reply</span> </a>
+                <a href="/auth/userinfo"> <span>Reply</span> </a>
               </span>
             </div>
 
@@ -134,19 +134,19 @@
               </form>
             </b-modal>
           </div>
-          <h5 class="mt-4 ml-4 mb-5"> Answers</h5>
-          <div id="mediaObjectNotationIcon" class="col-lg-12 layout-spacing mt-5">
-            <div class="panel-heading">
-              <div v-if="question.nbrep != 0" class="row">
-                <div>
-                <div class="float-right">
-                    <a class="btn btn-primary mr-1" :href="'/questionpagerightanswer/'+question.id+'/'">Right Answer</a>
-                    <a class="btn btn-primary mr-1" :href="'/questionpage/'+question.id+'/'">Newest</a>
-                    <a class="btn btn-primary mr-1" href="#">Oldest</a>
+           <div class="float-right mt-4">
+             <b-button-group>
+                    <a class="btn btn-primary" :href="'/questionpagerightanswer/'+question.id+'/'">Right Answer</a>
+                    <a class="btn btn-primary" :href="'/questionpage/'+question.id+'/'">Newest</a>
+                    <a class="btn btn-outline-primary" href="#">Oldest</a>
                     <a class="btn btn-primary" :href="'/questionpagemostliked/'+question.id+'/'">Most Liked</a>
+                    </b-button-group>
                     </div>
+          <h5 class="mt-4 ml-4 mb-5"> Answers</h5>
+          <div id="mediaObjectNotationIcon" class="col-lg-12 layout-spacing mt-5">     
+            <div class="panel-heading col-12">
+              <div v-if="question.nbrep != 0" class="row">
                 <div class="panel-body mb-3  col-xl-12">
-                  
                     <b-tab class="mt-5" title="Oldest" active>
                       <div v-for="rep in oldestreplies" :key="rep.id">
                         <div v-if="rep.questionRep == question.id && rep.accepted==true" class="panel-body notation-text-icon">
@@ -228,7 +228,7 @@
                             </div>
                             <div class="media-notation mb-4 float-right">
                               <a href="javascript:void(0);" class="">
-                                  <reply :replyid="rep.id" :userprofile="rep.userprofileRep" />
+                                  <likecomponent :replyid="rep.id" :userprofile="CurrentUserProfile.id" />
                               </a>
                               <a href="javascript:void(0);" class="mr-2"
                                 ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1792 1536">
@@ -254,11 +254,11 @@
                                 >
                                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                                 </svg>
-                                <span v-if="isLoggedIn">
+                                <span v-if="isLoggedIn && CurrentUserProfile.id!=null">
                                   <span v-b-modal="modalCreateCommentOldest(rep.id)">Add a comment</span>
                                 </span>
                                 <span v-else>
-                                  <a href="/auth/login"> <span>Add a comment</span></a>
+                                  <a href="/auth/userinfo"> <span>Add a comment</span></a>
                                 </span>
                               </a>
 
@@ -353,7 +353,7 @@
                       <hr width="90%" />
                     </b-tab>
                 </div>
-                </div>
+                
               </div>
             </div>
           </div>
@@ -369,10 +369,10 @@ import axios from 'axios';
 
 import '@/assets/sass/widgets/widgets.scss';
 import { mapGetters, mapActions } from 'vuex';
-import reply from './reply.vue'
+import likecomponent from './like-component.vue'
 export default {
   components:{
-    reply,
+    likecomponent,
   },
   data() {
     return {
@@ -383,7 +383,6 @@ export default {
       CurrentUserProfile: [],
       commentsToShow: 3,
       replydetails: [],
-      likedrepliesbythisuser:null,
       comment: {
         contentCo: '',
         replyCo: '',
@@ -391,7 +390,6 @@ export default {
       },
       CurrentUser: [],
       likedQuestion: false,
-      likedReply: false,
       likes: 0,
       replies: {
         contentR: '',
@@ -404,7 +402,6 @@ export default {
         replyVo: '',
       },
       oldestreplies: [],
-      mostlikedreplies: [],
     };
   },
   computed: {
@@ -422,19 +419,6 @@ export default {
     },
   },
   methods: {
-    
-    checkforlike(id){
-      let exist=false
-      for (let v in this.Votes){
-        if(this.Votes[v].replyVo==id && this.Votes[v].userprofileVo==this.CurrentUserProfile.id){
-          exist=true
-          this.showreplylike
-        }
-      }
-      if(exist==false){
-        return false
-      }else{return true}
-    },
     ...mapActions(['GetComments', 'GetQuestions', 'GetUsers', 'GetVotes', 'CreateVote', 'GetReplies', 'GetUserprofiles', 'CreateReply', 'CreateComment']),
     onFileChanged(event) {
       this.image = event.target.files[0];
@@ -460,24 +444,6 @@ export default {
       });
       this.likedQuestion = true;
       this.likes += 1;
-    },
-    deletelikedreply(rep) {
-      for (let v in this.Votes) {
-        if (this.Votes[v].replyVo === rep.id && this.Votes[v].userprofileVo === this.CurrentUserProfile.id) {
-          axios.delete('/vote/vote-delete/' + this.Votes[v].id + '/');
-        }
-      }
-      axios.post('/reply/reply-update/' + rep.id + '/', {
-        nblikesR: rep.nblikesR - 1,
-      });
-      this.$router.go()
-    },
-    likedreply(rep) {
-      this.CreateVote({ replyVo: rep.id, userprofileVo: this.vote.userprofileVo });
-
-      axios.post('/reply/reply-update/' + rep.id + '/', {nblikesR: rep.nblikesR + 1,
-      });
-      
     },
     deleteReply(id) {
       this.$swal({
@@ -593,16 +559,6 @@ export default {
       }
     },
 
-    //newest
-    modalCreateCommentNewest(i) {
-      return 'modalCreateCommentNewest' + i;
-    },
-    modalModifCommentNewest(id) {
-      return 'modalModifCommentNewest' + id;
-    },
-    modalModifReplyNewest(id) {
-      return 'modalModifReplyNewest' + id;
-    },
     //oldest
     modalCreateCommentOldest(i) {
       return 'modalCreateCommentOldest' + i;
@@ -612,23 +568,6 @@ export default {
     },
     modalModifReplyOldest(id) {
       return 'modalModifReplyOldest' + id;
-    },
-    //most liked
-    modalCreateCommentMost(i) {
-      return 'modalCreateCommentMost' + i;
-    },
-    modalModifCommentMost(id) {
-      return 'modalModifCommentMost' + id;
-    },
-    modalModifReplyMost(id) {
-      return 'modalModifReplyMost' + id;
-    },
-    //right answer
-    modalCreateCommentRight(i) {
-      return 'modalCreateCommentRight' + i;
-    },
-    modalModifCommentRight(i) {
-      return 'modalModifCommentRight' + i;
     },
   },
   created() {
@@ -643,7 +582,6 @@ export default {
     
     //sort by newest
     this.oldestreplies = this.Replies.reverse();
-    this.mostlikedreplies = this.Replies.sort((a, b) => b.nblikesR - a.nblikesR);
     axios
       .get('/question/question-detail/' + this.$route.params.id + '/')
       .then((response) => {
@@ -655,11 +593,6 @@ export default {
             for (let p in this.Userprofiles) {
               if (this.Userprofiles[p].userU == this.CurrentUser.id) {
                 this.CurrentUserProfile = this.Userprofiles[p];
-                for (let vo in this.Votes){
-                    if(this.CurrentUserProfile.id==this.Votes[vo].userprofileVo && this.Votes[vo].questionVo==null){
-                  this.likedrepliesbythisuser=+this.Votes[vo].replyVo
-                  }
-                  }
                 this.vote.questionVo = this.question.id;
                 this.vote.userprofileVo = this.CurrentUserProfile.id;
                 this.comment.userprofileCo = this.CurrentUserProfile.id;

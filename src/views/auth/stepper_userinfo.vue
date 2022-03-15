@@ -228,6 +228,9 @@ export default {
     this.GetUserprofiles();
     this.GetRoles();
     this.GetPreferences();
+    if(this.User==null){
+      this.$router.push('/login');
+    }
     for (let u in this.Users) {
       if (this.Users[u].username == this.User) {
         this.CurrentUser = this.Users[u];

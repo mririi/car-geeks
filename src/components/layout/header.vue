@@ -187,7 +187,7 @@
                             </b-dropdown-item>
                         </perfect-scrollbar>
                     </b-dropdown>
-
+                    <span class="mt-2" v-if="isLoggedIn">
                     <b-dropdown toggle-tag="a" variant="icon-only" toggle-class="nav-link" class="nav-item message-dropdown" :right="true">
                         <template #button-content>
                             <svg
@@ -238,9 +238,9 @@
                                 <p class="msg-title">ACCOUNT UPDATE</p>
                             </b-media>
                         </b-dropdown-item>
-                    </b-dropdown>
-
-                    <b-dropdown toggle-tag="a" variant="icon-only" toggle-class="nav-link" menu-class="notification-scroll" class="nav-item notification-dropdown" :right="true">
+                    </b-dropdown></span>
+                    <span v-if="isLoggedIn">
+                    <b-dropdown toggle-tag="a" variant="icon-only" toggle-class="nav-link" menu-class="notification-scroll" class="nav-item notification-dropdown " :right="true">
                         <template #button-content>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -252,7 +252,7 @@
                                 stroke-width="2"
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
-                                class="feather feather-bell"
+                                class="feather feather-bell mt-2"
                             >
                                 <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                                 <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
@@ -394,9 +394,9 @@
                                 </div>
                             </b-media>
                         </b-dropdown-item>
-                    </b-dropdown>
-
-                    <b-dropdown toggle-tag="a" variant="icon-only" toggle-class="user nav-link" class="nav-item user-profile-dropdown" :right="true">
+                    </b-dropdown></span>
+                    <span v-if="isLoggedIn">
+                    <b-dropdown toggle-tag="a" variant="icon-only" toggle-class="user nav-link" class="nav-item user-profile-dropdown mt-1" :right="true">
                         <template #button-content>
                             <img :src="'http://127.0.0.1:8000' + Userprofile.imageU" class="navbar-logo"  />
                         </template>
@@ -458,7 +458,10 @@
                             Lock Screen
                         </b-dropdown-item>
                         <b-dropdown-divider></b-dropdown-divider>
+                        
+                        
                         <b-dropdown-item  to="/auth/login">
+                        
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="24"
@@ -475,9 +478,14 @@
                                 <polyline points="16 17 21 12 16 7"></polyline>
                                 <line x1="21" y1="12" x2="9" y2="12"></line>
                             </svg>
+                            
                            <span @click="logout">Sign Out</span> 
                         </b-dropdown-item>
-                    </b-dropdown>
+                    </b-dropdown></span>
+                    <span class="mt-2" v-if="isLoggedIn==false">
+                    <a href="http://localhost:8080/auth/login" class="mt-2 ml-3">Login</a>
+                    <a href="http://localhost:8080/auth/register" class="mt-2 ml-3 mr-3">Register</a>
+                    </span>
                 </div>
             </header>
         </div>
@@ -1141,6 +1149,9 @@ import { mapGetters, mapActions } from "vuex";
             User:"StateUser"
             
             }),
+            isLoggedIn: function () {
+            return this.$store.getters.isAuthenticated;
+            },
         },
         methods: {
             reset() {
