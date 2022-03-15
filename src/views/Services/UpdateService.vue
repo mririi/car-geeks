@@ -23,7 +23,7 @@
                 <div class="panel-heading">
                   <div class="row">
                     <div class="col-xl-10 col-md-12 col-sm-12 col-12">
-                      <h4>Add Service</h4>
+                      <h4>Update {{form.titleS}}</h4>
                     </div>
                   </div>
                 </div>

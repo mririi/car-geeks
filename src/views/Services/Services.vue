@@ -74,6 +74,7 @@
                                     <b-form-rating id="rating" v-model="s.nbEval" show-value readonly variant="warning" size="lg" class=" bg-transparent border-0">
                                     </b-form-rating>
                                     </div>
+                                    
                                 
                                 <p class="card-text">In {{s.addressS}}</p>
                                 <p class="meta-text">

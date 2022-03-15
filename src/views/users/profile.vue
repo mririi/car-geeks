@@ -129,6 +129,7 @@
                 </div>
                 <div class="education ml-4 col-lg-8">
                   <span class="ml-4">Rate this profile</span>
+                  <span v-if="CurrentUserprofile.id != userprofile.id">
                   <span v-if="isLoggedIn && existe == true">
                     <span v-b-modal.Rating>
                       <b-form-rating id="rating" v-model="average" color="primary" show-value show-value-max readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
@@ -138,6 +139,12 @@
                     <a href="/auth/login">
                       <b-form-rating id="rating" v-model="average" vcolor="primary" show-value show-value-max readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
                     </a>
+                  </span>
+                  </span>
+                  <span v-else>
+                    <span @click="showAlert()">
+                      <b-form-rating id="rating" v-model="average" color="primary" show-value show-value-max readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -332,6 +339,12 @@ export default {
         this.GetEvaluationProfile()
       }
       this.$router.go();
+    },
+     async showAlert() {
+      this.$swal({
+        title: 'You cannot rating your profile',
+        padding: '2em',
+      });
     },
   },
   computed: {
