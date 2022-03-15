@@ -137,7 +137,6 @@ export default {
   },
 
   created: function () {
-    this.GetService();
     this.GetUserprofiles();
     this.GetServicetypes();
     this.GetUsers();
@@ -180,11 +179,12 @@ export default {
       axios.post('/service/service-update/'+ this.service.id + '/', {
           nbEval: this.average
         });
+        this.service.nbEval=this.average
     });
     
   },
   methods: {
-    ...mapActions(['GetService', 'GetUserprofiles', 'GetServicetypes', 'GetUsers', 'GetEvaluations']),
+    ...mapActions([ 'GetUserprofiles', 'GetServicetypes', 'GetUsers', 'GetEvaluations']),
     deleteService(){
       this.$swal({
         icon: 'warning',
@@ -209,7 +209,7 @@ export default {
           serviceEval: this.service.id,
           nbEval: this.nbEval,
         });
-        
+        this.GetEvaluations()
       } else {
         for (let e in this.Evaluations) {
           if (this.Evaluations[e].userprofileEval == this.CurrentUserProfile.id && this.Evaluations[e].serviceEval == this.service.id) {
@@ -217,7 +217,7 @@ export default {
               nbEval: this.nbEval,
             });
             done = true;
-         
+         this.GetEvaluations()
           }
         }
         if (done == false) {
@@ -226,15 +226,15 @@ export default {
             serviceEval: this.service.id,
             nbEval: this.nbEval,
           });
-    
+          this.GetEvaluations()
         }
+        this.GetEvaluations()
       }
       this.$router.go();
     },
   },
   computed: {
     ...mapGetters({
-      Service: 'StateService',
       Userprofiles: 'StateUserprofiles',
       Servicetypes: 'StateServicetypes',
       User: 'StateUser',

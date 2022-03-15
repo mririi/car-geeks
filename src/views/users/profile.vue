@@ -312,6 +312,7 @@ export default {
           userEval: this.CurrentUser.id,
           nbEval: this.nbEval,
         });
+        this.GetEvaluationProfile()
       } else {
         for (let e in this.EvaluationProfile) {
           if (this.EvaluationProfile[e].userprofileEval == this.$route.params.id && this.EvaluationProfile[e].userEval == this.CurrentUser.id) {
@@ -328,6 +329,7 @@ export default {
             nbEval: this.nbEval,
           });
         }
+        this.GetEvaluationProfile()
       }
       this.$router.go();
     },
@@ -372,9 +374,7 @@ export default {
     }
     axios.get('/userprofile/userprofile-detail/' + this.$route.params.id + '/').then((response) => {
       this.userprofile = response.data;
-    });
-
-    var sum = 0;
+      var sum = 0;
     var nb = 0;
     for (let e in this.EvaluationProfile) {
       if (this.EvaluationProfile[e].userprofileEval == this.$route.params.id) {
@@ -384,9 +384,13 @@ export default {
     }
     this.average = sum / nb;
 
-    axios.put('/userprofile/userprofile-update/' + this.$route.params.id + '/', {
+    axios.put('/userprofile/userprofile-update/' + this.userprofile.id + '/', {
       nbEvalProfile: this.average,
     });
+    this.userprofile.nbEval=this.average
+    });
+
+    
   },
 };
 </script>
