@@ -321,7 +321,7 @@ const routes = [
     {
         path: '/entreprises',
         name: 'entreprises',
-        //component: () => import( '../views/Services/Services.vue'),
+        component: () => import( '../views/Entreprises/Entreprises.vue'),
         meta: {
             layout: 'app'
           }
@@ -330,7 +330,7 @@ const routes = [
     {
         path: '/news',
         name: 'news',
-       // component: () => import( '../views/Services/Services.vue'),
+        component: () => import( '../views/Others/News.vue'),
         meta: {
             layout: 'app'
           }
@@ -339,7 +339,7 @@ const routes = [
     {
         path: '/groups',
         name: 'groups',
-        //component: () => import( '../views/Services/Services.vue'),
+        component: () => import( '../views/Groups/Groups.vue'),
         meta: {
             layout: 'app'
           }
