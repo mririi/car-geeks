@@ -387,7 +387,7 @@ export default {
     axios.put('/userprofile/userprofile-update/' + this.userprofile.id + '/', {
       nbEvalProfile: this.average,
     });
-    this.userprofile.nbEval=this.average
+    this.userprofile.nbEvalProfile=this.average
     });
 
     
