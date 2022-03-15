@@ -33,7 +33,17 @@
         </p>
         <p class="card-text mb-2 ml-4">{{ service.details }}</p>
         <div class="w-50">
-          <b-form-rating id="rating" v-model="average"  v-b-modal.Rating variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
+          <span v-if="isLoggedIn && existe==true">
+          <span v-b-modal.Rating>
+          <b-form-rating id="rating" v-model="average"   variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
+          </span>
+          </span>
+          <span v-else>
+          <a href="/auth/login">
+            <b-form-rating id="rating" v-model="average"   variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
+          </a>
+          </span>
+         
         </div>
         <h6 class="mb-4 ml-4">
           <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100">
@@ -132,6 +142,7 @@ export default {
     for (let u in this.Userprofiles) {
       if (this.Userprofiles[u].userU == this.CurrentUser.id) {
         this.CurrentUserProfile = this.Userprofiles[u];
+        this.existe=true
       }
     }
 
@@ -162,6 +173,7 @@ export default {
           nbEval: this.average
         });
     });
+    
   },
   methods: {
     ...mapActions(['GetService', 'GetUserprofiles', 'GetServicetypes', 'GetUsers', 'GetEvaluations']),
@@ -205,6 +217,9 @@ export default {
       Users: 'StateUsers',
       Evaluations: 'StateEvaluations',
     }),
+    isLoggedIn: function () {
+      return this.$store.getters.isAuthenticated;
+    },
   },
 };
 </script>

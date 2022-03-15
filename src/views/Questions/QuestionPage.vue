@@ -17,14 +17,18 @@
       <div class="widget widget-card-one">
         <div class="widget-heading">
           <b-media>
+            
             <template #aside>
               <div class="w-img">
                 <img :src="'http://127.0.0.1:8000' + userprofile.imageU" alt="avatar" />
               </div>
             </template>
+            <router-link :to="'/profile/'+userprofile.id">
             <h6>{{ userprofile.firstname }} {{ userprofile.lastname }}</h6>
+            </router-link>
             <p class="meta-date-time">{{ question.dateQ | formatDate }}</p>
             <h4 class="mt-5">{{ question.titleQ }}</h4>
+            
           </b-media>
         </div>
         <div class="widget-content">

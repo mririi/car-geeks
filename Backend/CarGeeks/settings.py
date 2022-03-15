@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "badge",
     "questioncategory",
     "evaluation",
+    "evaluationprofile",
     "preferences",
     "reclamation",
     "service",

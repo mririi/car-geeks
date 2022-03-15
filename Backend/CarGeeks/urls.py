@@ -12,6 +12,7 @@ urlpatterns = [
     path('questioncategory/',include('questioncategory.urls')),
     path('comment/',include('comment.urls')),
     path('evaluation/',include('evaluation.urls')),
+    path('evaluationprofile/',include('evaluationprofile.urls')),
     path('preferences/',include('preferences.urls')),
     path('reclamation/',include('reclamation.urls')),
     path('notification/',include('notifications.urls')),

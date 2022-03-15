@@ -400,7 +400,7 @@
                         <template #button-content>
                             <img :src="'http://127.0.0.1:8000' + Userprofile.imageU" class="navbar-logo"  />
                         </template>
-                         
+                         <span v-if="isLoggedIn">
                         <b-dropdown-item :to="'/profile/' + Userprofile.id">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -419,6 +419,27 @@
                             </svg>
                             Profile
                         </b-dropdown-item>
+                        </span>
+                        <span v-else>
+                        <b-dropdown-item to="/auth/login">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="feather feather-user"
+                            >
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            Profile
+                        </b-dropdown-item>
+                        </span>
                         <b-dropdown-divider></b-dropdown-divider>
                         <b-dropdown-item to="/apps/mailbox">
                             <svg
@@ -1139,8 +1160,10 @@ import { mapGetters, mapActions } from "vuex";
             Userprofiles: "StateUserprofiles",
             Users:"StateUsers",
             User:"StateUser"
-            
             }),
+            isLoggedIn: function () {
+      return this.$store.getters.isAuthenticated;
+    },
         },
         methods: {
             reset() {

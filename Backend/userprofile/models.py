@@ -21,6 +21,6 @@ class Userprofile(models.Model):
   badgeU = models.ForeignKey('badge.Badge',on_delete=models.CASCADE,blank=True,null=True)
   preferencesU = models.ForeignKey('preferences.Preferences',on_delete=models.CASCADE,blank=True,null=True)
   userU =models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
-
+  nbEvalProfile=models.DecimalField(max_digits=20,decimal_places=2,null=True,blank=True)
   def __str__(self):
     return self.firstname + " " + self.lastname

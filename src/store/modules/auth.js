@@ -8,6 +8,7 @@ const state = {
   user: null,
   users:null,
   userprofiles:null,
+  evaluationprofile:null,
   userentreprises:null,
   roles:null,
   //QUESTION
@@ -48,6 +49,7 @@ const getters = {
   StateUserprofiles: (state) => state.userprofiles,
   StateUserentreprises: (state) => state.userentreprises,
   StateisEntreprise: (state) => state.isEntreprise,
+  StateEvaluationProfile:(state) => state.evaluationprofile,
   //QUESTION
   StateQuestions: (state) => state.questions,
   StateQuestioncategories: (state) => state.questioncategories,
@@ -116,6 +118,10 @@ const actions = {
   async GetUserprofiles({ commit }) {
     let response = await axios.get("userprofile/userprofile-list/");
     commit("setUserprofiles", response.data);
+  },
+  async GetEvaluationProfile({ commit }) {
+    let response = await axios.get("evaluationprofile/evaluationprofile-list/");
+    commit("setEvaluationProfile", response.data);
   },
   //QUESTION
   async CreateQuestion({ dispatch }, question) {
@@ -272,6 +278,10 @@ const mutations = {
   setUserentreprises(state, userentreprises) {
     state.userentreprises = userentreprises;
   },
+ setEvaluationProfile(state,evaluationprofile)
+ {
+ state.evaluationprofile=evaluationprofile;
+ },
   setisEntreprise(state, is) {
     state.isEntreprise = is;
   },

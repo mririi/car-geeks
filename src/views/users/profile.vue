@@ -85,25 +85,25 @@
                     </li>
                     <li class="contacts-block__item">
                       <div v-for="user in Users" :key="user.id">
-                        <div v-if="user.id==userprofile.userU">
-                      <a :href="'mailto:' + user.email" target="_blank"
-                        ><svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          class="feather feather-mail"
-                        >
-                          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                          <polyline points="22,6 12,13 2,6"></polyline></svg
-                        >{{ user.email }}</a
-                      >
-                      </div>
+                        <div v-if="user.id == userprofile.userU">
+                          <a :href="'mailto:' + user.email" target="_blank"
+                            ><svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="feather feather-mail"
+                            >
+                              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                              <polyline points="22,6 12,13 2,6"></polyline></svg
+                            >{{ user.email }}</a
+                          >
+                        </div>
                       </div>
                     </li>
                     <li class="contacts-block__item">
@@ -127,28 +127,30 @@
                     </li>
                   </ul>
                 </div>
-                <div class="education ml-4 col-lg-8" > 
-                 <span class="ml-4">Rate this profile</span> 
-                     <b-form-rating id="rating" v-b-modal.Rating  v-model="average" precision="2" show-value-max readonly  show-value color="primary" size="lg" class="mb-2 bg-transparent border-0">
-                </b-form-rating>
+                <div class="education ml-4 col-lg-8">
+                  <span class="ml-4">Rate this profile</span>
+                  <span v-if="isLoggedIn && existe == true">
+                    <span v-b-modal.Rating>
+                      <b-form-rating id="rating" v-model="average" color="primary" show-value show-value-max readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <a href="/auth/login">
+                      <b-form-rating id="rating" v-model="average" vcolor="primary" show-value show-value-max readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
+                    </a>
+                  </span>
                 </div>
               </div>
-              
             </div>
-             
           </div>
-         
         </div>
       </div>
-         <b-modal id="Rating" :title="'Rate '+userprofile.firstname + ' '+ userprofile.lastname" centered>
-    
-    <b-form-rating id="rating" v-model="average" precision="2" show-value-max   show-value color="primary" size="lg" class="mb-2 bg-transparent border-0">
-                </b-form-rating>
-    <template #modal-footer>
-        
-        <b-button variant="primary">Submit your rating</b-button>
-    </template>
-</b-modal>
+      <b-modal id="Rating" :title="'Rate ' + userprofile.firstname + ' ' + userprofile.lastname" centered>
+        <b-form-rating id="rating" v-model="nbEval" precision="2" show-value-max show-value color="primary" size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
+        <template #modal-footer>
+          <b-button variant="primary" @click="Rating()">Submit your rating</b-button>
+        </template>
+      </b-modal>
       <div class="col-xl-8 col-lg-6 col-md-7 col-sm-12 layout-top-spacing">
         <div class="skills layout-spacing">
           <div class="panel">
@@ -244,22 +246,21 @@
                 <b-th><div class="th-content">Questions number</div></b-th>
               </b-tr>
             </b-thead>
-            
+
             <b-tbody>
               <b-tr v-for="u in filteredList" :key="u.id">
-                
                 <b-td
-                  ><a :href="'/profile/'+u.id"><div class="td-content">
-                    <img :src="'http://127.0.0.1:8000' + u.imageU" alt="avatar" /><span>{{ u.firstname }} {{ u.lastname }} </span>
-                  </div></a></b-td
+                  ><a :href="'/profile/' + u.id"
+                    ><div class="td-content">
+                      <img :src="'http://127.0.0.1:8000' + u.imageU" alt="avatar" /><span>{{ u.firstname }} {{ u.lastname }} </span>
+                    </div></a
+                  ></b-td
                 >
-                <b-td
-                  >
+                <b-td>
                   <div v-for="user in Users" :key="user.id">
-                  <div v-if="user.id==u.userU" class="td-content text-primary">{{ user.email }}</div>
+                    <div v-if="user.id == u.userU" class="td-content text-primary">{{ user.email }}</div>
                   </div>
-                  </b-td
-                >
+                </b-td>
                 <b-td
                   ><div class="td-content">{{ u.tel }}</div></b-td
                 >
@@ -271,7 +272,6 @@
                 <b-td
                   ><div class="td-content ml-5">{{ u.nbquestions }}</div></b-td
                 >
-                
               </b-tr>
             </b-tbody>
           </b-table-simple>
@@ -294,18 +294,51 @@ export default {
       CurrentUser: [],
       userprofile: [],
       CurrentUserprofile: [],
+      nbEval: '',
       search: '',
+      UserEval: '',
+      average: 0,
+      existe:false
     };
   },
   mounted() {},
   methods: {
-    ...mapActions(['GetUsers', 'GetCars', 'GetUserprofiles']),
+    ...mapActions(['GetUsers', 'GetCars', 'GetUserprofiles', 'GetEvaluations', 'GetEvaluationProfile']),
+    async Rating() {
+      let done = false;
+      if (this.EvaluationProfile.length == 0) {
+        axios.post('/evaluationprofile/evaluationprofile-create/', {
+          userprofileEval: this.$route.params.id,
+          userEval: this.CurrentUser.id,
+          nbEval: this.nbEval,
+        });
+      } else {
+        for (let e in this.EvaluationProfile) {
+          if (this.EvaluationProfile[e].userprofileEval == this.$route.params.id && this.EvaluationProfile[e].userEval == this.CurrentUser.id) {
+            axios.post('/evaluationprofile/evaluationprofile-update/' + this.EvaluationProfile[e].id + '/', {
+              nbEval: this.nbEval,
+            });
+            done = true;
+          }
+        }
+        if (done == false) {
+          axios.post('/evaluationprofile/evaluationprofile-create/', {
+            userprofileEval: this.$route.params.id,
+            userEval: this.CurrentUser.id,
+            nbEval: this.nbEval,
+          });
+        }
+      }
+      this.$router.go();
+    },
   },
   computed: {
     ...mapGetters({
       User: 'StateUser',
       Users: 'StateUsers',
       Userprofiles: 'StateUserprofiles',
+      Evaluations: 'StateEvaluations',
+      EvaluationProfile: 'StateEvaluationProfile',
     }),
     isLoggedIn: function () {
       return this.$store.getters.isAuthenticated;
@@ -324,6 +357,8 @@ export default {
     this.GetUsers();
     this.GetUserprofiles();
     this.GetCars();
+    this.GetEvaluations();
+    this.GetEvaluationProfile();
     for (let u in this.Users) {
       if (this.Users[u].username == this.User) {
         this.CurrentUser = this.Users[u];
@@ -332,10 +367,25 @@ export default {
     for (let p in this.Userprofiles) {
       if (this.Userprofiles[p].userU == this.CurrentUser.id) {
         this.CurrentUserprofile = this.Userprofiles[p];
+        this.existe=true
       }
     }
     axios.get('/userprofile/userprofile-detail/' + this.$route.params.id + '/').then((response) => {
       this.userprofile = response.data;
+    });
+
+    var sum = 0;
+    var nb = 0;
+    for (let e in this.EvaluationProfile) {
+      if (this.EvaluationProfile[e].userprofileEval == this.$route.params.id) {
+        sum += this.EvaluationProfile[e].nbEval;
+        nb++;
+      }
+    }
+    this.average = sum / nb;
+
+    axios.put('/userprofile/userprofile-update/' + this.$route.params.id + '/', {
+      nbEvalProfile: this.average,
     });
   },
 };
