@@ -38,7 +38,7 @@
           </div>
           <div class="w-action">
             <div class="card-like ml-4">
-              <span v-if="isLoggedIn">
+              <span v-if="isLoggedIn && CurrentUserProfile.id!=null">
                 <svg
                   v-show="likedQuestion == false"
                   @click="liked()"
@@ -57,7 +57,7 @@
                 </svg>
               </span>
               <span v-else>
-                <a href="/auth/login">
+                <a href="/auth/userinfo">
                   <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
                     <path
                       fill="currentColor"
@@ -97,11 +97,11 @@
                   />
                 </g>
               </svg>
-              <span v-if="isLoggedIn">
+              <span v-if="isLoggedIn && CurrentUserProfile.id!=null">
                 <span v-b-modal.exampleModalCenter>Reply</span>
               </span>
               <span v-else>
-                <a href="/auth/login"> <span>Reply</span> </a>
+                <a href="/auth/userinfo"> <span>Reply</span> </a>
               </span>
             </div>
 
@@ -138,223 +138,19 @@
               </form>
             </b-modal>
           </div>
-          <div id="mediaObjectNotationIcon" class="col-lg-12 layout-spacing mt-5">
-            <div class="panel-heading">
-              <div v-if="question.nbrep != 0" class="row">
-                <h5 class="mt-4 ml-4"> Answers</h5>
+          <div class="float-right mt-4">
+            <b-button-group>
+                    <a class="btn btn-primary" :href="'/questionpagerightanswer/'+question.id+'/'">Right Answer</a>
+                    <a class="btn btn-outline-primary" href="#">Newest</a>
+                    <a class="btn btn-primary" :href="'/questionpageoldest/'+question.id+'/'">Oldest</a>
+                    <a class="btn btn-primary" :href="'/questionpagemostliked/'+question.id+'/'">Most Liked</a>
+                    </b-button-group>
+                    </div>
+          <h5 class="mt-4 ml-4"> Answers</h5>
+              <div v-if="question.nbrep != 0" >
+                <div id="mediaObjectNotationIcon" class="col-lg-12 layout-spacing mt-5 row">
+            <div class="panel-heading col-12">
                 <div class="panel-body mb-3 pill-justify-right col-xl-12">
-                  <b-tabs pills nav-class=" justify-content-end mb-5">
-                    <b-tab title="Right Answer">
-                      <div v-for="rep in Replies" :key="rep.id">
-                        <div v-if="rep.questionRep == question.id && rep.checked == true" class="panel-body notation-text-icon">
-                          <b-media>
-                            <div v-for="u in Userprofiles" :key="u.id">
-                              <div v-if="u.id == rep.userprofileRep">
-                                <div class="float-left">
-                                  <b-avatar class="mr-3" :square="true" size="3rem" :src="'http://127.0.0.1:8000' + u.imageU" width="40px" />
-                                </div>
-                                <h6 class="">{{ u.firstname }} {{ u.lastname }}</h6>
-                              </div>
-                            </div>
-                            <p class="meta-date-time media-text mb-4">{{ rep.dateR | formatDate }}</p>
-                            <h5 class="media-text ml-5 mb-1">
-                              {{ rep.contentR }}
-                            </h5>
-                            <div v-if="rep.imageR != null" class="widget-content mb-4">
-                              <img :src="'http://127.0.0.1:8000' + rep.imageR" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
-                            </div>
-                            <div class="media-notation mb-4 float-right">
-                              <a href="javascript:void(0);" class="">
-                                  <reply :replyid="rep.id" :userprofile="rep.userprofileRep" />
-                              </a>
-                              <a href="javascript:void(0);" class="mr-2"
-                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1792 1536">
-                                  <path
-                                    fill="currentColor"
-                                    d="M896 128q-204 0-381.5 69.5T232.5 385T128 640q0 112 71.5 213.5T401 1029l87 50l-27 96q-24 91-70 172q152-63 275-171l43-38l57 6q69 8 130 8q204 0 381.5-69.5t282-187.5T1664 640t-104.5-255t-282-187.5T896 128zm896 512q0 174-120 321.5t-326 233t-450 85.5q-70 0-145-8q-198 175-460 242q-49 14-114 22h-5q-15 0-27-10.5t-16-27.5v-1q-3-4-.5-12t2-10t4.5-9.5l6-9l7-8.5l8-9q7-8 31-34.5t34.5-38t31-39.5t32.5-51t27-59t26-76q-157-89-247.5-220T0 640q0-174 120-321.5t326-233T896 0t450 85.5t326 233T1792 640z"
-                                  />
-                                </svg>
-                                {{ rep.nbCommentR }} comments
-                              </a>
-                              <a href="javascript:void(0);" class=""
-                                ><svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="20"
-                                  height="20"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  stroke-width="2"
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  class="feather feather-message-square"
-                                >
-                                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                                </svg>
-                                <span v-if="isLoggedIn">
-                                  <span v-b-modal="modalCreateCommentRight(rep.id)">Add a comment</span>
-                                </span>
-                                <span v-else>
-                                  <a href="/auth/login"> <span>Add a comment</span></a>
-                                </span>
-                              </a>
-
-                              <!-- Comment Modal -->
-
-                              <b-modal :id="'modalCreateCommentRight' + rep.id" hide-footer title="Add Comment" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
-                                <form class="mt-0">
-                                  <div class="form-group">
-                                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                      <path
-                                        fill="currentColor"
-                                        d="m21.558 3.592l-1.15-1.15a1.49 1.49 0 0 0-2.12 0L13 7.731V11h3.27l5.288-5.288a1.49 1.49 0 0 0 0-2.12ZM15.579 9.45h-1.03V8.42L18 4.973l1.03 1.03Z"
-                                      />
-                                      <path fill="currentColor" d="M19 19H5V5h6V3H5a2.006 2.006 0 0 0-2 2v14a2.006 2.006 0 0 0 2 2h14a2.006 2.006 0 0 0 2-2v-6h-2Z" />
-                                    </svg>
-                                    <b-form-textarea type="text" class="mb-2" v-model="comment.contentCo" placeholder="Enter your comment here"></b-form-textarea>
-                                  </div>
-                                  <b-button
-                                    variant="primary"
-                                    block
-                                    class="mt-2 mb-2"
-                                    @click="
-                                      $bvModal.hide(modalCreateCommentRight(rep.id));
-                                      commentaire(rep);
-                                    "
-                                    >Submit</b-button
-                                  >
-                                </form>
-                              </b-modal>
-                            </div>
-                          </b-media>
-
-                          <hr width="90%" />
-                          <div v-if="showMore==false">
-                          <div v-for="(c,index) in Comments" :key="c.id">
-                            <div v-if="index <= 3">
-                            <div v-if="c.replyCo == rep.id">
-                              <div v-if="CurrentUserProfile.id == c.userprofileCo">
-                                <b-dropdown variant="icon-only" dropleft toggle-tag="a" class="mb-4 mr-2 custom-dropdown float-right">
-                                  <template #button-content>
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      style="width: 24px; height: 24px"
-                                      width="24"
-                                      height="24"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      stroke-width="2"
-                                      stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      class="feather feather-more-vertical"
-                                    >
-                                      <circle cx="12" cy="12" r="1"></circle>
-                                      <circle cx="12" cy="5" r="1"></circle>
-                                      <circle cx="12" cy="19" r="1"></circle>
-                                    </svg>
-                                  </template>
-                                  <b-modal :id="'modalModifCommentRight' + c.id" hide-footer title="Modify Comment" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
-                                    <form class="mt-0">
-                                      <div class="form-group">
-                                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                          <path
-                                            fill="currentColor"
-                                            d="m21.558 3.592l-1.15-1.15a1.49 1.49 0 0 0-2.12 0L13 7.731V11h3.27l5.288-5.288a1.49 1.49 0 0 0 0-2.12ZM15.579 9.45h-1.03V8.42L18 4.973l1.03 1.03Z"
-                                          />
-                                          <path fill="currentColor" d="M19 19H5V5h6V3H5a2.006 2.006 0 0 0-2 2v14a2.006 2.006 0 0 0 2 2h14a2.006 2.006 0 0 0 2-2v-6h-2Z" />
-                                        </svg>
-                                        <b-form-textarea type="text" class="mb-2" v-model="c.contentCo" placeholder="Modify your comment here"></b-form-textarea>
-                                      </div>
-                                      <b-button
-                                        variant="primary"
-                                        block
-                                        class="mt-2 mb-2"
-                                        @click="
-                                          $bvModal.hide(modalModifCommentRight(c.id));
-                                          commentModif(c);
-                                        "
-                                        >Modify</b-button
-                                      >
-                                    </form>
-                                  </b-modal>
-                                  <b-dropdown-item v-b-modal="modalModifCommentRight(c.id)">Modify</b-dropdown-item>
-                                  <b-dropdown-item @click="deleteComment(c)">Delete</b-dropdown-item>
-                                </b-dropdown>
-                              </div>
-                              <p class="float-right">{{ c.dateCo | formatDate }}</p>
-                              <p class="ml-5">{{ c.contentCo }}</p>
-                            </div>
-                          </div>
-                          </div>
-                          </div>
-                          <div v-else>
-                            <div v-for="c in Comments" :key="c.id">
-                            <div v-if="c.replyCo == rep.id">
-                              <div v-if="CurrentUserProfile.id == c.userprofileCo">
-                                <b-dropdown variant="icon-only" dropleft toggle-tag="a" class="mb-4 mr-2 custom-dropdown float-right">
-                                  <template #button-content>
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      style="width: 24px; height: 24px"
-                                      width="24"
-                                      height="24"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      stroke-width="2"
-                                      stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      class="feather feather-more-vertical"
-                                    >
-                                      <circle cx="12" cy="12" r="1"></circle>
-                                      <circle cx="12" cy="5" r="1"></circle>
-                                      <circle cx="12" cy="19" r="1"></circle>
-                                    </svg>
-                                  </template>
-                                  <b-modal :id="'modalModifCommentRight' + c.id" hide-footer title="Modify Comment" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
-                                    <form class="mt-0">
-                                      <div class="form-group">
-                                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                          <path
-                                            fill="currentColor"
-                                            d="m21.558 3.592l-1.15-1.15a1.49 1.49 0 0 0-2.12 0L13 7.731V11h3.27l5.288-5.288a1.49 1.49 0 0 0 0-2.12ZM15.579 9.45h-1.03V8.42L18 4.973l1.03 1.03Z"
-                                          />
-                                          <path fill="currentColor" d="M19 19H5V5h6V3H5a2.006 2.006 0 0 0-2 2v14a2.006 2.006 0 0 0 2 2h14a2.006 2.006 0 0 0 2-2v-6h-2Z" />
-                                        </svg>
-                                        <b-form-textarea type="text" class="mb-2" v-model="c.contentCo" placeholder="Modify your comment here"></b-form-textarea>
-                                      </div>
-                                      <b-button
-                                        variant="primary"
-                                        block
-                                        class="mt-2 mb-2"
-                                        @click="
-                                          $bvModal.hide(modalModifCommentRight(c.id));
-                                          commentModif(c);
-                                        "
-                                        >Modify</b-button
-                                      >
-                                    </form>
-                                  </b-modal>
-                                  <b-dropdown-item v-b-modal="modalModifCommentRight(c.id)">Modify</b-dropdown-item>
-                                  <b-dropdown-item @click="deleteComment(c)">Delete</b-dropdown-item>
-                                </b-dropdown>
-                              </div>
-                              <p class="float-right">{{ c.dateCo | formatDate }}</p>
-                              <p class="ml-5">{{ c.contentCo }}</p>
-                            </div>
-                          </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div v-if="showMore==false">
-                        <b-button @click="showMore=true">Show More</b-button>
-                      </div>
-                      <div v-else>
-                        <b-button @click="showMore=false">Show Less</b-button>
-                      </div>
-                    </b-tab>
-
                     <b-tab title="Newest" active>
                       <div v-for="rep in Replies" :key="rep.id">
                         <div v-if="rep.questionRep == question.id && rep.accepted==true" class="panel-body notation-text-icon">
@@ -436,7 +232,7 @@
                             </div>
                             <div class="media-notation mb-4 float-right">
                               <a href="javascript:void(0);" class="">
-                                  <reply :replyid="rep.id" :userprofile="rep.userprofileRep" />
+                                  <likecomponent :replyid="rep.id" :userprofile="CurrentUserProfile.id" />
                               </a>
                               <a href="javascript:void(0);" class="mr-2"
                                 ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1792 1536">
@@ -462,11 +258,11 @@
                                 >
                                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                                 </svg>
-                                <span v-if="isLoggedIn">
+                                <span v-if="isLoggedIn && CurrentUserProfile.id!=null">
                                   <span v-b-modal="modalCreateCommentNewest(rep.id)">Add a comment</span>
                                 </span>
                                 <span v-else>
-                                  <a href="/auth/login"> <span>Add a comment</span></a>
+                                  <a href="/auth/userinfo"> <span>Add a comment</span></a>
                                 </span>
                               </a>
 
@@ -558,414 +354,7 @@
                         </div>
                       </div>
                     </b-tab>
-                    <b-tab title="Oldest">
-                      <div v-for="rep in oldestreplies" :key="rep.id">
-                        <div v-if="rep.questionRep == question.id && rep.accepted==true" class="panel-body notation-text-icon">
-                          <!--repmodif-->
-                          <b-modal :id="'modalModifReplyOldest' + rep.id" hide-footer title="Modify Answer" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
-                            <form class="mt-0">
-                              <div class="form-group">
-                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                  <path
-                                    fill="currentColor"
-                                    d="m21.558 3.592l-1.15-1.15a1.49 1.49 0 0 0-2.12 0L13 7.731V11h3.27l5.288-5.288a1.49 1.49 0 0 0 0-2.12ZM15.579 9.45h-1.03V8.42L18 4.973l1.03 1.03Z"
-                                  />
-                                  <path fill="currentColor" d="M19 19H5V5h6V3H5a2.006 2.006 0 0 0-2 2v14a2.006 2.006 0 0 0 2 2h14a2.006 2.006 0 0 0 2-2v-6h-2Z" />
-                                </svg>
-                                <b-form-textarea type="text" v-model="rep.contentR" class="mb-2" placeholder="Enter your reply content here"></b-form-textarea>
-                                <div class="mt-4 mb-5">
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="mb-1" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                                      <path d="M2 6a4 4 0 0 1 4-4h12a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V6Z" />
-                                      <circle cx="8.5" cy="8.5" r="2.5" />
-                                      <path d="M14.526 12.621L6 22h12.133A3.867 3.867 0 0 0 22 18.133V18c0-.466-.175-.645-.49-.99l-4.03-4.395a2 2 0 0 0-2.954.006Z" />
-                                    </g>
-                                  </svg>
-                                  <b-file @change="onFileChanged"></b-file>
-                                </div>
-                              </div>
-                              <b-button
-                                variant="primary"
-                                block
-                                class="mt-2 mb-2"
-                                @click="
-                                  replyModif(rep);
-                                  $bvModal.hide(modalModifReplyOldest(rep.id));
-                                "
-                                >Submit</b-button
-                              >
-                            </form>
-                          </b-modal>
-                          <b-media>
-                            <div v-for="u in Userprofiles" :key="u.id">
-                              <div v-if="u.id == rep.userprofileRep">
-                                <div class="float-left">
-                                  <b-avatar class="mr-3" :square="true" size="3rem" :src="'http://127.0.0.1:8000' + u.imageU" width="40px" />
-                                </div>
-                                <h6 class="">{{ u.firstname }} {{ u.lastname }}</h6>
-                              </div>
-                            </div>
-                            <div v-if="CurrentUserProfile.id == rep.userprofileRep">
-                              <b-dropdown variant="icon-only" dropleft toggle-tag="a" class="mb-4 mr-2 custom-dropdown float-right">
-                                <template #button-content>
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    style="width: 24px; height: 24px"
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="feather feather-more-vertical"
-                                  >
-                                    <circle cx="12" cy="12" r="1"></circle>
-                                    <circle cx="12" cy="5" r="1"></circle>
-                                    <circle cx="12" cy="19" r="1"></circle>
-                                  </svg>
-                                </template>
-                                <b-dropdown-item v-b-modal="modalModifReplyOldest(rep.id)">Modify</b-dropdown-item>
-                                <b-dropdown-item @click="deleteReply(rep.id)">Delete</b-dropdown-item>
-                              </b-dropdown>
-                            </div>
-                            <p class="meta-date-time media-text mb-4">{{ rep.dateR | formatDate }}</p>
-                            <h5 class="media-text ml-5 mb-1">
-                              {{ rep.contentR }}
-                            </h5>
-                            <div v-if="rep.imageR != null" class="widget-content mb-4">
-                              <img :src="'http://127.0.0.1:8000' + rep.imageR" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
-                            </div>
-                            <div class="media-notation mb-4 float-right">
-                              <a href="javascript:void(0);" class="">
-                                  <reply :replyid="rep.id" :userprofile="rep.userprofileRep" />
-                              </a>
-                              <a href="javascript:void(0);" class="mr-2"
-                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1792 1536">
-                                  <path
-                                    fill="currentColor"
-                                    d="M896 128q-204 0-381.5 69.5T232.5 385T128 640q0 112 71.5 213.5T401 1029l87 50l-27 96q-24 91-70 172q152-63 275-171l43-38l57 6q69 8 130 8q204 0 381.5-69.5t282-187.5T1664 640t-104.5-255t-282-187.5T896 128zm896 512q0 174-120 321.5t-326 233t-450 85.5q-70 0-145-8q-198 175-460 242q-49 14-114 22h-5q-15 0-27-10.5t-16-27.5v-1q-3-4-.5-12t2-10t4.5-9.5l6-9l7-8.5l8-9q7-8 31-34.5t34.5-38t31-39.5t32.5-51t27-59t26-76q-157-89-247.5-220T0 640q0-174 120-321.5t326-233T896 0t450 85.5t326 233T1792 640z"
-                                  />
-                                </svg>
-                                {{ rep.nbCommentR }} comments
-                              </a>
-                              <a href="javascript:void(0);" class=""
-                                ><svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="20"
-                                  height="20"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  stroke-width="2"
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  class="feather feather-message-square"
-                                >
-                                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                                </svg>
-                                <span v-if="isLoggedIn">
-                                  <span v-b-modal="modalCreateCommentOldest(rep.id)">Add a comment</span>
-                                </span>
-                                <span v-else>
-                                  <a href="/auth/login"> <span>Add a comment</span></a>
-                                </span>
-                              </a>
-
-                              <!-- Comment Modal -->
-
-                              <b-modal :id="'modalCreateCommentOldest' + rep.id" hide-footer title="Add Comment" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
-                                <form class="mt-0">
-                                  <div class="form-group">
-                                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                      <path
-                                        fill="currentColor"
-                                        d="m21.558 3.592l-1.15-1.15a1.49 1.49 0 0 0-2.12 0L13 7.731V11h3.27l5.288-5.288a1.49 1.49 0 0 0 0-2.12ZM15.579 9.45h-1.03V8.42L18 4.973l1.03 1.03Z"
-                                      />
-                                      <path fill="currentColor" d="M19 19H5V5h6V3H5a2.006 2.006 0 0 0-2 2v14a2.006 2.006 0 0 0 2 2h14a2.006 2.006 0 0 0 2-2v-6h-2Z" />
-                                    </svg>
-                                    <b-form-textarea type="text" class="mb-2" v-model="comment.contentCo" placeholder="Enter your comment here"></b-form-textarea>
-                                  </div>
-                                  <b-button
-                                    variant="primary"
-                                    block
-                                    class="mt-2 mb-2"
-                                    @click="
-                                      $bvModal.hide(modalCreateCommentOldest(rep.id));
-                                      commentaire(rep);
-                                    "
-                                    >Submit</b-button
-                                  >
-                                </form>
-                              </b-modal>
-                            </div>
-                          </b-media>
-                          <hr width="90%" />
-                          <div v-for="c in Comments" :key="c.id">
-                            <div v-if="c.replyCo == rep.id">
-                              <div v-if="CurrentUserProfile.id == c.userprofileCo">
-                                <b-dropdown variant="icon-only" dropleft toggle-tag="a" class="mb-4 mr-2 custom-dropdown float-right">
-                                  <template #button-content>
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      style="width: 24px; height: 24px"
-                                      width="24"
-                                      height="24"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      stroke-width="2"
-                                      stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      class="feather feather-more-vertical"
-                                    >
-                                      <circle cx="12" cy="12" r="1"></circle>
-                                      <circle cx="12" cy="5" r="1"></circle>
-                                      <circle cx="12" cy="19" r="1"></circle>
-                                    </svg>
-                                  </template>
-
-                                  <b-modal :id="'modalModifCommentOldest' + c.id" hide-footer title="Modify Comment" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
-                                    <form class="mt-0">
-                                      <div class="form-group">
-                                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                          <path
-                                            fill="currentColor"
-                                            d="m21.558 3.592l-1.15-1.15a1.49 1.49 0 0 0-2.12 0L13 7.731V11h3.27l5.288-5.288a1.49 1.49 0 0 0 0-2.12ZM15.579 9.45h-1.03V8.42L18 4.973l1.03 1.03Z"
-                                          />
-                                          <path fill="currentColor" d="M19 19H5V5h6V3H5a2.006 2.006 0 0 0-2 2v14a2.006 2.006 0 0 0 2 2h14a2.006 2.006 0 0 0 2-2v-6h-2Z" />
-                                        </svg>
-                                        <b-form-textarea type="text" class="mb-2" v-model="c.contentCo" placeholder="Modify your comment here"></b-form-textarea>
-                                      </div>
-                                      <b-button
-                                        variant="primary"
-                                        block
-                                        class="mt-2 mb-2"
-                                        @click="
-                                          $bvModal.hide(modalModifCommentOldest(c.id));
-                                          commentModif(c);
-                                        "
-                                        >Modify</b-button
-                                      >
-                                    </form>
-                                  </b-modal>
-
-                                  <b-dropdown-item v-b-modal="modalModifCommentOldest(c.id)">Modify</b-dropdown-item>
-                                  <b-dropdown-item @click="deleteComment(c)">Delete</b-dropdown-item>
-                                </b-dropdown>
-                              </div>
-                              <p class="float-right">{{ c.dateCo | formatDate }}</p>
-                              <p class="ml-5">{{ c.contentCo }}</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <hr width="90%" />
-                    </b-tab>
-                    <b-tab title="Most liked">
-                      <div v-for="rep in mostlikedreplies" :key="rep.id">
-                        <div v-if="rep.questionRep == question.id && rep.accepted==true" class="panel-body notation-text-icon">
-                          <!--repmodif-->
-                          <b-modal :id="'modalModifReplyMost' + rep.id" hide-footer title="Modify Answer" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
-                            <form class="mt-0">
-                              <div class="form-group">
-                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                  <path
-                                    fill="currentColor"
-                                    d="m21.558 3.592l-1.15-1.15a1.49 1.49 0 0 0-2.12 0L13 7.731V11h3.27l5.288-5.288a1.49 1.49 0 0 0 0-2.12ZM15.579 9.45h-1.03V8.42L18 4.973l1.03 1.03Z"
-                                  />
-                                  <path fill="currentColor" d="M19 19H5V5h6V3H5a2.006 2.006 0 0 0-2 2v14a2.006 2.006 0 0 0 2 2h14a2.006 2.006 0 0 0 2-2v-6h-2Z" />
-                                </svg>
-                                <b-form-textarea type="text" v-model="rep.contentR" class="mb-2" placeholder="Enter your reply content here"></b-form-textarea>
-                                <div class="mt-4 mb-5">
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="mb-1" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                                      <path d="M2 6a4 4 0 0 1 4-4h12a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V6Z" />
-                                      <circle cx="8.5" cy="8.5" r="2.5" />
-                                      <path d="M14.526 12.621L6 22h12.133A3.867 3.867 0 0 0 22 18.133V18c0-.466-.175-.645-.49-.99l-4.03-4.395a2 2 0 0 0-2.954.006Z" />
-                                    </g>
-                                  </svg>
-                                  <b-file @change="onFileChanged"></b-file>
-                                </div>
-                              </div>
-                              <b-button
-                                variant="primary"
-                                block
-                                class="mt-2 mb-2"
-                                @click="
-                                  replyModif(rep);
-                                  $bvModal.hide(modalModifReplyMost(rep.id));
-                                "
-                                >Submit</b-button
-                              >
-                            </form>
-                          </b-modal>
-                          <b-media>
-                            <div v-for="u in Userprofiles" :key="u.id">
-                              <div v-if="u.id == rep.userprofileRep">
-                                <div class="float-left">
-                                  <b-avatar class="mr-3" :square="true" size="3rem" :src="'http://127.0.0.1:8000' + u.imageU" width="40px" />
-                                </div>
-                                <h6 class="">{{ u.firstname }} {{ u.lastname }}</h6>
-                              </div>
-                            </div>
-                            <div v-if="CurrentUserProfile.id == rep.userprofileRep">
-                              <b-dropdown variant="icon-only" dropleft toggle-tag="a" class="mb-4 mr-2 custom-dropdown float-right">
-                                <template #button-content>
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    style="width: 24px; height: 24px"
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="feather feather-more-vertical"
-                                  >
-                                    <circle cx="12" cy="12" r="1"></circle>
-                                    <circle cx="12" cy="5" r="1"></circle>
-                                    <circle cx="12" cy="19" r="1"></circle>
-                                  </svg>
-                                </template>
-                                <b-dropdown-item v-b-modal="modalModifReplyMost(rep.id)">Modify</b-dropdown-item>
-                                <b-dropdown-item @click="deleteReply(rep.id)">Delete</b-dropdown-item>
-                              </b-dropdown>
-                            </div>
-                            <p class="meta-date-time media-text mb-4">{{ rep.dateR | formatDate }}</p>
-                            <h5 class="media-text ml-5 mb-1">
-                              {{ rep.contentR }}
-                            </h5>
-                            <div v-if="rep.imageR != null" class="widget-content mb-4">
-                              <img :src="'http://127.0.0.1:8000' + rep.imageR" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
-                            </div>
-                            <div class="media-notation mb-4 float-right">
-                              <a href="javascript:void(0);" class="">
-                                  <reply :replyid="rep.id" :userprofile="rep.userprofileRep" />
-                              </a>
-                              <a href="javascript:void(0);" class="mr-2"
-                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1792 1536">
-                                  <path
-                                    fill="currentColor"
-                                    d="M896 128q-204 0-381.5 69.5T232.5 385T128 640q0 112 71.5 213.5T401 1029l87 50l-27 96q-24 91-70 172q152-63 275-171l43-38l57 6q69 8 130 8q204 0 381.5-69.5t282-187.5T1664 640t-104.5-255t-282-187.5T896 128zm896 512q0 174-120 321.5t-326 233t-450 85.5q-70 0-145-8q-198 175-460 242q-49 14-114 22h-5q-15 0-27-10.5t-16-27.5v-1q-3-4-.5-12t2-10t4.5-9.5l6-9l7-8.5l8-9q7-8 31-34.5t34.5-38t31-39.5t32.5-51t27-59t26-76q-157-89-247.5-220T0 640q0-174 120-321.5t326-233T896 0t450 85.5t326 233T1792 640z"
-                                  />
-                                </svg>
-                                {{ rep.nbCommentR }} comments
-                              </a>
-                              <a href="javascript:void(0);" class=""
-                                ><svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="20"
-                                  height="20"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  stroke-width="2"
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  class="feather feather-message-square"
-                                >
-                                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                                </svg>
-                                <span v-if="isLoggedIn">
-                                  <span v-b-modal="modalCreateCommentMost(rep.id)">Add a comment</span>
-                                </span>
-                                <span v-else>
-                                  <a href="/auth/login"> <span>Add a comment</span></a>
-                                </span>
-                              </a>
-
-                              <!-- Comment Modal -->
-
-                              <b-modal :id="'modalCreateCommentMost' + rep.id" hide-footer title="Add Comment" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
-                                <form class="mt-0">
-                                  <div class="form-group">
-                                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                      <path
-                                        fill="currentColor"
-                                        d="m21.558 3.592l-1.15-1.15a1.49 1.49 0 0 0-2.12 0L13 7.731V11h3.27l5.288-5.288a1.49 1.49 0 0 0 0-2.12ZM15.579 9.45h-1.03V8.42L18 4.973l1.03 1.03Z"
-                                      />
-                                      <path fill="currentColor" d="M19 19H5V5h6V3H5a2.006 2.006 0 0 0-2 2v14a2.006 2.006 0 0 0 2 2h14a2.006 2.006 0 0 0 2-2v-6h-2Z" />
-                                    </svg>
-                                    <b-form-textarea type="text" class="mb-2" v-model="comment.contentCo" placeholder="Enter your comment here"></b-form-textarea>
-                                  </div>
-                                  <b-button
-                                    variant="primary"
-                                    block
-                                    class="mt-2 mb-2"
-                                    @click="
-                                      $bvModal.hide(modalCreateCommentMost(rep.id));
-                                      commentaire(rep);
-                                    "
-                                    >Submit</b-button
-                                  >
-                                </form>
-                              </b-modal>
-                            </div>
-                          </b-media>
-                          <hr width="90%" />
-                          <div v-for="c in Comments" :key="c.id">
-                            <div v-if="c.replyCo == rep.id">
-                              <div v-if="CurrentUserProfile.id == c.userprofileCo">
-                                <b-dropdown variant="icon-only" dropleft toggle-tag="a" class="mb-4 mr-2 custom-dropdown float-right">
-                                  <template #button-content>
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      style="width: 24px; height: 24px"
-                                      width="24"
-                                      height="24"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      stroke-width="2"
-                                      stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      class="feather feather-more-vertical"
-                                    >
-                                      <circle cx="12" cy="12" r="1"></circle>
-                                      <circle cx="12" cy="5" r="1"></circle>
-                                      <circle cx="12" cy="19" r="1"></circle>
-                                    </svg>
-                                  </template>
-                                  <b-modal :id="'modalModifCommentMost' + c.id" hide-footer title="Modify Comment" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
-                                    <form class="mt-0">
-                                      <div class="form-group">
-                                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                          <path
-                                            fill="currentColor"
-                                            d="m21.558 3.592l-1.15-1.15a1.49 1.49 0 0 0-2.12 0L13 7.731V11h3.27l5.288-5.288a1.49 1.49 0 0 0 0-2.12ZM15.579 9.45h-1.03V8.42L18 4.973l1.03 1.03Z"
-                                          />
-                                          <path fill="currentColor" d="M19 19H5V5h6V3H5a2.006 2.006 0 0 0-2 2v14a2.006 2.006 0 0 0 2 2h14a2.006 2.006 0 0 0 2-2v-6h-2Z" />
-                                        </svg>
-                                        <b-form-textarea type="text" class="mb-2" v-model="c.contentCo" placeholder="Modify your comment here"></b-form-textarea>
-                                      </div>
-                                      <b-button
-                                        variant="primary"
-                                        block
-                                        class="mt-2 mb-2"
-                                        @click="
-                                          $bvModal.hide(modalModifCommentMost(c.id));
-                                          commentModif(c);
-                                        "
-                                        >Modify</b-button
-                                      >
-                                    </form>
-                                  </b-modal>
-                                  <b-dropdown-item v-b-modal="modalModifCommentMost(c.id)">Modify</b-dropdown-item>
-                                  <b-dropdown-item @click="deleteComment(c)">Delete</b-dropdown-item>
-                                </b-dropdown>
-                              </div>
-                              <p class="float-right">{{ c.dateCo | formatDate }}</p>
-                              <p class="ml-5">{{ c.contentCo }}</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </b-tab>
-                  </b-tabs>
+                    
                 </div>
               </div>
             </div>
@@ -982,10 +371,10 @@ import axios from 'axios';
 
 import '@/assets/sass/widgets/widgets.scss';
 import { mapGetters, mapActions } from 'vuex';
-import reply from './reply.vue'
+import likecomponent from './like-component.vue'
 export default {
   components:{
-    reply,
+    likecomponent,
   },
   data() {
     return {
@@ -994,9 +383,7 @@ export default {
       userprofile: [],
       userprofileRep: [],
       CurrentUserProfile: [],
-      commentsToShow: 3,
       replydetails: [],
-      likedrepliesbythisuser:null,
       comment: {
         contentCo: '',
         replyCo: '',
@@ -1016,8 +403,6 @@ export default {
         userprofileVo: '',
         replyVo: '',
       },
-      oldestreplies: [],
-      mostlikedreplies: [],
     };
   },
   computed: {
@@ -1035,19 +420,6 @@ export default {
     },
   },
   methods: {
-    
-    checkforlike(id){
-      let exist=false
-      for (let v in this.Votes){
-        if(this.Votes[v].replyVo==id && this.Votes[v].userprofileVo==this.CurrentUserProfile.id){
-          exist=true
-          this.showreplylike
-        }
-      }
-      if(exist==false){
-        return false
-      }else{return true}
-    },
     ...mapActions(['GetComments', 'GetQuestions', 'GetUsers', 'GetVotes', 'CreateVote', 'GetReplies', 'GetUserprofiles', 'CreateReply', 'CreateComment']),
     onFileChanged(event) {
       this.image = event.target.files[0];
@@ -1084,33 +456,6 @@ export default {
         nblikesR: rep.nblikesR - 1,
       });
       this.$router.go()
-    },
-    likedreply(rep) {
-      this.CreateVote({ replyVo: rep.id, userprofileVo: this.vote.userprofileVo });
-
-      axios.post('/reply/reply-update/' + rep.id + '/', {nblikesR: rep.nblikesR + 1,
-      });
-      
-    },
-    deleteReply(id) {
-      this.$swal({
-        icon: 'warning',
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        showCancelButton: true,
-        confirmButtonText: 'Delete',
-        padding: '2em',
-      }).then((result) => {
-        if (result.value) {
-          axios.delete(`http://127.0.0.1:8000/reply/reply-delete/${id}/`);
-          axios.put('/userprofile/userprofile-update/' + this.CurrentUserProfile.id + '/', { nbreplies: (this.CurrentUserProfile.nbreplies -= 1) });
-          axios.put('/question/question-update/' + this.$route.params.id + '/', {
-            nbrep: (this.question.nbrep -= 1),
-          });
-          this.$swal('Deleted!', 'Your reply has been deleted.', 'success');
-          this.$router.go();
-        }
-      });
     },
     deleteComment(c) {
       let replydetails = [];
@@ -1216,47 +561,14 @@ export default {
     modalModifReplyNewest(id) {
       return 'modalModifReplyNewest' + id;
     },
-    //oldest
-    modalCreateCommentOldest(i) {
-      return 'modalCreateCommentOldest' + i;
-    },
-    modalModifCommentOldest(id) {
-      return 'modalModifCommentOldest' + id;
-    },
-    modalModifReplyOldest(id) {
-      return 'modalModifReplyOldest' + id;
-    },
-    //most liked
-    modalCreateCommentMost(i) {
-      return 'modalCreateCommentMost' + i;
-    },
-    modalModifCommentMost(id) {
-      return 'modalModifCommentMost' + id;
-    },
-    modalModifReplyMost(id) {
-      return 'modalModifReplyMost' + id;
-    },
-    //right answer
-    modalCreateCommentRight(i) {
-      return 'modalCreateCommentRight' + i;
-    },
-    modalModifCommentRight(i) {
-      return 'modalModifCommentRight' + i;
-    },
   },
   created() {
-    //this.GetComments();
     this.GetQuestions();
     this.GetReplies();
     this.GetUsers();
     this.GetUserprofiles();
     this.GetVotes();
     this.GetComments();
-    //liked replies
-    
-    //sort by newest
-    this.oldestreplies = this.Replies.reverse();
-    this.mostlikedreplies = this.Replies.sort((a, b) => b.nblikesR - a.nblikesR);
     axios
       .get('/question/question-detail/' + this.$route.params.id + '/')
       .then((response) => {
@@ -1268,11 +580,6 @@ export default {
             for (let p in this.Userprofiles) {
               if (this.Userprofiles[p].userU == this.CurrentUser.id) {
                 this.CurrentUserProfile = this.Userprofiles[p];
-                for (let vo in this.Votes){
-                    if(this.CurrentUserProfile.id==this.Votes[vo].userprofileVo && this.Votes[vo].questionVo==null){
-                  this.likedrepliesbythisuser=+this.Votes[vo].replyVo
-                  }
-                  }
                 this.vote.questionVo = this.question.id;
                 this.vote.userprofileVo = this.CurrentUserProfile.id;
                 this.comment.userprofileCo = this.CurrentUserProfile.id;
