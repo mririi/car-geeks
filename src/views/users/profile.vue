@@ -129,6 +129,7 @@
                 </div>
                 <div class="education ml-4 col-lg-8">
                   <span class="ml-4">Rate this profile</span>
+                  <span v-if="CurrentUserprofile.id != userprofile.id">
                   <span v-if="isLoggedIn && existe == true">
                     <span v-b-modal.Rating>
                       <b-form-rating id="rating" v-model="average" color="primary" show-value show-value-max readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
@@ -138,6 +139,12 @@
                     <a href="/auth/login">
                       <b-form-rating id="rating" v-model="average" vcolor="primary" show-value show-value-max readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
                     </a>
+                  </span>
+                  </span>
+                  <span v-else>
+                    <span @click="showAlert()">
+                      <b-form-rating id="rating" v-model="average" color="primary" show-value show-value-max readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -312,6 +319,7 @@ export default {
           userEval: this.CurrentUser.id,
           nbEval: this.nbEval,
         });
+        this.GetEvaluationProfile()
       } else {
         for (let e in this.EvaluationProfile) {
           if (this.EvaluationProfile[e].userprofileEval == this.$route.params.id && this.EvaluationProfile[e].userEval == this.CurrentUser.id) {
@@ -328,8 +336,15 @@ export default {
             nbEval: this.nbEval,
           });
         }
+        this.GetEvaluationProfile()
       }
       this.$router.go();
+    },
+     async showAlert() {
+      this.$swal({
+        title: 'You cannot rating your profile',
+        padding: '2em',
+      });
     },
   },
   computed: {
@@ -372,9 +387,7 @@ export default {
     }
     axios.get('/userprofile/userprofile-detail/' + this.$route.params.id + '/').then((response) => {
       this.userprofile = response.data;
-    });
-
-    var sum = 0;
+      var sum = 0;
     var nb = 0;
     for (let e in this.EvaluationProfile) {
       if (this.EvaluationProfile[e].userprofileEval == this.$route.params.id) {
@@ -384,9 +397,13 @@ export default {
     }
     this.average = sum / nb;
 
-    axios.put('/userprofile/userprofile-update/' + this.$route.params.id + '/', {
+    axios.put('/userprofile/userprofile-update/' + this.userprofile.id + '/', {
       nbEvalProfile: this.average,
     });
+    this.userprofile.nbEvalProfile=this.average
+    });
+
+    
   },
 };
 </script>

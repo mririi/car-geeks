@@ -1,11 +1,15 @@
 <template>
   <div class="col-xl-12 col-lg-12 col-md-12 mb-4 mt-4 float-container">
     <b-card class="b-l-card-1">
-      <div class="float-right bg-danger  ml-2" style="border-radius: 50px; padding: 5px" v-if="CurrentUserProfile.id == service.userprofileS">
+      <div class="float-right bg-danger ml-2" style="border-radius: 50px; padding: 5px" v-if="CurrentUserProfile.id == service.userprofileS">
         <a @click="deleteService()"
-          ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="18" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 22 24"><path fill="currentColor" d="M16.313 4V2.144C16.313.96 15.353 0 14.169 0H7.831A2.142 2.142 0 0 0 5.69 2.189v-.002V4H0v2h.575c.196.023.372.099.515.214l-.002-.002c.119.157.203.346.239.552l.001.008l1.187 15.106c.094 1.84.094 2.118 2.25 2.118h12.462c2.16 0 2.16-.275 2.25-2.113l1.187-15.1c.036-.217.12-.409.242-.572l-.002.003a.994.994 0 0 1 .508-.212h.58v-2h-5.687zM7 2.187c0-.6.487-.938 1.106-.938h5.734c.618 0 1.162.344 1.162.938V4h-8zM6.469 20l-.64-12h1.269l.656 12zm5.225 0H10.32V8h1.375zm3.85 0h-1.275l.656-12h1.269z"/></svg>
+          ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="18" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 22 24">
+            <path
+              fill="currentColor"
+              d="M16.313 4V2.144C16.313.96 15.353 0 14.169 0H7.831A2.142 2.142 0 0 0 5.69 2.189v-.002V4H0v2h.575c.196.023.372.099.515.214l-.002-.002c.119.157.203.346.239.552l.001.008l1.187 15.106c.094 1.84.094 2.118 2.25 2.118h12.462c2.16 0 2.16-.275 2.25-2.113l1.187-15.1c.036-.217.12-.409.242-.572l-.002.003a.994.994 0 0 1 .508-.212h.58v-2h-5.687zM7 2.187c0-.6.487-.938 1.106-.938h5.734c.618 0 1.162.344 1.162.938V4h-8zM6.469 20l-.64-12h1.269l.656 12zm5.225 0H10.32V8h1.375zm3.85 0h-1.275l.656-12h1.269z"
+            />
+          </svg>
         </a>
-        
       </div>
       <div class="float-right bg-warning" style="border-radius: 100px; padding: 5px" v-if="CurrentUserProfile.id == service.userprofileS">
         <a :href="'/updateservice/' + service.id"
@@ -25,9 +29,8 @@
             <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
           </svg>
         </a>
-        
       </div>
-      
+
       <div class="float-child">
         <img :src="'http://127.0.0.1:8000' + service.imageS" class="img-fluid img-thumbnail" style="height: 350px; width: 100%" />
       </div>
@@ -41,17 +44,23 @@
         </p>
         <p class="card-text mb-2 ml-4">{{ service.details }}</p>
         <div class="w-50">
-          <span v-if="isLoggedIn && existe==true">
-          <span v-b-modal.Rating>
-          <b-form-rating id="rating" v-model="average"   variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
-          </span>
+          <span v-if="service.userprofileS != CurrentUserProfile.id">
+            <span v-if="isLoggedIn && existe == true">
+              <span v-b-modal.Rating>
+                <b-form-rating id="rating" v-model="average" variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
+              </span>
+            </span>
+            <span v-else>
+              <a href="/auth/login">
+                <b-form-rating id="rating" v-model="average" variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
+              </a>
+            </span>
           </span>
           <span v-else>
-          <a href="/auth/login">
-            <b-form-rating id="rating" v-model="average"   variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
-          </a>
+            <span @click="showAlert()">
+              <b-form-rating id="rating" v-model="average" variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
+            </span>
           </span>
-         
         </div>
         <h6 class="mb-4 ml-4">
           <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100">
@@ -105,7 +114,7 @@
         </h6>
       </div>
     </b-card>
-    
+
     <b-modal id="Rating" :title="'Rate ' + service.titleS" centered>
       <b-form-rating id="rating" v-model="nbEval" precision="2" show-value-max show-value variant="warning" size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
 
@@ -113,10 +122,40 @@
         <b-button variant="primary" @click="rating()">Submit your rating</b-button>
       </template>
     </b-modal>
+    <div class="row layout-top-spacing mt-5">
+      <div id="custom_carousel" class="col-lg-12 layout-spacing">
+        <div class="panel-body style-custom-1">
+          <div class="container" style="max-width: 928px">
+            <div class="row">
+              <h3 class="text-center mb-4">Related Services</h3>
+              <div class="col-lg-12 col-md-12 p-0">
+                <b-carousel ref="carousel1" :interval="4000" controls indicators class="style-custom-1">
+                  <span v-for="s in Services" :key="s.id">
+                    <span v-if="s.accepted == true">
+                      <a :href="'/servicedetails/'+s.id">
+                      <b-carousel-slide>
+                        <template #img>
+                          <img class="d-block w-100 slide-image" height="350px" :src="'http://127.0.0.1:8000' + s.imageS" alt="First slide" />
+                        </template>
+                       
+                        <h3><b-badge variant="warning">{{s.titleS}}</b-badge></h3>
+                       
+                      </b-carousel-slide>
+                      </a>
+                    </span>
+                  </span>
+                </b-carousel>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import '@/assets/sass/components/custom-carousel.scss';
 import axios from 'axios';
 import { mapGetters, mapActions } from 'vuex';
 export default {
@@ -129,17 +168,17 @@ export default {
       CurrentUserProfile: [],
       existe: false,
       average: 0,
-      average1:0,
-      average2:0,
-      average3:0,
+      average1: 0,
+      average2: 0,
+      average3: 0,
       nbEval: null,
     };
   },
 
   created: function () {
-    this.GetService();
     this.GetUserprofiles();
     this.GetServicetypes();
+    this.GetServices();
     this.GetUsers();
     this.GetEvaluations();
     for (let u in this.Users) {
@@ -150,7 +189,7 @@ export default {
     for (let u in this.Userprofiles) {
       if (this.Userprofiles[u].userU == this.CurrentUser.id) {
         this.CurrentUserProfile = this.Userprofiles[u];
-        this.existe=true
+        this.existe = true;
       }
     }
 
@@ -177,15 +216,15 @@ export default {
         }
       }
       this.average = sum / nb;
-      axios.post('/service/service-update/'+ this.service.id + '/', {
-          nbEval: this.average
-        });
+      axios.post('/service/service-update/' + this.service.id + '/', {
+        nbEval: this.average,
+      });
+      this.service.nbEval = this.average;
     });
-    
   },
   methods: {
-    ...mapActions(['GetService', 'GetUserprofiles', 'GetServicetypes', 'GetUsers', 'GetEvaluations']),
-    deleteService(){
+    ...mapActions(['GetUserprofiles', 'GetServicetypes', 'GetUsers', 'GetEvaluations', 'GetServices']),
+    deleteService() {
       this.$swal({
         icon: 'warning',
         title: 'Are you sure?',
@@ -209,7 +248,7 @@ export default {
           serviceEval: this.service.id,
           nbEval: this.nbEval,
         });
-        
+        this.GetEvaluations();
       } else {
         for (let e in this.Evaluations) {
           if (this.Evaluations[e].userprofileEval == this.CurrentUserProfile.id && this.Evaluations[e].serviceEval == this.service.id) {
@@ -217,7 +256,7 @@ export default {
               nbEval: this.nbEval,
             });
             done = true;
-         
+            this.GetEvaluations();
           }
         }
         if (done == false) {
@@ -226,20 +265,27 @@ export default {
             serviceEval: this.service.id,
             nbEval: this.nbEval,
           });
-    
+          this.GetEvaluations();
         }
+        this.GetEvaluations();
       }
       this.$router.go();
+    },
+    async showAlert() {
+      this.$swal({
+        title: 'You cannot rating your service',
+        padding: '2em',
+      });
     },
   },
   computed: {
     ...mapGetters({
-      Service: 'StateService',
       Userprofiles: 'StateUserprofiles',
       Servicetypes: 'StateServicetypes',
       User: 'StateUser',
       Users: 'StateUsers',
       Evaluations: 'StateEvaluations',
+      Services: 'StateServices',
     }),
     isLoggedIn: function () {
       return this.$store.getters.isAuthenticated;
