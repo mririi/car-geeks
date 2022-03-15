@@ -1,6 +1,12 @@
 <template>
   <div class="col-xl-12 col-lg-12 col-md-12 mb-4 mt-4 float-container">
     <b-card class="b-l-card-1">
+      <div class="float-right bg-danger  ml-2" style="border-radius: 50px; padding: 5px" v-if="CurrentUserProfile.id == service.userprofileS">
+        <a @click="deleteService()"
+          ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="18" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 22 24"><path fill="currentColor" d="M16.313 4V2.144C16.313.96 15.353 0 14.169 0H7.831A2.142 2.142 0 0 0 5.69 2.189v-.002V4H0v2h.575c.196.023.372.099.515.214l-.002-.002c.119.157.203.346.239.552l.001.008l1.187 15.106c.094 1.84.094 2.118 2.25 2.118h12.462c2.16 0 2.16-.275 2.25-2.113l1.187-15.1c.036-.217.12-.409.242-.572l-.002.003a.994.994 0 0 1 .508-.212h.58v-2h-5.687zM7 2.187c0-.6.487-.938 1.106-.938h5.734c.618 0 1.162.344 1.162.938V4h-8zM6.469 20l-.64-12h1.269l.656 12zm5.225 0H10.32V8h1.375zm3.85 0h-1.275l.656-12h1.269z"/></svg>
+        </a>
+        
+      </div>
       <div class="float-right bg-warning" style="border-radius: 100px; padding: 5px" v-if="CurrentUserProfile.id == service.userprofileS">
         <a :href="'/updateservice/' + service.id"
           ><svg
@@ -19,7 +25,9 @@
             <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
           </svg>
         </a>
+        
       </div>
+      
       <div class="float-child">
         <img :src="'http://127.0.0.1:8000' + service.imageS" class="img-fluid img-thumbnail" style="height: 350px; width: 100%" />
       </div>
@@ -165,6 +173,22 @@ export default {
   },
   methods: {
     ...mapActions(['GetService', 'GetUserprofiles', 'GetServicetypes', 'GetUsers', 'GetEvaluations']),
+    deleteService(){
+      this.$swal({
+        icon: 'warning',
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        showCancelButton: true,
+        confirmButtonText: 'Delete',
+        padding: '2em',
+      }).then((result) => {
+        if (result.value) {
+          axios.delete(`http://127.0.0.1:8000/service/service-delete/${this.service.id}/`);
+          this.$swal('Deleted!', 'Your Service has been deleted.', 'success');
+          this.$router.push('/services');
+        }
+      });
+    },
     async rating() {
       let done = false;
       if (this.Evaluations.length == 0) {
