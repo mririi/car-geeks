@@ -27,7 +27,16 @@
         </a>
         
       </div>
-      
+      <div class="float-right bg-success mr-2"  v-b-modal.promotion style="border-radius: 10px; padding: 5px" v-if="CurrentUserProfile.id == service.userprofileS && promoted==false">
+          Promote
+        <b-modal id="promotion" title="Promote your service !" centered>
+          <label>Number of days</label>
+          <b-input placeholder="1,3,7..etc" type="number" v-model="nbDays" min=1 value="7"></b-input>
+          <template #modal-footer>
+        <b-button variant="primary" @click="promote()">Submit your promotion request</b-button>
+      </template>
+        </b-modal>
+      </div>
       <div class="float-child">
         <img :src="'http://127.0.0.1:8000' + service.imageS" class="img-fluid img-thumbnail" style="height: 350px; width: 100%" />
       </div>
@@ -129,9 +138,8 @@ export default {
       CurrentUserProfile: [],
       existe: false,
       average: 0,
-      average1:0,
-      average2:0,
-      average3:0,
+      nbDays:7,
+      promoted:false,
       nbEval: null,
     };
   },
@@ -141,6 +149,7 @@ export default {
     this.GetServicetypes();
     this.GetUsers();
     this.GetEvaluations();
+    this.GetServicepromotions();
     for (let u in this.Users) {
       if (this.Users[u].username == this.User) {
         this.CurrentUser = this.Users[u];
@@ -161,7 +170,11 @@ export default {
           this.userprofile = this.Userprofiles[u];
         }
       }
-
+      for (let s in this.Servicepromotions){
+        if(this.Servicepromotions[s].serviceP==this.service.id){
+          this.promoted=true
+        }
+      }
       for (let t in this.Servicetypes) {
         if (this.Servicetypes[t].id == this.service.typeS) {
           this.type = this.Servicetypes[t];
@@ -184,7 +197,11 @@ export default {
     
   },
   methods: {
-    ...mapActions([ 'GetUserprofiles', 'GetServicetypes', 'GetUsers', 'GetEvaluations']),
+    ...mapActions(['GetServicepromotions', 'GetUserprofiles','CreateServicepromotion', 'GetServicetypes', 'GetUsers', 'GetEvaluations']),
+    promote(){
+      this.CreateServicepromotion({serviceP:this.service.id,nbDays:this.nbDays})
+      this.promoted=true
+    },
     deleteService(){
       this.$swal({
         icon: 'warning',
@@ -240,6 +257,7 @@ export default {
       User: 'StateUser',
       Users: 'StateUsers',
       Evaluations: 'StateEvaluations',
+      Servicepromotions:'StateServicepromotions'
     }),
     isLoggedIn: function () {
       return this.$store.getters.isAuthenticated;

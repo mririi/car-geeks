@@ -28,6 +28,7 @@ const state = {
   servicetypes:null,
   services:null,
   evaluations:null,
+  servicepromotions:null,
   //OTHERS
   reclamations:null,
   preferences:null,
@@ -67,6 +68,7 @@ const getters = {
   StateServices: (state) => state.services,
   StateServicetypes: (state) => state.servicetypes,
   StateEvaluations:(state) => state.evaluations,
+  StateServicepromotions:(state) => state.servicepromotions,
   //OTHERS
   StatePreferences: (state) => state.preferences,
   StateReclamations: (state) => state.reclamations,
@@ -231,6 +233,14 @@ const actions = {
     let response = await axios.get("servicetype/servicetype-list/");
     commit("setServicetypes", response.data);
   },
+  async CreateServicepromotion({ dispatch }, servicepro) {
+    await axios.post("/servicepromotion/servicepromotion-create/", servicepro);
+    return await dispatch("GetServicepromotions");
+  },
+  async GetServicepromotions({ commit }) {
+    let response = await axios.get("servicepromotion/servicepromotion-list/");
+    commit("setServicepromotions", response.data);
+  },
   async GetEvaluations({ commit }) {
     let response = await axios.get("evaluation/evaluation-list/");
     commit("setEvaluations", response.data);
@@ -332,6 +342,9 @@ const mutations = {
   },
   setServicetypes(state, servicetypes) {
     state.servicetypes = servicetypes;
+  },
+  setServicepromotions(state, servicepromotions) {
+    state.servicepromotions = servicepromotions;
   },
   setEvaluations(state,evaluations)
   {

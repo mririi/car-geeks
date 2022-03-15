@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "emailapp",
     "reply",
     "badge",
+    "servicepromotion",
     "questioncategory",
     "evaluation",
     "evaluationprofile",
