@@ -10,6 +10,7 @@ class Service(models.Model):
   details = models.TextField(unique=True,null=True,blank=True)
   addressS = models.CharField(max_length=200,null=True,blank=True)
   accepted = models.BooleanField(default=False)
+  promoted = models.BooleanField(default=False)
   country = models.CharField(max_length=200,null=True,blank=True)
   dateS = models.DateTimeField(auto_now_add=True)
   imageS = models.ImageField(upload_to='images/',null=True, blank=True)

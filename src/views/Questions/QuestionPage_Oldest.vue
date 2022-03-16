@@ -145,7 +145,6 @@
           <h5 class="mt-4 ml-4 mb-5"> Answers</h5>
           <div id="mediaObjectNotationIcon" class="col-lg-12 layout-spacing mt-5">     
             <div class="panel-heading col-12">
-              <div v-if="question.nbrep != 0" class="row">
                 <div class="panel-body mb-3  col-xl-12">
                     <b-tab class="mt-5" title="Oldest" active>
                       <div v-for="rep in oldestreplies" :key="rep.id">
@@ -354,7 +353,6 @@
                     </b-tab>
                 </div>
                 
-              </div>
             </div>
           </div>
         </div>
