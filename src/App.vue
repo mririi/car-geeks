@@ -21,7 +21,8 @@ import serviceLayout from './layouts/service-layout.vue';
             app: appLayout,
             auth: authLayout,
             question: questionLayout,
-            service: serviceLayout
+            service: serviceLayout,
+            
         },
         computed: {
             layout() {

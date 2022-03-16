@@ -344,6 +344,15 @@ const routes = [
             layout: 'app'
           }
     },
+    //Dashboard
+    {
+        path: '/dashboard',
+        name: 'dashboard',
+        component: () => import( '../views/Admin/Dashboard.vue'),
+        meta: {
+            layout: 'dashboard'
+          }
+    },
     //elements
     {
         path: '/elements/alerts',
@@ -688,6 +697,8 @@ router.beforeEach((to, from, next) => {
         store.commit('setLayout', 'question');
     } else if (to.meta && to.meta.layout && to.meta.layout == 'service') {
         store.commit('setLayout', 'service');
+    } else if (to.meta && to.meta.layout && to.meta.layout == 'dashboard') {
+        store.commit('setLayout', 'dashboard');
     } else{
         store.commit('setLayout', 'app');
     }
