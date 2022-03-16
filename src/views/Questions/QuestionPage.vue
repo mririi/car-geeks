@@ -14,25 +14,60 @@
       </ul>
     </portal>
     <div class="col-xl-12 mt-3 col-lg-6 col-md-12 col-sm-12 col-12 layout-spacing">
+      
       <div class="widget widget-card-one">
+        <div v-if="CurrentUserProfile.id == question.userprofileQ">
+              <b-dropdown variant="icon-only"  toggle-tag="a" size="1em" class="mb-4 mr-2 custom-dropdown mt-3 float-right">
+                <template #button-content>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    style="width: 18px; height: 18px"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-more-vertical"
+                  >
+                    <circle cx="12" cy="12" r="1"></circle>
+                    <circle cx="12" cy="5" r="1"></circle>
+                    <circle cx="12" cy="19" r="1"></circle>
+                  </svg>
+                </template>
+                <b-dropdown-item :href="'/updatequestion/'+question.id">Modify</b-dropdown-item>
+                <b-dropdown-item @click="deleteQuestion(question.id)">Delete</b-dropdown-item>
+              </b-dropdown>
+              </div>
         <div class="widget-heading">
+          
           <b-media>
             
             <template #aside>
               <div class="w-img">
                 <img :src="'http://127.0.0.1:8000' + userprofile.imageU" alt="avatar" />
               </div>
+              
             </template>
+            
             <router-link :to="'/profile/'+userprofile.id">
             <h6>{{ userprofile.firstname }} {{ userprofile.lastname }}</h6>
             </router-link>
+            
             <p class="meta-date-time">{{ question.dateQ | formatDate }}</p>
-            <h4 class="mt-5">{{ question.titleQ }}</h4>
+            
+            <b-card class="bg-transparent border-0 col-12">
+          <b-card-text>  <h4 class="font-weight-bold">{{ question.titleQ }}</h4></b-card-text></b-card>
             
           </b-media>
         </div>
+        
         <div class="widget-content">
-          <h6 class="ml-5 mb-5">{{ question.contentQ }}</h6>
+          <b-card class="bg-transparent border-0 col-6">
+            <b-card-text>
+          <h6 class="ml-5 mb-5">{{ question.contentQ }}</h6></b-card-text></b-card>
           <div class="widget-content mb-5" v-if="question.imageQ != null">
             <img :src="'http://127.0.0.1:8000' + question.imageQ" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
           </div>
@@ -113,7 +148,10 @@
                     <path fill="currentColor" d="m21.558 3.592l-1.15-1.15a1.49 1.49 0 0 0-2.12 0L13 7.731V11h3.27l5.288-5.288a1.49 1.49 0 0 0 0-2.12ZM15.579 9.45h-1.03V8.42L18 4.973l1.03 1.03Z" />
                     <path fill="currentColor" d="M19 19H5V5h6V3H5a2.006 2.006 0 0 0-2 2v14a2.006 2.006 0 0 0 2 2h14a2.006 2.006 0 0 0 2-2v-6h-2Z" />
                   </svg>
-                  <b-form-textarea type="text" v-model="replies.contentR" class="mb-2" placeholder="Enter your reply content here"></b-form-textarea>
+                  <b-form-textarea type="text" v-model="replies.contentR" class="mb-2" :class="[is_submit_reply ? (replies.contentR && replies.contentR.length<500 && replies.contentR.length>25 ? 'is-valid' : 'is-invalid') : '']" placeholder="Enter your reply content here"></b-form-textarea>
+                  <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
+                      <b-form-invalid-feedback :class="{ 'd-block': is_submit_reply && !replies.contentR }">Please Enter content between 25 and 500 characters</b-form-invalid-feedback>
+                    
                   <div class="mt-4 mb-5">
                     <svg xmlns="http://www.w3.org/2000/svg" class="mb-1" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
                       <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
@@ -122,7 +160,7 @@
                         <path d="M14.526 12.621L6 22h12.133A3.867 3.867 0 0 0 22 18.133V18c0-.466-.175-.645-.49-.99l-4.03-4.395a2 2 0 0 0-2.954.006Z" />
                       </g>
                     </svg>
-                    <b-file @change="onFileChanged"></b-file>
+                    <b-file @change="onFileChanged" ></b-file>                    
                   </div>
                 </div>
                 <b-button
@@ -131,7 +169,6 @@
                   class="mt-2 mb-2"
                   @click="
                     reply();
-                    $bvModal.hide('exampleModalCenter');
                   "
                   >Submit</b-button
                 >
@@ -147,7 +184,6 @@
                     </b-button-group>
                     </div>
           <h5 class="mt-4 ml-4"> Answers</h5>
-              <div v-if="question.nbrep != 0" >
                 <div id="mediaObjectNotationIcon" class="col-lg-12 layout-spacing mt-5 row">
             <div class="panel-heading col-12">
                 <div class="panel-body mb-3 pill-justify-right col-xl-12">
@@ -165,7 +201,9 @@
                                   />
                                   <path fill="currentColor" d="M19 19H5V5h6V3H5a2.006 2.006 0 0 0-2 2v14a2.006 2.006 0 0 0 2 2h14a2.006 2.006 0 0 0 2-2v-6h-2Z" />
                                 </svg>
-                                <b-form-textarea type="text" v-model="rep.contentR" class="mb-2" placeholder="Enter your reply content here"></b-form-textarea>
+                                <b-form-textarea type="text" v-model="rep.contentR" class="mb-2" :class="[is_submit_replymodif ? (rep.contentR && rep.contentR.length<500 && rep.contentR.length>25 ? 'is-valid' : 'is-invalid') : '']" placeholder="Enter your reply content here"></b-form-textarea>
+                                <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
+                      <b-form-invalid-feedback :class="{ 'd-block': is_submit_replymodif && !rep.contentR }">Please Enter content between 25 and 500 characters</b-form-invalid-feedback>
                                 <div class="mt-4 mb-5">
                                   <svg xmlns="http://www.w3.org/2000/svg" class="mb-1" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
                                     <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
@@ -183,7 +221,6 @@
                                 class="mt-2 mb-2"
                                 @click="
                                   replyModif(rep);
-                                  $bvModal.hide(modalModifReplyNewest(rep.id));
                                 "
                                 >Submit</b-button
                               >
@@ -220,13 +257,17 @@
                                   </svg>
                                 </template>
                                 <b-dropdown-item v-b-modal="modalModifReplyNewest(rep.id)">Modify</b-dropdown-item>
-                                <b-dropdown-item @click="deleteReply(rep.id)">Delete</b-dropdown-item>
+                                <b-dropdown-item @click="deleteReply(rep)">Delete</b-dropdown-item>
                               </b-dropdown>
                             </div>
                             <p class="meta-date-time media-text mb-4">{{ rep.dateR | formatDate }}</p>
+                            <b-card class="bg-transparent border-0 w-50">
+                              <b-card-text>
                             <h5 class="media-text ml-5 mb-1">
                               {{ rep.contentR }}
                             </h5>
+                             </b-card-text>
+                             </b-card>
                             <div v-if="rep.imageR != null" class="widget-content mb-4">
                               <img :src="'http://127.0.0.1:8000' + rep.imageR" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
                             </div>
@@ -278,14 +319,15 @@
                                       />
                                       <path fill="currentColor" d="M19 19H5V5h6V3H5a2.006 2.006 0 0 0-2 2v14a2.006 2.006 0 0 0 2 2h14a2.006 2.006 0 0 0 2-2v-6h-2Z" />
                                     </svg>
-                                    <b-form-textarea type="text" class="mb-2" v-model="comment.contentCo" placeholder="Enter your comment here"></b-form-textarea>
+                                    <b-form-textarea type="text" class="mb-2" v-model="comment.contentCo" :class="[is_submit_comment ? (comment.contentCo && comment.contentCo.length<200 && comment.contentCo.length>25 ? 'is-valid' : 'is-invalid') : '']" placeholder="Enter your comment here"></b-form-textarea>
+                                  <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
+                      <b-form-invalid-feedback :class="{ 'd-block': is_submit_comment && !comment.contentCo }">Please Enter content between 25 and 200 characters</b-form-invalid-feedback>
                                   </div>
                                   <b-button
                                     variant="primary"
                                     block
                                     class="mt-2 mb-2"
                                     @click="
-                                      $bvModal.hide(modalCreateCommentNewest(rep.id));
                                       commentaire(rep);
                                     "
                                     >Submit</b-button
@@ -328,14 +370,16 @@
                                           />
                                           <path fill="currentColor" d="M19 19H5V5h6V3H5a2.006 2.006 0 0 0-2 2v14a2.006 2.006 0 0 0 2 2h14a2.006 2.006 0 0 0 2-2v-6h-2Z" />
                                         </svg>
-                                        <b-form-textarea type="text" class="mb-2" v-model="c.contentCo" placeholder="Modify your comment here"></b-form-textarea>
+                                        <b-form-textarea type="text" class="mb-2" :class="[is_submit_commentmodif ? (c.contentCo && c.contentCo.length<200 && c.contentCo.length>25 ? 'is-valid' : 'is-invalid') : '']" v-model="c.contentCo" placeholder="Modify your comment here"></b-form-textarea>
+                                      <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
+                      <b-form-invalid-feedback :class="{ 'd-block': is_submit_commentmodif && !c.contentCo }">Please Enter content between 25 and 200 characters</b-form-invalid-feedback>
+                    
                                       </div>
                                       <b-button
                                         variant="primary"
                                         block
                                         class="mt-2 mb-2"
                                         @click="
-                                          $bvModal.hide(modalModifCommentNewest(c.id));
                                           commentModif(c);
                                         "
                                         >Modify</b-button
@@ -347,7 +391,7 @@
                                 </b-dropdown>
                               </div>
                               <p class="float-right mr-4" style="font-size: 10px">{{ c.dateCo | formatDate }}</p>
-                              <p class="ml-5">{{ c.contentCo }}</p>
+                              <b-card class="ml-5 bg-transparent border-0"><b-card-text>{{ c.contentCo }}</b-card-text></b-card>
                               <hr width="90%" />
                             </div>
                           </div>
@@ -358,7 +402,6 @@
                 </div>
               </div>
             </div>
-          </div>
         </div>
       </div>
     </div>
@@ -403,6 +446,10 @@ export default {
         userprofileVo: '',
         replyVo: '',
       },
+      is_submit_reply:false,
+      is_submit_replymodif:false,
+      is_submit_comment:false,
+      is_submit_commentmodif:false,
     };
   },
   computed: {
@@ -423,6 +470,27 @@ export default {
     ...mapActions(['GetComments', 'GetQuestions', 'GetUsers', 'GetVotes', 'CreateVote', 'GetReplies', 'GetUserprofiles', 'CreateReply', 'CreateComment']),
     onFileChanged(event) {
       this.image = event.target.files[0];
+    },
+    deleteQuestion() {
+      this.$swal({
+        icon: 'warning',
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        showCancelButton: true,
+        confirmButtonText: 'Delete',
+        padding: '2em',
+      }).then((result) => {
+        if (result.value) {
+          axios.delete(`/question/question-delete/${this.question.id}/`);
+          axios.put('/userprofile/userprofile-update/' + this.CurrentUserProfile.id + '/', {
+            nbquestions: (this.CurrentUserProfile.nbquestions -= 1),
+          });
+          this.$swal('Deleted!', 'Your question has been deleted.', 'success');
+          this.GetQuestions()
+          this.$router.push('/questions');
+        }
+      });
+     
     },
     deleteliked() {
       for (let v in this.Votes) {
@@ -445,17 +513,6 @@ export default {
       });
       this.likedQuestion = true;
       this.likes += 1;
-    },
-    deletelikedreply(rep) {
-      for (let v in this.Votes) {
-        if (this.Votes[v].replyVo === rep.id && this.Votes[v].userprofileVo === this.CurrentUserProfile.id) {
-          axios.delete('/vote/vote-delete/' + this.Votes[v].id + '/');
-        }
-      }
-      axios.post('/reply/reply-update/' + rep.id + '/', {
-        nblikesR: rep.nblikesR - 1,
-      });
-      this.$router.go()
     },
     deleteComment(c) {
       let replydetails = [];
@@ -481,15 +538,36 @@ export default {
         }
       });
     },
+    deleteReply(r) {
+      this.$swal({
+        icon: 'warning',
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        showCancelButton: true,
+        confirmButtonText: 'Delete',
+        padding: '2em',
+      }).then((result) => {
+        if (result.value) {
+            axios.put('/question/question-update/' + this.question.id + '/', {
+              nblikes: (this.question.nblikes -= 1),
+            });
+          axios.delete(`http://127.0.0.1:8000/reply/reply-delete/${r.id}/`);
+          this.$swal('Deleted!', 'Your comment has been deleted.', 'success');
+          this.$router.go();
+        }
+      });
+    },
     async reply() {
       try {
+        this.is_submit_reply=true
+        if(this.replies.contentR && this.replies.contentR.length<500 && this.replies.contentR.length>25){
+          this.$bvModal.hide("exampleModalCenter")
         for (let u in this.Userprofiles) {
           if (this.Userprofiles[u].userU == this.CurrentUser.id) {
             this.userprofileRep = this.Userprofiles[u].id;
             this.CurrentUserProfile = this.Userprofiles[u];
           }
         }
-
         var formdata = new FormData();
         if (this.image != null) {
           formdata.append('imageR', this.image);
@@ -504,27 +582,36 @@ export default {
         this.replies.contentR = '';
         await axios.put('/userprofile/userprofile-update/' + this.userprofileRep + '/', { nbreplies: (this.CurrentUserProfile.nbreplies += 1) });
         this.GetReplies();
-        this.oldestreplies = this.Replies.reverse();
-        this.mostlikedreplies = this.Replies.sort((a, b) => b.nblikesR - a.nblikesR);
-      } catch (error) {
+        this.is_submit_reply=false
+        this.image=null
+      }} catch (error) {
         throw 'Il ya un error!';
       }
     },
     async replyModif(r) {
       try {
+        
         this.replies.contentR = r.contentR;
+        this.is_submit_replymodif=true
+        if(this.replies.contentR && this.replies.contentR.length<500 && this.replies.contentR.length>25){
+          this.$bvModal.hide('modalModifReplyNewest'+r.id)
         var formdata = new FormData();
         if (this.image != null) {
           formdata.append('imageR', this.image);
         }
         formdata.append('contentR', this.replies.contentR);
+        formdata.append('checked', r.checked);
         await axios.post('/reply/reply-update/' + r.id + '/', formdata);
         this.GetReplies();
-      } catch (error) {
+        this.is_submit_replymodif=false
+      }} catch (error) {
         throw 'Il ya un errora !';
       }
     },
     async commentaire(rep) {
+      this.is_submit_comment=true
+        if(this.comment.contentCo && this.comment.contentCo.length<200 && this.comment.contentCo.length>25){
+          this.$bvModal.hide('modalCreateCommentNewest'+rep.id)
       axios.get('/reply/reply-detail/' + rep.id + '/').then((response) => {
         this.replydetails = response.data;
       });
@@ -536,17 +623,24 @@ export default {
         });
         this.GetReplies();
         this.comment.contentCo = '';
+        this.is_submit_comment=false
+      
       } catch (error) {
         throw 'Il ya un errora !';
-      }
+      }}
     },
     async commentModif(c) {
       try {
         this.comment.contentCo = c.contentCo;
+        this.is_submit_commentmodif=true
+        if(this.comment.contentCo && this.comment.contentCo.length<200 && this.comment.contentCo.length>25){
+          this.$bvModal.hide('modalModifCommentNewest'+c.id)
+        
         await axios.post('/comment/comment-update/' + c.id + '/', { contentCo: this.comment.contentCo });
         this.GetReplies();
         this.GetComments();
-      } catch (error) {
+        this.is_submit_commentmodif=false
+      }} catch (error) {
         throw 'Il ya un errora !';
       }
     },

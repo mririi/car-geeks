@@ -143,7 +143,6 @@
                     </b-button-group>
                     </div>
           <h5 class="mt-4 ml-4"> Answers</h5>
-              <div v-if="question.nbrep != 0" >
                 <div id="mediaObjectNotationIcon" class="col-lg-12 layout-spacing mt-5 row">
             <div class="panel-heading col-12">
                 <div class="panel-body mb-3 pill-justify-right col-xl-12">
@@ -360,7 +359,6 @@
                 </div>
               </div>
             </div>
-          </div>
         </div>
       </div>
     </div>

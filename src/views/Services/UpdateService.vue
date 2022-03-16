@@ -31,9 +31,9 @@
                   <b-form novalidate @submit.prevent="submit">
                     <label >Title <span style="color:red">*</span></label>
                     <b-form-group class="mb-3">
-                      <b-input type="text" placeholder="Service title " v-model="form.titleS" :class="[is_submit_form1 ? (form.titleS && form.titleS.length<100 && form.titleS.length>15 ? 'is-valid' : 'is-invalid') : '']"></b-input>
+                      <b-input type="text" placeholder="Service title " v-model="form.titleS" :class="[is_submit_form1 ? (form.titleS && form.titleS.length<24 && form.titleS.length>15 ? 'is-valid' : 'is-invalid') : '']"></b-input>
                       <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
-                      <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.titleS  }">Please enter a title between 15 and 100 characters</b-form-invalid-feedback>
+                      <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.titleS  }">Please enter a title between 15 and 24 characters</b-form-invalid-feedback>
                     </b-form-group>
                     <label >Service details <span style="color:red">*</span></label>
                     <b-form-group class="mb-3">

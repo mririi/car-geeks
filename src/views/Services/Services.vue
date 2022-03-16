@@ -59,26 +59,48 @@
                 
                    <div class="fq-article-section">
                     <div class="row">
-                        <div v-for="s in filterByCategory" :key="s.id" class="col-lg-4 col-md-6 mb-lg-0 mb-4 text-center">
+                        <div v-for="s in filterByPromoted" :key="s.id" class="col-lg-4 col-md-6 mb-lg-0 mb-4 text-center">
                           <a v-if="s.accepted==true" :href="'/servicedetails/'+s.id"> 
-                          <b-badge variant="danger">Promoted</b-badge>
-                           <b-card  :img-src="'http://127.0.0.1:8000' + s.imageS" class="mt-3 cardzoom" img-top img-width="100px" img-height="200px">
+                          
+                           <b-card  :img-src="'http://127.0.0.1:8000' + s.imageS" class="mt-3 cardzoom " img-top img-width="100px" img-height="200px">
+                           
                             <h5 class="card-title">{{s.titleS}}
-                              <div v-for="t in Servicetypes" :key="t.id">
-                                <div v-if="s.typeS==t.id">
-                                <b-badge class="mt-2" variant="warning">{{ t.descT }}</b-badge>
-                                </div>
-                              </div>
+                              <b-badge class="text-center" variant="danger">Promoted</b-badge>
+                              
                                 </h5>
                                 <div class="fq-rating mb-2">
                                     <b-form-rating id="rating" v-model="s.nbEval" show-value readonly variant="warning" size="lg" class=" bg-transparent border-0">
                                     </b-form-rating>
                                     </div>
-                                    
-                                
+                                    <div v-for="t in Servicetypes" :key="t.id">
+                                <div v-if="s.typeS==t.id">
+                                <b-badge class=" mb-1" variant="warning">{{ t.descT }}</b-badge>
+                                </div>
+                              </div>
                                 <p class="card-text">In {{s.addressS}}</p>
                                 <p class="meta-text">
+                            {{s.priceS}} DT</p>
+                            </b-card></a>
+                            </div>
+                        <div v-for="s in filterByNotPromoted" :key="s.id" class="col-lg-4 col-md-6 mb-lg-0 mb-4 text-center">
+                          <a v-if="s.accepted==true" :href="'/servicedetails/'+s.id"> 
+                          
+                           <b-card  :img-src="'http://127.0.0.1:8000' + s.imageS" class="mt-3 cardzoom" img-top img-width="100px" img-height="200px">
                            
+                            <h5 class="card-title">{{s.titleS}}
+                              
+                                </h5>
+                                <div class="fq-rating mb-2">
+                                    <b-form-rating id="rating" v-model="s.nbEval" show-value readonly variant="warning" size="lg" class=" bg-transparent border-0">
+                                    </b-form-rating>
+                                    </div>
+                                    <div v-for="t in Servicetypes" :key="t.id">
+                                <div v-if="s.typeS==t.id">
+                                <b-badge class="mb-2" variant="warning">{{ t.descT }}</b-badge>
+                                </div>
+                              </div>
+                                <p class="card-text">In {{s.addressS}}</p>
+                                <p class="meta-text mt-2 mb-4">
                             {{s.priceS}} DT</p>
                             </b-card></a>
                             </div>
@@ -110,11 +132,12 @@ import { mapGetters, mapActions } from 'vuex';
         },
         mounted() {},
         methods: {
-            ...mapActions(['GetServices','GetServicetypes', 'GetUsers', 'GetUserprofiles']),
+            ...mapActions(['GetServices','GetServicepromotions','GetServicetypes', 'GetUsers', 'GetUserprofiles']),
         },
         computed: {
     ...mapGetters({
       Services: 'StateServices',
+      Servicepromotions: 'StateServicepromotions',
       Userprofiles: 'StateUserprofiles',
       Servicetypes: 'StateServicetypes',
       User: 'StateUser',
@@ -130,16 +153,22 @@ import { mapGetters, mapActions } from 'vuex';
         return service.titleS.toLowerCase().includes(this.search.toLowerCase());
       });
     },
-    filterByCategory: function () {
+    filterByCategory() {
       if (this.category != '') {
         return this.filteredList.filter((service) => this.category.includes(service.typeS));
       } else return this.filteredList;
+    },
+    filterByPromoted: function () {
+        return this.filterByCategory.filter((servicep) => {return servicep.promoted==true});
+    },
+    filterByNotPromoted: function () {
+        return this.filterByCategory.filter((servicep) => {return servicep.promoted==false});
     },
   },
         created: function () {
         this.GetServices();
         this.GetServicetypes();
-        
+        this.GetServicepromotions();
         }
     };
 </script>

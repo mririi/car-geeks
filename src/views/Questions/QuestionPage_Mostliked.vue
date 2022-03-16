@@ -135,7 +135,7 @@
             </b-modal>
           </div>
           
-              
+               
                 <div class="float-right mt-4 mb-4">
                   <b-button-group>
                     <a class="btn btn-primary" :href="'/questionpagerightanswer/'+question.id+'/'">Right Answer</a>
@@ -145,7 +145,7 @@
                     </b-button-group>
                     </div>
                 <h5 class="mt-4 ml-4"> Answers</h5>
-                <div v-if="question.nbrep != 0" >
+                
                 <div class="panel-body mb-3 pill-justify-right col-xl-12">
                   <div id="mediaObjectNotationIcon" class="col-lg-12 layout-spacing mt-5 row">
             <div class="panel-heading col-12">
@@ -354,7 +354,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          
         </div>
       </div>
     </div>
