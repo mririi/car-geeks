@@ -11,6 +11,7 @@
     import '@/assets/sass/app.scss';
 import questionLayout from './layouts/question-layout.vue';
 import serviceLayout from './layouts/service-layout.vue';
+import dashboardLayout from './layouts/dashboard-layout.vue';
 
     export default {
         metaInfo: {
@@ -22,7 +23,7 @@ import serviceLayout from './layouts/service-layout.vue';
             auth: authLayout,
             question: questionLayout,
             service: serviceLayout,
-            
+            dashboard: dashboardLayout
         },
         computed: {
             layout() {

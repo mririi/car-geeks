@@ -60,7 +60,9 @@
                    <div class="fq-article-section">
                     <div class="row">
                         <div v-for="s in filterByCategory" :key="s.id" class="col-lg-4 col-md-6 mb-lg-0 mb-4 text-center">
-                          <a v-if="s.accepted==true" :href="'/servicedetails/'+s.id">  <b-card  :img-src="'http://127.0.0.1:8000' + s.imageS" class="mt-3 cardzoom" img-top img-width="100px" img-height="200px">
+                          <a v-if="s.accepted==true" :href="'/servicedetails/'+s.id"> 
+                          <b-badge variant="danger">Promoted</b-badge>
+                           <b-card  :img-src="'http://127.0.0.1:8000' + s.imageS" class="mt-3 cardzoom" img-top img-width="100px" img-height="200px">
                             <h5 class="card-title">{{s.titleS}}
                               <div v-for="t in Servicetypes" :key="t.id">
                                 <div v-if="s.typeS==t.id">
@@ -72,6 +74,7 @@
                                     <b-form-rating id="rating" v-model="s.nbEval" show-value readonly variant="warning" size="lg" class=" bg-transparent border-0">
                                     </b-form-rating>
                                     </div>
+                                    
                                 
                                 <p class="card-text">In {{s.addressS}}</p>
                                 <p class="meta-text">

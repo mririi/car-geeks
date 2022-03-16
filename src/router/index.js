@@ -7,11 +7,12 @@ Vue.use(VueRouter);
 
 const routes = [
     //dashboard
-    { path: '/', 
-    name: 'Home', 
-    component: Home,
-    meta: { layout: 'auth' }
-},
+    {
+        path: '/',
+        name: 'Home',
+        component: Home,
+        meta: { layout: 'auth' }
+    },
 
     {
         path: '/index2',
@@ -177,10 +178,11 @@ const routes = [
     {
         path: '/auth/userinfo',
         name: 'userinfo',
-        component: () => import( '../views/auth/stepper_userinfo.vue'),
-        meta: { layout: 'auth',
+        component: () => import('../views/auth/stepper_userinfo.vue'),
+        meta: {
+            layout: 'auth',
             requiresAuth: true
-           }
+        }
     },
     {
         path: '/auth/register-boxed',
@@ -221,7 +223,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "auth-lockscreen" */ '../views/Services/ServiceDetails.vue'),
         meta: { layout: 'service' }
     },
-   
+
     {
         path: '/auth/pass-recovery',
         name: 'pass-recovery',
@@ -232,126 +234,145 @@ const routes = [
     {
         path: '/questions',
         name: 'questions',
-        component: () => import( '../views/Questions/Questions.vue'),
+        component: () => import('../views/Questions/Questions.vue'),
         meta: { layout: 'question' }
     },
-     //Add Question
-     {
+    //Add Question
+    {
         path: '/addquestion',
         name: 'addquestion',
-        component: () => import( '../views/Questions/AddQuestion.vue'),
+        component: () => import('../views/Questions/AddQuestion.vue'),
         meta: {
             requiresAuth: true,
         }
-        
+
     },
-     //Update Question
-     {
+    //Update Question
+    {
         path: "/updatequestion/:id",
         name: "UpdateQuestion",
-        component: () => import( '../views/Questions/UpdateQuestion.vue'),
+        component: () => import('../views/Questions/UpdateQuestion.vue'),
         meta: {
-          requiresAuth: true,
-          layout: 'question'
+            requiresAuth: true,
+            layout: 'question'
         }
-      },
+    },
     //Question Page(newest)
     {
         path: '/questionpage/:id',
         name: 'questionpage',
-        component: () => import( '../views/Questions/QuestionPage.vue'),
+        component: () => import('../views/Questions/QuestionPage.vue'),
         meta: {
             layout: 'question'
-          }
+        }
     },
     //Question Page(oldest)
     {
         path: '/questionpageoldest/:id',
         name: 'questionpageoldest',
-        component: () => import( '../views/Questions/QuestionPage_Oldest.vue'),
+        component: () => import('../views/Questions/QuestionPage_Oldest.vue'),
         meta: {
             layout: 'question'
-          }
+        }
     },
     //Question Page(oldest)
     {
         path: '/questionpagemostliked/:id',
         name: 'questionpagemostliked',
-        component: () => import( '../views/Questions/QuestionPage_Mostliked.vue'),
+        component: () => import('../views/Questions/QuestionPage_Mostliked.vue'),
         meta: {
             layout: 'question'
-          }
+        }
     },
     //Question Page(oldest)
     {
         path: '/questionpagerightanswer/:id',
         name: 'questionpagerightanswer',
-        component: () => import( '../views/Questions/QuestionPage_Rightanswer.vue'),
+        component: () => import('../views/Questions/QuestionPage_Rightanswer.vue'),
         meta: {
             layout: 'question'
-          }
+        }
     },
     //Services
     {
         path: '/services',
         name: 'services',
-        component: () => import( '../views/Services/Services.vue'),
+        component: () => import('../views/Services/Services.vue'),
         meta: {
             layout: 'service'
-          }
+        }
     },
     {
         path: '/addservice',
         name: 'addservice',
-        component: () => import( '../views/Services/AddService.vue'),
+        component: () => import('../views/Services/AddService.vue'),
         meta: {
             requiresAuth: true,
-          }
+        }
     },
     {
         path: '/updateservice/:id',
         name: 'updateservice',
-        component: () => import( '../views/Services/UpdateService.vue'),
+        component: () => import('../views/Services/UpdateService.vue'),
         meta: {
             layout: 'service',
             requiresAuth: true,
-          }
+        }
     },
     //Entreprises
     {
         path: '/entreprises',
         name: 'entreprises',
-        component: () => import( '../views/Entreprises/Entreprises.vue'),
+        component: () => import('../views/Entreprises/Entreprises.vue'),
         meta: {
             layout: 'app'
-          }
+        }
     },
     //News
     {
         path: '/news',
         name: 'news',
-        component: () => import( '../views/Others/News.vue'),
+        component: () => import('../views/Others/News.vue'),
         meta: {
             layout: 'app'
-          }
+        }
     },
     //Groups
     {
         path: '/groups',
         name: 'groups',
-        component: () => import( '../views/Groups/Groups.vue'),
+        component: () => import('../views/Groups/Groups.vue'),
         meta: {
             layout: 'app'
-          }
+        }
     },
     //Dashboard
     {
         path: '/dashboard',
         name: 'dashboard',
-        component: () => import( '../views/Admin/Dashboard.vue'),
+        component: () => import('../views/Admin/Dashboard.vue'),
         meta: {
             layout: 'dashboard'
-          }
+        }
+    },
+       //Users
+    {
+        path: "/dashboard/users",
+        name: 'users',
+        component: () => import('../views/Admin/Users.vue'),
+        meta: {
+            layout: 'dashboard'
+        },
+    },
+
+     //Questions Dashboard
+     {
+        path: "/dashboard/questionlist",
+        name: 'questionlist',
+        component: () => import('../views/Admin/QuestionList.vue'),
+        meta: {
+            layout: 'dashboard'
+        },
     },
     //elements
     {
@@ -699,21 +720,21 @@ router.beforeEach((to, from, next) => {
         store.commit('setLayout', 'service');
     } else if (to.meta && to.meta.layout && to.meta.layout == 'dashboard') {
         store.commit('setLayout', 'dashboard');
-    } else{
+    } else {
         store.commit('setLayout', 'app');
     }
     next(true);
 });
 router.beforeEach((to, from, next) => {
     if (to.matched.some((record) => record.meta.requiresAuth)) {
-      if (store.getters.isAuthenticated) {
-        next();
-        return;
-      }
-      next("/auth/login");
+        if (store.getters.isAuthenticated) {
+            next();
+            return;
+        }
+        next("/auth/login");
     } else {
-      next();
+        next();
     }
-  });
-  
+});
+
 export default router;

@@ -14,7 +14,7 @@
       </ul>
     </portal>
    
-<div>
+<div class="col-lg-12">
   <iframe class="mt-2" width="1310" height="800" src="https://rss.app/embed/v1/magazine/4eFLJJsnzlqsSpvm" frameborder="0"></iframe>
 </div>
 </div>

@@ -34,7 +34,7 @@
                 </router-view>
 
                 <!-- BEGIN FOOTER -->
-                <Footer></Footer>
+              
                 <!-- END FOOTER -->
             </div>
             <!--  END CONTENT AREA  -->
@@ -47,15 +47,16 @@
 </template>
 <script>
     import Header from '@/components/layout/header.vue';
-    import dasboardsidebar from '@/components/layout/dashboardsidebar.vue';
-    import Footer from '@/components/layout/footer.vue';
+ 
+  
     import appSettings from '@/components/app-settings.vue';
+import Dasboardsidebar from '@/components/layout/dasboardsidebar.vue';
     export default {
         components: {
             Header,
-            dasboardsidebar,
-            Footer,
-            appSettings
+           
+            appSettings,
+                Dasboardsidebar
         },
         data() {
             return {};

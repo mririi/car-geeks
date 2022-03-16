@@ -23,6 +23,7 @@ urlpatterns = [
     path('userprofile/',include('userprofile.urls')),
     path('car/',include('car.urls')),
     path('vote/',include('vote.urls')),
+    path('servicepromotion/',include('servicepromotion.urls')),
     path('userentreprise/',include('userentreprise.urls')),
     path('auth/', obtain_auth_token),
     path('api/password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
