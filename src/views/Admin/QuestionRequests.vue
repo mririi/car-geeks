@@ -56,37 +56,56 @@
 
         <div class="panel-body">
           <b-table responsive bordered hover :items="filterByCategory" :fields="fields">
-            <template #cell(accepted)="data">
-              <span v-if="data.item.accepted == true">
-                <b-badge variant="success">Accepted</b-badge>
-              </span>
-              <span v-else>
+            <template #cell(accepted)>
+              <span>
                 <b-badge variant="danger">Pending</b-badge>
               </span>
             </template>
             <template #cell(dateQ)="data">
-               {{data.item.dateQ |formatDate}}
+              {{ data.item.dateQ | formatDate }}
             </template>
             <template #cell(userprofileQ)="data">
               <span v-for="u in Userprofiles" :key="u.id">
-                <span v-if="u.id == data.item.userprofileQ">
-                   {{u.firstname}} {{u.lastname}}
-                </span>
+                <span v-if="u.id == data.item.userprofileQ"> {{ u.firstname }} {{ u.lastname }} </span>
               </span>
             </template>
             <template #cell(categoryQ)="data">
               <span v-for="c in Questioncategories" :key="c.id">
                 <span v-if="c.id == data.item.categoryQ">
-                   {{c.typeC}}
+                  {{ c.typeC }}
                 </span>
               </span>
             </template>
-             <template #cell(imageQ)="data">
-                <span v-if="data.item.imageQ!=null">
-              <b-avatar :src="'http://127.0.0.1:8000'+data.item.imageQ" size="4rem" rounded="lg"  alt="" srcset=""/>
+            <template #cell(actions)="data">
+              <span @click="Accept(data.item.id,data.item.userprofileQ)">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="feather feather-check-circle text-primary ac"
+                >
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+              </span>
+            </template>
+            <template #cell(imageQ)="data">
+              <span v-if="data.item.imageQ != null">
+                <b-avatar :src="'http://127.0.0.1:8000' + data.item.imageQ" size="4rem" rounded="lg" alt="" srcset="" />
               </span>
               <span v-else>
-                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="4em" height="4em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 64 64"><path fill="currentColor" d="M32 2C15.432 2 2 15.432 2 32.001C2 48.567 15.432 62 32 62s30-13.433 30-29.999C62 15.432 48.568 2 32 2zm22 30.001c0 4.629-1.433 8.922-3.876 12.465l-30.591-30.59A21.889 21.889 0 0 1 32 10c12.15 0 22 9.851 22 22.001zm-44 0a21.9 21.9 0 0 1 3.876-12.468l30.591 30.591A21.887 21.887 0 0 1 32 54.001c-12.15 0-22-9.852-22-22z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="4em" height="4em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 64 64">
+                  <path
+                    fill="currentColor"
+                    d="M32 2C15.432 2 2 15.432 2 32.001C2 48.567 15.432 62 32 62s30-13.433 30-29.999C62 15.432 48.568 2 32 2zm22 30.001c0 4.629-1.433 8.922-3.876 12.465l-30.591-30.59A21.889 21.889 0 0 1 32 10c12.15 0 22 9.851 22 22.001zm-44 0a21.9 21.9 0 0 1 3.876-12.468l30.591 30.591A21.887 21.887 0 0 1 32 54.001c-12.15 0-22-9.852-22-22z"
+                  />
+                </svg>
               </span>
             </template>
           </b-table>
@@ -99,10 +118,14 @@
 .table3 .actions svg {
   padding: 2px;
 }
+.ac {
+  cursor: pointer;
+}
 </style>
 <script>
 import '@/assets/sass/apps/contacts.scss';
 import { mapGetters, mapActions } from 'vuex';
+import axios from 'axios';
 export default {
   metaInfo: { title: 'Bootstrap Custom Table' },
   data() {
@@ -124,17 +147,31 @@ export default {
       fields: [
         { key: 'imageQ', label: 'Image', class: 'text-center  ' },
         { key: 'titleQ', label: 'Title' },
+        { key: 'contentQ', label: 'Content' },
         { key: 'dateQ', label: 'Date' },
         { key: 'categoryQ', label: 'Category' },
         { key: 'nbrep', label: 'Replies' },
         { key: 'userprofileQ', label: 'User' },
         { key: 'accepted', label: 'Status', class: 'text-center  ' },
+        { key: 'actions', label: 'Actions', class: 'text-center  ' },
       ],
     };
   },
 
   methods: {
     ...mapActions(['GetQuestions', 'GetUsers', 'GetUserprofiles', 'GetQuestioncategories']),
+    async Accept(id , userid) {
+      await axios.put('/question/question-update/' + id + '/', { accepted: true });
+      for(let u in this.Userprofiles)
+      {
+          if(this.Userprofiles[u].id==userid)
+          {
+           await axios.put('/userprofile/userprofile-update/' + userid + '/', { nbquestions:this.Userprofiles[u].nbquestions+=1  });
+          }
+      }
+      
+      this.$router.go();
+    },
   },
   computed: {
     ...mapGetters({
@@ -147,7 +184,7 @@ export default {
 
     filteredList() {
       return this.Questions.filter((question) => {
-        return question.titleQ.toLowerCase().includes(this.search.toLowerCase());
+        return question.titleQ.toLowerCase().includes(this.search.toLowerCase()) && question.accepted == false;
       });
     },
     filterByCategory: function () {

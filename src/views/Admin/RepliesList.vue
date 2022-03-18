@@ -7,7 +7,7 @@
             <nav class="breadcrumb-one" aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:;">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><span>Questions</span></li>
+                <li class="breadcrumb-item active" aria-current="page"><span>Replies</span></li>
               </ol>
             </nav>
           </div>
@@ -20,42 +20,14 @@
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-3 filtered-list-search layout-spacing align-self-center">
           <form class="form-inline my-2 my-lg-0">
             <div class="">
-              <b-input v-model.trim="search" class="product-search" placeholder="Search Questions..." />
-              <span v-b-toggle.collapse-1 class="ml-2 mt-2 justify-content-end">
-                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="22" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36">
-                  <path
-                    fill="currentColor"
-                    d="M22 33V19.5L33.47 8A1.81 1.81 0 0 0 34 6.7V5a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1.67a1.79 1.79 0 0 0 .53 1.27L14 19.58v10.2Z"
-                    class="clr-i-solid clr-i-solid-path-1"
-                  />
-                  <path
-                    fill="currentColor"
-                    d="M33.48 4h-31a.52.52 0 0 0-.48.52v1.72a1.33 1.33 0 0 0 .39.95l12 12v10l7.25 3.61V19.17l12-12a1.35 1.35 0 0 0 .36-.91V4.52a.52.52 0 0 0-.52-.52Z"
-                    class="clr-i-solid clr-i-solid-path-1"
-                  />
-                  <path fill="none" d="M0 0h36v36H0z" />
-                </svg>
-                <span class="h6">Filter</span>
-              </span>
-              <b-collapse id="collapse-1">
-                <b-card class="bg-transparent border-0 border-white w-50 ml-3 default mt-2 mb-4">
-                  <b-form-group label="Categories : " v-slot="{ ariaDescribedby }">
-                    <b-form-checkbox-group id="checkbox-group-2" v-model="category" :aria-describedby="ariaDescribedby" name="flavour-a1">
-                      <div v-for="c in Questioncategories" :key="c.id">
-                        <b-form-checkbox :value="c.id">
-                          {{ c.typeC }}
-                        </b-form-checkbox>
-                      </div>
-                    </b-form-checkbox-group>
-                  </b-form-group>
-                </b-card>
-              </b-collapse>
+              <b-input v-model.trim="search" class="product-search" placeholder="Search Replies..." />
+             
             </div>
           </form>
         </div>
 
         <div class="panel-body">
-          <b-table responsive bordered hover :items="filterByCategory" :fields="fields">
+          <b-table responsive bordered hover :items="filteredList" :fields="fields">
             <template #cell(accepted)="data">
               <span v-if="data.item.accepted == true">
                 <b-badge variant="success">Accepted</b-badge>
@@ -64,26 +36,28 @@
                 <b-badge variant="danger">Pending</b-badge>
               </span>
             </template>
-            <template #cell(dateQ)="data">
-               {{data.item.dateQ |formatDate}}
+            <template #cell(dateR)="data">
+               {{data.item.dateR |formatDate}}
             </template>
-            <template #cell(userprofileQ)="data">
+            <template #cell(userprofileRep)="data">
               <span v-for="u in Userprofiles" :key="u.id">
-                <span v-if="u.id == data.item.userprofileQ">
+                <span v-if="u.id == data.item.userprofileRep">
                    {{u.firstname}} {{u.lastname}}
                 </span>
               </span>
             </template>
-            <template #cell(categoryQ)="data">
-              <span v-for="c in Questioncategories" :key="c.id">
-                <span v-if="c.id == data.item.categoryQ">
-                   {{c.typeC}}
+            <template #cell(questionRep)="data">
+              <span v-for="q in Questions" :key="q.id">
+                <span v-if="q.id == data.item.questionRep">
+                    <router-link :to="'/questionpage/'+q.id">
+                   {{q.titleQ}}
+                    </router-link>
                 </span>
               </span>
             </template>
-             <template #cell(imageQ)="data">
-                <span v-if="data.item.imageQ!=null">
-              <b-avatar :src="'http://127.0.0.1:8000'+data.item.imageQ" size="4rem" rounded="lg"  alt="" srcset=""/>
+            <template #cell(imageR)="data">
+                <span v-if="data.item.imageR!=null">
+              <b-avatar :src="'http://127.0.0.1:8000'+data.item.imageR" size="4rem" rounded="lg"  alt="" srcset=""/>
               </span>
               <span v-else>
                 <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="4em" height="4em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 64 64"><path fill="currentColor" d="M32 2C15.432 2 2 15.432 2 32.001C2 48.567 15.432 62 32 62s30-13.433 30-29.999C62 15.432 48.568 2 32 2zm22 30.001c0 4.629-1.433 8.922-3.876 12.465l-30.591-30.59A21.889 21.889 0 0 1 32 10c12.15 0 22 9.851 22 22.001zm-44 0a21.9 21.9 0 0 1 3.876-12.468l30.591 30.591A21.887 21.887 0 0 1 32 54.001c-12.15 0-22-9.852-22-22z"/></svg>
@@ -122,19 +96,20 @@ export default {
       search: '',
       CurrentUser: [],
       fields: [
-        { key: 'imageQ', label: 'Image', class: 'text-center  ' },
-        { key: 'titleQ', label: 'Title' },
-        { key: 'dateQ', label: 'Date' },
-        { key: 'categoryQ', label: 'Category' },
-        { key: 'nbrep', label: 'Replies' },
-        { key: 'userprofileQ', label: 'User' },
-        { key: 'accepted', label: 'Status', class: 'text-center  ' },
+        { key: 'imageR', label: 'Image' ,class: 'text-center ' },
+        { key: 'contentR', label: 'Content' },
+        { key: 'dateR', label: 'Date' },
+        { key: 'nblikesR', label: 'Likes' },
+        { key: 'nbCommentR', label: 'Comments' },
+        { key: 'userprofileRep', label: 'User' },
+        { key: 'questionRep', label: 'Question'},
+        { key: 'accepted', label: 'Status', class: 'text-center' },
       ],
     };
   },
 
   methods: {
-    ...mapActions(['GetQuestions', 'GetUsers', 'GetUserprofiles', 'GetQuestioncategories']),
+    ...mapActions(['GetQuestions','GetReplies', 'GetUsers', 'GetUserprofiles', 'GetQuestioncategories']),
   },
   computed: {
     ...mapGetters({
@@ -143,24 +118,22 @@ export default {
       Questioncategories: 'StateQuestioncategories',
       User: 'StateUser',
       Users: 'StateUsers',
+      Replies:'StateReplies'
     }),
 
     filteredList() {
-      return this.Questions.filter((question) => {
-        return question.titleQ.toLowerCase().includes(this.search.toLowerCase());
+      return this.Replies.filter((rep) => {
+        return rep.contentR.toLowerCase().includes(this.search.toLowerCase());
       });
     },
-    filterByCategory: function () {
-      if (this.category != '') {
-        return this.filteredList.filter((question) => this.category.includes(question.categoryQ));
-      } else return this.filteredList;
-    },
+    
   },
   created: function () {
     this.GetQuestions();
     this.GetUserprofiles();
     this.GetQuestioncategories();
     this.GetUsers();
+    this.GetReplies();
     /*for (let q in this.Questions) {
      this.items[q].title = this.Questions[q].titleQ;
       this.items[q].date = this.Questions[q].dateQ;

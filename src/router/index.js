@@ -374,6 +374,51 @@ const routes = [
             layout: 'dashboard'
         },
     },
+    //Questions Requests
+    {
+        path: "/dashboard/questionrequests",
+        name: 'questionrequests',
+        component: () => import('../views/Admin/QuestionRequests.vue'),
+        meta: {
+            layout: 'dashboard'
+        },
+    },
+     //Replies Dashboard
+     {
+        path: "/dashboard/replieslist",
+        name: 'replieslist',
+        component: () => import('../views/Admin/RepliesList.vue'),
+        meta: {
+            layout: 'dashboard'
+        },
+    },
+    //Replies Requests
+    {
+        path: "/dashboard/repliesrequests",
+        name: 'repliesrequests',
+        component: () => import('../views/Admin/RepliesRequests.vue'),
+        meta: {
+            layout: 'dashboard'
+        },
+    },
+    //Comments dashboard
+    {
+        path: "/dashboard/commentslist",
+        name: 'commentslist',
+        component: () => import('../views/Admin/CommentList.vue'),
+        meta: {
+            layout: 'dashboard'
+        },
+    },
+    //Services dashboard
+    {
+        path: "/dashboard/servicelist",
+        name: 'servicelist',
+        component: () => import('../views/Admin/ServiceList.vue'),
+        meta: {
+            layout: 'dashboard'
+        },
+    },
     //elements
     {
         path: '/elements/alerts',

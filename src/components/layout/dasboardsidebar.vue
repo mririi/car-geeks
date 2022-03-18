@@ -50,7 +50,7 @@
           <b-collapse id="quest" accordion="menu">
             <ul class="collapse submenu list-unstyled show">
               <router-link tag="li" to="/dashboard/questionlist" @click.native="toggleMobileMenu"><a>Questions List</a></router-link>
-              <router-link tag="li" to="/apps/mailbox" @click.native="toggleMobileMenu"><a>Create requests</a></router-link>
+              <router-link tag="li" to="/dashboard/questionrequests" @click.native="toggleMobileMenu"><a>Add Question requests</a></router-link>
             </ul>
           </b-collapse>
         </li>
@@ -84,8 +84,8 @@
           </a>
           <b-collapse id="rep" accordion="menu">
             <ul class="collapse submenu list-unstyled show">
-              <router-link tag="li" to="/apps/chat" @click.native="toggleMobileMenu"><a>Replies List</a></router-link>
-              <router-link tag="li" to="/apps/mailbox" @click.native="toggleMobileMenu"><a>Replies requests</a></router-link>
+              <router-link tag="li" to="/dashboard/replieslist" @click.native="toggleMobileMenu"><a>Replies List</a></router-link>
+              <router-link tag="li" to="/dashboard/repliesrequests" @click.native="toggleMobileMenu"><a>Add Reply requests</a></router-link>
             </ul>
           </b-collapse>
         </li>
@@ -119,7 +119,7 @@
           </a>
           <b-collapse id="comment" accordion="menu">
             <ul class="collapse submenu list-unstyled show">
-              <router-link tag="li" to="/apps/chat" @click.native="toggleMobileMenu"><a>Comments List</a></router-link>
+              <router-link tag="li" to="/dashboard/commentslist" @click.native="toggleMobileMenu"><a>Comments List</a></router-link>
              
             </ul>
           </b-collapse>
@@ -154,7 +154,7 @@
           </a>
           <b-collapse id="services" accordion="menu">
             <ul class="collapse submenu list-unstyled show">
-              <router-link tag="li" to="/apps/chat" @click.native="toggleMobileMenu"><a>Services List</a></router-link>
+              <router-link tag="li" to="/dashboard/servicelist" @click.native="toggleMobileMenu"><a>Services List</a></router-link>
               <router-link tag="li" to="/apps/mailbox" @click.native="toggleMobileMenu"><a>Create Requests</a></router-link>
             </ul>
           </b-collapse>
