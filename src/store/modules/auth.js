@@ -9,7 +9,9 @@ const state = {
   users:null,
   userprofiles:null,
   evaluationprofile:null,
+  evaluationentreprises:null,
   userentreprises:null,
+  entreprisepromotions:null,
   roles:null,
   //QUESTION
   questions: null,
@@ -50,7 +52,10 @@ const getters = {
   StateUserprofiles: (state) => state.userprofiles,
   StateUserentreprises: (state) => state.userentreprises,
   StateisEntreprise: (state) => state.isEntreprise,
+  StateEntreprisepromotions: (state) => state.Entreprisepromotions,
   StateEvaluationProfile:(state) => state.evaluationprofile,
+  StateEvaluationentreprises:(state) => state.evaluationentreprises,
+
   //QUESTION
   StateQuestions: (state) => state.questions,
   StateQuestioncategories: (state) => state.questioncategories,
@@ -109,6 +114,10 @@ const actions = {
     let response = await axios.get("userentreprise/userentreprise-list/");
     commit("setUserentreprises", response.data);
   },
+  async GetEntreprisepromotions({ commit }) {
+    let response = await axios.get("entreprisepromotion/entreprisepromotion-list/");
+    commit("setEntreprisepromotions", response.data);
+  },
   async GetUsers({ commit }) {
     let response = await axios.get("user/users/");
     commit("setUsers", response.data);
@@ -117,6 +126,14 @@ const actions = {
     await axios.post("/userprofile/userprofile-create/", profile);
     return await dispatch("GetUserprofiles");
   },
+  async CreateUserentreprise({ dispatch }, profile) {
+    await axios.post("/userentreprise/userentreprise-create/", profile);
+    return await dispatch("GetUserentreprises");
+  },
+  async CreateEntreprisepromotion({ dispatch }, entreprise) {
+    await axios.post("/entreprisepromotion/entreprisepromotion-create/", entreprise);
+    return await dispatch("GetServicepromotions");
+  },
   async GetUserprofiles({ commit }) {
     let response = await axios.get("userprofile/userprofile-list/");
     commit("setUserprofiles", response.data);
@@ -124,6 +141,10 @@ const actions = {
   async GetEvaluationProfile({ commit }) {
     let response = await axios.get("evaluationprofile/evaluationprofile-list/");
     commit("setEvaluationProfile", response.data);
+  },
+  async GetEvaluationentreprises({ commit }) {
+    let response = await axios.get("evaluationentreprise/evaluationentreprise-list/");
+    commit("setEvaluationentreprises", response.data);
   },
   //QUESTION
   async CreateQuestion({ dispatch }, question) {
@@ -288,9 +309,16 @@ const mutations = {
   setUserentreprises(state, userentreprises) {
     state.userentreprises = userentreprises;
   },
+  setEntreprisepromotions(state, entreprisepromotions) {
+    state.entreprisepromotions = entreprisepromotions;
+  },
  setEvaluationProfile(state,evaluationprofile)
  {
  state.evaluationprofile=evaluationprofile;
+ },
+ setEvaluationentreprises(state,evaluationentreprise)
+ {
+ state.evaluationentreprises=evaluationentreprise;
  },
   setisEntreprise(state, is) {
     state.isEntreprise = is;

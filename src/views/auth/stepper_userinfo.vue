@@ -57,6 +57,7 @@
                         class="country-select"
                         v-model="form.country"
                         :country="form.country"
+                        countryName
                         topCountry="US"
                         :class="[is_submit_form1 ? (form.country ? 'is-valid' : 'is-invalid') : '']"
                       />
@@ -183,7 +184,6 @@ export default {
         formdata.append('lastname', this.form.lastname);
         formdata.append('firstname', this.form.firstname);
         formdata.append('address', this.form.address);
-        formdata.append('email', this.form.email);
         formdata.append('age', this.form.age);
         formdata.append('tel', this.form.tel);
         formdata.append('country', this.form.country);

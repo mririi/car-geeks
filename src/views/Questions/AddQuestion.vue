@@ -52,6 +52,11 @@
                     </b-select>
                     <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
                       <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.categoryQ }">Please fill the Category</b-form-invalid-feedback>
+               <!--      <vue-tags-input
+      v-model="tag"
+      :tags="tags"
+      @tags-changed="newTags => tags = newTags"
+    />-->
                      <small id="emailHelp2" class="form-text text-muted mt-3"><span style="color:red">*</span> Required Fields</small>
                     <b-button  @click="submit" variant="primary" class="mt-4 justfiy-content-end">Submit</b-button>
                   </b-form>
@@ -73,17 +78,23 @@
 import '@/assets/sass/components/cards/card.scss';
 import '@/assets/sass/forms/file-upload-with-preview.min.css';
 import { mapGetters, mapActions } from 'vuex';
+//import VueTagsInput from '@johmun/vue-tags-input';
 
 export default {
   name: 'Questions',
-  components: {},
+  components: {
+   // VueTagsInput,
+    },
   data() {
     return {
+      tag: '',
+      tags: [],
       form: {
         titleQ: '',
         contentQ: '',
         userprofileQ:'',
-        categoryQ:0
+        categoryQ:0,
+        
       },
       image:null,
       uprofile:[],
@@ -140,6 +151,7 @@ export default {
         formdata.append("titleQ", this.form.titleQ);
         formdata.append("contentQ", this.form.contentQ);
         formdata.append("categoryQ", this.form.categoryQ);
+        //formdata.append("tags", this.tags.text);
         formdata.append("userprofileQ", this.form.userprofileQ);
         console.log(this.form.categoryQ)
         await this.CreateQuestion(formdata);

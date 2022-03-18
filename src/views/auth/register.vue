@@ -98,6 +98,15 @@
                     </svg>
                     <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.password.length > 6 }">Please enter a password longer than 6 characters !</b-form-invalid-feedback>
                   </div>
+                  <b-form-checkbox
+                id="checkbox-1"
+                v-model="check"
+                name="checkbox-1"
+                value="1"
+                class="text-white mb-3"
+              >
+                I am an entreprise
+              </b-form-checkbox>
                   <div class="d-sm-flex justify-content-between">
                     <div class="field-wrapper">
                       <b-button type="submit" variant="primary">Get Started!</b-button>
@@ -150,6 +159,7 @@ export default {
   metaInfo: { title: 'Register Boxed' },
   data() {
     return {
+      check: null,
       pwd_type: 'password',
       form: {
         username: '',
@@ -161,7 +171,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['Register']),
+    ...mapActions(["CreateRole","isEntreprise",'Register']),
     set_pwd_type() {
       if (this.pwd_type == 'password') {
         this.pwd_type = 'text';
@@ -176,10 +186,18 @@ export default {
     },
     async submit() {
       this.is_submit_form1 = true;
-      if (this.form.username && this.form.password && this.form.email) {
+      if (this.form.username && this.form.username.length>6 && this.form.password.length>6 && this.form.password && this.form.email) {
         try {
           await this.Register(this.form);
-          this.$router.push('/auth/userinfo');
+          if (this.check==null){
+        await this.isEntreprise(false)
+        this.$router.push('/auth/userinfo');
+        }else if (this.check==1){
+          await this.isEntreprise(true)
+          await this.CreateRole({entreprise:true})
+          this.$router.push('/auth/userentrepriseinfo');
+        }
+          
         } catch (error) {
           console.log(error);
           this.valid = false;

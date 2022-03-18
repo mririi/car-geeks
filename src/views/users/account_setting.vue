@@ -93,7 +93,7 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label for="country">Country</label>
-                            <country-select class="country-select"  :country="form.country"
+                            <country-select class="country-select" countryName  :country="form.country"
                         v-model="form.country" />
                           </div>
                         </div>

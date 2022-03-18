@@ -396,11 +396,16 @@
                         </b-dropdown-item>
                     </b-dropdown></span>
                     <span v-if="isLoggedIn">
-                    <b-dropdown toggle-tag="a" variant="icon-only" toggle-class="user nav-link" class="nav-item user-profile-dropdown mt-1" :right="true">
+                    <b-dropdown toggle-tag="a" variant="icon-only" toggle-class="user nav-link" class="nav-item user-profile-dropdown " :right="true">
                         <template #button-content>
+                            <span v-if="Userprofile.length!=0">
                             <img :src="'http://127.0.0.1:8000' + Userprofile.imageU" class="navbar-logo"  />
+                            </span>
+                            <span v-if="Userprofile.length==0">
+                                <img :src="'http://127.0.0.1:8000' + Userentreprise.imageE" class="navbar-logo"  />
+                            </span>
                         </template>
-                         <span v-if="CurrentUserprofile!=null">
+                         <span v-if="Userprofile.length!=0">
                         <b-dropdown-item :to="'/profile/' + Userprofile.id">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -418,6 +423,26 @@
                                 <circle cx="12" cy="7" r="4"></circle>
                             </svg>
                             Profile
+                        </b-dropdown-item>
+                        </span>
+                        <span v-else-if="Userprofile.length==0">
+                        <b-dropdown-item :to="'/entreprisedetails/' + Userentreprise.id">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="feather feather-user"
+                            >
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            Portfolio
                         </b-dropdown-item>
                         </span>
                         <span v-else>
@@ -504,8 +529,8 @@
                         </b-dropdown-item>
                     </b-dropdown></span>
                     <span class="mt-2" v-if="isLoggedIn==false">
-                    <a href="http://localhost:8080/auth/login" class="mt-2 ml-3">Login</a>
-                    <a href="http://localhost:8080/auth/register" class="mt-2 ml-3 mr-3">Register</a>
+                    <a href="auth/login" class="mt-2 ml-3">Login</a>
+                    <a href="auth/register" class="mt-2 ml-3 mr-3">Register</a>
                     </span>
                 </div>
             </header>
@@ -948,8 +973,7 @@
                             <li><a target="_blank" href="/pages/coming-soon">Coming Soon</a></li>
                             <router-link tag="li" to="/pages/blank-page"><a>Blank Page</a></router-link>
                             <router-link tag="li" to="/pages/sample"><a>Sample Page</a></router-link>
-
-                            <router-link tag="li" to="/users/profile"><a>Profile</a></router-link>
+                            <router-link tag="li" to="/profile/"><a>Profile</a></router-link>
                             <router-link tag="li" to="/users/account-setting"><a>Account Settings</a></router-link>
                             <li class="sub-sub-submenu-list">
                                 <a href="javascript:;" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -1136,6 +1160,7 @@ import { mapGetters, mapActions } from "vuex";
                 selectedLang: null,
                 countryList: this.$store.state.countryList,
                 Userprofile:[],
+                Userentreprise:[],
                 CurrentUser:[],
                 query: '',
                 searchResultsVisible: false,
@@ -1166,6 +1191,7 @@ import { mapGetters, mapActions } from "vuex";
             ...mapGetters({
             Questions: "StateQuestions",
             Userprofiles: "StateUserprofiles",
+            Userentreprises: "StateUserentreprises",
             Users:"StateUsers",
             User:"StateUser"
             }),
@@ -1234,12 +1260,14 @@ import { mapGetters, mapActions } from "vuex";
         ...mapActions([
       "GetQuestions",
       "GetUserprofiles",
+      "GetUserentreprises",
       "GetUsers",
     ]),
         },
         created: function () {
     this.GetQuestions()
     this.GetUserprofiles()
+    this.GetUserentreprises()
     this.GetUsers()
     console.log(this.User)
     for (let u in this.Users) {
@@ -1247,13 +1275,21 @@ import { mapGetters, mapActions } from "vuex";
           if (this.Users[u].username == this.User) {
             this.CurrentUser = this.Users[u];
           }
-        }
+        }console.log(this.Userprofile)
     for (let u in this.Userprofiles){
         {
             if(this.Userprofiles[u].userU==this.CurrentUser.id){
                 this.Userprofile=this.Userprofiles[u]
+                console.log(this.Userprofile)
             }
 
+        }
+    }
+    
+    for (let e in this.Userentreprises){
+        if(this.Userentreprises[e].userE==this.CurrentUser.id){
+            this.Userentreprise=this.Userentreprises[e]
+            console.log(this.Userentreprise)
         }
     }
   },

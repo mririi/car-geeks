@@ -25,6 +25,8 @@ urlpatterns = [
     path('vote/',include('vote.urls')),
     path('servicepromotion/',include('servicepromotion.urls')),
     path('userentreprise/',include('userentreprise.urls')),
+    path('entreprisepromotion/',include('entreprisepromotion.urls')),
+    path('evaluationentreprise/',include('evaluationentreprise.urls')),
     path('auth/', obtain_auth_token),
     path('api/password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
     path('emailapp/',include('emailapp.urls'))

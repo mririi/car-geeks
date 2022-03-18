@@ -71,6 +71,7 @@
                         class="country-select"
                         v-model="form.country"
                         :country="form.country"
+                        countryName
                         topCountry="US"
                         :class="[is_submit_form1 ? (form.country ? 'is-valid' : 'is-invalid') : '']"
                       />
