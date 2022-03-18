@@ -138,12 +138,13 @@ export default {
   created: function () {
     this.GetUsers();
     this.GetUserprofiles();
+    this.GetUserentreprises();
   },
   computed: {
-    ...mapGetters({Roles: 'StateRoles', Userprofiles: 'StateUserprofiles', Users: 'StateUsers' }),
+    ...mapGetters({Roles: 'StateRoles',Userentreprises:'StateUserentreprises', Userprofiles: 'StateUserprofiles', Users: 'StateUsers' }),
   },
   methods: {
-    ...mapActions(['LogIn','Register','CreateRole', 'GetRoles', 'GetUsers', 'GetUserprofiles']),
+    ...mapActions(['LogIn','Register','CreateRole','GetUserentreprises', 'GetRoles', 'GetUsers', 'GetUserprofiles']),
     set_pwd_type() {
       if (this.pwd_type == 'password') {
         this.pwd_type = 'text';
@@ -179,8 +180,18 @@ export default {
               existuserprofile = true;
             }
           }
+          let exi=false
           if (existuserprofile == false) {
-            this.$router.push('/auth/userinfo');
+            for(let e in this.Userentreprises){
+              if(this.Userentreprises[e].userE==this.CurrentUser.id){
+                this.$router.push('/auth/userentrepriseinfo');
+                exi=true
+              }
+            }
+            if(exi==false){
+              this.$router.push('/auth/userinfo');
+            }
+            
           } else {
             this.$router.push('/questions');
             this.valid = true;

@@ -40,6 +40,9 @@
       </template>
         </b-modal>
       </div>
+      <div v-if="service.promoted==true" class="float-right mr-1" style="border-radius: 5px;padding:5px" >
+       <b-badge variant="success"> Promoted Service</b-badge>
+      </div>
       <div class="float-child">
         <img :src="'http://127.0.0.1:8000' + service.imageS" class="img-fluid img-thumbnail" style="height: 350px; width: 100%" />
       </div>
@@ -213,6 +216,15 @@ export default {
       for (let s in this.Servicepromotions){
         if(this.Servicepromotions[s].serviceP==this.service.id){
           this.promoted=true
+          const d = new Date(this.Servicepromotions[s].dateP)
+          d.setDate(d.getDate() + parseInt(this.Servicepromotions[s].nbDays))
+          console.log(new Date())
+          if(new Date()>new Date(this.Servicepromotions[s].dateP)){
+            axios.delete(`http://127.0.0.1:8000/servicepromotion/servicepromotion-delete/${this.Servicepromotions[s].id}/`)
+            axios.post('/service/service-update/' + this.service.id + '/',{promoted:false,accepted:this.service.accepted})
+            this.promoted=false
+            this.$router.go()
+          }
         }
       }
       for (let t in this.Servicetypes) {
@@ -236,7 +248,7 @@ export default {
     });
   },
   methods: {
-    ...mapActions(['GetServicepromotions', 'GetUserprofiles','CreateServicepromotion', 'GetServicetypes', 'GetUsers', 'GetEvaluations']),
+    ...mapActions(['GetServicepromotions','GetServices', 'GetUserprofiles','CreateServicepromotion', 'GetServicetypes', 'GetUsers', 'GetEvaluations']),
     promote(){
       this.CreateServicepromotion({serviceP:this.service.id,nbDays:this.nbDays})
       this.promoted=true

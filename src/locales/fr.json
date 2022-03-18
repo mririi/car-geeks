@@ -10,7 +10,7 @@
     "tables": "les tables",
     "datatables": "Tableaux de données",
     "forms": "Formes",
-    "users": "Utilisateurs",
+    "Users": "Utilisateurs",
     "pages": "Pages",
     "authentication": "Authentification",
     "drag_and_drop": "Glisser déposer",
@@ -19,5 +19,10 @@
     "starter_kit": "Kit de démarrage",
     "documentation": "Documentation",
     "ui_kit": "Trousse d'interface utilisateur",
-    "more": "Suite"
+    "more": "Suite",
+    "Questions":"Questions",
+    "News":"Actualité",
+    "Groups":"Groupes",
+    "Ask a question":"Poser une question"
+    
 }

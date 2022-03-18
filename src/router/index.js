@@ -328,6 +328,30 @@ const routes = [
             layout: 'app'
         }
     },
+    {
+        path: '/entreprisedetails/:id',
+        name: 'entreprisedetails',
+        component: () => import('../views/Entreprises/EntrepriseDetails.vue'),
+        meta: {
+            layout: 'app'
+        }
+    },
+    {
+        path: '/auth/userentrepriseinfo',
+        name: 'userentreprise',
+        component: () => import('../views/auth/stepper_userentrepriseinfo.vue'),
+        meta: {
+            layout: 'auth'
+        }
+    },
+    {
+        path: '/updateentreprise/:id',
+        name: 'userentrepriseupdate',
+        component: () => import('../views/Entreprises/UpdateEntreprise.vue'),
+        meta: {
+            layout: 'app'
+        }
+    },
     //News
     {
         path: '/news',

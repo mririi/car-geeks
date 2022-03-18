@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     "questioncategory",
     "evaluation",
     "evaluationprofile",
+    "evaluationentreprise",
+    "entreprisepromotion",
     "preferences",
     "reclamation",
     "service",
