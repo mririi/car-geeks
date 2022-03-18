@@ -70,14 +70,6 @@
 }
 </style>
 <script>
-import moment from 'moment';
-import Vue from 'vue';
-import axios from 'axios';
-Vue.filter('formatDate', function (value) {
-  if (value) {
-    return moment(String(value)).format('DD MMMM YYYY H:mm');
-  }
-});
 import '@/assets/sass/components/cards/card.scss';
 import '@/assets/sass/forms/file-upload-with-preview.min.css';
 import { mapGetters, mapActions } from 'vuex';
@@ -151,7 +143,6 @@ export default {
         formdata.append("userprofileQ", this.form.userprofileQ);
         console.log(this.form.categoryQ)
         await this.CreateQuestion(formdata);
-        await axios.put('/userprofile/userprofile-update/' + this.form.userprofileQ +'/',{nbquestions:this.uprofile.nbquestions+=1})
         this.$router.push("/questions");
       
         

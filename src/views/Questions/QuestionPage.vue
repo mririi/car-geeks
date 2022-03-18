@@ -65,7 +65,7 @@
         </div>
         
         <div class="widget-content">
-          <b-card class="bg-transparent border-0 col-6">
+          <b-card class="bg-transparent border-0 col-12">
             <b-card-text>
           <h6 class="ml-5 mb-5">{{ question.contentQ }}</h6></b-card-text></b-card>
           <div class="widget-content mb-5" v-if="question.imageQ != null">
@@ -235,7 +235,7 @@
                                 <h6 class="">{{ u.firstname }} {{ u.lastname }}</h6>
                               </div>
                             </div>
-                            <div v-if="CurrentUserProfile.id == rep.userprofileRep">
+                            <div v-if="CurrentUserProfile.id == rep.userprofileRep &&  rep.checked==false">
                               <b-dropdown variant="icon-only" dropleft toggle-tag="a" class="mb-4 mr-2 custom-dropdown float-right">
                                 <template #button-content>
                                   <svg
@@ -261,12 +261,22 @@
                               </b-dropdown>
                             </div>
                             <p class="meta-date-time media-text mb-4">{{ rep.dateR | formatDate }}</p>
-                            <b-card class="bg-transparent border-0 w-50">
+                            <b-card class="bg-transparent border-0 col-12">
+                              <b-media>
+                                <template #aside>
+                              <b-card-text v-if="alreadychecked==false">
+                              <checkreply :userprofile="question.userprofileQ" :currentuserprofile="CurrentUserProfile.id" :replyid="rep.id" />
+                              </b-card-text>
+                              <b-card-text v-else-if="rep.checked==true ">
+                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="3em" height="3em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><path fill="#62b47d" fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm8.854-9.646a.5.5 0 0 0-.708-.708L7.5 7.793L6.354 6.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/></svg>
+                              </b-card-text>
                               <b-card-text>
-                            <h5 class="media-text ml-5 mb-1">
+                            <h5 class="media-text ml-3 mb-1">
                               {{ rep.contentR }}
                             </h5>
                              </b-card-text>
+                                </template>
+                              </b-media>
                              </b-card>
                             <div v-if="rep.imageR != null" class="widget-content mb-4">
                               <img :src="'http://127.0.0.1:8000' + rep.imageR" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
@@ -319,9 +329,9 @@
                                       />
                                       <path fill="currentColor" d="M19 19H5V5h6V3H5a2.006 2.006 0 0 0-2 2v14a2.006 2.006 0 0 0 2 2h14a2.006 2.006 0 0 0 2-2v-6h-2Z" />
                                     </svg>
-                                    <b-form-textarea type="text" class="mb-2" v-model="comment.contentCo" :class="[is_submit_comment ? (comment.contentCo && comment.contentCo.length<200 && comment.contentCo.length>25 ? 'is-valid' : 'is-invalid') : '']" placeholder="Enter your comment here"></b-form-textarea>
+                                    <b-form-textarea type="text" class="mb-2" v-model="comment.contentCo" :class="[is_submit_comment ? (comment.contentCo && comment.contentCo.length<200 && comment.contentCo.length>15 ? 'is-valid' : 'is-invalid') : '']" placeholder="Enter your comment here"></b-form-textarea>
                                   <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
-                      <b-form-invalid-feedback :class="{ 'd-block': is_submit_comment && !comment.contentCo }">Please Enter content between 25 and 200 characters</b-form-invalid-feedback>
+                      <b-form-invalid-feedback :class="{ 'd-block': is_submit_comment && !comment.contentCo }">Please Enter content between 15 and 200 characters</b-form-invalid-feedback>
                                   </div>
                                   <b-button
                                     variant="primary"
@@ -370,9 +380,9 @@
                                           />
                                           <path fill="currentColor" d="M19 19H5V5h6V3H5a2.006 2.006 0 0 0-2 2v14a2.006 2.006 0 0 0 2 2h14a2.006 2.006 0 0 0 2-2v-6h-2Z" />
                                         </svg>
-                                        <b-form-textarea type="text" class="mb-2" :class="[is_submit_commentmodif ? (c.contentCo && c.contentCo.length<200 && c.contentCo.length>25 ? 'is-valid' : 'is-invalid') : '']" v-model="c.contentCo" placeholder="Modify your comment here"></b-form-textarea>
+                                        <b-form-textarea type="text" class="mb-2" :class="[is_submit_commentmodif ? (c.contentCo && c.contentCo.length<200 && c.contentCo.length>15 ? 'is-valid' : 'is-invalid') : '']" v-model="c.contentCo" placeholder="Modify your comment here"></b-form-textarea>
                                       <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
-                      <b-form-invalid-feedback :class="{ 'd-block': is_submit_commentmodif && !c.contentCo }">Please Enter content between 25 and 200 characters</b-form-invalid-feedback>
+                      <b-form-invalid-feedback :class="{ 'd-block': is_submit_commentmodif && !c.contentCo }">Please Enter content between 15 and 200 characters</b-form-invalid-feedback>
                     
                                       </div>
                                       <b-button
@@ -391,7 +401,13 @@
                                 </b-dropdown>
                               </div>
                               <p class="float-right mr-4" style="font-size: 10px">{{ c.dateCo | formatDate }}</p>
-                              <b-card class="ml-5 bg-transparent border-0"><b-card-text>{{ c.contentCo }}</b-card-text></b-card>
+                              <b-card class="ml-5 bg-transparent border-0"><b-card-text>{{ c.contentCo }} - 
+                                <span v-for="u in Userprofiles" :key="u.id">
+                                  <span v-if="u.id==c.userprofileCo">
+                                   <a class="text-primary" :href="'/profile/'+u.id+'/'"> {{u.firstname}} {{u.lastname}}</a>
+                                  </span>
+                                </span>
+                                </b-card-text></b-card>
                               <hr width="90%" />
                             </div>
                           </div>
@@ -415,18 +431,19 @@ import axios from 'axios';
 import '@/assets/sass/widgets/widgets.scss';
 import { mapGetters, mapActions } from 'vuex';
 import likecomponent from './like-component.vue'
+import checkreply from './check-reply.vue'
 export default {
   components:{
     likecomponent,
+    checkreply
   },
   data() {
     return {
-      showMore:false,
+      alreadychecked:false,
       question: [],
       userprofile: [],
       userprofileRep: [],
       CurrentUserProfile: [],
-      replydetails: [],
       comment: {
         contentCo: '',
         replyCo: '',
@@ -434,7 +451,6 @@ export default {
       },
       CurrentUser: [],
       likedQuestion: false,
-      likedReply: false,
       likes: 0,
       replies: {
         contentR: '',
@@ -576,14 +592,10 @@ export default {
         formdata.append('questionRep', this.questionRep);
         formdata.append('userprofileRep', this.userprofileRep);
         await this.CreateReply(formdata);
-        await axios.put('/question/question-update/' + this.$route.params.id + '/', {
-          nbrep: (this.question.nbrep += 1),
-        });
+        
         this.replies.contentR = '';
-        await axios.put('/userprofile/userprofile-update/' + this.userprofileRep + '/', { nbreplies: (this.CurrentUserProfile.nbreplies += 1) });
         this.GetReplies();
         this.is_submit_reply=false
-        this.image=null
       }} catch (error) {
         throw 'Il ya un error!';
       }
@@ -610,7 +622,7 @@ export default {
     },
     async commentaire(rep) {
       this.is_submit_comment=true
-        if(this.comment.contentCo && this.comment.contentCo.length<200 && this.comment.contentCo.length>25){
+        if(this.comment.contentCo && this.comment.contentCo.length<200 && this.comment.contentCo.length>15){
           this.$bvModal.hide('modalCreateCommentNewest'+rep.id)
       axios.get('/reply/reply-detail/' + rep.id + '/').then((response) => {
         this.replydetails = response.data;
@@ -633,13 +645,14 @@ export default {
       try {
         this.comment.contentCo = c.contentCo;
         this.is_submit_commentmodif=true
-        if(this.comment.contentCo && this.comment.contentCo.length<200 && this.comment.contentCo.length>25){
+        if(this.comment.contentCo && this.comment.contentCo.length<200 && this.comment.contentCo.length>15){
           this.$bvModal.hide('modalModifCommentNewest'+c.id)
         
         await axios.post('/comment/comment-update/' + c.id + '/', { contentCo: this.comment.contentCo });
         this.GetReplies();
         this.GetComments();
         this.is_submit_commentmodif=false
+        this.comment.contentCo=''
       }} catch (error) {
         throw 'Il ya un errora !';
       }
@@ -663,6 +676,11 @@ export default {
     this.GetUserprofiles();
     this.GetVotes();
     this.GetComments();
+    for(let r in this.Replies){
+      if(this.Replies[r].checked==true){
+        this.alreadychecked=true
+      }
+    }
     axios
       .get('/question/question-detail/' + this.$route.params.id + '/')
       .then((response) => {
