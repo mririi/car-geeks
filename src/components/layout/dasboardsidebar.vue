@@ -155,7 +155,7 @@
           <b-collapse id="services" accordion="menu">
             <ul class="collapse submenu list-unstyled show">
               <router-link tag="li" to="/dashboard/servicelist" @click.native="toggleMobileMenu"><a>Services List</a></router-link>
-              <router-link tag="li" to="/apps/mailbox" @click.native="toggleMobileMenu"><a>Create Requests</a></router-link>
+              <router-link tag="li" to="/dashboard/servicerequests" @click.native="toggleMobileMenu"><a>Add Service Requests</a></router-link>
             </ul>
           </b-collapse>
         </li>

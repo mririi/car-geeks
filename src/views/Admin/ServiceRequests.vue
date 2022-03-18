@@ -107,7 +107,7 @@
                 <b-badge variant="danger">Pending</b-badge>
               </span>
             </template>
-            
+         
             <template #cell(userprofileS)="data">
               <span v-for="u in Userprofiles" :key="u.id">
                 <span v-if="u.id == data.item.userprofileS">
@@ -122,6 +122,25 @@
                    {{t.descT}}
                   
                 </span>
+              </span>
+            </template>
+               <template #cell(actions)="data">
+              <span @click="Accept(data.item.id,data.item.userprofileS)">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="feather feather-check-circle text-primary ac"
+                >
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
               </span>
             </template>
                <template #cell(imageS)="data">
@@ -187,6 +206,7 @@
 </style>
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import axios from 'axios'
 export default {
   metaInfo: { title: 'Bootstrap Custom Table' },
   data() {
@@ -201,7 +221,9 @@ export default {
       is_select_all2: false,
       selected_rows2: [],
       search:'',
-      category:''
+      category:'',
+      userprofileservice:[],
+      userservice:[]
     };
   },
   watch: {
@@ -231,6 +253,8 @@ export default {
         this.GetServices();
         this.GetServicetypes();
         this.GetServicepromotions();
+        this.GetRoles();
+        
         },
   mounted() {
     this.bind_data();
@@ -243,10 +267,11 @@ export default {
       Servicetypes: 'StateServicetypes',
       User: 'StateUser',
       Users: 'StateUsers',
+      Roles:'StateRoles'
     }),
      filteredList() {
       return this.Services.filter((service) => {
-        return service.titleS.toLowerCase().includes(this.search.toLowerCase());
+        return service.titleS.toLowerCase().includes(this.search.toLowerCase())&& service.accepted==false;
       });
     },
     filterByType: function () {
@@ -256,7 +281,25 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['GetServices','GetServicepromotions','GetServicetypes', 'GetUsers', 'GetUserprofiles']),
+    ...mapActions(['GetServices','GetServicepromotions','GetServicetypes', 'GetUsers', 'GetUserprofiles','GetRoles']),
+    async Accept(id,userid) {
+      await axios.post('/service/service-update/' + id + '/', { accepted: true });
+       await axios.get('/userprofile/userprofile-detail/' + userid + '/').then((response) => {
+        this.userprofileservice = response.data;
+       }),
+         await axios.get('/user/users/' + this.userprofileservice.userU + '/').then((response) => {
+        this.userservice = response.data;
+       });
+
+       for (let r in this.Roles)
+       {
+         if (this.Roles[r].userRole== this.userservice.id && this.Roles[r].service==false)
+         {
+            await axios.post('/role/role-update/'+this.Roles[r].id+'/', { service: true , userRole:this.userservice.id ,admin:this.Roles[r].admin }); 
+         }
+       }
+      this.$router.go();
+    },
     bind_data() {
       //table 3
       this.columns2 = [
@@ -269,10 +312,11 @@ export default {
         { key: 'accepted', label: 'Status' },
         { key: 'userprofileS', label: 'User' },
         { key: 'typeS', label: 'Type' },
+        { key: 'actions', label: 'Actions', class: 'text-center  ' },
       ];
       
 
-      this.table_option2.total_rows = this.Services.length;
+      this.table_option2.total_rows = this.filterByType.length;
       this.get_meta2();
     },
     on_filtered(filtered_items) {

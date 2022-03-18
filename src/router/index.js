@@ -419,6 +419,15 @@ const routes = [
             layout: 'dashboard'
         },
     },
+    //Services Requests
+    {
+        path: "/dashboard/servicerequests",
+        name: 'servicerequests',
+        component: () => import('../views/Admin/ServiceRequests.vue'),
+        meta: {
+            layout: 'dashboard'
+        },
+    },
     //elements
     {
         path: '/elements/alerts',

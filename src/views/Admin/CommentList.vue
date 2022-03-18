@@ -7,7 +7,7 @@
             <nav class="breadcrumb-one" aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:;">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><span>Comments</span></li>
+                <li class="breadcrumb-item active" aria-current="page"><span>Services</span></li>
               </ol>
             </nav>
           </div>
@@ -15,39 +15,121 @@
       </ul>
     </portal>
 
-    <div id="tableHover" class="col-lg-12 col-12 layout-spacing mt-5">
-      <div class="statbox panel box box-shadow">
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-3 filtered-list-search layout-spacing align-self-center">
-          <form class="form-inline my-2 my-lg-0">
-            <div class="">
-              <b-input v-model.trim="search" class="product-search" placeholder="Search Comments..." />
-             
-            </div>
-          </form>
-        </div>
+    <div class="row layout-top-spacing">
+      <div class="col-xl-12 col-lg-12 col-sm-12 layout-spacing">
+        <div class="panel p-0">
+          <div class="custom-table table3">
+            <div class="table-header">
+              <div class="d-flex align-items-center">
+                <span>Results :</span>
+                <span class="ml-2">
+                  <b-select v-model="table_option2.page_size" class="h-auto">
+                    <b-select-option value="5">5</b-select-option>
+                    <b-select-option value="10">10</b-select-option>
+                    <b-select-option value="20">20</b-select-option>
+                    <b-select-option value="50">50</b-select-option>
+                  </b-select>
+                </span>
+                
+              </div>
 
-        <div class="panel-body">
-          <b-table responsive bordered hover :items="filteredList" :fields="fields">
-           
-            <template #cell(dateCo)="data">
+             
+
+              <div class="header-search">
+                <b-input v-model="search" size="sm" placeholder="Search..." />
+                <div class="search-image">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-search"
+                  >
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <b-table
+              ref="basic_table2"
+              responsive
+              hover
+              bordered
+              :items="filteredList"
+              :fields="columns2"
+              :per-page="table_option2.page_size"
+              :current-page="table_option2.current_page"
+              :filter="table_option2.search_text"
+              sort-by="id"
+              :show-empty="true"
+              @filtered="on_filtered"
+              @sort-changed="clear_selection"
+            >
+              <template #cell(userprofileCo)="data">
+                <span v-for="u in Userprofiles" :key="u.id">
+                  <span v-if="u.id == data.item.userprofileCo"> {{ u.firstname }} {{ u.lastname }} </span>
+                </span>
+              </template>
+              <template #cell(replyCo)="data">
+                <span v-for="r in Replies" :key="r.id">
+                  <span v-if="r.id == data.item.replyCo">
+                    {{ r.contentR }}
+                  </span>
+                </span>
+              </template>
+              <template #cell(dateCo)="data">
                {{data.item.dateCo |formatDate}}
-            </template>
-            <template #cell(userprofileCo)="data">
-              <span v-for="u in Userprofiles" :key="u.id">
-                <span v-if="u.id == data.item.userprofileCo">
-                   {{u.firstname}} {{u.lastname}}
-                </span>
-              </span>
-            </template>
-            <template #cell(replyCo)="data">
-              <span v-for="r in Replies" :key="r.id">
-                <span v-if="r.id == data.item.replyCo"> 
-                   {{r.contentR}}
-                </span>
-              </span>
-            </template>
-            
-          </b-table>
+              </template>
+            </b-table>
+
+            <div class="table-footer">
+              <div class="dataTables_info">Showing {{ meta2.total_items ? meta2.start_index + 1 : 0 }} to {{ meta2.end_index + 1 }} of {{ meta2.total_items }}</div>
+              <div class="paginating-container pagination-solid flex-column align-items-right">
+                <b-pagination
+                  v-model="table_option2.current_page"
+                  :total-rows="table_option2.total_rows"
+                  :per-page="table_option2.page_size"
+                  prev-text="Prev"
+                  next-text="Next"
+                  first-text="First"
+                  last-text="Last"
+                  first-class="first"
+                  prev-class="prev"
+                  next-class="next"
+                  last-class="last"
+                  class="rounded"
+                >
+                  <template #first-text>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+                    </svg>
+                  </template>
+                  <template #prev-text>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                  </template>
+                  <template #next-text>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                  </template>
+                  <template #last-text>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                    </svg>
+                  </template>
+                </b-pagination>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -59,55 +141,43 @@
 }
 </style>
 <script>
-import '@/assets/sass/apps/contacts.scss';
 import { mapGetters, mapActions } from 'vuex';
 export default {
   metaInfo: { title: 'Bootstrap Custom Table' },
   data() {
     return {
-      category: [],
-      CurrentUserProfile: [],
-      items: [
-        {
-          title: '',
-          date: '',
-          category: '',
-          replies: '',
-          user: '',
-          status: '',
-        },
-      ],
+      //table 3
+      items2: [],
+      columns2: [],
+      table_option2: { total_rows: 0, current_page: 1, page_size: 5, search_text: '' },
+      meta2: {},
+      is_select_all2: false,
+      selected_rows2: [],
       search: '',
-      CurrentUser: [],
-      fields: [
-        { key: 'contentCo', label: 'Content' },
-        { key: 'dateCo', label: 'Date' },
-        { key: 'userprofileCo', label: 'User' },
-        { key: 'replyCo', label: 'Reply'},
-      ],
     };
   },
-
-  methods: {
-    ...mapActions(['GetQuestions','GetReplies', 'GetComments', 'GetUsers', 'GetUserprofiles', 'GetQuestioncategories']),
-  },
-  computed: {
-    ...mapGetters({
-      Questions: 'StateQuestions',
-      Userprofiles: 'StateUserprofiles',
-      Questioncategories: 'StateQuestioncategories',
-      User: 'StateUser',
-      Users: 'StateUsers',
-      Replies:'StateReplies',
-      Comments:'StateComments'
-    }),
-
-    filteredList() {
-      return this.Comments.filter((com) => {
-        return com.contentCo.toLowerCase().includes(this.search.toLowerCase());
-      });
+  watch: {
+    table_option: {
+      handler: function () {
+        this.get_meta();
+        this.clear_selection();
+      },
+      deep: true,
     },
-    
+    table_option1: {
+      handler: function () {
+        this.get_meta1();
+        this.clear_selection1();
+      },
+      deep: true,
+    },
+    table_option2: {
+      handler: function () {
+        this.get_meta2();
+        this.clear_selection2();
+      },
+      deep: true,
+    },
   },
   created: function () {
     this.GetQuestions();
@@ -116,35 +186,184 @@ export default {
     this.GetUsers();
     this.GetReplies();
     this.GetComments();
-    /*for (let q in this.Questions) {
-     this.items[q].title = this.Questions[q].titleQ;
-      this.items[q].date = this.Questions[q].dateQ;
-      for (let c in this.Questioncategories) {
-        if (this.Questioncategories[c].id == this.Questions[q].categoryQ) {
-          this.items[q].category = this.Questioncategories[c].typeC;
-        }
-      }
-      this.items[q].replies = this.Questions[q].nbrep;
-      for (let u in this.Userprofiles) {
-        if (this.Userprofiles[u].id == this.Questions[q].userprofileQ) {
-          this.items[q].user = this.Userprofiles[u].firstname + ' ' + this.Userprofiles[u].lastname;
-        }
-      }
-      this.items[q].status = this.Questions[q].accepted;
-    }*/
+  },
+  mounted() {
+    this.bind_data();
+  },
 
-    console.log(this.items);
-    console.log(this.Questions);
-    for (let u in this.Users) {
-      if (this.Users[u].username == this.User) {
-        this.CurrentUser = this.Users[u];
+  computed: {
+    ...mapGetters({
+      Questions: 'StateQuestions',
+      Userprofiles: 'StateUserprofiles',
+      Questioncategories: 'StateQuestioncategories',
+      User: 'StateUser',
+      Users: 'StateUsers',
+      Replies: 'StateReplies',
+      Comments: 'StateComments',
+    }),
+    filteredList() {
+      return this.Comments.filter((comment) => {
+        return comment.contentCo.toLowerCase().includes(this.search.toLowerCase());
+      });
+    },
+  },
+
+  methods: {
+    ...mapActions(['GetQuestions', 'GetReplies', 'GetComments', 'GetUsers', 'GetUserprofiles', 'GetQuestioncategories']),
+
+    bind_data() {
+      //table 3
+      this.columns2 = [
+        { key: 'contentCo', label: 'Content' },
+        { key: 'dateCo', label: 'Date' },
+        { key: 'userprofileCo', label: 'User' },
+        { key: 'replyCo', label: 'Reply' },
+      ];
+
+      this.table_option2.total_rows = this.Comments.length;
+      this.get_meta2();
+    },
+    on_filtered(filtered_items) {
+      this.refresh_table(filtered_items.length);
+    },
+    refresh_table(total) {
+      this.table_option.total_rows = total;
+      this.table_option.currentPage = 1;
+    },
+    get_meta() {
+      this.meta = this.get_common_meta(this.table_option);
+    },
+
+    get_common_meta(table_option) {
+      var startPage;
+      var endPage;
+      var totalPages = table_option.page_size < 1 ? 1 : Math.ceil(table_option.total_rows / table_option.page_size);
+      totalPages = Math.max(totalPages || 0, 1);
+
+      var maxSize = 5;
+      var isMaxSized = typeof maxSize !== 'undefined' && maxSize < totalPages;
+      if (isMaxSized) {
+        startPage = Math.max(table_option.current_page - Math.floor(maxSize / 2), 1);
+        endPage = startPage + maxSize - 1;
+
+        if (endPage > totalPages) {
+          endPage = totalPages;
+          startPage = endPage - maxSize + 1;
+        }
+      } else {
+        startPage = 1;
+        endPage = totalPages;
       }
-    }
-    for (let u in this.Userprofiles) {
-      if (this.Userprofiles[u].userU == this.CurrentUser.id) {
-        this.CurrentUserProfile = this.Userprofiles[u];
+      let startIndex = (table_option.current_page - 1) * table_option.page_size;
+      let endIndex = Math.min(startIndex + table_option.page_size - 1, table_option.total_rows - 1);
+
+      var pages = Array.from(Array(endPage + 1 - startPage).keys()).map((i) => startPage + i);
+      return {
+        total_items: table_option.total_rows,
+        current_page: table_option.current_page,
+        page_size: table_option.page_size,
+        total_pages: totalPages,
+        start_page: startPage,
+        end_page: endPage,
+        start_index: startIndex,
+        end_index: endIndex,
+        pages: pages,
+      };
+    },
+
+    //checkbox selection
+    select_all() {
+      this.selected_rows = this.$refs.basic_table.paginatedItems.map((d) => {
+        return d.id;
+      });
+      if (!this.is_select_all) {
+        this.clear_selection();
       }
-    }
+      this.check_select_all();
+    },
+    check_select_all() {
+      let ids = this.$refs.basic_table.paginatedItems.map((d) => {
+        return d.id;
+      });
+      this.is_select_all = false;
+      if (ids.length == this.selected_rows.length) {
+        this.is_select_all = true;
+      }
+    },
+    clear_selection() {
+      this.is_select_all = false;
+      this.selected_rows = [];
+    },
+
+    //table 2
+    on_filtered1(filtered_items) {
+      this.refresh_table1(filtered_items.length);
+    },
+    refresh_table1(total) {
+      this.table_option1.total_rows = total;
+      this.table_option1.currentPage = 1;
+    },
+    get_meta1() {
+      this.meta1 = this.get_common_meta(this.table_option1);
+    },
+    //checkbox selection
+    select_all1() {
+      this.selected_rows1 = this.$refs.basic_table1.paginatedItems.map((d) => {
+        return d.id;
+      });
+      if (!this.is_select_all1) {
+        this.clear_selection1();
+      }
+      this.check_select_all1();
+    },
+    check_select_all1() {
+      let ids = this.$refs.basic_table1.paginatedItems.map((d) => {
+        return d.id;
+      });
+      this.is_select_all1 = false;
+      if (ids.length == this.selected_rows1.length) {
+        this.is_select_all1 = true;
+      }
+    },
+    clear_selection1() {
+      this.is_select_all1 = false;
+      this.selected_rows1 = [];
+    },
+
+    //table 3
+    on_filtered2(filtered_items) {
+      this.refresh_table2(filtered_items.length);
+    },
+    refresh_table2(total) {
+      this.table_option2.total_rows = total;
+      this.table_option2.currentPage = 1;
+    },
+    get_meta2() {
+      this.meta2 = this.get_common_meta(this.table_option2);
+    },
+    //checkbox selection
+    select_all2() {
+      this.selected_rows2 = this.$refs.basic_table2.paginatedItems.map((d) => {
+        return d.id;
+      });
+      if (!this.is_select_all2) {
+        this.clear_selection2();
+      }
+      this.check_select_all2();
+    },
+    check_select_all2() {
+      let ids = this.$refs.basic_table2.paginatedItems.map((d) => {
+        return d.id;
+      });
+      this.is_select_all2 = false;
+      if (ids.length == this.selected_rows2.length) {
+        this.is_select_all2 = true;
+      }
+    },
+    clear_selection2() {
+      this.is_select_all2 = false;
+      this.selected_rows2 = [];
+    },
   },
 };
 </script>
