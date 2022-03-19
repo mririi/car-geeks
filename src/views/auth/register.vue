@@ -96,6 +96,7 @@
                       <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                       <circle cx="12" cy="12" r="3"></circle>
                     </svg>
+                    <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
                     <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.password.length > 6 }">Please enter a password longer than 6 characters !</b-form-invalid-feedback>
                   </div>
                   <b-form-checkbox
@@ -194,7 +195,6 @@ export default {
         this.$router.push('/auth/userinfo');
         }else if (this.check==1){
           await this.isEntreprise(true)
-          await this.CreateRole({entreprise:true})
           this.$router.push('/auth/userentrepriseinfo');
         }
           

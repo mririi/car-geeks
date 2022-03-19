@@ -35,12 +35,13 @@
                       </div>
                         </template>
                       </b-media>
-                      <h1 class="text-center mt-1 mb-5">Portfolio {{userentreprise.typeE}} </h1>
+                      <h1 class="text-center mt-1 mb-5">Portfolio </h1>
                       <b-media>
-                        <template #aside>
-                          <img :src="'http://127.0.0.1:8000'+userentreprise.imageE" class="img-fluid img-thumbnail w-75 mh-75"  />
+                        <template #aside >
+                          <img :src="'http://127.0.0.1:8000'+userentreprise.imageE" class="col-6" />
+                          <h1 class="col-6" style="margin-top:10%;margin-left:15%">{{userentreprise.nameE}}</h1>
                         </template>
-                       <h1 style="margin-top:200px"> {{userentreprise.nameE}}</h1>
+                       
                       </b-media>
                       <b-media right-align class="mt-5 ">
                         
@@ -79,6 +80,33 @@
                        
                       </b-media>
                      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+                       <div class="mt-5 mb-5">
+                      <h1 class="text-center">Rate Us !</h1>
+          <span v-if="userentreprise.id != CurrentUserEntreprise.id">
+            <span v-if="isLoggedIn && existe == true">
+              <span v-b-modal.Rating>
+                <b-form-rating id="rating" v-model="average" variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
+              </span>
+            </span>
+            <span v-else>
+              <a href="/auth/login">
+                <b-form-rating id="rating" v-model="average" variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
+              </a>
+            </span>
+          </span>
+          <span v-else>
+            <span @click="showAlert()">
+              <b-form-rating id="rating" v-model="average" variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
+            </span>
+          </span>
+        </div>
+         <b-modal id="Rating" :title="'Rate ' + userentreprise.nameE" centered>
+      <b-form-rating id="rating" v-model="nbEval" precision="2" show-value-max show-value variant="warning" size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
+
+      <template #modal-footer>
+        <b-button variant="primary" @click="Rating()">Submit your rating</b-button>
+      </template>
+    </b-modal>
       <div class="widget widget-recent-orders">
         <div class="widget-heading">
           <h5>Other Entreprises</h5>
@@ -107,32 +135,32 @@
 
             <b-tbody>
               <b-tr v-for="e in filteredList" :key="e.id">
-                <b-td
+                <b-td v-if="e.id!=userentreprise.id"
                   ><a :href="'/entreprisedetails/' + e.id"
                     ><div class="td-content">
                       <img :src="'http://127.0.0.1:8000' + e.imageE" alt="avatar" /><span>{{e.nameE}} </span>
                     </div></a
                   ></b-td
                 >
-                <b-td
+                <b-td v-if="e.id!=userentreprise.id"
                   ><div class="td-content">
                     <span>{{ e.typeE }}</span>
                   </div></b-td
                 >
-                <b-td>
+                <b-td v-if="e.id!=userentreprise.id">
                   <div v-for="user in Users" :key="user.id">
                     <div v-if="user.id == e.userE" class="td-content text-primary">{{ user.email }}</div>
                   </div>
                 </b-td>
-                <b-td
+                <b-td v-if="e.id!=userentreprise.id"
                   ><div class="td-content">{{ e.contactE }}</div></b-td
                 >
-                <b-td
+                <b-td v-if="e.id!=userentreprise.id"
                   ><div class="td-content">
                     <span>{{ e.country }}</span>
                   </div></b-td
                 >
-                <b-td
+                <b-td v-if="e.id!=userentreprise.id"
                   ><div class="td-content">{{ e.addressE }}</div></b-td
                 >
               </b-tr>
@@ -167,10 +195,10 @@ import axios from 'axios';
       userentreprise: [],
       CurrentUserEntreprise: [],
       user:[],
-      nbEval: '',
+      nbEval: 0,
       search: '',
       UserEval: '',
-      nbDays:0,
+      nbDays:7,
       average: 0,
       promoted:false,
       existe:false
@@ -181,6 +209,7 @@ import axios from 'axios';
     ...mapGetters({
       Entreprises: 'StateUserentreprises',
       Entreprisepromotions: 'StateEntreprisepromotions',
+      Evaluationentreprises: 'StateEvaluationentreprises',
       Userentreprises: 'StateUserentreprises',
       User: 'StateUser',
       Users: 'StateUsers',
@@ -195,12 +224,51 @@ import axios from 'axios';
         );
       });
     },
+    
+    isLoggedIn: function () {
+      return this.$store.getters.isAuthenticated;
+    },
     },
         methods: {    ...mapActions(['GetUsers','GetEntreprisepromotions','CreateEntreprisepromotion', 'GetCars', 'GetUserentreprises', 'GetEvaluations', 'GetEvaluationentreprises']),
 
 promote(){
       this.CreateEntreprisepromotion({entreprisePE:this.userentreprise.id,nbDays:this.nbDays})
       this.promoted=true
+    },
+    async Rating() {
+      let done = false;
+      if (this.Evaluationentreprises.length == 0) {
+        axios.post('/evaluationentreprise/evaluationentreprise-create/', {
+          userentrepriseEval: this.$route.params.id,
+          userEval: this.CurrentUser.id,
+          nbEval: this.nbEval,
+        });
+        this.GetEvaluationentreprises()
+      } else {
+        for (let e in this.Evaluationentreprises) {
+          if (this.Evaluationentreprises[e].userentrepriseEval == this.$route.params.id && this.Evaluationentreprises[e].userEval == this.CurrentUser.id) {
+            axios.post('/evaluationentreprise/evaluationentreprise-update/' + this.Evaluationentreprises[e].id + '/', {
+              nbEval: this.nbEval,
+            });
+            done = true;
+          }
+        }
+        if (done == false) {
+          axios.post('/evaluationentreprise/evaluationentreprise-create/', {
+            userentrepriseEval: this.$route.params.id,
+            userEval: this.CurrentUser.id,
+            nbEval: this.nbEval,
+          });
+        }
+        this.GetEvaluationentreprises()
+      }
+      this.$router.go();
+    },
+    async showAlert() {
+      this.$swal({
+        title: 'You cannot rating your entreprise',
+        padding: '2em',
+      });
     },
 },
         created: function () {
@@ -221,14 +289,16 @@ promote(){
     }
     axios.get('/userentreprise/userentreprise-detail/' + this.$route.params.id + '/').then((response) => {
       this.userentreprise = response.data;
-      console.log(this.Entreprisepromotions)
+      if(this.userentreprise.published==false){
+        this.$router.push('/entreprises');
+      }
+      this.nbEval=this.userentreprise.nbEval
       for (let s in this.Entreprisepromotions){
         if(this.Entreprisepromotions[s].entreprisePE==this.userentreprise.id){
           this.promoted=true
           const d = new Date(this.Entreprisepromotions[s].datePE)
           d.setDate(d.getDate() + parseInt(this.Entreprisepromotions[s].nbDays))
-          console.log(new Date())
-          if(new Date()>new Date(this.Entreprisepromotions[s].datePE)){
+          if(new Date()>new Date(this.Entreprisepromotions[s].datePE)&&this.Entreprisepromotions[s].dateP!=null){
             axios.delete(`http://127.0.0.1:8000/entreprisepromotion/entreprisepromotion-delete/${this.Entreprisepromotions[s].id}/`)
             axios.post('/userentreprise/userentreprise-update/' + this.userentreprise.id + '/',{promoted:false,published:this.userentreprise.published})
             this.promoted=false
@@ -236,20 +306,20 @@ promote(){
           }
         }
       }
-      /*var sum = 0;
+      var sum = 0;
     var nb = 0;
-    for (let e in this.EvaluationProfile) {
-      if (this.EvaluationProfile[e].userentrepriseEval == this.$route.params.id) {
-        sum += this.EvaluationProfile[e].nbEval;
+    for (let e in this.Evaluationentreprises) {
+      if (this.Evaluationentreprises[e].userentrepriseEval == this.$route.params.id) {
+        sum += this.Evaluationentreprises[e].nbEval;
         nb++;
       }
     }
-    //this.average = sum / nb;*/
-
-    /*axios.put('/userentreprise/userentreprise-update/' + this.userentreprise.id + '/', {
-      nbEvalProfile: this.average,
-    });*/
-    //this.userentreprise.nbEvalProfile=this.average
+    this.average = sum / nb;
+  console.log(this.average)
+    axios.put('/userentreprise/userentreprise-update/' + this.userentreprise.id + '/', {
+      nbEval: this.average,
+    });
+    this.userentreprise.nbEval=this.average
     axios.get('/user/users/' + this.userentreprise.userE + '/').then((response) => {
       this.user = response.data;})
     });

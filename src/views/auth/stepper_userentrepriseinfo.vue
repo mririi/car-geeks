@@ -33,7 +33,7 @@
                       <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.typeE }">Please fill the Business type</b-form-invalid-feedback>
                     </b-form-group>
                      <b-form-group label="Phone Number" class="col-md-4">
-                      <b-input type="text" placeholder="Phone number" v-model="form.contactE" :class="[is_submit_form1 ? (form.contactE ? 'is-valid' : 'is-invalid') : '']" />
+                      <b-input type="number" placeholder="Phone number" v-model="form.contactE" :class="[is_submit_form1 ? (form.contactE ? 'is-valid' : 'is-invalid') : '']" />
                       <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
                       <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.contactE }">Please fill the Phone number</b-form-invalid-feedback>
                     </b-form-group>
@@ -116,12 +116,14 @@ export default {
         contactE: '',
         country: '',
         bio:'',
+        roleE:null,
         userE: [],
       },
       CurrentUser: [],
       is_submit_form1: false,
       ok: false,
       image: null,
+      roleexist:false,
     };
   },
   mounted() {
@@ -137,11 +139,12 @@ export default {
       Users: 'StateUsers',
       User: 'StateUser',
       Userentreprises: 'StateUserentreprises',
+      Roles:'StateRoles'
       
     }),
   },
   methods: {
-    ...mapActions([ 'GetUsers', 'CreateUserentreprise', 'GetUserentreprises']),
+    ...mapActions(['CreateRole', 'GetUsers','GetRoles', 'CreateUserentreprise', 'GetUserentreprises']),
     //upload image
     onFileChanged(event) {
       this.image = event.target.files[0];
@@ -154,18 +157,26 @@ export default {
       }
       this.is_submit_form1 = true;
       if (this.form.nameE && this.form.typeE && this.form.country && this.form.contactE && this.image && this.form.bio.length<500 && this.form.bio.length>25) {
+        for (let r in this.Roles) {
+            if (this.Roles[r].userRole == this.form.userE.id) {
+              this.form.roleE = this.Roles[r].id;
+            }
+          }
         var formdata = new FormData();
           formdata.append('imageE', this.image);
         formdata.append('typeE', this.form.typeE);
         formdata.append('nameE', this.form.nameE);
         formdata.append('addressE', this.form.addressE);
         formdata.append('contactE', this.form.contactE);
+        if (this.form.roleE != null) {
+          formdata.append('roleE', this.form.roleE);
+        }
         formdata.append('country', this.form.country);
         formdata.append('bio', this.form.bio);
         formdata.append('userE', this.form.userE.id);
         //
           this.CreateUserentreprise(formdata);
-          this.$router.push('/entreprises')
+          this.$router.push('/')
         return true;
       } else {
         return false;
@@ -176,12 +187,22 @@ export default {
   created() {
     this.GetUsers();
     this.GetUserentreprises();
+    this.GetRoles()
     if(this.User==null){
       this.$router.push('/login');
     }
+    
     for (let u in this.Users) {
       if (this.Users[u].username == this.User) {
         this.CurrentUser = this.Users[u];
+        for(let r in this.Roles){
+          if (this.Roles[r].userRole==this.CurrentUser.id){
+            this.roleexist=true
+          }
+        }
+        if(this.roleexist==false){
+          this.CreateRole({entreprise:true,userRole:this.CurrentUser.id})
+        }
         for (let u in this.Userentreprises) {
           if (this.Userentreprises[u].userE == this.CurrentUser.id) {
             this.$router.push('/entreprises');

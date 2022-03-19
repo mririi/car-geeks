@@ -31,13 +31,13 @@
                     <div class="row">
                         <div v-for="s in filterByPromoted" :key="s.id" class="col-lg-4 col-md-6 mb-lg-0 mb-4 mt-2 text-center">
                           <a v-if="s.published==true"  :href="'/entreprisedetails/'+s.id"> 
-                          <b-card class="component-card_4">
+                          <b-card class="component-card_4 " style="height:92%">
                             <b-badge class="float-right" variant="danger">Promoted</b-badge>
                             
-                                <span class="user-profile  mt-2 ml-5">
-                                    <img :src="'http://127.0.0.1:8000' + s.imageE" class="col-5" alt="..." />
+                                <span class="user-profile ml-5  mt-2">
+                                    <img :src="'http://127.0.0.1:8000' + s.imageE" class="col-6" alt="..." />
                                 </span>
-                                <div class="user-info">
+                                <div class="user-info mt-2 mr-4">
                                     <h5 class="card-user_name">{{s.nameE}}</h5>
                                     <p class="card-user_occupation text-warning">{{s.typeE}}</p>
                                     <div class="card-star_rating">
@@ -48,13 +48,13 @@
                             </b-card>
                             </a>
                             </div>
-                            <div v-for="s in filterByNotPromoted" :key="s.id" class="col-lg-4 col-md-6 mb-lg-0 mb-4 mt-2 text-center">
+                            <div v-for="s in filterByNotPromoted" :key="s.id" class="col-lg-4 mb-4 mt-2 text-center">
                           <a v-if="s.published==true" :href="'/entreprisedetails/'+s.id"> 
-                          <b-card class="component-card_4">
-                                <span class="user-profile  mt-2 ml-5 col-4" >
-                                    <img :src="'http://127.0.0.1:8000' + s.imageE" class="col-5" />
+                          <b-card class="component-card_4" style="height:100%">
+                                <span class="user-profile  mt-2" >
+                                    <img :src="'http://127.0.0.1:8000' + s.imageE" class="col-6" />
                                 </span>
-                                <div class="user-info">
+                                <div class="user-info mt-5">
                                     <h5 class="card-user_name">{{s.nameE}}</h5>
                                     <p class="card-user_occupation text-warning">{{s.typeE}}</p>
                                     <div class="card-star_rating">

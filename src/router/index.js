@@ -319,6 +319,15 @@ const routes = [
             requiresAuth: true,
         }
     },
+    {
+        path: '/promoinfo',
+        name: 'promoinfo',
+        component: () => import('../views/Services/PromoInfo.vue'),
+        meta: {
+            layout: 'service',
+            requiresAuth: true,
+        }
+    },
     //Entreprises
     {
         path: '/entreprises',
