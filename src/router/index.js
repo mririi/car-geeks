@@ -452,6 +452,60 @@ const routes = [
             layout: 'dashboard'
         },
     },
+    //Entreprises Dashboard
+    {
+        path: "/dashboard/entrepriselist",
+        name: 'entrepriselist',
+        component: () => import('../views/Admin/EntreprisesList.vue'),
+        meta: {
+            layout: 'dashboard'
+        },
+    },
+    //Entreprises Requests
+    {
+        path: "/dashboard/entrepriserequests",
+        name: 'entrepriserequests',
+        component: () => import('../views/Admin/EntrepriseRequests.vue'),
+        meta: {
+            layout: 'dashboard'
+        },
+    },
+    //Promoted Services Dashboard
+    {
+        path: "/dashboard/promotedservices",
+        name: 'promotedservices',
+        component: () => import('../views/Admin/PromotedServices.vue'),
+        meta: {
+            layout: 'dashboard'
+        },
+    },
+    //Promotion Services Requests
+    {
+        path: "/dashboard/promotionservicerequests",
+        name: 'promotionservicerequests',
+        component: () => import('../views/Admin/PromotionServiceRequests.vue'),
+        meta: {
+            layout: 'dashboard'
+        },
+    },
+    //Promoted Entreprises Dashboard
+    {
+        path: "/dashboard/promotedentreprises",
+        name: 'promotedentreprises',
+        component: () => import('../views/Admin/PromotedEntreprises.vue'),
+        meta: {
+            layout: 'dashboard'
+        },
+    },
+    //Promotion Entreprises Requests
+    {
+        path: "/dashboard/promotionentrepriserequests",
+        name: 'promotionentrepriserequests',
+        component: () => import('../views/Admin/PromotionEntrepriseRequests.vue'),
+        meta: {
+            layout: 'dashboard'
+        },
+    },
     //elements
     {
         path: '/elements/alerts',

@@ -196,7 +196,8 @@
           </a>
           <b-collapse id="entreprises" accordion="menu">
             <ul class="collapse submenu list-unstyled show">
-              <router-link tag="li" to="/apps/chat" @click.native="toggleMobileMenu"><a>Enreprises List</a></router-link>
+              <router-link tag="li" to="/dashboard/entrepriselist" @click.native="toggleMobileMenu"><a>Enreprises List</a></router-link>
+              <router-link tag="li" to="/dashboard/entrepriserequests" @click.native="toggleMobileMenu"><a>Add Entreprise Requests</a></router-link>
             </ul>
           </b-collapse>
         </li>
@@ -230,10 +231,10 @@
           </a>
           <b-collapse id="promotion" accordion="menu">
             <ul class="collapse submenu list-unstyled show">
-              <router-link tag="li" to="/apps/chat" @click.native="toggleMobileMenu"><a>Promoted Services</a></router-link>
-              <router-link tag="li" to="/apps/mailbox" @click.native="toggleMobileMenu"><a>Promoted Entreprises</a></router-link>
-              <router-link tag="li" to="/apps/todo-list" @click.native="toggleMobileMenu"><a>Services Requests</a></router-link>
-              <router-link tag="li" to="/apps/todo-list" @click.native="toggleMobileMenu"><a>Entreprises Requests</a></router-link>
+              <router-link tag="li" to="/dashboard/promotedservices" @click.native="toggleMobileMenu"><a>Promoted Services</a></router-link>
+              <router-link tag="li" to="/dashboard/promotedentreprises" @click.native="toggleMobileMenu"><a>Promoted Entreprises</a></router-link>
+              <router-link tag="li" to="/dashboard/promotionservicerequests" @click.native="toggleMobileMenu"><a>Services Requests</a></router-link>
+              <router-link tag="li" to="/dashboard/promotionentrepriserequests" @click.native="toggleMobileMenu"><a>Entreprises Requests</a></router-link>
             </ul>
           </b-collapse>
         </li>

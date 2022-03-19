@@ -30,11 +30,38 @@
                     <b-select-option value="50">50</b-select-option>
                   </b-select>
                 </span>
-                
+                   <span v-b-toggle.collapse-1 class="ml-2 mt-2">
+                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="22" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36">
+                  <path
+                    fill="currentColor"
+                    d="M22 33V19.5L33.47 8A1.81 1.81 0 0 0 34 6.7V5a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1.67a1.79 1.79 0 0 0 .53 1.27L14 19.58v10.2Z"
+                    class="clr-i-solid clr-i-solid-path-1"
+                  />
+                  <path
+                    fill="currentColor"
+                    d="M33.48 4h-31a.52.52 0 0 0-.48.52v1.72a1.33 1.33 0 0 0 .39.95l12 12v10l7.25 3.61V19.17l12-12a1.35 1.35 0 0 0 .36-.91V4.52a.52.52 0 0 0-.52-.52Z"
+                    class="clr-i-solid clr-i-solid-path-1"
+                  />
+                  <path fill="none" d="M0 0h36v36H0z" />
+                </svg>
+                <span class="h6">Filter</span>
+              </span>
               </div>
-
              
-
+                <b-collapse id="collapse-1">
+                <b-card class="bg-transparent border-0 border-white  ml-3 default mt-2 mb-4">
+                  <b-form-group label="Categories : " v-slot="{ ariaDescribedby }">
+                    <b-form-checkbox-group id="checkbox-group-2" v-model="category" :aria-describedby="ariaDescribedby" name="flavour-a1">
+                      <div v-for="t in Servicetypes" :key="t.id">
+                        <b-form-checkbox :value="t.id">
+                          {{ t.descT }}
+                        </b-form-checkbox>
+                      </div>
+                    </b-form-checkbox-group>
+                  </b-form-group>
+                </b-card>
+              </b-collapse>
+              
               <div class="header-search">
                 <b-input v-model="search" size="sm" placeholder="Search..." />
                 <div class="search-image">
@@ -56,13 +83,13 @@
                 </div>
               </div>
             </div>
-
+  
             <b-table
               ref="basic_table2"
               responsive
               hover
               bordered
-              :items="filteredList"
+              :items="filterByType"
               :fields="columns2"
               :per-page="table_option2.page_size"
               :current-page="table_option2.current_page"
@@ -72,26 +99,7 @@
               @filtered="on_filtered"
               @sort-changed="clear_selection"
             >
-               <template #cell(published)="data">
-              <span v-if="data.item.published == true">
-                <b-badge variant="success">Published</b-badge>
-              </span>
-              <span v-else>
-                <b-badge variant="danger">Unpublished</b-badge>
-              </span>
-            </template>
-            <template #cell(dateinscritE)="data">
-               {{data.item.dateinscritE |formatDate}}
-            </template>
             
-            <template #cell(imageE)="data">
-                <span v-if="data.item.imageE!=null">
-              <b-avatar :src="'http://127.0.0.1:8000'+data.item.imageE" size="4rem" rounded="lg"  alt="" srcset=""/>
-              </span>
-              <span v-else>
-                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="4em" height="4em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 64 64"><path fill="currentColor" d="M32 2C15.432 2 2 15.432 2 32.001C2 48.567 15.432 62 32 62s30-13.433 30-29.999C62 15.432 48.568 2 32 2zm22 30.001c0 4.629-1.433 8.922-3.876 12.465l-30.591-30.59A21.889 21.889 0 0 1 32 10c12.15 0 22 9.851 22 22.001zm-44 0a21.9 21.9 0 0 1 3.876-12.468l30.591 30.591A21.887 21.887 0 0 1 32 54.001c-12.15 0-22-9.852-22-22z"/></svg>
-              </span>
-            </template>
             </b-table>
 
             <div class="table-footer">
@@ -151,6 +159,8 @@ export default {
   metaInfo: { title: 'Bootstrap Custom Table' },
   data() {
     return {
+     
+
       //table 3
       items2: [],
       columns2: [],
@@ -158,7 +168,8 @@ export default {
       meta2: {},
       is_select_all2: false,
       selected_rows2: [],
-      search: '',
+      search:'',
+      category:''
     };
   },
   watch: {
@@ -184,55 +195,53 @@ export default {
       deep: true,
     },
   },
-  created: function () {
-    this.GetQuestions();
-    this.GetUserentreprises();
-    this.GetQuestioncategories();
-    this.GetUsers();
-    this.GetReplies();
-  },
+   created: function () {
+        this.GetServices();
+        this.GetServicetypes();
+        this.GetServicepromotions();
+
+        },
   mounted() {
     this.bind_data();
   },
-
-  computed: {
-    ...mapGetters({
-      Questions: 'StateQuestions',
-      UserEntreprises: 'StateUserentreprises',
-      Questioncategories: 'StateQuestioncategories',
+  computed:{
+ ...mapGetters({
+      Services: 'StateServices',
+      Servicepromotions: 'StateServicepromotions',
+      Userprofiles: 'StateUserprofiles',
+      Servicetypes: 'StateServicetypes',
       User: 'StateUser',
       Users: 'StateUsers',
-      Replies:'StateReplies'
     }),
      filteredList() {
-      return this.UserEntreprises.filter((entreprise) => {
-        return entreprise.nameE.toLowerCase().includes(this.search.toLowerCase())||
-               entreprise.typeE.toLowerCase().includes(this.search.toLowerCase())||
-               entreprise.addressE.toLowerCase().includes(this.search.toLowerCase())||
-               entreprise.country.toLowerCase().includes(this.search.toLowerCase())
-        ;
+      return this.Servicepromotions.filter((service) => {
+        return service.dateP.includes(this.search.toLowerCase());
       });
     },
+    filterByType: function () {
+      if (this.category != '') {
+        return this.filteredList.filter((service) => this.category.includes(service.typeS));
+      } else return this.filteredList;
+    },
   },
-
   methods: {
-   ...mapActions(['GetQuestions','GetReplies', 'GetUsers', 'GetUserentreprises', 'GetQuestioncategories']),
-
+    ...mapActions(['GetServices','GetServicepromotions','GetServicetypes', 'GetUsers', 'GetUserprofiles']),
     bind_data() {
       //table 3
-      this.columns2 =[
-        { key: 'imageE', label: 'Image' ,class: 'text-center ' },
-        { key: 'nameE', label: 'Name' },
-        { key: 'dateinscritE', label: 'Date' },
-        { key: 'typeE', label: 'Type' },
-        { key: 'addressE', label: 'Address' },
-        { key: 'country', label: 'Country' },
-        { key: 'contactE', label: 'Phone' },
-        { key: 'published', label: 'Status'},
-        
-      ],
+      this.columns2 = [
+       //   { key: 'imageS', label: 'Image' },
+       // { key: 'titleS', label: 'Title' ,class:'w-50' },
+       // { key: 'priceS', label: 'Price' },
+        { key: 'dateP', label: 'Promotion Date' },
+        { key: 'nbdays', label: 'Number of days' },
+      //  { key: 'addressS', label: 'Address'},
+      //  { key: 'promoted', label: 'Promotion' },
+     //   { key: 'userprofileS', label: 'User' },
+      //  { key: 'typeS', label: 'Type' },
+      ];
+      
 
-      this.table_option2.total_rows = this.UserEntreprises.length;
+      this.table_option2.total_rows = this.filterByType.length;
       this.get_meta2();
     },
     on_filtered(filtered_items) {

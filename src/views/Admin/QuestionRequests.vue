@@ -287,9 +287,16 @@ export default {
       await axios.put('/question/question-update/' + id + '/', { accepted: true });
       for(let u in this.Userprofiles)
       {
-          if(this.Userprofiles[u].id==userid)
+          if(this.Userprofiles[u].id==userid )
           {
-           await axios.put('/userprofile/userprofile-update/' + userid + '/', { nbquestions:this.Userprofiles[u].nbquestions+=1  });
+            for(let q in this.Questions)
+            {
+             if(this.Questions[q].id==id && this.Questions[q].modified==false)
+             {
+               await axios.put('/userprofile/userprofile-update/' + userid + '/', { nbquestions:this.Userprofiles[u].nbquestions+=1  });
+             }
+            }
+           
           }
       }
       
