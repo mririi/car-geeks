@@ -7,12 +7,12 @@
     // layouts
     import appLayout from './layouts/app-layout.vue';
     import authLayout from './layouts/auth-layout.vue';
-    
+    import axios from 'axios';
     import '@/assets/sass/app.scss';
 import questionLayout from './layouts/question-layout.vue';
 import serviceLayout from './layouts/service-layout.vue';
 import dashboardLayout from './layouts/dashboard-layout.vue';
-
+import { mapGetters, mapActions } from "vuex";
     export default {
         metaInfo: {
             title: 'Home',
@@ -28,12 +28,30 @@ import dashboardLayout from './layouts/dashboard-layout.vue';
         computed: {
             layout() {
                 return this.$store.getters.layout;
-            }
+            },
+            ...mapGetters({
+      Userprofiles: "StateUserprofiles",})
         },
         data() {
             return {};
         },
+        created(){
+            this.GetUserprofiles();
+            for(let u in this.Userprofiles){
+                if(this.Userprofiles[u].nbquestions>=10 && this.Userprofiles[u].nbquestions<20){
+                    axios.put('/userprofile/userprofile-update/'+this.Userprofiles[u].id+'/',{badgeU:1})
+                }
+                else if (this.Userprofiles[u].nbquestions>=20 && this.Userprofiles[u].nbquestions<30)
+                {
+                    axios.put('/userprofile/userprofile-update/'+this.Userprofiles[u].id+'/',{badgeU:2})
+                }else if(this.Userprofiles[u].nbquestions>=30){
+                    axios.put('/userprofile/userprofile-update/'+this.Userprofiles[u].id+'/',{badgeU:3})
+                }
+            }
+        },
         mounted() {},
-        methods: {}
+        methods: {
+            ...mapActions(["GetUserprofiles",])
+        }
     };
 </script>
