@@ -52,7 +52,7 @@ const getters = {
   StateUserprofiles: (state) => state.userprofiles,
   StateUserentreprises: (state) => state.userentreprises,
   StateisEntreprise: (state) => state.isEntreprise,
-  StateEntreprisepromotions: (state) => state.Entreprisepromotions,
+  StateEntreprisepromotions: (state) => state.entreprisepromotions,
   StateEvaluationProfile:(state) => state.evaluationprofile,
   StateEvaluationentreprises:(state) => state.evaluationentreprises,
 

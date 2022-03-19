@@ -207,7 +207,9 @@ export default {
 
     axios.get('/service/service-detail/' + this.$route.params.id + '/').then((response) => {
       this.service = response.data;
-
+      if(this.service.accepted==false){
+        this.$router.push('/services');
+      }
       for (let u in this.Userprofiles) {
         if (this.Userprofiles[u].id == this.service.userprofileS) {
           this.userprofile = this.Userprofiles[u];
@@ -218,8 +220,7 @@ export default {
           this.promoted=true
           const d = new Date(this.Servicepromotions[s].dateP)
           d.setDate(d.getDate() + parseInt(this.Servicepromotions[s].nbDays))
-          console.log(new Date())
-          if(new Date()>new Date(this.Servicepromotions[s].dateP)){
+          if(new Date()>new Date(this.Servicepromotions[s].dateP)&&this.Servicepromotions[s].dateP!=null){
             axios.delete(`http://127.0.0.1:8000/servicepromotion/servicepromotion-delete/${this.Servicepromotions[s].id}/`)
             axios.post('/service/service-update/' + this.service.id + '/',{promoted:false,accepted:this.service.accepted})
             this.promoted=false

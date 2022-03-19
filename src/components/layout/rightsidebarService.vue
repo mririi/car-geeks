@@ -24,6 +24,16 @@
           Add a Service</b-button></a
         >
     </div>
+    <div >
+    <a v-if="promo==true"
+          href="http://localhost:8080/promoinfo"
+          
+          class=" ml-3 mb-3"
+          >
+          <b-button variant="warning" class="mt-3">
+          Promotion Informations</b-button></a
+        >
+    </div>
         
       
       
@@ -33,6 +43,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 //import NotificationDropdown from "@/components/Dropdowns/NotificationDropdown.vue";
 //import UserDropdown from "@/components/Dropdowns/UserDropdown.vue";
 import { mapGetters, mapActions } from "vuex";
@@ -41,6 +52,9 @@ export default {
     return {
       collapseShow: "hidden",
       serviceuser:false,
+      promo:false,
+      CurrentUserProfile:[],
+      CurrentUser:[],
     };
   },
   created: function () {
@@ -48,16 +62,31 @@ export default {
     this.GetServices();
     this.GetUsers();
     this.GetRoles();
+    this.GetServicepromotions();
+    this.GetUserprofiles();
     for (let u in this.Users){
-      if(this.Users[u].id==this.User){
-        this.CurrentUser=this.Users[u].id
+      if(this.Users[u].username==this.User){
+        this.CurrentUser=this.Users[u]
+        for(let up in this.Userprofiles){
+       if(this.Userprofiles[up].userU==this.CurrentUser.id){
+         this.CurrentUserProfile=this.Userprofiles[up]
+         for(let p in this.Servicepromotions){
+      axios.get('/service/service-detail/' + this.Servicepromotions[p].serviceP + '/').then((response) => {
+      if(response.data.userprofileS==this.CurrentUserProfile.id){
+        this.promo=true
+      }})
+    }
+       }
+     }
       }
     }
     for (let r in this.Roles){
-      if(this.Roles[r].userRole==this.CurrentUser && this.Roles[r].service==true){
+      if(this.Roles[r].userRole==this.CurrentUser.id && this.Roles[r].service==true){
         this.serviceuser=true
       }
     }
+     
+    
   },
   methods: {
     toggleCollapseShow: function (classes) {
@@ -67,6 +96,8 @@ export default {
       "GetServices",
       "GetUsers",
       "GetRoles",
+      "GetServicepromotions",
+      "GetUserprofiles",
     ]),
   },
   components: {
@@ -79,6 +110,9 @@ export default {
       Services: "StateServices",
       Roles: "StateRoles",
       Users: "StateUsers",
+      User:"StateUser",
+      Servicepromotions:"StateServicepromotions",
+      Userprofiles:"StateUserprofiles"
     }),
     isLoggedIn: function () {
       return this.$store.getters.isAuthenticated;

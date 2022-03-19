@@ -37,7 +37,7 @@
                   <hr />
                   <b-form-row class="mb-4">
                     <b-form-group label="Phone Number" class="col-md-6">
-                      <b-input type="text" placeholder="Phone number" v-model="form.tel" :class="[is_submit_form1 ? (form.tel ? 'is-valid' : 'is-invalid') : '']" />
+                      <b-input type="number" placeholder="Phone number" v-model="form.tel" :class="[is_submit_form1 ? (form.tel ? 'is-valid' : 'is-invalid') : '']" />
                       <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
                       <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.tel }">Please fill the Phone number</b-form-invalid-feedback>
                     </b-form-group>

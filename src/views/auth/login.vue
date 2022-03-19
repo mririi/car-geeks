@@ -173,6 +173,7 @@ export default {
               if(this.exist==false && this.CurrentUser.is_superuser){
               this.CreateRole({ userRole: this.CurrentUser.id, admin: true });
             }
+            
           }}
           let existuserprofile = false;
           for (let uu in this.Userprofiles) {
@@ -182,6 +183,7 @@ export default {
           }
           let exi=false
           if (existuserprofile == false) {
+            
             for(let e in this.Userentreprises){
               if(this.Userentreprises[e].userE==this.CurrentUser.id){
                 this.$router.push('/auth/userentrepriseinfo');
