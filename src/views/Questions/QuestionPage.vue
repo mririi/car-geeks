@@ -613,6 +613,7 @@ export default {
         }
         formdata.append('contentR', this.replies.contentR);
         formdata.append('checked', r.checked);
+        formdata.append('modified', true);
         await axios.post('/reply/reply-update/' + r.id + '/', formdata);
         this.GetReplies();
         this.is_submit_replymodif=false

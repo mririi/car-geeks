@@ -7,7 +7,7 @@
             <nav class="breadcrumb-one" aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:;">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><span>Services</span></li>
+                <li class="breadcrumb-item active" aria-current="page"><span>Entreprise Requests</span></li>
               </ol>
             </nav>
           </div>
@@ -83,6 +83,25 @@
             <template #cell(dateinscritE)="data">
                {{data.item.dateinscritE |formatDate}}
             </template>
+             <template #cell(actions)="data">
+              <span @click="Accept(data.item.id)">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="feather feather-check-circle text-primary ac"
+                >
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+              </span>
+            </template>
             
             <template #cell(imageE)="data">
                 <span v-if="data.item.imageE!=null">
@@ -146,6 +165,7 @@
 }
 </style>
 <script>
+import axios from 'axios'
 import { mapGetters, mapActions } from 'vuex';
 export default {
   metaInfo: { title: 'Bootstrap Custom Table' },
@@ -206,10 +226,10 @@ export default {
     }),
      filteredList() {
       return this.UserEntreprises.filter((entreprise) => {
-        return entreprise.nameE.toLowerCase().includes(this.search.toLowerCase())||
+        return (entreprise.nameE.toLowerCase().includes(this.search.toLowerCase())||
                entreprise.typeE.toLowerCase().includes(this.search.toLowerCase())||
                entreprise.addressE.toLowerCase().includes(this.search.toLowerCase())||
-               entreprise.country.toLowerCase().includes(this.search.toLowerCase())
+               entreprise.country.toLowerCase().includes(this.search.toLowerCase())) && entreprise.published==false
         ;
       });
     },
@@ -217,7 +237,11 @@ export default {
 
   methods: {
    ...mapActions(['GetQuestions','GetReplies', 'GetUsers', 'GetUserentreprises', 'GetQuestioncategories']),
-
+   async Accept(id) {
+      await axios.put('/userentreprise/userentreprise-update/' + id + '/', { published: true });
+      
+          },
+     
     bind_data() {
       //table 3
       this.columns2 =[
@@ -229,10 +253,10 @@ export default {
         { key: 'country', label: 'Country' },
         { key: 'contactE', label: 'Phone' },
         { key: 'published', label: 'Status'},
-        
+        { key: 'actions', label: 'Actions', class: 'text-center  ' },
       ],
 
-      this.table_option2.total_rows = this.UserEntreprises.length;
+      this.table_option2.total_rows = this.filteredList.length;
       this.get_meta2();
     },
     on_filtered(filtered_items) {

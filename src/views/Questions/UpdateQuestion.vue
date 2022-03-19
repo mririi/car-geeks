@@ -139,6 +139,7 @@ export default {
         formdata.append('contentQ', this.form.contentQ);
         formdata.append('categoryQ', this.form.categoryQ);
         formdata.append('accepted', false);
+        formdata.append('modified', true);
         axios.put('/question/question-update/' + this.$route.params.id + '/', formdata);
         this.$router.push('/questions');
         }
