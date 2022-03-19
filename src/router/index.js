@@ -110,12 +110,12 @@ const routes = [
     {
         path: '/contact-us',
         name: 'contact-us',
-        component: () => import(/* webpackChunkName: "pages-contact-us" */ '../views/pages/contact_us.vue')
+        component: () => import(/* webpackChunkName: "pages-contact-us" */ '../views/Others/contact_us.vue')
     },
     {
-        path: '/pages/faq',
+        path: '/faq',
         name: 'faq',
-        component: () => import(/* webpackChunkName: "pages-faq" */ '../views/pages/faq.vue')
+        component: () => import(/* webpackChunkName: "pages-faq" */ '../views/Others/faq.vue')
     },
     {
         path: '/pages/faq2',

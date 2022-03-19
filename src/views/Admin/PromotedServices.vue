@@ -6,7 +6,7 @@
           <div class="page-header">
             <nav class="breadcrumb-one" aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="javascript:;">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="javascript:;">Promotions</a></li>
                 <li class="breadcrumb-item active" aria-current="page"><span>Services</span></li>
               </ol>
             </nav>
@@ -30,37 +30,10 @@
                     <b-select-option value="50">50</b-select-option>
                   </b-select>
                 </span>
-                   <span v-b-toggle.collapse-1 class="ml-2 mt-2">
-                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="22" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36">
-                  <path
-                    fill="currentColor"
-                    d="M22 33V19.5L33.47 8A1.81 1.81 0 0 0 34 6.7V5a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1.67a1.79 1.79 0 0 0 .53 1.27L14 19.58v10.2Z"
-                    class="clr-i-solid clr-i-solid-path-1"
-                  />
-                  <path
-                    fill="currentColor"
-                    d="M33.48 4h-31a.52.52 0 0 0-.48.52v1.72a1.33 1.33 0 0 0 .39.95l12 12v10l7.25 3.61V19.17l12-12a1.35 1.35 0 0 0 .36-.91V4.52a.52.52 0 0 0-.52-.52Z"
-                    class="clr-i-solid clr-i-solid-path-1"
-                  />
-                  <path fill="none" d="M0 0h36v36H0z" />
-                </svg>
-                <span class="h6">Filter</span>
-              </span>
+                  
               </div>
              
-                <b-collapse id="collapse-1">
-                <b-card class="bg-transparent border-0 border-white  ml-3 default mt-2 mb-4">
-                  <b-form-group label="Categories : " v-slot="{ ariaDescribedby }">
-                    <b-form-checkbox-group id="checkbox-group-2" v-model="category" :aria-describedby="ariaDescribedby" name="flavour-a1">
-                      <div v-for="t in Servicetypes" :key="t.id">
-                        <b-form-checkbox :value="t.id">
-                          {{ t.descT }}
-                        </b-form-checkbox>
-                      </div>
-                    </b-form-checkbox-group>
-                  </b-form-group>
-                </b-card>
-              </b-collapse>
+             
               
               <div class="header-search">
                 <b-input v-model="search" size="sm" placeholder="Search..." />
@@ -99,7 +72,29 @@
               @filtered="on_filtered"
               @sort-changed="clear_selection"
             >
-            
+             <template #cell(serviceP)="data">
+              <span v-for="s in Services" :key="s.id">
+                <span v-if="s.id == data.item.serviceP">
+                    <router-link :to="'/servicedetails/'+s.id">
+                   {{s.titleS}}
+                    </router-link>
+                </span>
+              </span>
+            </template>
+             <template #cell(Running)="data">
+              <span v-if="data.item.Running == true">
+                <b-badge variant="success">Promoted</b-badge>
+              </span>
+              <span v-else>
+                <b-badge variant="danger">Unpromoted</b-badge>
+              </span>
+            </template>
+             <template #cell(dateP)="data">
+              <span v-if="data.item.dateP != null">
+                {{data.item.dateP}}
+              </span>
+              
+            </template>
             </b-table>
 
             <div class="table-footer">
@@ -213,9 +208,9 @@ export default {
       User: 'StateUser',
       Users: 'StateUsers',
     }),
-     filteredList() {
+   filteredList() {
       return this.Servicepromotions.filter((service) => {
-        return service.dateP.includes(this.search.toLowerCase());
+        return service.nbDays.includes(this.search)&& service.Running==true;
       });
     },
     filterByType: function () {
@@ -229,19 +224,17 @@ export default {
     bind_data() {
       //table 3
       this.columns2 = [
-       //   { key: 'imageS', label: 'Image' },
-       // { key: 'titleS', label: 'Title' ,class:'w-50' },
-       // { key: 'priceS', label: 'Price' },
-        { key: 'dateP', label: 'Promotion Date' },
-        { key: 'nbdays', label: 'Number of days' },
-      //  { key: 'addressS', label: 'Address'},
-      //  { key: 'promoted', label: 'Promotion' },
-     //   { key: 'userprofileS', label: 'User' },
-      //  { key: 'typeS', label: 'Type' },
+      
+       { key: 'serviceP', label: 'Service' },
+       { key: 'dateP', label: 'Date' },
+        { key: 'nbDays', label: 'Number of days' },
+         { key: 'Running', label: 'Status' },
+          
+      
       ];
       
 
-      this.table_option2.total_rows = this.filterByType.length;
+      this.table_option2.total_rows = this.Servicepromotions.length;
       this.get_meta2();
     },
     on_filtered(filtered_items) {

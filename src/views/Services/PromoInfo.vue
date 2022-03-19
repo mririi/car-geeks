@@ -13,88 +13,70 @@
                 </li>
             </ul>
         </portal>
-        <div class="coming-soon">
-            <div class="coming-soon-container">
-                <div class="coming-soon-cont">
-                    <div class="coming-soon-wrap">
-                        <div class="coming-soon-container">
-                            <div class="coming-soon-content">
-                                <h4 class="">Coming Soon</h4>
-                                <p class="">We will be here in a shortwhile.....</p>
-
-                                <div id="timer">
-                                    <div class="days">
-                                        <span class="count">{{ days ? days : '--' }}</span> <span class="text">Days</span>
-                                    </div>
-                                    <div class="hours">
-                                        <span class="count">{{ hours ? hours : '--' }}</span> <span class="text">Hours</span>
-                                    </div>
-                                    <div class="min">
-                                        <span class="count">{{ minutes ? minutes : '--' }}</span> <span class="text">Mins</span>
-                                    </div>
-                                    <div class="sec">
-                                        <span class="count">{{ seconds ? seconds : '--' }}</span> <span class="text">Secs</span>
-                                    </div>
+         <div class="col-xl-12 col-lg-12 col-md-6 col-sm-12 col-12 mt-5 layout-spacing">
+                <div class="widget widget-visitor-by-browser">
+                    <div class="widget-heading">
+                        <h5>Promotion Period</h5>
+                    </div>
+                    <div class="widget-content">
+                        <span v-for="s in Services" :key="s.id">
+                        <div class="browser-list">
+                            <div class="w-icon icon-fill-primary">
+                                <router-link :to="'/servicedetails/'+s.id">
+                                <b-avatar :src="'http://127.0.0.1:8000'+s.imageS" size="2.5rem" rounded="lg"/>
+                                </router-link>
+                            </div>
+                            <div class="w-browser-details">
+                                <div class="w-browser-info">
+                                    <h6>Left</h6>
+                                    <p class="browser-count">7 Days</p>
                                 </div>
-
+                                <div class="w-browser-stats">
+                                    <b-progress variant="gradient-primary" :value="4" :min="1" :max="7"></b-progress>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="coming-soon-image">
-                    <div class="l-image">
-                        <div class="img-content">
-                            <img src="@/assets/images/mindset.svg" alt="coming_soon" />
-                        </div>
+                      
+                      </span>
                     </div>
                 </div>
             </div>
-        </div>
     </div>
 </template>
 
 <script>
-    import '@/assets/sass/pages/coming-soon/style.scss';
+    
+     import Vue from 'vue';
+    import VueApexCharts from 'vue-apexcharts';
+    Vue.use(VueApexCharts);
+    Vue.component('apexchart', VueApexCharts);
+  import { mapGetters, mapActions } from 'vuex';
+    import '@/assets/sass/widgets/widgets.scss';
     export default {
         metaInfo: { title: 'Comming Soon' },
         data() {
             return {
-                days: null,
-                hours: null,
-                minutes: null,
-                seconds: null
+                
             };
         },
-        mounted() {
-            this.set_timer();
+        created: function () {
+        this.GetServices();
+        this.GetServicetypes();
+        this.GetServicepromotions();
+
+        },
+        computed:{
+ ...mapGetters({
+      Services: 'StateServices',
+      Servicepromotions: 'StateServicepromotions',
+      Userprofiles: 'StateUserprofiles',
+      Servicetypes: 'StateServicetypes',
+      User: 'StateUser',
+      Users: 'StateUsers',
+    }),
         },
         methods: {
-            set_timer() {
-                // Set the date we're counting down to
-                let getYear = new Date().getFullYear();
-                let countDownDate = new Date('Mar 21, ' + getYear + ' 15:37:25').getTime();
-
-                // Update the count down every 1 second
-                let countdownfunction = setInterval(() => {
-                    // Get todays date and time
-                    let now = new Date().getTime();
-
-                    // Find the distance between now an the count down date
-                    let distance = countDownDate - now;
-
-                    // Time calculations for days, hours, minutes and seconds
-                    this.days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                    this.hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    this.minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    this.seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                    // If the count down is over, write some text
-                    if (distance < 0) {
-                        clearInterval(countdownfunction);
-                        document.getElementById('timer').innerHTML = 'EXPIRED';
-                    }
-                }, 1000);
-            }
+          ...mapActions(['GetServices','GetServicepromotions','GetServicetypes', 'GetUsers', 'GetUserprofiles']),
         }
     };
 </script>

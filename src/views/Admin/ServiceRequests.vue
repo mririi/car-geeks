@@ -203,6 +203,9 @@
 .table3 .actions svg {
   padding: 2px;
 }
+.ac{
+  cursor: pointer;
+}
 </style>
 <script>
 import { mapGetters, mapActions } from 'vuex';
