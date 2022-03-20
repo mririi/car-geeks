@@ -92,7 +92,7 @@
                   </span>
               </template>
                <template #cell(actions)="data">
-              <span @click="Accept(data.item.id)">
+              <span @click="Accept(data.item.id,data.item.serviceP)">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -229,9 +229,10 @@ export default {
   },
   methods: {
     ...mapActions(['GetServices', 'GetServicepromotions', 'GetServicetypes', 'GetUsers', 'GetUserprofiles']),
-    async Accept(id) {
+    async Accept(id,serviceid) {
         const current = new Date();
       await axios.post('/servicepromotion/servicepromotion-update/' + id + '/', { Running: true , dateP:current.getFullYear()+'-'+(current.getMonth()+1)+'-'+current.getDate() });
+      await axios.post('/service/service-update/' + serviceid + '/', { promoted: true });
       this.$router.go();
     },
     bind_data() {

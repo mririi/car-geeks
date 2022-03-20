@@ -28,10 +28,10 @@
     <a v-if="promo==true"
           href="http://localhost:8080/promoinfo"
           
-          class=" ml-3 mb-3"
+          class=" ml-5 mb-3"
           >
           <b-button variant="warning" class="mt-3">
-          Promotion Informations</b-button></a
+          My Promotions</b-button></a
         >
     </div>
         

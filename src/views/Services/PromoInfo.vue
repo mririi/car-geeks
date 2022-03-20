@@ -19,20 +19,24 @@
                         <h5>Promotion Period</h5>
                     </div>
                     <div class="widget-content">
-                        <span v-for="s in Services" :key="s.id">
+                        <span v-for="sp in Servicepromotions" :key="sp.id">
                         <div class="browser-list">
                             <div class="w-icon icon-fill-primary">
+                                <span v-for="s in Services" :key="s.id">
+                                    <span v-if="sp.serviceP == s.id">
                                 <router-link :to="'/servicedetails/'+s.id">
                                 <b-avatar :src="'http://127.0.0.1:8000'+s.imageS" size="2.5rem" rounded="lg"/>
                                 </router-link>
+                                </span>
+                                </span>
                             </div>
                             <div class="w-browser-details">
                                 <div class="w-browser-info">
                                     <h6>Left</h6>
-                                    <p class="browser-count">7 Days</p>
+                                    <p class="browser-count">{{sp.nbDays}} Days</p>
                                 </div>
                                 <div class="w-browser-stats">
-                                    <b-progress variant="gradient-primary" :value="4" :min="1" :max="7"></b-progress>
+                                    <b-progress variant="gradient-primary" :value="valueDate" :min="1" :max="valueDate+sp.nbDays"></b-progress>
                                 </div>
                             </div>
                         </div>
@@ -56,14 +60,17 @@
         metaInfo: { title: 'Comming Soon' },
         data() {
             return {
-                
+             maxDate:'',
+             valueDate:'',
+             minDate:''
             };
         },
         created: function () {
         this.GetServices();
         this.GetServicetypes();
         this.GetServicepromotions();
-
+         this.valueDate=new Date().getDate();
+         console.log(this.valueDate)
         },
         computed:{
  ...mapGetters({

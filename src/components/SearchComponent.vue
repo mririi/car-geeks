@@ -40,12 +40,13 @@
             :key="index"
             href="question.item.path"
             @mousedown.prevent="searchResultsVisible = true"
-            class="border-b border-gray-400 text-xl cursor-pointer p-4 hover:bg-blue-100"
-            :class="{ 'bg-blue-100': index === highlightedIndex }"
+            class="border-b border-gray-700 text-xl cursor-pointer p-4 hover:bg-blue-700"
+           
+            :class="{ 'bg-blue-700': index === highlightedIndex }"
           >
             {{ question.item.titleQ }}
 
-            <span class="block font-normal text-sm my-1">{{ question.item.contentQ }}</span>
+            
           </a>
 
           <div v-if="searchResults.length === 0" class="font-normal w-full border-b cursor-pointer p-4">
@@ -139,11 +140,11 @@ export default {
 </script>
 
 <style scoped>
-  .fade-enter-active, .fade-leave-active {
+ /* .fade-enter-active, .fade-leave-active {
     transition: opacity .2s;
   }
   .fade-enter, .fade-leave-to {
     opacity: 0;
-  }
+  }*/
 </style>
 

@@ -1,24 +1,24 @@
 <template>
-    <div class="layout-px-spacing">
-        <portal to="breadcrumb">
-            <ul class="navbar-nav flex-row">
-                <li>
-                    <div class="page-header">
-                        <nav class="breadcrumb-one" aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item active" aria-current="page"><span>Services</span></li>
-                            </ol>
-                        </nav>
-                    </div>
-                </li>
-            </ul>
-        </portal>
-        <div>
-      <div class="row mr-1 float-right">
+  <div class="layout-px-spacing">
+    <portal to="breadcrumb">
+      <ul class="navbar-nav flex-row">
+        <li>
+          <div class="page-header">
+            <nav class="breadcrumb-one" aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page"><span>Services</span></li>
+              </ol>
+            </nav>
+          </div>
+        </li>
+      </ul>
+    </portal>
+    <div>
+      <div class="row  float-right">
         <div class="col-lg-12 col-md-12 col-sm-12 filtered-list-search-live mx-auto">
           <b-form class="form-inline my-2 my-lg-0 justify-content-center" @submit.prevent="search">
             <div class="w-100">
-              <b-input v-model="search" class="w-100 product-search br-25" placeholder="Search Questions" @keyup="search"></b-input>
+              <b-input v-model="search" class="w-100 product-search br-25" placeholder="Search Services" @keyup="search"></b-input>
             </div>
           </b-form>
         </div>
@@ -45,7 +45,7 @@
           <b-form-group label="Categories : " v-slot="{ ariaDescribedby }">
             <b-form-checkbox-group id="checkbox-group-2" v-model="category" :aria-describedby="ariaDescribedby" name="flavour-a1">
               <div v-for="c in Servicetypes" :key="c.id">
-                <b-form-checkbox  :value="c.id">
+                <b-form-checkbox :value="c.id">
                   {{ c.descT }}
                 </b-form-checkbox>
               </div>
@@ -54,87 +54,88 @@
         </b-card>
       </b-collapse>
     </div>
-        <div class="row layout-top-spacing">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
-                
-                   <div class="fq-article-section">
-                    <div class="row">
-                        <div v-for="s in filterByPromoted" :key="s.id" class="col-lg-4 col-md-6 mb-lg-0 mb-4 text-center">
-                          <a v-if="s.accepted==true" :href="'/servicedetails/'+s.id"> 
-                          
-                           <b-card  :img-src="'http://127.0.0.1:8000' + s.imageS" class="mt-3 cardzoom " img-top img-width="100px" img-height="200px">
-                           
-                            <h5 class="card-title">{{s.titleS}}
-                              <b-badge class="text-center" variant="danger">Promoted</b-badge>
-                              
-                                </h5>
-                                <div class="fq-rating mb-2">
-                                    <b-form-rating id="rating" v-model="s.nbEval" show-value readonly variant="warning" size="lg" class=" bg-transparent border-0">
-                                    </b-form-rating>
-                                    </div>
-                                    <div v-for="t in Servicetypes" :key="t.id">
-                                <div v-if="s.typeS==t.id">
-                                <b-badge class=" mb-1" variant="warning">{{ t.descT }}</b-badge>
-                                </div>
-                              </div>
-                                <p class="card-text">In {{s.addressS}}</p>
-                                <p class="meta-text">
-                            {{s.priceS}} DT</p>
-                            </b-card></a>
-                            </div>
-                        <div v-for="s in filterByNotPromoted" :key="s.id" class="col-lg-4 col-md-6 mb-lg-0 mb-4 text-center">
-                          <a v-if="s.accepted==true" :href="'/servicedetails/'+s.id"> 
-                          
-                           <b-card  :img-src="'http://127.0.0.1:8000' + s.imageS" class="mt-3 cardzoom" img-top img-width="100px" img-height="200px">
-                           
-                            <h5 class="card-title">{{s.titleS}}
-                              
-                                </h5>
-                                <div class="fq-rating mb-2">
-                                    <b-form-rating id="rating" v-model="s.nbEval" show-value readonly variant="warning" size="lg" class=" bg-transparent border-0">
-                                    </b-form-rating>
-                                    </div>
-                                    <div v-for="t in Servicetypes" :key="t.id">
-                                <div v-if="s.typeS==t.id">
-                                <b-badge class="mb-2" variant="warning">{{ t.descT }}</b-badge>
-                                </div>
-                              </div>
-                                <p class="card-text">In {{s.addressS}}</p>
-                                <p class="meta-text mt-2 mb-4">
-                            {{s.priceS}} DT</p>
-                            </b-card></a>
-                            </div>
-                        </div>
-                    </div>
-                
+    <hr>
+    <div class="faq container">
+      <div class="faq-layouting layout-spacing">
+        <div class="fq-article-section">
+          <h2>Services List</h2>
+          <div class="row">
+            <div class="col-lg-3 col-md-6 mb-lg-0 mb-4" v-for="s in filterByPromoted" :key="s.id">
+              <b-badge variant="danger" class="ml-2">Sponsorised</b-badge>
+              <b-card :img-src="'http://127.0.0.1:8000' + s.imageS" img-top img-alt="Service" class="counter" img-width="100%" img-height="200px">
+              
+                <router-link :to="'/servicedetails/' + s.id">
+                  <div class="fq-rating text-center responsive ml-3">
+                    <b-form-rating id="rating" v-model="s.nbEval" readonly variant="warning" class="bg-transparent border-0"> </b-form-rating>
+                  </div>
+                  <h5 class="card-title text-center mb-4">{{ s.titleS }}</h5>
+                  <b-badge variant="warning" class="float-right mb-3 h4">{{ s.priceS }} DT</b-badge>
+                  <p class="meta-text">
+                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
+                      <path
+                        fill="currentColor"
+                        d="M16 2A11.013 11.013 0 0 0 5 13a10.889 10.889 0 0 0 2.216 6.6s.3.395.349.452L16 30l8.439-9.953c.044-.053.345-.447.345-.447l.001-.003A10.885 10.885 0 0 0 27 13A11.013 11.013 0 0 0 16 2Zm0 15a4 4 0 1 1 4-4a4.005 4.005 0 0 1-4 4Z"
+                      />
+                      <circle cx="16" cy="13" r="4" fill="none" />
+                    </svg>
+                    {{ s.addressS }}
+                  </p>
+                </router-link>
+              </b-card>
             </div>
+            <div class="col-lg-3 col-md-6 mb-lg-0 mb-4 mt-4" v-for="s in filterByNotPromoted" :key="s.id">
+              <b-card :img-src="'http://127.0.0.1:8000' + s.imageS" img-top img-alt="faq-video-tutorials" img-width="100%" img-height="200px">
+                <router-link :to="'/servicedetails/' + s.id">
+                  <div class="fq-rating text-center ml-3">
+                    <b-form-rating id="rating" v-model="s.nbEval" readonly variant="warning" class="bg-transparent border-0 w-25"> </b-form-rating>
+                  </div>
+                  <h5 class="card-title text-center mb-4">{{ s.titleS }}</h5>
+                  <b-badge variant="warning" class="float-right mb-3 h4">{{ s.priceS }} DT</b-badge>
+                  <p class="meta-text">
+                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
+                      <path
+                        fill="currentColor"
+                        d="M16 2A11.013 11.013 0 0 0 5 13a10.889 10.889 0 0 0 2.216 6.6s.3.395.349.452L16 30l8.439-9.953c.044-.053.345-.447.345-.447l.001-.003A10.885 10.885 0 0 0 27 13A11.013 11.013 0 0 0 16 2Zm0 15a4 4 0 1 1 4-4a4.005 4.005 0 0 1-4 4Z"
+                      />
+                      <circle cx="16" cy="13" r="4" fill="none" />
+                    </svg>
+                    {{ s.addressS }}
+                  </p>
+                </router-link>
+              </b-card>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+   
+  </div>
 </template>
 <style scoped>
-    .layout-px-spacing {
-        min-height: calc(100vh - 170px) !important;
-    }
-    .cardzoom:hover{
-      zoom:1.05;
-    }
+.layout-px-spacing {
+  min-height: calc(100vh - 170px) !important;
+}
+.cardzoom:hover {
+  zoom: 1.05;
+}
 </style>
 <script>
-import '@/assets/sass/pages/faq/faq.scss'
+import '@/assets/sass/pricing-table.scss';
+import '@/assets/sass/pages/faq/faq.scss';
 import { mapGetters, mapActions } from 'vuex';
-    export default {
-        metaInfo: { name: 'Services' },
-        data(){
-            return{
-                search:"",
-                category:[]
-            }
-        },
-        mounted() {},
-        methods: {
-            ...mapActions(['GetServices','GetServicepromotions','GetServicetypes', 'GetUsers', 'GetUserprofiles']),
-        },
-        computed: {
+export default {
+  metaInfo: { name: 'Services' },
+  data() {
+    return {
+      search: '',
+      category: [],
+    };
+  },
+  mounted() {},
+  methods: {
+    ...mapActions(['GetServices', 'GetServicepromotions', 'GetServicetypes', 'GetUsers', 'GetUserprofiles']),
+  },
+  computed: {
     ...mapGetters({
       Services: 'StateServices',
       Servicepromotions: 'StateServicepromotions',
@@ -144,9 +145,9 @@ import { mapGetters, mapActions } from 'vuex';
       Users: 'StateUsers',
     }),
     filterByAccepted() {
-      
-        return this.Services.filter((service) => {return service.accepted==true});
-      
+      return this.Services.filter((service) => {
+        return service.accepted == true;
+      });
     },
     filteredList() {
       return this.filterByAccepted.filter((service) => {
@@ -159,16 +160,20 @@ import { mapGetters, mapActions } from 'vuex';
       } else return this.filteredList;
     },
     filterByPromoted: function () {
-        return this.filterByCategory.filter((servicep) => {return servicep.promoted==true});
+      return this.filterByCategory.filter((servicep) => {
+        return servicep.promoted == true;
+      });
     },
     filterByNotPromoted: function () {
-        return this.filterByCategory.filter((servicep) => {return servicep.promoted==false});
+      return this.filterByCategory.filter((servicep) => {
+        return servicep.promoted == false;
+      });
     },
   },
-        created: function () {
-        this.GetServices();
-        this.GetServicetypes();
-        this.GetServicepromotions();
-        }
-    };
+  created: function () {
+    this.GetServices();
+    this.GetServicetypes();
+    this.GetServicepromotions();
+  },
+};
 </script>
