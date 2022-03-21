@@ -105,7 +105,7 @@ import '@/assets/sass/pages/faq/faq.scss';
 import '@/assets/sass/pricing-table.scss';
 import { mapGetters, mapActions } from 'vuex';
 export default {
-  metaInfo: { name: 'Services' },
+  metaInfo: { title: 'Entreprises' },
   data() {
     return {
       search: '',

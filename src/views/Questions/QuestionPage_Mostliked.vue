@@ -432,6 +432,7 @@ import { mapGetters, mapActions } from 'vuex';
 import likecomponent from './like-component.vue'
 import checkreply from './check-reply.vue'
 export default {
+  metaInfo: { title: 'Question Page' },
   components:{
     likecomponent,
     checkreply

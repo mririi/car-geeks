@@ -369,6 +369,7 @@ import '@/assets/sass/widgets/widgets.scss';
 import { mapGetters, mapActions } from 'vuex';
 import likecomponent from './like-component.vue'
 export default {
+  metaInfo: { title: 'Question Page' },
   components:{
     likecomponent,
   },

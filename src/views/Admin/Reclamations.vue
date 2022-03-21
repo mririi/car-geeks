@@ -7,7 +7,7 @@
             <nav class="breadcrumb-one" aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:;">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><span>Entreprises</span></li>
+                <li class="breadcrumb-item active" aria-current="page"><span>Reclamations</span></li>
               </ol>
             </nav>
           </div>
@@ -72,28 +72,12 @@
               @filtered="on_filtered"
               @sort-changed="clear_selection"
             >
-               <template #cell(published)="data">
-              <span v-if="data.item.published == true">
-                <b-badge variant="success">Published</b-badge>
-              </span>
-              <span v-else>
-                <b-badge variant="danger">Unpublished</b-badge>
-              </span>
-            </template>
-            <template #cell(dateinscritE)="data">
-               {{data.item.dateinscritE |formatDate}}
-            </template>
-            
-            <template #cell(imageE)="data">
-                <span v-if="data.item.imageE!=null">
-                   <router-link :to="'/entreprisedetails/'+data.item.id">
-              <b-avatar :src="'http://127.0.0.1:8000'+data.item.imageE" size="4rem" rounded="lg"  alt="" srcset=""/>
-                   </router-link>
-              </span>
-              <span v-else>
-                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="4em" height="4em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 64 64"><path fill="currentColor" d="M32 2C15.432 2 2 15.432 2 32.001C2 48.567 15.432 62 32 62s30-13.433 30-29.999C62 15.432 48.568 2 32 2zm22 30.001c0 4.629-1.433 8.922-3.876 12.465l-30.591-30.59A21.889 21.889 0 0 1 32 10c12.15 0 22 9.851 22 22.001zm-44 0a21.9 21.9 0 0 1 3.876-12.468l30.591 30.591A21.887 21.887 0 0 1 32 54.001c-12.15 0-22-9.852-22-22z"/></svg>
-              </span>
-            </template>
+              <template #cell(emailRec)="data">
+                <a :href="'mailto:'+data.item.emailRec">
+                  {{data.item.emailRec}}
+                </a>
+              </template>
+              
             </b-table>
 
             <div class="table-footer">
@@ -187,11 +171,8 @@ export default {
     },
   },
   created: function () {
-    this.GetQuestions();
-    this.GetUserentreprises();
-    this.GetQuestioncategories();
-    this.GetUsers();
-    this.GetReplies();
+    this.GetReclamations();
+  
   },
   mounted() {
     this.bind_data();
@@ -199,42 +180,30 @@ export default {
 
   computed: {
     ...mapGetters({
-      Questions: 'StateQuestions',
-      UserEntreprises: 'StateUserentreprises',
-      Questioncategories: 'StateQuestioncategories',
-      User: 'StateUser',
-      Users: 'StateUsers',
-      Replies:'StateReplies'
+     Reclamations:'StateReclamations'
     }),
-     filteredList() {
-      return this.UserEntreprises.filter((entreprise) => {
-        return entreprise.nameE.toLowerCase().includes(this.search.toLowerCase())||
-               entreprise.typeE.toLowerCase().includes(this.search.toLowerCase())||
-               entreprise.addressE.toLowerCase().includes(this.search.toLowerCase())||
-               entreprise.country.toLowerCase().includes(this.search.toLowerCase())
-        ;
+    filteredList() {
+      return this.Reclamations.filter((rec) => {
+        return rec.nameRec.toLowerCase().includes(this.search.toLowerCase())||
+               rec.emailRec.toLowerCase().includes(this.search.toLowerCase())||
+               rec.messageRec.toLowerCase().includes(this.search.toLowerCase());
       });
     },
   },
 
   methods: {
-   ...mapActions(['GetQuestions','GetReplies', 'GetUsers', 'GetUserentreprises', 'GetQuestioncategories']),
+    ...mapActions(['GetReclamations']),
 
     bind_data() {
       //table 3
-      this.columns2 =[
-        { key: 'imageE', label: 'Image' ,class: 'text-center ' },
-        { key: 'nameE', label: 'Name' },
-        { key: 'dateinscritE', label: 'Date' },
-        { key: 'typeE', label: 'Type' },
-        { key: 'addressE', label: 'Address' },
-        { key: 'country', label: 'Country' },
-        { key: 'contactE', label: 'Phone' },
-        { key: 'published', label: 'Status'},
-        
-      ],
+      this.columns2 = [
+        { key: 'nameRec', label: 'Name' },
+        { key: 'emailRec', label: 'Email' },
+        { key: 'telRec', label: 'Phone' },
+        { key: 'messageRec', label: 'Message' },
+      ];
 
-      this.table_option2.total_rows = this.UserEntreprises.length;
+      this.table_option2.total_rows = this.filteredList.length;
       this.get_meta2();
     },
     on_filtered(filtered_items) {

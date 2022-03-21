@@ -77,7 +77,7 @@
             set_timer() {
                 // Set the date we're counting down to
                 let getYear = new Date().getFullYear() ;
-                let countDownDate = new Date('Apr 5, ' + getYear + ' 15:37:25').getTime();
+                let countDownDate = new Date('Apr 30, ' + getYear + ' ,15:37:25').getTime();
 
                 // Update the count down every 1 second
                 let countdownfunction = setInterval(() => {

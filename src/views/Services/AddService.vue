@@ -130,7 +130,7 @@ import '@/assets/sass/components/cards/card.scss';
 import '@/assets/sass/forms/file-upload-with-preview.min.css';
 import { mapGetters, mapActions } from 'vuex';
 export default {
-  name: 'Questions',
+  metaInfo: { title: 'Add Service' },
   components: {},
   data() {
     return {

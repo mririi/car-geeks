@@ -81,7 +81,7 @@ import { mapGetters, mapActions } from 'vuex';
 //import VueTagsInput from '@johmun/vue-tags-input';
 
 export default {
-  name: 'Questions',
+  metaInfo: { title: 'Add Question' },
   components: {
    // VueTagsInput,
     },

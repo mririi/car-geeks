@@ -146,7 +146,7 @@ import '@/assets/sass/components/cards/card.scss';
 import { mapGetters, mapActions } from 'vuex';
 import axios from 'axios';
 export default {
-  name: 'Questions',
+  metaInfo: { title: 'Questions' },
   data() {
     return {
       search: '',

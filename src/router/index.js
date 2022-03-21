@@ -388,6 +388,15 @@ const routes = [
             layout: 'dashboard'
         }
     },
+    //Reclamations Dashboard
+    {
+        path: '/dashboard/reclamations',
+        name: 'reclamations',
+        component: () => import('../views/Admin/Reclamations.vue'),
+        meta: {
+            layout: 'dashboard'
+        }
+    },
        //Users
     {
         path: "/dashboard/users",

@@ -13,6 +13,7 @@ class Service(models.Model):
   promoted = models.BooleanField(default=False)
   country = models.CharField(max_length=200,null=True,blank=True)
   dateS = models.DateTimeField(auto_now_add=True)
+  nbvisits = models.IntegerField(default=0,null=True,blank=True)
   imageS = models.ImageField(upload_to='images/',null=True, blank=True)
   userprofileS = models.ForeignKey('userprofile.Userprofile',on_delete=models.CASCADE,null=True,blank=True)
   typeS = models.ForeignKey('servicetype.Servicetype',on_delete=models.CASCADE,null=True,blank=True)

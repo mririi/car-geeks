@@ -124,7 +124,7 @@ import '@/assets/sass/pricing-table.scss';
 import '@/assets/sass/pages/faq/faq.scss';
 import { mapGetters, mapActions } from 'vuex';
 export default {
-  metaInfo: { name: 'Services' },
+  metaInfo: { title: 'Services' },
   data() {
     return {
       search: '',
@@ -134,6 +134,7 @@ export default {
   mounted() {},
   methods: {
     ...mapActions(['GetServices', 'GetServicepromotions', 'GetServicetypes', 'GetUsers', 'GetUserprofiles']),
+    
   },
   computed: {
     ...mapGetters({

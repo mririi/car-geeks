@@ -1,7 +1,7 @@
 <template>
   <div class="col-xl-12 col-lg-12 col-md-12 mb-4 mt-4 float-container">
     <b-card class="b-l-card-1">
-      <div class="float-right bg-danger ml-2" style="border-radius: 50px; padding: 5px" v-if="CurrentUserProfile.id == service.userprofileS">
+      <div class="float-right bg-danger ml-2 del" style="border-radius: 50px; padding: 5px" v-if="CurrentUserProfile.id == service.userprofileS">
         <a @click="deleteService()"
           ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="18" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 22 24">
             <path
@@ -171,6 +171,7 @@ import '@/assets/sass/components/custom-carousel.scss';
 import axios from 'axios';
 import { mapGetters, mapActions } from 'vuex';
 export default {
+  metaInfo: { title: 'Service Details' },
   data() {
     return {
       service: [],
@@ -244,6 +245,7 @@ export default {
       this.average = sum / nb;
       axios.post('/service/service-update/' + this.service.id + '/', {
         nbEval: this.average,
+        nbvisits:this.service.nbvisits+1
       });
       this.service.nbEval = this.average;
     });
@@ -334,5 +336,9 @@ export default {
   width: 50%;
   float: left;
   padding: 10px;
+}
+.del
+{
+  cursor: pointer;
 }
 </style>>

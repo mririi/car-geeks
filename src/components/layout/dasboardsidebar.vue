@@ -354,7 +354,7 @@
           </a>
           <b-collapse id="rec" accordion="menu">
             <ul class="collapse submenu list-unstyled show">
-              <router-link tag="li" to="/apps/chat" @click.native="toggleMobileMenu"><a>Reclamations List</a></router-link>
+              <router-link tag="li" to="/dashboard/reclamations" @click.native="toggleMobileMenu"><a>Reclamations List</a></router-link>
               
             </ul>
           </b-collapse>

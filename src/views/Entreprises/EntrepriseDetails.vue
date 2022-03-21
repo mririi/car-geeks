@@ -51,9 +51,14 @@
                         </a>
                       </div>
                     </li>
-                     <li class="list-unstyled">
+                    <li class="list-unstyled">
                       <div class="icon-svg">
-                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 20"><path fill="currentColor" d="m19.799 5.165l-2.375-1.83a1.997 1.997 0 0 0-.521-.237A2.035 2.035 0 0 0 16.336 3H9.5l.801 5h6.035c.164 0 .369-.037.566-.098s.387-.145.521-.236l2.375-1.832c.135-.091.202-.212.202-.334s-.067-.243-.201-.335zM8.5 1h-1a.5.5 0 0 0-.5.5V5H3.664c-.166 0-.37.037-.567.099c-.198.06-.387.143-.521.236L.201 7.165C.066 7.256 0 7.378 0 7.5c0 .121.066.242.201.335l2.375 1.832c.134.091.323.175.521.235c.197.061.401.098.567.098H7v8.5a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-17a.5.5 0 0 0-.5-.5z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 20">
+                          <path
+                            fill="currentColor"
+                            d="m19.799 5.165l-2.375-1.83a1.997 1.997 0 0 0-.521-.237A2.035 2.035 0 0 0 16.336 3H9.5l.801 5h6.035c.164 0 .369-.037.566-.098s.387-.145.521-.236l2.375-1.832c.135-.091.202-.212.202-.334s-.067-.243-.201-.335zM8.5 1h-1a.5.5 0 0 0-.5.5V5H3.664c-.166 0-.37.037-.567.099c-.198.06-.387.143-.521.236L.201 7.165C.066 7.256 0 7.378 0 7.5c0 .121.066.242.201.335l2.375 1.832c.134.091.323.175.521.235c.197.061.401.098.567.098H7v8.5a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-17a.5.5 0 0 0-.5-.5z"
+                          />
+                        </svg>
                       </div>
                       {{ userentreprise.addressE }}
                     </li>
@@ -73,9 +78,15 @@
                       </div>
                       {{ userentreprise.contactE }}
                     </li>
-                     <li class="list-unstyled">
+                    <li class="list-unstyled">
                       <div class="icon-svg">
-                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32"><path fill="currentColor" d="M16 2A11.013 11.013 0 0 0 5 13a10.889 10.889 0 0 0 2.216 6.6s.3.395.349.452L16 30l8.439-9.953c.044-.053.345-.447.345-.447l.001-.003A10.885 10.885 0 0 0 27 13A11.013 11.013 0 0 0 16 2Zm0 15a4 4 0 1 1 4-4a4.005 4.005 0 0 1-4 4Z"/><circle cx="16" cy="13" r="4" fill="none"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
+                          <path
+                            fill="currentColor"
+                            d="M16 2A11.013 11.013 0 0 0 5 13a10.889 10.889 0 0 0 2.216 6.6s.3.395.349.452L16 30l8.439-9.953c.044-.053.345-.447.345-.447l.001-.003A10.885 10.885 0 0 0 27 13A11.013 11.013 0 0 0 16 2Zm0 15a4 4 0 1 1 4-4a4.005 4.005 0 0 1-4 4Z"
+                          />
+                          <circle cx="16" cy="13" r="4" fill="none" />
+                        </svg>
                       </div>
                       {{ userentreprise.country }}
                     </li>
@@ -165,10 +176,10 @@
             <div class="col-md-12">
               <h3>Actions</h3>
               <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-4">
                   <ul class="">
                     <li class="list-unstyled">
-                      <h4 class="text-center mt-4">Rate Us !</h4>
+                      <h4 class="text-center mt-2">Rate Us !</h4>
                       <span v-if="userentreprise.userE != CurrentUser.id">
                         <span v-if="isLoggedIn">
                           <span v-b-modal.Rating>
@@ -196,16 +207,50 @@
                     </li>
                   </ul>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-8">
                   <ul class="">
                     <li class="list-unstyled">
-                      <div class="faq-layouting layout-spacing">
-                        <div class="fq-comman-question-wrapper">
-                          <div class="row">
-                            <div class="col-md-12">
-                              <h4>Your feedback help us to improve our services quality</h4>
-                            </div>
-                          </div>
+                      <div class="row">
+                        <div class="col-md-12 mt-4">
+                          <h4>Your feedback help us to improve our services quality</h4>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="faq container mt-5">
+      <div class="faq-layouting layout-spacing">
+        <div class="fq-comman-question-wrapper">
+          <div class="row">
+            <div class="col-md-12">
+              <h3>For this company</h3>
+              <div class="row">
+                <div class="col-md-7">
+                  <ul class="">
+                    <li class="list-unstyled ml-5" v-if="CurrentUserEntreprise.id == userentreprise.id && promoted == false">
+                      <h1><b-button variant="info" v-b-modal.promotion>Reach more people by boosting your company <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-miterlimit="5.759" d="M3 3v16a2 2 0 0 0 2 2h16"/><path stroke-miterlimit="5.759" d="m7 14l4-4l4 4l6-6"/><path d="M18 8h3v3"/></g></svg></b-button></h1>
+                      <b-modal id="promotion" title="Promote your company !" centered>
+                        <label>Number of days</label>
+                        <b-input placeholder="1,3,7..etc" type="number" v-model="nbDays" min="1" value="7"></b-input>
+                        <template #modal-footer>
+                          <b-button variant="primary" @click="promote()">Submit your promotion request</b-button>
+                        </template>
+                      </b-modal>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-md-5">
+                  <ul class="">
+                    <li class="list-unstyled" v-if="CurrentUser.id == userentreprise.userE">
+                      <div class="row">
+                        <div class="col-md-12 mt-2">
+                          <router-link :to="'/updateentreprise/' + userentreprise.id"><b-button variant="info">Update your company information</b-button></router-link>
                         </div>
                       </div>
                     </li>
@@ -279,7 +324,6 @@
       </div>
     </div>
   </div>
-
 </template>
 <style scoped>
 .layout-px-spacing {
@@ -438,7 +482,7 @@ export default {
     });
     for (let ep in this.Evaluationentreprises) {
       if (this.Evaluationentreprises[ep].userentrepriseEval == this.userentreprise.id) {
-        this.nbStat=this.nbStat+1;
+        this.nbStat = this.nbStat + 1;
       }
     }
   },
