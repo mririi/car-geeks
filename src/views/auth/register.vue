@@ -97,7 +97,7 @@
                       <circle cx="12" cy="12" r="3"></circle>
                     </svg>
                     <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
-                    <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.password.length > 6 }">Please enter a password longer than 6 characters !</b-form-invalid-feedback>
+                    <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.password.length >= 6 }">Please enter a password longer than 6 characters !</b-form-invalid-feedback>
                   </div>
                   <b-form-checkbox
                 id="checkbox-1"
@@ -106,7 +106,7 @@
                 value="1"
                 class="text-white mb-3"
               >
-                I am an entreprise
+               <p>I am an entreprise</p> 
               </b-form-checkbox>
                   <div class="d-sm-flex justify-content-between">
                     <div class="field-wrapper">
@@ -187,7 +187,7 @@ export default {
     },
     async submit() {
       this.is_submit_form1 = true;
-      if (this.form.username && this.form.username.length>6 && this.form.password.length>6 && this.form.password && this.form.email) {
+      if (this.form.username && this.form.username.length>=6 && this.form.password.length>=6 && this.form.password && this.form.email) {
         try {
           await this.Register(this.form);
           if (this.check==null){

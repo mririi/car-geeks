@@ -101,30 +101,56 @@ export default {
     this.GetUsers();
     this.GetUserprofiles();
     this.GetQuestioncategories();
+    this.GetUserentreprises()
     for (let u in this.Users) {
       if (this.Users[u].username == this.User) {
         this.CurrentUser = this.Users[u];
       }
     }
-    let existuserprofile = false;
-    for (let uu in this.Userprofiles) {
-      if (this.Userprofiles[uu].userU == this.CurrentUser.id) {
-        existuserprofile = true;
-      }
-    }
-    if (existuserprofile == false) {
-      this.$router.push('/auth/userinfo');
-    }
+    
     axios.get('/question/question-detail/' + this.$route.params.id + '/').then((response) => {
       this.form = response.data;
     });
+    let existuserentreprise=false
+      for (let ue in this.Userentreprises){
+      if(this.Userentreprises[ue].userE==this.CurrentUser.id)
+        {
+          existuserentreprise = true
+          this.$router.push('/questions')
+          this.$swal({
+              title: 'You cannot access this page !',
+              padding: '2em'
+          });
+        }
+      }
+      if (existuserentreprise==false){
+        let existuserprofile=false
+      for (let uu in this.Userprofiles){
+      if(this.Userprofiles[uu].userU==this.CurrentUser.id)
+        {
+          if(this.Userprofiles[uu].id!=this.form.userprofileS){
+            this.$router.push('/questions')
+            this.$swal({
+              
+              title: 'This is not your Question !',
+              padding: '2em'
+          });
+          }
+          existuserprofile = true
+        }
+      }
+      if (existuserprofile==false){
+        
+        this.$router.push('/auth/userinfo')
+      }
+      }
   },
   methods: {
     onFileChanged(event) {
       this.image = event.target.files[0];
       console.log(this.image);
     },
-    ...mapActions(['GetQuestioncategories', 'CreateQuestion', 'GetUsers', 'GetUserprofiles']),
+    ...mapActions(['GetUserentreprises','GetQuestioncategories', 'CreateQuestion', 'GetUsers', 'GetUserprofiles']),
     async submit() {
       try {
         this.is_submit_form1 = true;
@@ -138,7 +164,11 @@ export default {
         formdata.append('titleQ', this.form.titleQ);
         formdata.append('contentQ', this.form.contentQ);
         formdata.append('categoryQ', this.form.categoryQ);
-        formdata.append('accepted', false);
+        if (this.CurrentUser.is_superuser){
+        formdata.append("accepted", true);
+        }else{
+          formdata.append("accepted", false);
+        }
         formdata.append('modified', true);
         axios.put('/question/question-update/' + this.$route.params.id + '/', formdata);
         this.$router.push('/questions');
@@ -149,7 +179,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters({ Questioncategories: 'StateQuestioncategories', Userprofiles: 'StateUserprofiles', User: 'StateUser', Users: 'StateUsers' }),
+    ...mapGetters({Userentreprises:'StateUserentreprises', Questioncategories: 'StateQuestioncategories', Userprofiles: 'StateUserprofiles', User: 'StateUser', Users: 'StateUsers' }),
     isLoggedIn: function () {
       return this.$store.getters.isAuthenticated;
     },

@@ -106,13 +106,28 @@ export default {
     this.GetUsers()
     this.GetUserprofiles()
     this.GetQuestioncategories()
+    this.GetUserentreprises()
     for (let u in this.Users){
       if(this.Users[u].username==this.User)
         {
           this.CurrentUser = this.Users[u];
         }
       }
-      let existuserprofile=false
+      
+      let existuserentreprise=false
+      for (let ue in this.Userentreprises){
+      if(this.Userentreprises[ue].userE==this.CurrentUser.id)
+        {
+          existuserentreprise = true
+          this.$router.push('/questions')
+          this.$swal({
+              title: 'You cannot add a question as an entreprise, Please create a normal account !',
+              padding: '2em'
+          });
+        }
+      }
+      if (existuserentreprise==false){
+        let existuserprofile=false
       for (let uu in this.Userprofiles){
       if(this.Userprofiles[uu].userU==this.CurrentUser.id)
         {
@@ -122,13 +137,15 @@ export default {
       if (existuserprofile==false){
         this.$router.push('/auth/userinfo')
       }
+      }
+      
   },
     methods: {
    onFileChanged (event) {
       this.image = event.target.files[0]
       console.log(this.image)
     },
-    ...mapActions(["GetQuestioncategories","CreateQuestion","GetUsers","GetUserprofiles"]),
+    ...mapActions(["GetUserentreprises","GetQuestioncategories","CreateQuestion","GetUsers","GetUserprofiles"]),
     async submit() {
       try {
         this.is_submit_form1 = true;
@@ -151,6 +168,9 @@ export default {
         formdata.append("titleQ", this.form.titleQ);
         formdata.append("contentQ", this.form.contentQ);
         formdata.append("categoryQ", this.form.categoryQ);
+        if (this.CurrentUser.is_superuser){
+        formdata.append("accepted", true);
+        }
         //formdata.append("tags", this.tags.text);
         formdata.append("userprofileQ", this.form.userprofileQ);
         console.log(this.form.categoryQ)
@@ -166,7 +186,7 @@ export default {
     
     },
     computed: {
-    ...mapGetters({ Questioncategories:"StateQuestioncategories",Userprofiles:"StateUserprofiles", User: "StateUser",Users: "StateUsers"}),
+    ...mapGetters({ Userentreprises:"StateUserentreprises",Questioncategories:"StateQuestioncategories",Userprofiles:"StateUserprofiles", User: "StateUser",Users: "StateUsers"}),
     isLoggedIn: function() {
       return this.$store.getters.isAuthenticated;
     },

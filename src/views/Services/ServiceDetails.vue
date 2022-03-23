@@ -57,8 +57,13 @@
         <p class="card-text mb-2 ml-4">{{ service.details }}</p>
         <div class="w-50">
           <span v-if="service.userprofileS != CurrentUserProfile.id">
-            <span v-if="isLoggedIn && existe == true">
+            <span v-if="isLoggedIn && existprofile == true">
               <span v-b-modal.Rating>
+                <b-form-rating id="rating" v-model="average" variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
+              </span>
+            </span>
+            <span v-else-if="existentreprise==true">
+              <span @click="showAlert1()" >
                 <b-form-rating id="rating" v-model="average" variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
               </span>
             </span>
@@ -179,7 +184,8 @@ export default {
       type: [],
       CurrentUser: [],
       CurrentUserProfile: [],
-      existe: false,
+      existprofile: false,
+      existentreprise: false,
       average: 0,
       nbDays:7,
       promoted:false,
@@ -194,6 +200,7 @@ export default {
     this.GetUsers();
     this.GetEvaluations();
     this.GetServicepromotions();
+    this.GetUserentreprises();
     for (let u in this.Users) {
       if (this.Users[u].username == this.User) {
         this.CurrentUser = this.Users[u];
@@ -202,10 +209,15 @@ export default {
     for (let u in this.Userprofiles) {
       if (this.Userprofiles[u].userU == this.CurrentUser.id) {
         this.CurrentUserProfile = this.Userprofiles[u];
-        this.existe = true;
+        this.existprofile = true;
       }
     }
-
+    for (let ue in this.Userentreprises) {
+      if (this.Userentreprises[ue].userE == this.CurrentUser.id) {
+        
+        this.existentreprise= true;
+      }
+    }
     axios.get('/service/service-detail/' + this.$route.params.id + '/').then((response) => {
       this.service = response.data;
       if(this.service.accepted==false){
@@ -251,7 +263,7 @@ export default {
     });
   },
   methods: {
-    ...mapActions(['GetServicepromotions','GetServices', 'GetUserprofiles','CreateServicepromotion', 'GetServicetypes', 'GetUsers', 'GetEvaluations']),
+    ...mapActions(['GetUserentreprises','GetServicepromotions','GetServices', 'GetUserprofiles','CreateServicepromotion', 'GetServicetypes', 'GetUsers', 'GetEvaluations']),
     promote(){
       this.CreateServicepromotion({serviceP:this.service.id,nbDays:this.nbDays})
       this.promoted=true
@@ -305,13 +317,20 @@ export default {
     },
     async showAlert() {
       this.$swal({
-        title: 'You cannot rating your service',
+        title: 'You cannot rate your service',
+        padding: '2em',
+      });
+    },
+    async showAlert1() {
+      this.$swal({
+        title: 'You cannot rate this service as an entreprise',
         padding: '2em',
       });
     },
   },
   computed: {
     ...mapGetters({
+      Userentreprises: 'StateUserentreprises',
       Userprofiles: 'StateUserprofiles',
       Servicetypes: 'StateServicetypes',
       User: 'StateUser',

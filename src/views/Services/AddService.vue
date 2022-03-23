@@ -37,7 +37,7 @@
                     </b-form-group>
                     <label >Service details <span style="color:red">*</span></label>
                     <b-form-group class="mb-3">
-                      <b-textarea rows="4" type="text" v-model="form.details" placeholder="Question details" :class="[is_submit_form1 ? (form.details && form.details.length<500 && form.details.length>25 ? 'is-valid' : 'is-invalid') : '']"></b-textarea>
+                      <b-textarea rows="4" type="text" v-model="form.details" placeholder="Service details" :class="[is_submit_form1 ? (form.details && form.details.length<500 && form.details.length>25 ? 'is-valid' : 'is-invalid') : '']"></b-textarea>
                     <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
                       <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.details }">Please enter content between 25 and 500 characters</b-form-invalid-feedback>
                     </b-form-group>
@@ -155,13 +155,27 @@ export default {
     this.GetUsers()
     this.GetUserprofiles()
     this.GetServicetypes()
+    this.GetUserentreprises()
     for (let u in this.Users){
       if(this.Users[u].username==this.User)
         {
           this.CurrentUser = this.Users[u];
         }
       }
-      let existuserprofile=false
+      let existuserentreprise=false
+      for (let ue in this.Userentreprises){
+      if(this.Userentreprises[ue].userE==this.CurrentUser.id)
+        {
+          existuserentreprise = true
+          this.$router.push('/services')
+          this.$swal({
+              title: 'You cannot add a service as an entreprise, Please create a normal account !',
+              padding: '2em'
+          });
+        }
+      }
+      if (existuserentreprise==false){
+        let existuserprofile=false
       for (let uu in this.Userprofiles){
       if(this.Userprofiles[uu].userU==this.CurrentUser.id)
         {
@@ -170,6 +184,7 @@ export default {
       }
       if (existuserprofile==false){
         this.$router.push('/auth/userinfo')
+      }
       }
   },
     methods: {
@@ -181,18 +196,18 @@ export default {
       this.image = event.target.files[0]
       console.log(this.image)
     },
-    ...mapActions(["GetServicetypes","CreateService","GetUsers","GetUserprofiles"]),
+    ...mapActions(["GetUserentreprises","GetServicetypes","CreateService","GetUsers","GetUserprofiles"]),
     async submit() {
       try {
         this.is_submit_form1 = true;
-                if (this.form.titleS && this.form.titleS.length<100 && this.form.titleS.length>15 &&
+                if (this.form.titleS && this.form.titleS.length<24 && this.form.titleS.length>15 &&
                   this.form.addressS &&
                   this.form.typeS &&
                   this.form.country &&
                   this.form.contactS &&
                   this.form.priceS &&
-                  this.form.email &&
-                  this.form.details &&
+                  this.form.email && this.email_validate(this.form.email) &&
+                  this.form.details && this.form.details.length<500 && this.form.titleS.length>25 &&
                   this.image
                 ) {
         for (let u in this.Userprofiles){
@@ -214,6 +229,9 @@ export default {
         formdata.append("priceS", this.form.priceS);
         formdata.append("email", this.form.email);
         formdata.append("details", this.form.details);
+        if (this.CurrentUser.is_superuser){
+        formdata.append("accepted", true);
+        }
         formdata.append("typeS", this.form.typeS);
         formdata.append("userprofileS", this.form.userprofileS);
         await this.CreateService(formdata);
@@ -226,7 +244,7 @@ export default {
     
     },
     computed: {
-    ...mapGetters({ Servicetypes:"StateServicetypes",Userprofiles:"StateUserprofiles", User: "StateUser",Users: "StateUsers"}),
+    ...mapGetters({Userentreprises:"StateUserentreprises", Servicetypes:"StateServicetypes",Userprofiles:"StateUserprofiles", User: "StateUser",Users: "StateUsers"}),
     isLoggedIn: function() {
       return this.$store.getters.isAuthenticated;
     },

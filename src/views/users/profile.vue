@@ -22,7 +22,7 @@
             <div class="panel-body">
               <div class="d-flex justify-content-between">
                 <h3 class="">Profile</h3>
-                <router-link :to="'/profile-edit/' + userprofile.id" v-if="CurrentUserprofile.id == userprofile.id" class="mt-2 edit-profile">
+                <router-link :to="'/profile-edit/' + userprofile.id" v-if="CurrentUserprofile.id == userprofile.id || CurrentUser.is_superuser==true" class="mt-2 edit-profile">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -130,9 +130,14 @@
                 <div class="education ml-4 col-lg-8">
                   <span class="ml-4">Rate this profile</span>
                   <span v-if="CurrentUserprofile.id != userprofile.id">
-                  <span v-if="isLoggedIn && existe == true">
+                  <span v-if="isLoggedIn && existprofile == true">
                     <span v-b-modal.Rating>
                       <b-form-rating id="rating" v-model="average" color="primary" show-value show-value-max readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
+                    </span>
+                  </span>
+                   <span v-else-if="existentreprise==true">
+                    <span @click="showAlert1()" >
+                      <b-form-rating id="rating" v-model="average" variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
                     </span>
                   </span>
                   <span v-else>
@@ -312,12 +317,13 @@ export default {
       search: '',
       UserEval: '',
       average: 0,
-      existe:false
+      existprofile:false,
+      existentreprise:false,
     };
   },
   mounted() {},
   methods: {
-    ...mapActions(['GetUsers', 'GetCars', 'GetUserprofiles', 'GetEvaluations', 'GetEvaluationProfile']),
+    ...mapActions(['GetUserentreprises','GetUsers', 'GetCars', 'GetUserprofiles', 'GetEvaluations', 'GetEvaluationProfile']),
     async Rating() {
       let done = false;
       if (this.EvaluationProfile.length == 0) {
@@ -353,9 +359,16 @@ export default {
         padding: '2em',
       });
     },
+    async showAlert1() {
+      this.$swal({
+        title: 'You cannot rate this profile as an entreprise',
+        padding: '2em',
+      });
+    },
   },
   computed: {
     ...mapGetters({
+      Userentreprises:'StateUserentreprises',
       User: 'StateUser',
       Users: 'StateUsers',
       Userprofiles: 'StateUserprofiles',
@@ -376,6 +389,7 @@ export default {
     },
   },
   created: function () {
+    this.GetUserentreprises();
     this.GetUsers();
     this.GetUserprofiles();
     this.GetCars();
@@ -386,10 +400,16 @@ export default {
         this.CurrentUser = this.Users[u];
       }
     }
-    for (let p in this.Userprofiles) {
-      if (this.Userprofiles[p].userU == this.CurrentUser.id) {
-        this.CurrentUserprofile = this.Userprofiles[p];
-        this.existe=true
+    for (let u in this.Userprofiles) {
+      if (this.Userprofiles[u].userU == this.CurrentUser.id) {
+        this.CurrentUserProfile = this.Userprofiles[u];
+        this.existprofile = true;
+      }
+    }
+    for (let ue in this.Userentreprises) {
+      if (this.Userentreprises[ue].userE == this.CurrentUser.id) {
+        
+        this.existentreprise= true;
       }
     }
     axios.get('/userprofile/userprofile-detail/' + this.$route.params.id + '/').then((response) => {

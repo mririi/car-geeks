@@ -37,9 +37,6 @@ export default {
   data() {
     return {
       collapseShow: "hidden",
-      nbQ: "",
-      nbR: "",
-      nbU: "",
     };
   },
   created: function () {
@@ -48,9 +45,6 @@ export default {
     this.GetQuestions();
     this.GetReplies();
     this.GetUserprofiles();
-    this.nbQ = this.Questions.length;
-    this.nbR = this.Replies.length;
-    this.nbU = this.Userprofiles.length;
     
   },
   methods: {

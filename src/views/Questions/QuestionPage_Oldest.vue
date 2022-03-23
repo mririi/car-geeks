@@ -91,6 +91,23 @@
                   />
                 </svg>
               </span>
+              <span v-else-if="existentreprise == true">
+              <svg
+                  @click="showAlertlike()"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                  role="img"
+                  width="24"
+                  height="24"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 512 512"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M96 191.1H32c-17.67 0-32 14.33-32 31.1v223.1c0 17.67 14.33 31.1 32 31.1h64c17.67 0 32-14.33 32-31.1V223.1c0-16.8-14.3-32-32-32zM512 227c0-36.89-30.05-66.92-66.97-66.92h-99.86C354.7 135.1 360 113.5 360 100.8c0-33.8-26.2-68.78-70.06-68.78c-46.61 0-59.36 32.44-69.61 58.5c-31.66 80.5-60.33 66.39-60.33 93.47c0 12.84 10.36 23.99 24.02 23.99a23.88 23.88 0 0 0 14.97-5.26c76.76-61.37 57.97-122.7 90.95-122.7c16.08 0 22.06 12.75 22.06 20.79c0 7.404-7.594 39.55-25.55 71.59a23.934 23.934 0 0 0-3.066 11.72c0 13.92 11.43 23.1 24 23.1h137.6C455.5 208.1 464 216.6 464 227c0 9.809-7.766 18.03-17.67 18.71c-12.66.86-22.36 11.4-22.36 23.94c0 15.47 11.39 15.95 11.39 28.91c0 25.37-35.03 12.34-35.03 42.15c0 11.22 6.392 13.03 6.392 22.25c0 22.66-29.77 13.76-29.77 40.64c0 4.515 1.11 5.961 1.11 9.456c0 10.45-8.516 18.95-18.97 18.95h-52.53c-25.62 0-51.02-8.466-71.5-23.81l-36.66-27.51a23.851 23.851 0 0 0-14.38-4.811c-13.85 0-24.03 11.38-24.03 24.04c0 7.287 3.312 14.42 9.596 19.13l36.67 27.52C235 468.1 270.6 480 306.6 480h52.53c35.33 0 64.36-27.49 66.8-62.2c17.77-12.23 28.83-32.51 28.83-54.83a65.97 65.97 0 0 0-.64-9.122c17.84-12.15 29.28-32.58 29.28-55.28a66.33 66.33 0 0 0-1.876-15.64C499.9 270.1 512 250.2 512 227z"
+                  />
+                </svg>
+              </span>
               <span v-else>
                 <a href="/auth/userinfo">
                   <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
@@ -134,6 +151,9 @@
               </svg>
               <span v-if="isLoggedIn && CurrentUserProfile.id!=null">
                 <span v-b-modal.exampleModalCenter>Reply</span>
+              </span>
+              <span v-else-if="existentreprise==true">
+                 <span @click="showAlert()">Reply</span>
               </span>
               <span v-else>
                 <a href="/auth/userinfo"> <span>Reply</span> </a>
@@ -282,9 +302,26 @@
                               <img :src="'http://127.0.0.1:8000' + rep.imageR" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
                             </div>
                             <div class="media-notation mb-4 float-right">
-                              <a href="javascript:void(0);" class="">
-                                  <likecomponent :replyid="rep.id" :userprofile="CurrentUserProfile.id" />
-                              </a>
+                              <a v-if="existuserentreprise==false" href="javascript:void(0);" class="">
+                            <likecomponent :replyid="rep.id" :userprofile="CurrentUserProfile.id" />
+                          </a>
+                          <a v-else>
+                            <svg
+                  @click="showAlertlike()"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                  role="img"
+                  width="24"
+                  height="24"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 512 512"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M96 191.1H32c-17.67 0-32 14.33-32 31.1v223.1c0 17.67 14.33 31.1 32 31.1h64c17.67 0 32-14.33 32-31.1V223.1c0-16.8-14.3-32-32-32zM512 227c0-36.89-30.05-66.92-66.97-66.92h-99.86C354.7 135.1 360 113.5 360 100.8c0-33.8-26.2-68.78-70.06-68.78c-46.61 0-59.36 32.44-69.61 58.5c-31.66 80.5-60.33 66.39-60.33 93.47c0 12.84 10.36 23.99 24.02 23.99a23.88 23.88 0 0 0 14.97-5.26c76.76-61.37 57.97-122.7 90.95-122.7c16.08 0 22.06 12.75 22.06 20.79c0 7.404-7.594 39.55-25.55 71.59a23.934 23.934 0 0 0-3.066 11.72c0 13.92 11.43 23.1 24 23.1h137.6C455.5 208.1 464 216.6 464 227c0 9.809-7.766 18.03-17.67 18.71c-12.66.86-22.36 11.4-22.36 23.94c0 15.47 11.39 15.95 11.39 28.91c0 25.37-35.03 12.34-35.03 42.15c0 11.22 6.392 13.03 6.392 22.25c0 22.66-29.77 13.76-29.77 40.64c0 4.515 1.11 5.961 1.11 9.456c0 10.45-8.516 18.95-18.97 18.95h-52.53c-25.62 0-51.02-8.466-71.5-23.81l-36.66-27.51a23.851 23.851 0 0 0-14.38-4.811c-13.85 0-24.03 11.38-24.03 24.04c0 7.287 3.312 14.42 9.596 19.13l36.67 27.52C235 468.1 270.6 480 306.6 480h52.53c35.33 0 64.36-27.49 66.8-62.2c17.77-12.23 28.83-32.51 28.83-54.83a65.97 65.97 0 0 0-.64-9.122c17.84-12.15 29.28-32.58 29.28-55.28a66.33 66.33 0 0 0-1.876-15.64C499.9 270.1 512 250.2 512 227z"
+                  />
+                </svg> {{ rep.nblikesR }} likes
+                          </a>
                               <a href="javascript:void(0);" class="mr-2"
                                 ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1792 1536">
                                   <path
@@ -312,6 +349,9 @@
                                 <span v-if="isLoggedIn && CurrentUserProfile.id!=null">
                                   <span v-b-modal="modalCreateCommentOldest(rep.id)">Add a comment</span>
                                 </span>
+                                <span v-else-if="existentreprise==true">
+                                <span @click="showAlertcomment()">Add a comment</span>
+                              </span>
                                 <span v-else>
                                   <a href="/auth/userinfo"> <span>Add a comment</span></a>
                                 </span>
@@ -464,6 +504,7 @@ export default {
         userprofileVo: '',
         replyVo: '',
       },
+      existentreprise:false,
       oldestreplies: [],
       is_submit_reply:false,
       is_submit_replymodif:false,
@@ -473,6 +514,7 @@ export default {
   },
   computed: {
     ...mapGetters({
+      Userentreprises:'StateUserentreprises',
       Questions: 'StateQuestions',
       Replies: 'StateReplies',
       Userprofiles: 'StateUserprofiles',
@@ -486,9 +528,27 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['GetComments', 'GetQuestions', 'GetUsers', 'GetVotes', 'CreateVote', 'GetReplies', 'GetUserprofiles', 'CreateReply', 'CreateComment']),
+    ...mapActions(['GetUserentreprises','GetComments', 'GetQuestions', 'GetUsers', 'GetVotes', 'CreateVote', 'GetReplies', 'GetUserprofiles', 'CreateReply', 'CreateComment']),
     onFileChanged(event) {
       this.image = event.target.files[0];
+    },
+    async showAlert() {
+      this.$swal({
+        title: 'You cannot reply as an entreprise, Please create a normal account !',
+        padding: '2em',
+      });
+    },
+    async showAlertcomment() {
+      this.$swal({
+        title: 'You cannot comment as an entreprise, Please create a normal account !',
+        padding: '2em',
+      });
+    },
+    async showAlertlike() {
+      this.$swal({
+        title: 'You cannot like as an entreprise, Please create a normal account !',
+        padding: '2em',
+      });
     },
     deleteliked() {
       for (let v in this.Votes) {
@@ -574,6 +634,9 @@ export default {
         formdata.append('contentR', this.replies.contentR);
         formdata.append('questionRep', this.questionRep);
         formdata.append('userprofileRep', this.userprofileRep);
+        if (this.CurrentUser.is_superuser){
+        formdata.append("accepted", true);
+        }
         await this.CreateReply(formdata);
         
         this.replies.contentR = '';
@@ -596,6 +659,9 @@ export default {
         }
         formdata.append('contentR', this.replies.contentR);
         formdata.append('checked', r.checked);
+        if (this.CurrentUser.is_superuser){
+        formdata.append("accepted", true);
+        }
         await axios.post('/reply/reply-update/' + r.id + '/', formdata);
         this.GetReplies();
         this.is_submit_replymodif=false
@@ -659,6 +725,7 @@ export default {
     this.GetUserprofiles();
     this.GetVotes();
     this.GetComments();
+    this.GetUserentreprises();
     //liked replies
     
     //sort 
@@ -671,6 +738,12 @@ export default {
         for (let u in this.Users) {
           if (this.Users[u].username == this.User) {
             this.CurrentUser = this.Users[u];
+            for (let ue in this.Userentreprises){
+      if(this.Userentreprises[ue].userE==this.CurrentUser.id)
+        {
+          this.existentreprise = true
+        }
+      }
             for (let p in this.Userprofiles) {
               if (this.Userprofiles[p].userU == this.CurrentUser.id) {
                 this.CurrentUserProfile = this.Userprofiles[p];

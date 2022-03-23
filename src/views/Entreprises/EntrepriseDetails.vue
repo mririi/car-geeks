@@ -447,6 +447,10 @@ export default {
       this.userentreprise = response.data;
       if (this.userentreprise.published == false) {
         this.$router.push('/entreprises');
+         this.$swal({
+              title: 'Please Wait for the administrator to verify your informations',
+              padding: '2em'
+          });
       }
       this.nbEval = this.userentreprise.nbEval;
       for (let s in this.Entreprisepromotions) {
@@ -471,7 +475,6 @@ export default {
         }
       }
       this.average = sum / nb;
-      console.log(this.average);
       axios.put('/userentreprise/userentreprise-update/' + this.userentreprise.id + '/', {
         nbEval: this.average,
       });

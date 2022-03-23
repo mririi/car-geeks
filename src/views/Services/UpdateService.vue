@@ -153,25 +153,50 @@ export default {
     this.GetUsers()
     this.GetUserprofiles()
     this.GetServicetypes()
+    this.GetUserentreprises()
     for (let u in this.Users){
       if(this.Users[u].username==this.User)
         {
           this.CurrentUser = this.Users[u];
         }
       }
-      let existuserprofile=false
+       axios.get('/service/service-detail/' + this.$route.params.id + '/').then((response) => {
+      this.form = response.data;
+    });
+      let existuserentreprise=false
+      for (let ue in this.Userentreprises){
+      if(this.Userentreprises[ue].userE==this.CurrentUser.id)
+        {
+          existuserentreprise = true
+          this.$router.push('/services')
+          this.$swal({
+              title: 'You cannot access this page !',
+              padding: '2em'
+          });
+        }
+      }
+      if (existuserentreprise==false){
+        let existuserprofile=false
       for (let uu in this.Userprofiles){
       if(this.Userprofiles[uu].userU==this.CurrentUser.id)
         {
+          if(this.Userprofiles[uu].id!=this.form.userprofileS){
+            this.$router.push('/services')
+            this.$swal({
+              
+              title: 'This is not your Service !',
+              padding: '2em'
+          });
+          }
           existuserprofile = true
         }
       }
       if (existuserprofile==false){
+        
         this.$router.push('/auth/userinfo')
       }
-      axios.get('/service/service-detail/' + this.$route.params.id + '/').then((response) => {
-      this.form = response.data;
-    });
+      }
+     
   },
     methods: {
     email_validate(email) {
@@ -182,7 +207,7 @@ export default {
       this.image = event.target.files[0]
       console.log(this.image)
     },
-    ...mapActions(["GetServicetypes","GetUsers","GetUserprofiles"]),
+    ...mapActions(["GetUserentreprises","GetServicetypes","GetUsers","GetUserprofiles"]),
     async submit() {
       try {
         this.is_submit_form1 = true;
@@ -213,6 +238,9 @@ export default {
         formdata.append("email", this.form.email);
         formdata.append("details", this.form.details);
         formdata.append("typeS", this.form.typeS);
+        if (this.CurrentUser.is_superuser){
+        formdata.append("accepted", true);
+        }
         formdata.append("userprofileS", this.form.userprofileS);
         await axios.post('/service/service-update/' + this.$route.params.id + '/',formdata);
         this.$router.push("/services");
@@ -224,7 +252,7 @@ export default {
     
     },
     computed: {
-    ...mapGetters({ Servicetypes:"StateServicetypes",Userprofiles:"StateUserprofiles", User: "StateUser",Users: "StateUsers"}),
+    ...mapGetters({Userentreprises:"StateUserentreprises", Servicetypes:"StateServicetypes",Userprofiles:"StateUserprofiles", User: "StateUser",Users: "StateUsers"}),
     isLoggedIn: function() {
       return this.$store.getters.isAuthenticated;
     },
