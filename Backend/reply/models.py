@@ -13,7 +13,6 @@ class Reply(models.Model):
   accepted = models.BooleanField(default=False)
   modified = models.BooleanField(default=False)
   questionRep = models.ForeignKey('question.Question',on_delete=models.CASCADE,null=True,blank=True)
-  voteRep = models.ForeignKey('vote.Vote',on_delete=models.CASCADE,null=True,blank=True)
 
   def __str__(self):
     return 'Reply de '+self.userprofileRep.__str__()+' with title : '+self.contentR.__str__()

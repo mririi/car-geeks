@@ -5,7 +5,7 @@ from django.db import models
 class Service(models.Model):
   titleS = models.CharField(max_length=200,null=True,blank=True)
   priceS = models.DecimalField(max_digits=20,decimal_places=2,null=True,blank=True)
-  contactS = models.CharField(max_length=200,null=True,blank=True)
+  contactS = models.IntegerField(null=True,blank=True)
   email = models.CharField(max_length=200,null=True,blank=True)
   details = models.TextField(unique=True,null=True,blank=True)
   addressS = models.CharField(max_length=200,null=True,blank=True)

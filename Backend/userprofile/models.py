@@ -13,7 +13,6 @@ class Userprofile(models.Model):
   bio = models.TextField(default="",blank=True,null=True)
   nbquestions = models.IntegerField(default=0)
   nbreplies = models.IntegerField(default=0)
-  nblikes = models.IntegerField(default=0)
   nbvisits = models.IntegerField(default=0)
   dateinscrit = models.DateTimeField(auto_now_add=True)
   imageU = models.ImageField(upload_to='images/',null=True, blank=True)

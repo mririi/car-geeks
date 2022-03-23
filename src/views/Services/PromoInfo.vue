@@ -99,7 +99,7 @@ export default {
       minDate: '',
       promoDate:[
         {
-          date: '',
+          date: null,
           service: '',
           nbDays: '',
           now: '',
@@ -125,13 +125,15 @@ export default {
         this.CurrentUserProfile = this.Userprofiles[u];
       }
     }
-
+    let i=0
     for (let s in this.Servicepromotions) {
       if (this.Servicepromotions[s].Running == true) {
-        this.promoDate[s].date = new Date(this.Servicepromotions[s].dateP).getDate();
-        this.promoDate[s].service = this.Servicepromotions[s].serviceP;
-        this.promoDate[s].nbDays = parseInt(this.Servicepromotions[s].nbDays);
-        this.promoDate[s].now = new Date().getDate();  
+
+        this.promoDate[i].date = new Date(this.Servicepromotions[s].dateP).getDate();
+        this.promoDate[i].service = this.Servicepromotions[s].serviceP;
+        this.promoDate[i].nbDays = parseInt(this.Servicepromotions[s].nbDays);
+        this.promoDate[i].now = new Date().getDate();  
+        
       }
     }
     console.log(this.promoDate);
