@@ -210,7 +210,6 @@ export default {
                   this.form.details && this.form.details.length<500 && this.form.details.length>25 &&
                   this.image
                 ) {
-                  console.log("zz")
         for (let u in this.Userprofiles){
       if(this.Userprofiles[u].userU==this.CurrentUser.id)
         {
@@ -236,6 +235,9 @@ export default {
         formdata.append("typeS", this.form.typeS);
         formdata.append("userprofileS", this.form.userprofileS);
         await this.CreateService(formdata);
+        if (this.CurrentUser.is_superuser==false){
+        this.$swal('Good Job!', 'Your service has been created successfuly, Please wait for the administator to accept it !', 'success');
+        }
         this.$router.push("/services");
         }
       } catch (error) {

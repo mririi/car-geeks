@@ -175,6 +175,9 @@ export default {
         formdata.append("userprofileQ", this.form.userprofileQ);
         console.log(this.form.categoryQ)
         await this.CreateQuestion(formdata);
+        if (this.CurrentUser.is_superuser==false){
+        this.$swal('Good Job!', 'Your question has been created successfuly, Please wait for the administator to accept it !', 'success');
+        }
         this.$router.push("/questions");
       
         

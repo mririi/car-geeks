@@ -176,6 +176,7 @@ export default {
         formdata.append('userE', this.form.userE.id);
         //
           this.CreateUserentreprise(formdata);
+          this.$swal('Good Job!', 'Your entreprise has been created successfuly.', 'success');
           this.$router.push('/')
         return true;
       } else {

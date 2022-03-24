@@ -161,6 +161,7 @@
              ...mapActions(["CreateReclamation"]),
         async submit(){
             await this.CreateReclamation(this.form)
+        this.$swal('We heard you !', 'Your reclamation has been sent successfuly, Wait for our email !', 'success');
         }
         },
     };

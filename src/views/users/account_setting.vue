@@ -213,6 +213,7 @@ export default {
           formdata.append('tel', this.form.tel);
           axios.put('/userprofile/userprofile-update/' + this.$route.params.id + '/', formdata);
           this.GetUserprofiles();
+        this.$swal('Good Job!', 'Your profile has been updated successfuly !', 'success');
           this.$router.push('/profile/' + this.form.id);
         }
       } catch (error) {

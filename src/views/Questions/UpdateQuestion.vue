@@ -171,6 +171,9 @@ export default {
         }
         formdata.append('modified', true);
         axios.put('/question/question-update/' + this.$route.params.id + '/', formdata);
+        if (this.CurrentUser.is_superuser==false){
+        this.$swal('Good Job!', 'Your question has been updated successfuly, Please wait for the administator to accept it !', 'success');
+        }
         this.$router.push('/questions');
         }
       } catch (error) {

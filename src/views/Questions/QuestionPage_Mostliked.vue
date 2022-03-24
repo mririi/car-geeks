@@ -641,6 +641,8 @@ export default {
         this.replies.contentR = '';
         this.GetReplies();
         this.is_submit_reply=false
+                this.$swal('Good Job!', 'Your reply has been created successfuly, Please wait for the administator to accept it !', 'success');
+
       }} catch (error) {
         throw 'Il ya un error!';
       }
@@ -664,6 +666,8 @@ export default {
         await axios.post('/reply/reply-update/' + r.id + '/', formdata);
         this.GetReplies();
         this.is_submit_replymodif=false
+                this.$swal('Good Job!', 'Your reply has been updated successfuly, Please wait for the administator to accept it !', 'success');
+
       }} catch (error) {
         throw 'Il ya un errora !';
       }
@@ -684,7 +688,7 @@ export default {
         this.GetReplies();
         this.comment.contentCo = '';
         this.is_submit_comment=false
-      
+      this.$swal('Good Job!', 'Your comment has been created successfuly !', 'success');
       } catch (error) {
         throw 'Il ya un errora !';
       }}
@@ -701,6 +705,7 @@ export default {
         this.GetComments();
         this.is_submit_commentmodif=false
         this.comment.contentCo=''
+        this.$swal('Good Job!', 'Your comment has been updated successfuly !', 'success');
       }} catch (error) {
         throw 'Il ya un errora !';
       }

@@ -218,6 +218,7 @@ export default {
           }
         }
       }
+      this.$swal('Good Job!', 'Your profile has been created successfuly.', 'success');
       this.$router.push('/questions');
     },
   },

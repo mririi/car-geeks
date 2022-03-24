@@ -22,7 +22,7 @@
             <div class="panel-body">
               <div class="d-flex justify-content-between">
                 <h3 class="">Profile</h3>
-                <router-link :to="'/profile-edit/' + userprofile.id" v-if="CurrentUserprofile.id == userprofile.id || CurrentUser.is_superuser==true" class="mt-2 edit-profile">
+                <router-link :to="'/profile-edit/' + userprofile.id" v-if="CurrentUserProfile.id == userprofile.id || CurrentUser.is_superuser==true" class="mt-2 edit-profile">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -129,7 +129,7 @@
                 </div>
                 <div class="education ml-4 col-lg-8">
                   <span class="ml-4">Rate this profile</span>
-                  <span v-if="CurrentUserprofile.id != userprofile.id">
+                  <span v-if="CurrentUserProfile.id != userprofile.id">
                   <span v-if="isLoggedIn && existprofile == true">
                     <span v-b-modal.Rating>
                       <b-form-rating id="rating" v-model="average" color="primary" show-value show-value-max readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
@@ -312,7 +312,7 @@ export default {
     return {
       CurrentUser: [],
       userprofile: [],
-      CurrentUserprofile: [],
+      CurrentUserProfile: [],
       nbEval: '',
       search: '',
       UserEval: '',
@@ -349,6 +349,7 @@ export default {
             nbEval: this.nbEval,
           });
         }
+
         this.GetEvaluationProfile()
       }
       this.$router.go();

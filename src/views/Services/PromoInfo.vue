@@ -21,17 +21,17 @@
         <div class="widget-content">
           <span v-for="sp in Servicepromotions" :key="sp.id">
             <span v-if="sp.Running==true">
+          <span v-for="s in Services" :key="s.id">
+                  <span v-if="sp.serviceP == s.id && s.userprofileS == CurrentUserProfile.id">
+          
 
            
-            <div class="browser-list">
+            <div class="browser-list mb-5">
               <div class="w-icon icon-fill-primary">
-                <span v-for="s in Services" :key="s.id">
-                  <span v-if="sp.serviceP == s.id && s.userprofileS == CurrentUserProfile.id">
                     <router-link :to="'/servicedetails/' + s.id">
                       <b-avatar :src="'http://127.0.0.1:8000' + s.imageS" size="2.5rem" rounded="lg" />
                     </router-link>
-                  </span>
-                </span>
+                  
               </div>
               <div class="w-browser-details" v-if="getDatee < getDatee1(sp.dateP) + sp.nbDays">
                 <div class="w-browser-info">
@@ -54,6 +54,8 @@
             </div>
              </span>
           </span>
+          </span>
+          </span>
         </div>
       </div>
     </div>
@@ -65,13 +67,11 @@
         </div>
         <div class="widget-content">
           <span v-for="sp1 in Servicepromotions" :key="sp1.id">
-            <span v-if="sp1.Running==true">
-
-            
+            <span v-if="sp1.Running==true ">
             <span v-for="s1 in Services" :key="s1.id">
-              <span v-if="sp1.serviceP == s1.id">
+              <span v-if="sp1.serviceP == s1.id && CurrentUserProfile.id==s1.userprofileS">
                 <div class="row">
-                  <div class="col-12">
+                  <div class="col-12 ">
                     <div class="w-detail">
                       <p class="w-title">Total Visits for {{s1.titleS}}</p>
                       <p class="w-stats">{{s1.nbvisits}}</p>

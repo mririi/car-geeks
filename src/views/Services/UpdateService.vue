@@ -243,6 +243,9 @@ export default {
         }
         formdata.append("userprofileS", this.form.userprofileS);
         await axios.post('/service/service-update/' + this.$route.params.id + '/',formdata);
+        if (this.CurrentUser.is_superuser==false){
+        this.$swal('Good Job!', 'Your service has been updated successfuly, Please wait for the administator to accept it !', 'success');
+        }
         this.$router.push("/services");
         }
       } catch (error) {

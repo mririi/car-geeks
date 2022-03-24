@@ -390,6 +390,7 @@ export default {
     promote() {
       this.CreateEntreprisepromotion({ entreprisePE: this.userentreprise.id, nbDays: this.nbDays });
       this.promoted = true;
+      this.$swal('Good Job!', 'Your Entreprise promotion has been sent, Please wait for the administrator to launch your promotion !', 'success');
     },
     async Rating() {
       let done = false;
