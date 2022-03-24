@@ -222,6 +222,7 @@
                           <p>Prefered Question Category : {{q.typeC}}</p>
                           <div v-if="CurrentUserProfile.id == userprofile.id"> 
                         <b-button variant="warning" v-b-modal.preference>Modify</b-button>
+                        <!--<b-button variant="danger" @click="deletePref()">Delete</b-button>-->
                         </div>
                       </div>
                     </div>
@@ -321,6 +322,22 @@ export default {
   mounted() {},
   methods: {
     ...mapActions(['GetPreferences','GetQuestioncategories','GetUserentreprises','CreateNotification','GetUsers', 'GetUserprofiles', 'GetEvaluations', 'GetEvaluationProfile']),
+    deletePref(){
+      this.$swal({
+        icon: 'warning',
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        showCancelButton: true,
+        confirmButtonText: 'Delete',
+        padding: '2em',
+      }).then((result) => {
+        if (result.value) {
+          axios.put(`http://127.0.0.1:8000/userprofile/userprofile-update/${this.userprofile.id}/`,{preferencesU:null});
+          this.$swal('Deleted!', 'Your Preference has been deleted.', 'success');
+          this.$router.go();
+        }
+      });
+    },
     preferencesUpdate(){
       console.log(this.form)
       axios.post('/preferences/preferences-update/'+this.userprofile.preferencesU+'/',this.form)
