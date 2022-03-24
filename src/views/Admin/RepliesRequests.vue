@@ -251,7 +251,7 @@ export default {
   },
 
   methods: {
-   ...mapActions(['GetQuestions','GetReplies', 'GetUsers', 'GetUserprofiles', 'GetQuestioncategories']),
+   ...mapActions(['GetQuestions','CreateNotification','GetReplies', 'GetUsers', 'GetUserprofiles', 'GetQuestioncategories']),
  async Accept(id,userid) {
       await axios.post('/reply/reply-update/' + id + '/', { accepted: true });
        for(let u in this.Userprofiles)
@@ -263,6 +263,17 @@ export default {
              if(this.Replies[r].id==id && this.Replies[r].modified==false)
              {
                 await axios.put('/userprofile/userprofile-update/' + userid + '/', { nbreplies:this.Userprofiles[u].nbreplies+=1  });
+                for(let q in this.Questions){
+                  if(this.Questions[q].id==this.Replies[r].questionRep){
+                  await axios.put('/question/question-update/' + this.Questions[q].id + '/', { nbrep:this.Questions[q].id.nbrep+=1  });
+                  if(this.Questions[q].userprofileQ!=this.Replies[r].userprofileRep){
+                  this.CreateNotification({message:' Replied to your question ' ,userprofileNo:this.Userprofiles[u].id,questionNo:this.Questions[q].id})
+                  }
+                  }
+                }
+               
+                
+                this.CreateNotification({message:'Your reply has been accepted ' ,replyNo:this.Replies[r].id,admin:true})
              }
             }
            

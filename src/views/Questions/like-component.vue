@@ -53,7 +53,7 @@ export default {
       
     }),},
   methods:{
-    ...mapActions(['GetVotes','CreateVote']),
+    ...mapActions(['GetVotes','CreateNotification','CreateVote']),
     likedreply(){
         this.liked=false
         axios.post('/reply/reply-update/'+this.replyid+'/',{nblikesR:this.likes-1})
@@ -67,6 +67,11 @@ export default {
     deletedlike(){
         this.liked=true
         this.CreateVote({ replyVo: this.replyid, userprofileVo: this.userprofile });
+        if(this.CurrentUserProfile.id!=this.question.userprofileQ){
+          this.CreateNotification({message:' liked your reply !',userprofileNo:this.userprofile,replyNo:this.replyid})
+      }
+         
+
         axios.post('/reply/reply-update/' + this.replyid + '/', {nblikesR: this.likes + 1});
         this.likes+=1
     }

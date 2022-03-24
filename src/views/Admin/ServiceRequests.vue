@@ -284,9 +284,10 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['GetServices','GetServicepromotions','GetServicetypes', 'GetUsers', 'GetUserprofiles','GetRoles']),
+    ...mapActions(['GetServices','CreateNotification','GetServicepromotions','GetServicetypes', 'GetUsers', 'GetUserprofiles','GetRoles']),
     async Accept(id,userid) {
       await axios.post('/service/service-update/' + id + '/', { accepted: true });
+       this.CreateNotification({message:'Your service has been accepted ' ,serviceNo:id,admin:true})
        await axios.get('/userprofile/userprofile-detail/' + userid + '/').then((response) => {
         this.userprofileservice = response.data;
        }),
@@ -299,7 +300,7 @@ export default {
          if (this.Roles[r].userRole== this.userservice.id && this.Roles[r].service==false)
          {
             await axios.post('/role/role-update/'+this.Roles[r].id+'/', { service: true , userRole:this.userservice.id ,admin:this.Roles[r].admin }); 
-         }
+        }
        }
       this.$router.go();
     },

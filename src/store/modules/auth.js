@@ -279,6 +279,10 @@ const actions = {
     await axios.post("/reclamation/reclamation-create/", reclamation);
     return await dispatch("GetReclamations");
   },
+  async CreateNotification({ dispatch }, notification) {
+    await axios.post("/notifications/notification-create/", notification);
+    return await dispatch("GetNotifications");
+  },
   async GetReclamations({ commit }) {
     let response = await axios.get("reclamation/reclamation-list/");
     commit("setReclamations", response.data);

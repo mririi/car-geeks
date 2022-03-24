@@ -21,6 +21,7 @@ urlpatterns = [
     path('servicetype/',include('servicetype.urls')),
     path('userprofile/',include('userprofile.urls')),
     path('vote/',include('vote.urls')),
+    path('notifications/',include('notifications.urls')),
     path('servicepromotion/',include('servicepromotion.urls')),
     path('userentreprise/',include('userentreprise.urls')),
     path('entreprisepromotion/',include('entreprisepromotion.urls')),

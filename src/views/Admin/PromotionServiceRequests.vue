@@ -228,11 +228,12 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['GetServices', 'GetServicepromotions', 'GetServicetypes', 'GetUsers', 'GetUserprofiles']),
+    ...mapActions(['GetServices','CreateNotification', 'GetServicepromotions', 'GetServicetypes', 'GetUsers', 'GetUserprofiles']),
     async Accept(id,serviceid) {
         const current = new Date();
       await axios.post('/servicepromotion/servicepromotion-update/' + id + '/', { Running: true , dateP:current.getFullYear()+'-'+(current.getMonth()+1)+'-'+current.getDate() });
       await axios.post('/service/service-update/' + serviceid + '/', { promoted: true });
+      this.CreateNotification({message:'Your service promotion has been accepted ' ,serviceNo:serviceid,admin:true})
       this.$router.go();
     },
     bind_data() {

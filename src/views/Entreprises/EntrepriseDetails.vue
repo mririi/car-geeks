@@ -181,8 +181,13 @@
                     <li class="list-unstyled">
                       <h4 class="text-center mt-2">Rate Us !</h4>
                       <span v-if="userentreprise.userE != CurrentUser.id">
-                        <span v-if="isLoggedIn">
+                        <span v-if="isLoggedIn && existe==false">
                           <span v-b-modal.Rating>
+                            <b-form-rating id="rating" v-model="average" variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
+                          </span>
+                        </span>
+                        <span v-else-if="isLoggedIn && existe==true">
+                          <span @click="showAlertUserentreprise()">
                             <b-form-rating id="rating" v-model="average" variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
                           </span>
                         </span>
@@ -347,6 +352,7 @@ export default {
     return {
       CurrentUser: [],
       userentreprise: [],
+      CurrentUserProfile:[],
       CurrentUserEntreprise: [],
       user: [],
       nbEval: 0,
@@ -368,6 +374,7 @@ export default {
       Userentreprises: 'StateUserentreprises',
       User: 'StateUser',
       Users: 'StateUsers',
+      Userprofiles: 'StateUserprofiles',
     }),
     filterByAccepted() {
       return this.Userentreprises.filter((entreprise) => {
@@ -385,7 +392,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['GetUsers', 'GetEntreprisepromotions', 'CreateEntreprisepromotion', 'GetCars', 'GetUserentreprises', 'GetEvaluations', 'GetEvaluationentreprises']),
+    ...mapActions(['GetUsers','GetUserprofiles','CreateNotification', 'GetEntreprisepromotions', 'CreateEntreprisepromotion', 'GetCars', 'GetUserentreprises', 'GetEvaluations', 'GetEvaluationentreprises']),
 
     promote() {
       this.CreateEntreprisepromotion({ entreprisePE: this.userentreprise.id, nbDays: this.nbDays });
@@ -419,11 +426,19 @@ export default {
         }
         this.GetEvaluationentreprises();
       }
+      this.CreateNotification({message:' Rated your Entreprise '+this.nbEval+' Stars !',userprofileNo:this.CurrentUserProfile.id,entrepriseNo:this.$route.params.id})
+
       this.$router.go();
     },
     async showAlert() {
       this.$swal({
-        title: 'You cannot rating your entreprise',
+        title: 'You cannot rate your entreprise',
+        padding: '2em',
+      });
+    },
+    async showAlertUserentreprise() {
+      this.$swal({
+        title: 'You cannot rate an entreprise with a professional account',
         padding: '2em',
       });
     },
@@ -433,9 +448,15 @@ export default {
     this.GetUserentreprises();
     this.GetEvaluationentreprises();
     this.GetEntreprisepromotions();
+    this.GetUserprofiles();
     for (let u in this.Users) {
       if (this.Users[u].username == this.User) {
         this.CurrentUser = this.Users[u];
+        for(let up in this.Userprofiles){
+          if(this.Userprofiles[up].userU==this.CurrentUser.id){
+            this.CurrentUserProfile=this.Userprofiles[up]
+          }
+        }
       }
     }
     for (let p in this.Userentreprises) {

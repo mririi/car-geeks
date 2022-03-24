@@ -323,7 +323,7 @@ export default {
   },
   mounted() {},
   methods: {
-    ...mapActions(['GetUserentreprises','GetUsers', 'GetCars', 'GetUserprofiles', 'GetEvaluations', 'GetEvaluationProfile']),
+    ...mapActions(['GetUserentreprises','CreateNotification','GetUsers', 'GetCars', 'GetUserprofiles', 'GetEvaluations', 'GetEvaluationProfile']),
     async Rating() {
       let done = false;
       if (this.EvaluationProfile.length == 0) {
@@ -352,6 +352,7 @@ export default {
 
         this.GetEvaluationProfile()
       }
+      this.CreateNotification({message:' Rated your Profile '+this.nbEval+' Stars !',userprofileNo:this.CurrentUserProfile.id,profileNo:this.$route.params.id})
       this.$router.go();
     },
      async showAlert() {

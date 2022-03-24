@@ -282,7 +282,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['GetQuestions', 'GetUsers', 'GetUserprofiles', 'GetQuestioncategories']),
+    ...mapActions(['GetQuestions','CreateNotification', 'GetUsers', 'GetUserprofiles', 'GetQuestioncategories']),
     async Accept(id , userid) {
       await axios.put('/question/question-update/' + id + '/', { accepted: true });
       for(let u in this.Userprofiles)
@@ -294,6 +294,7 @@ export default {
              if(this.Questions[q].id==id && this.Questions[q].modified==false)
              {
                await axios.put('/userprofile/userprofile-update/' + userid + '/', { nbquestions:this.Userprofiles[u].nbquestions+=1  });
+              this.CreateNotification({message:'Your Question has been accepted ' ,questionNo:this.Questions[q].id,admin:true})
              }
             }
            

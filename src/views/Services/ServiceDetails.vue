@@ -263,7 +263,7 @@ export default {
     });
   },
   methods: {
-    ...mapActions(['GetUserentreprises','GetServicepromotions','GetServices', 'GetUserprofiles','CreateServicepromotion', 'GetServicetypes', 'GetUsers', 'GetEvaluations']),
+    ...mapActions(['GetUserentreprises','CreateNotification','GetServicepromotions','GetServices', 'GetUserprofiles','CreateServicepromotion', 'GetServicetypes', 'GetUsers', 'GetEvaluations']),
     promote(){
       this.CreateServicepromotion({serviceP:this.service.id,nbDays:this.nbDays})
       this.promoted=true
@@ -314,6 +314,7 @@ export default {
         }
         this.GetEvaluations();
       }
+      this.CreateNotification({message:' Rated your Service '+this.nbEval+' Stars !',userprofileNo:this.CurrentUserProfile.id,serviceNo:this.service.id})
       this.$router.go();
     },
     async showAlert() {

@@ -259,31 +259,26 @@
                             </svg>
                             <span class="badge badge-success"></span>
                         </template>
+                        <div v-for="n in Notifications" :key="n.id">
+                        <b-dropdown-item :to="path(n)" @click="updatenotif(n.id)" v-if="Userprofile.id==n.userprofileNo && n.seen==false">
+                            
+                            
 
-                        <b-dropdown-item>
+                            
                             <b-media class="server-log">
                                 <template #aside>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="feather feather-server"
-                                    >
-                                        <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
-                                        <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
-                                        <line x1="6" y1="6" x2="6" y2="6"></line>
-                                        <line x1="6" y1="18" x2="6" y2="18"></line>
-                                    </svg>
+                                    
                                 </template>
                                 <div class="data-info">
-                                    <h6 class="">Server Rebooted</h6>
-                                    <p class="">45 min ago</p>
+                                   
+                                    <h6 class="">
+                                        <div v-for="u in Userprofiles" :key="u.id">
+                                            <div v-if="u.id==n.byuserprofileNo">
+                                            {{u.firstname}} {{u.lastname}}
+                                            </div>
+                                            </div>{{n.message}}</h6>
+                      
+                                    <p class="">{{getDateago(n.dateNo)}} ago</p>
                                 </div>
 
                                 <div class="icon-status">
@@ -304,96 +299,10 @@
                                     </svg>
                                 </div>
                             </b-media>
+                           
                         </b-dropdown-item>
                         <b-dropdown-divider></b-dropdown-divider>
-                        <b-dropdown-item>
-                            <b-media>
-                                <template #aside>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="feather feather-heart"
-                                    >
-                                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                                    </svg>
-                                </template>
-                                <div class="data-info">
-                                    <h6 class="">Licence Expiring Soon</h6>
-                                    <p class="">8 hrs ago</p>
-                                </div>
-
-                                <div class="icon-status">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="feather feather-x"
-                                    >
-                                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                                    </svg>
-                                </div>
-                            </b-media>
-                        </b-dropdown-item>
-                        <b-dropdown-divider></b-dropdown-divider>
-                        <b-dropdown-item>
-                            <b-media class="file-upload">
-                                <template #aside>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="feather feather-file-text"
-                                    >
-                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                        <polyline points="14 2 14 8 20 8"></polyline>
-                                        <line x1="16" y1="13" x2="8" y2="13"></line>
-                                        <line x1="16" y1="17" x2="8" y2="17"></line>
-                                        <polyline points="10 9 9 9 8 9"></polyline>
-                                    </svg>
-                                </template>
-                                <div class="data-info">
-                                    <h6 class="">Kelly Portfolio.pdf</h6>
-                                    <p class="">670 kb</p>
-                                </div>
-
-                                <div class="icon-status">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="feather feather-check"
-                                    >
-                                        <polyline points="20 6 9 17 4 12"></polyline>
-                                    </svg>
-                                </div>
-                            </b-media>
-                        </b-dropdown-item>
+                        </div>
                     </b-dropdown></span>
                     <span v-if="isLoggedIn">
                     <b-dropdown toggle-tag="a" variant="icon-only" toggle-class="user nav-link" class="nav-item user-profile-dropdown " :right="true">
@@ -1152,6 +1061,7 @@
     </div>
 </template>
 <script>
+import axios from 'axios'
 import { mapGetters, mapActions } from "vuex";
 //import SearchComponent from '@/components/SearchComponent'
     export default {
@@ -1193,13 +1103,43 @@ import { mapGetters, mapActions } from "vuex";
             Userprofiles: "StateUserprofiles",
             Userentreprises: "StateUserentreprises",
             Users:"StateUsers",
-            User:"StateUser"
+            User:"StateUser",
+            Notifications:"StateNotifications"
             }),
             isLoggedIn: function () {
       return this.$store.getters.isAuthenticated;
     },
         },
         methods: {
+            path(notif){
+                if(notif.questionNo!=null){
+                    return '/questionpage/'+notif.questionNo+'/'
+                }else if(notif.profileNo!=null){
+                    return '/profile/'+notif.profileNo+'/'
+                }
+                else if(notif.serviceNo!=null){
+                    return '/servicedetails/'+notif.serviceNo+'/'
+                }
+                else if(notif.entrepriseNo!=null){
+                    return '/entreprisedetails/'+notif.entrepriseNo+'/'
+                }
+                
+            },
+            updatenotif(id){
+                axios.put('/notifications/notification-update/'+id+'/',{seen:true})
+                
+            },
+            getDateago: function(s){
+        if(new Date().getHours()-new Date(s).getHours()==0){
+      return new Date().getMinutes()-new Date(s).getMinutes()+' mins'
+        }else if(new Date().getDate()-new Date(s).getDate()==0){
+      return new Date().getHours()-new Date(s).getHours()+' Hours'
+        }else if(new Date().getDate()-new Date(s).getDate()==0){
+      return new Date().getHours()-new Date(s).getHours()+' Days'
+        }else if(new Date().getMonths()-new Date(s).getMonths()==0){
+      return new Date().getDate()-new Date(s).getDate()+' Days'
+        }
+    },
             reset() {
       this.query = ''
       this.highlightedIndex = 0
@@ -1262,6 +1202,7 @@ import { mapGetters, mapActions } from "vuex";
       "GetUserprofiles",
       "GetUserentreprises",
       "GetUsers",
+      "GetNotifications",
     ]),
         },
         created: function () {
@@ -1269,6 +1210,7 @@ import { mapGetters, mapActions } from "vuex";
     this.GetUserprofiles()
     this.GetUserentreprises()
     this.GetUsers()
+    this.GetNotifications()
     for (let u in this.Users) {
         
           if (this.Users[u].username == this.User) {

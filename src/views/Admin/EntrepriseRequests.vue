@@ -236,10 +236,10 @@ export default {
   },
 
   methods: {
-   ...mapActions(['GetQuestions','GetReplies', 'GetUsers', 'GetUserentreprises', 'GetQuestioncategories']),
+   ...mapActions(['GetQuestions','CreateNotification','GetReplies', 'GetUsers', 'GetUserentreprises', 'GetQuestioncategories']),
    async Accept(id) {
       await axios.put('/userentreprise/userentreprise-update/' + id + '/', { published: true });
-      
+      this.CreateNotification({message:'Your entreprise has been accepted ' ,entrepriseNo:id,admin:true})
           },
      
     bind_data() {

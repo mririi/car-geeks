@@ -229,11 +229,12 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['GetUserentreprises','GetEntreprisepromotions','GetServicetypes', 'GetUsers', 'GetUserprofiles']),
+    ...mapActions(['GetUserentreprises','CreateNotification','GetEntreprisepromotions','GetServicetypes', 'GetUsers', 'GetUserprofiles']),
     async Accept(id,entrepriseid) {
         const current = new Date();
       await axios.post('/entreprisepromotion/entreprisepromotion-update/' + id + '/', { Running: true , dateP:current.getFullYear()+'-'+(current.getMonth()+1)+'-'+current.getDate() });
       await axios.post('/userentreprise/userentreprise-update/' + entrepriseid + '/', { promoted: true });
+      this.CreateNotification({message:'Your entreprise promotion has been accepted ' ,entrepriseNo:entrepriseid,admin:true})
       this.$router.go();
     },
     bind_data() {

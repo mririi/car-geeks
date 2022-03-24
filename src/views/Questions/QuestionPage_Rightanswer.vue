@@ -240,7 +240,7 @@
                               <img :src="'http://127.0.0.1:8000' + rep.imageR" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
                             </div>
                             <div class="media-notation mb-4 float-right">
-                              <a v-if="existuserentreprise==false" href="javascript:void(0);" class="">
+                              <a v-if="existentreprise==false" href="javascript:void(0);" class="">
                             <likecomponent :replyid="rep.id" :userprofile="CurrentUserProfile.id" />
                           </a>
                           <a v-else>
@@ -463,7 +463,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['GetUserentreprises','GetComments', 'GetQuestions', 'GetUsers', 'GetVotes', 'CreateVote', 'GetReplies', 'GetUserprofiles', 'CreateReply', 'CreateComment']),
+    ...mapActions(['GetUserentreprises','CreateNotification','GetComments', 'GetQuestions', 'GetUsers', 'GetVotes', 'CreateVote', 'GetReplies', 'GetUserprofiles', 'CreateReply', 'CreateComment']),
     onFileChanged(event) {
       this.image = event.target.files[0];
     },
@@ -500,8 +500,9 @@ export default {
     },
     liked() {
       this.CreateVote(this.vote);
-
-      axios.put('/question/question-update/' + this.$route.params.id + '/', {
+if(this.CurrentUserProfile.id!=this.question.userprofileQ){
+      this.CreateNotification({message:' liked your question !',userprofileNo:this.CurrentUserProfile.id,questionNo:this.question.id})
+      }      axios.put('/question/question-update/' + this.$route.params.id + '/', {
         nblikes: this.likes + 1,
       });
       this.likedQuestion = true;
@@ -617,7 +618,9 @@ export default {
       this.comment.replyCo = rep.id;
       try {
         await this.CreateComment(this.comment);
-        await axios.post('/reply/reply-update/' + rep.id + '/', {
+        if(this.CurrentUserProfile.id!=rep.userprofileRep){
+          this.CreateNotification({message:' commented on your reply !',userprofileNo:this.CurrentUserProfile.id,replyNo:rep.id})
+          }        await axios.post('/reply/reply-update/' + rep.id + '/', {
           nbCommentR: (this.replydetails.nbCommentR += 1),
         });
         this.GetReplies();
