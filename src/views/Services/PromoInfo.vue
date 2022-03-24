@@ -19,24 +19,27 @@
           <h5>Promotion Period</h5>
         </div>
         <div class="widget-content">
-          <span v-for="sp in promoDate" :key="sp.id">
+          <span v-for="sp in Servicepromotions" :key="sp.id">
+            <span v-if="sp.Running==true">
+
+           
             <div class="browser-list">
               <div class="w-icon icon-fill-primary">
                 <span v-for="s in Services" :key="s.id">
-                  <span v-if="sp.service == s.id && s.userprofileS == CurrentUserProfile.id">
+                  <span v-if="sp.serviceP == s.id && s.userprofileS == CurrentUserProfile.id">
                     <router-link :to="'/servicedetails/' + s.id">
                       <b-avatar :src="'http://127.0.0.1:8000' + s.imageS" size="2.5rem" rounded="lg" />
                     </router-link>
                   </span>
                 </span>
               </div>
-              <div class="w-browser-details" v-if="sp.now < sp.date + sp.nbDays">
+              <div class="w-browser-details" v-if="getDatee < getDatee1(sp.dateP) + sp.nbDays">
                 <div class="w-browser-info">
-                  <h6>Left {{ sp.date + sp.nbDays - sp.now }} Days</h6>
+                  <h6>Left {{ getDatee1(sp.dateP) + parseInt(sp.nbDays) - getDatee }} Days</h6>
                   <p class="browser-count">{{ sp.nbDays }} Days</p>
                 </div>
                 <div class="w-browser-stats">
-                  <b-progress variant="gradient-primary" :value="sp.now - sp.date" :min="1" :max="sp.nbDays"></b-progress>
+                  <b-progress variant="gradient-primary" :value="getDatee  - getDatee1(sp.dateP)" :min="1" :max="sp.nbDays"></b-progress>
                 </div>
               </div>
               <div class="w-browser-details" v-else>
@@ -49,6 +52,7 @@
                 </div>
               </div>
             </div>
+             </span>
           </span>
         </div>
       </div>
@@ -60,9 +64,12 @@
           <div class="task-action"></div>
         </div>
         <div class="widget-content">
-          <span v-for="sp1 in promoDate" :key="sp1.id">
+          <span v-for="sp1 in Servicepromotions" :key="sp1.id">
+            <span v-if="sp1.Running==true">
+
+            
             <span v-for="s1 in Services" :key="s1.id">
-              <span v-if="sp1.service == s1.id">
+              <span v-if="sp1.serviceP == s1.id">
                 <div class="row">
                   <div class="col-12">
                     <div class="w-detail">
@@ -73,6 +80,7 @@
                   </div>
                 </div>
               </span>
+            </span>
             </span>
           </span>
         </div>
@@ -97,14 +105,6 @@ export default {
       maxDate: '',
       valueDate: '',
       minDate: '',
-      promoDate:[
-        {
-          date: null,
-          service: '',
-          nbDays: '',
-          now: '',
-        }
-      ],
       CurrentUser: [],
       CurrentUserProfile: [],
     };
@@ -125,20 +125,12 @@ export default {
         this.CurrentUserProfile = this.Userprofiles[u];
       }
     }
-    let i=0
-    for (let s in this.Servicepromotions) {
-      if (this.Servicepromotions[s].Running == true) {
-
-        this.promoDate[i].date = new Date(this.Servicepromotions[s].dateP).getDate();
-        this.promoDate[i].service = this.Servicepromotions[s].serviceP;
-        this.promoDate[i].nbDays = parseInt(this.Servicepromotions[s].nbDays);
-        this.promoDate[i].now = new Date().getDate();  
-        
-      }
-    }
-    console.log(this.promoDate);
   },
   computed: {
+    getDatee(){
+      return new Date().getDate()
+    },
+    
     ...mapGetters({
       Services: 'StateServices',
       Servicepromotions: 'StateServicepromotions',
@@ -172,6 +164,9 @@ export default {
    
   },
   methods: {
+    getDatee1: function(s){
+      return new Date(s).getDate()
+    },
     ...mapActions(['GetServices', 'GetServicepromotions', 'GetServicetypes', 'GetUsers', 'GetUserprofiles']),
   },
 };

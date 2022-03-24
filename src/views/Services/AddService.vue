@@ -207,9 +207,10 @@ export default {
                   this.form.contactS &&
                   this.form.priceS &&
                   this.form.email && this.email_validate(this.form.email) &&
-                  this.form.details && this.form.details.length<500 && this.form.titleS.length>25 &&
+                  this.form.details && this.form.details.length<500 && this.form.details.length>25 &&
                   this.image
                 ) {
+                  console.log("zz")
         for (let u in this.Userprofiles){
       if(this.Userprofiles[u].userU==this.CurrentUser.id)
         {

@@ -1269,18 +1269,16 @@ import { mapGetters, mapActions } from "vuex";
     this.GetUserprofiles()
     this.GetUserentreprises()
     this.GetUsers()
-    console.log(this.User)
     for (let u in this.Users) {
         
           if (this.Users[u].username == this.User) {
             this.CurrentUser = this.Users[u];
           }
-        }console.log(this.Userprofile)
+        }
     for (let u in this.Userprofiles){
         {
             if(this.Userprofiles[u].userU==this.CurrentUser.id){
                 this.Userprofile=this.Userprofiles[u]
-                console.log(this.Userprofile)
             }
 
         }
@@ -1289,7 +1287,6 @@ import { mapGetters, mapActions } from "vuex";
     for (let e in this.Userentreprises){
         if(this.Userentreprises[e].userE==this.CurrentUser.id){
             this.Userentreprise=this.Userentreprises[e]
-            console.log(this.Userentreprise)
         }
     }
   },
