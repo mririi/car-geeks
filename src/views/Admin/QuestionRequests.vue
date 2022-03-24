@@ -294,7 +294,7 @@ export default {
              if(this.Questions[q].id==id && this.Questions[q].modified==false)
              {
                await axios.put('/userprofile/userprofile-update/' + userid + '/', { nbquestions:this.Userprofiles[u].nbquestions+=1  });
-              this.CreateNotification({message:'Your Question has been accepted ' ,questionNo:this.Questions[q].id,admin:true})
+              this.CreateNotification({message:'Your Question has been accepted ' ,questionNo:this.Questions[q].id,userprofileNo:userid,admin:true})
              }
             }
            

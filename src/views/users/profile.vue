@@ -163,6 +163,16 @@
           <b-button variant="primary" @click="Rating()">Submit your rating</b-button>
         </template>
       </b-modal>
+      <b-modal id="preference" title="Modify your preferences" centered>
+        <h5>Question Category:</h5>
+                  <b-select v-model="form.categoryPref" value="Default select">
+                    <b-select-option value="0">Select Category</b-select-option>
+                    <b-select-option v-for="c in Questioncategories" :key="c.id" :value="c.id">{{ c.typeC }}</b-select-option>
+                  </b-select>
+        <template #modal-footer>
+          <b-button variant="primary" @click="preferencesUpdate()">Update</b-button>
+        </template>
+      </b-modal>
       <div class="col-xl-8 col-lg-6 col-md-7 col-sm-12 layout-top-spacing">
         <div class="skills layout-spacing">
           <div class="panel">
@@ -202,36 +212,19 @@
         <div class="education layout-spacing mt-4">
           <div class="panel">
             <div class="panel-body">
-              <h3 class="">Activity</h3>
+              <h3 class="">Preferences</h3>
               <div class="timeline-alter">
-                <div class="item-timeline">
-                  <div class="t-meta-date">
-                    <p class="">04 Mar 2009</p>
-                  </div>
-                  <div class="t-dot"></div>
-                  <div class="t-text">
-                    <p>Royal Collage of Art</p>
-                    <p>Designer Illustrator</p>
-                  </div>
-                </div>
-                <div class="item-timeline">
-                  <div class="t-meta-date">
-                    <p class="">25 Apr 2014</p>
-                  </div>
-                  <div class="t-dot"></div>
-                  <div class="t-text">
-                    <p>Massachusetts Institute of Technology (MIT)</p>
-                    <p>Designer Illustrator</p>
-                  </div>
-                </div>
-                <div class="item-timeline">
-                  <div class="t-meta-date">
-                    <p class="">04 Apr 2018</p>
-                  </div>
-                  <div class="t-dot"></div>
-                  <div class="t-text">
-                    <p>School of Art Institute of Chicago (SAIC)</p>
-                    <p>Designer Illustrator</p>
+                <div v-for="p in Preferences" :key="p.id">
+                  <div v-if="p.userprofilePref==userprofile.id">
+                    <div v-for="q in Questioncategories" :key="q.id">
+                      <div v-if="q.id==p.categoryPref">
+                       
+                          <p>Prefered Question Category : {{q.typeC}}</p>
+                          <div v-if="CurrentUserProfile.id == userprofile.id"> 
+                        <b-button variant="warning" v-b-modal.preference>Modify</b-button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -313,6 +306,10 @@ export default {
       CurrentUser: [],
       userprofile: [],
       CurrentUserProfile: [],
+      form:{
+        categoryPref:'',
+        userprofilePref:'',
+      },
       nbEval: '',
       search: '',
       UserEval: '',
@@ -323,7 +320,13 @@ export default {
   },
   mounted() {},
   methods: {
-    ...mapActions(['GetUserentreprises','CreateNotification','GetUsers', 'GetCars', 'GetUserprofiles', 'GetEvaluations', 'GetEvaluationProfile']),
+    ...mapActions(['GetPreferences','GetQuestioncategories','GetUserentreprises','CreateNotification','GetUsers', 'GetUserprofiles', 'GetEvaluations', 'GetEvaluationProfile']),
+    preferencesUpdate(){
+      console.log(this.form)
+      axios.post('/preferences/preferences-update/'+this.userprofile.preferencesU+'/',this.form)
+      this.$router.go()
+
+    },
     async Rating() {
       let done = false;
       if (this.EvaluationProfile.length == 0) {
@@ -376,6 +379,8 @@ export default {
       Userprofiles: 'StateUserprofiles',
       Evaluations: 'StateEvaluations',
       EvaluationProfile: 'StateEvaluationProfile',
+      Questioncategories:'StateQuestioncategories',
+      Preferences:'StatePreferences',
     }),
     isLoggedIn: function () {
       return this.$store.getters.isAuthenticated;
@@ -394,9 +399,10 @@ export default {
     this.GetUserentreprises();
     this.GetUsers();
     this.GetUserprofiles();
-    this.GetCars();
     this.GetEvaluations();
     this.GetEvaluationProfile();
+    this.GetPreferences();
+    this.GetQuestioncategories()
     for (let u in this.Users) {
       if (this.Users[u].username == this.User) {
         this.CurrentUser = this.Users[u];
@@ -416,6 +422,9 @@ export default {
     }
     axios.get('/userprofile/userprofile-detail/' + this.$route.params.id + '/').then((response) => {
       this.userprofile = response.data;
+      axios.get('/preferences/preferences-detail/' + this.userprofile.preferencesU + '/').then((response) => {
+      this.form = response.data;
+    }); 
       var sum = 0;
     var nb = 0;
     for (let e in this.EvaluationProfile) {
