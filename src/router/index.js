@@ -361,6 +361,14 @@ const routes = [
             layout: 'app'
         }
     },
+    {
+        path: '/promoinfoentreprise/:id',
+        name: 'userentreprisepromoinfo',
+        component: () => import('../views/Entreprises/PromoInfoEntreprise.vue'),
+        meta: {
+            layout: 'app'
+        }
+    },
     //News
     {
         path: '/news',

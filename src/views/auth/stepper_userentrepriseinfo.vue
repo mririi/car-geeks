@@ -70,9 +70,23 @@
                       </label> 
                       <div class="custom-file-container__image-preview"></div>
                     </div>
-                    <b-form-group class="col-md-6">
+                    <div class="custom-file-container col-6" data-upload-id="mySecondImage">
+                      <label>Upload Verification Papers <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">x</a></label>
+                      <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
+                      <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !image1 }">Please fill the image !</b-form-invalid-feedback>
+                    
+                      <label class="custom-file-container__custom-file">
+                        <input type="file" @change="onFileChanged1" class="custom-file-container__custom-file__custom-file-input" accept="image/*" :class="[is_submit_form1 ? (image1 ? 'is-valid' : 'is-invalid') : '']" />
+                        <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
+                        <span class="custom-file-container__custom-file__custom-file-control"></span>
+                      </label> 
+                      <div class="custom-file-container__image-preview"></div>
+                    </div>
+                  </b-form-row>
+                    <b-form-row class="mb-4">
+                    <b-form-group class="col-md-12">
                       <label>Bio</label>
-                      <b-textarea rows="6" cols="80" type="text" v-model="form.bio" placeholder="Question details" :class="[is_submit_form1 ? (form.bio && form.bio.length<500 && form.bio.length>25 ? 'is-valid' : 'is-invalid') : '']"></b-textarea>
+                      <b-textarea rows="6" cols="80" type="text" v-model="form.bio" placeholder="Entreprise details" :class="[is_submit_form1 ? (form.bio && form.bio.length<500 && form.bio.length>25 ? 'is-valid' : 'is-invalid') : '']"></b-textarea>
                     <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
                       <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.bio }">Please Enter content between 25 and 500 characters</b-form-invalid-feedback>
                     </b-form-group>
@@ -123,11 +137,18 @@ export default {
       is_submit_form1: false,
       ok: false,
       image: null,
+      image1:null,
       roleexist:false,
     };
   },
   mounted() {
     new FileUploadWithPreview('myFirstImage', {
+      images: {
+        baseImage: require('@/assets/images/file-preview.png'),
+        backgroundImage: '',
+      },
+    });
+    new FileUploadWithPreview('mySecondImage', {
       images: {
         baseImage: require('@/assets/images/file-preview.png'),
         backgroundImage: '',
@@ -149,6 +170,9 @@ export default {
     onFileChanged(event) {
       this.image = event.target.files[0];
     },
+    onFileChanged1(event1) {
+      this.image1 = event1.target.files[0];
+    },
     onComplete: async function () {
       for (let u in this.Users) {
         if (this.Users[u].username == this.User) {
@@ -156,7 +180,7 @@ export default {
         }
       }
       this.is_submit_form1 = true;
-      if (this.form.nameE && this.form.typeE && this.form.country && this.form.contactE && this.image && this.form.bio.length<500 && this.form.bio.length>25) {
+      if (this.form.nameE && this.form.typeE && this.form.country && this.form.contactE && this.image && this.image1 && this.form.bio.length<500 && this.form.bio.length>25) {
         for (let r in this.Roles) {
             if (this.Roles[r].userRole == this.form.userE.id) {
               this.form.roleE = this.Roles[r].id;
@@ -164,6 +188,7 @@ export default {
           }
         var formdata = new FormData();
           formdata.append('imageE', this.image);
+          formdata.append('imageVerif', this.image1);
         formdata.append('typeE', this.form.typeE);
         formdata.append('nameE', this.form.nameE);
         formdata.append('addressE', this.form.addressE);

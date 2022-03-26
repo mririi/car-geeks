@@ -1100,6 +1100,7 @@ export default {
     this.selectedLang = this.$appSetting.toggleLanguage();
 
     this.toggleMode();
+    
   },
   computed: {
     ...mapGetters({
@@ -1145,6 +1146,7 @@ export default {
     updatenotif(notif) {
       axios.put('/notifications/notification-update/' + notif.id + '/', { seen: true, admin: notif.admin });
     },
+
     getDateago: function (s) {
       if (new Date().getHours() - new Date(s).getHours() == 0) {
         return new Date().getMinutes() - new Date(s).getMinutes() + ' mins';
