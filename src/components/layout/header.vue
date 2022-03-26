@@ -1118,7 +1118,6 @@ export default {
   watch: {
     // whenever question changes, this function will run
     Notifications(newNotifications, oldNotifications) {
-
         if(oldNotifications!=newNotifications){
             //this.GetNotifications()
             
@@ -1153,7 +1152,7 @@ export default {
         return new Date().getHours() - new Date(s).getHours() + ' Hours';
       } else if (new Date().getDate() - new Date(s).getDate() == 0) {
         return new Date().getHours() - new Date(s).getHours() + ' Days';
-      } else if (new Date().getMonths() - new Date(s).getMonths() == 0) {
+      } else if (new Date().getMonth() - new Date(s).getMonth() == 0) {
         return new Date().getDate() - new Date(s).getDate() + ' Days';
       }
     },

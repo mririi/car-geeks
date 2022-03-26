@@ -265,9 +265,9 @@ export default {
                 await axios.put('/userprofile/userprofile-update/' + userid + '/', { nbreplies:this.Userprofiles[u].nbreplies+=1  });
                 for(let q in this.Questions){
                   if(this.Questions[q].id==this.Replies[r].questionRep){
-                  await axios.put('/question/question-update/' + this.Questions[q].id + '/', { nbrep:this.Questions[q].id.nbrep+=1  });
+                  await axios.put('/question/question-update/' + this.Questions[q].id + '/', { nbrep:this.Questions[q].nbrep+=1  });
                   if(this.Questions[q].userprofileQ!=this.Replies[r].userprofileRep){
-                  this.CreateNotification({message:' Replied to your question ' ,userprofileNo:this.Userprofiles[u].id,questionNo:this.Questions[q].id})
+                  this.CreateNotification({message:' Replied to your question ' ,byuserprofileNo:this.Replies[r].userprofileRep,userprofileNo:this.Userprofiles[u].id,questionNo:this.Questions[q].id})
                   }
                   }
                 }

@@ -240,6 +240,7 @@ export default {
    async Accept(id) {
       await axios.put('/userentreprise/userentreprise-update/' + id + '/', { published: true });
       this.CreateNotification({message:'Your entreprise has been accepted ' ,entrepriseNo:id,admin:true})
+      this.$router.go()
           },
      
     bind_data() {

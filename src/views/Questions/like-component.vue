@@ -67,13 +67,14 @@ export default {
     deletedlike(){
         this.liked=true
         this.CreateVote({ replyVo: this.replyid, userprofileVo: this.userprofile });
+        axios.post('/reply/reply-update/' + this.replyid + '/', {nblikesR: this.likes+1});
+        this.likes+=1
         if(this.CurrentUserProfile.id!=this.question.userprofileQ){
           this.CreateNotification({message:' liked your reply !',userprofileNo:this.userprofile,replyNo:this.replyid})
       }
          
 
-        axios.post('/reply/reply-update/' + this.replyid + '/', {nblikesR: this.likes + 1});
-        this.likes+=1
+        
     }
   },
   

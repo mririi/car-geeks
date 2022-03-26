@@ -42,7 +42,7 @@
       </div>
       <b-collapse id="collapse-1">
         <b-card class="bg-transparent border-0 border-white w-25 ml-3 default mt-2 mb-4">
-          <b-form-group label="Categories : " v-slot="{ ariaDescribedby }">
+          <b-form-group label="Types1 : " v-slot="{ ariaDescribedby }">
             <b-form-checkbox-group id="checkbox-group-2" v-model="category" :aria-describedby="ariaDescribedby" name="flavour-a1">
               <div v-for="c in Servicetypes" :key="c.id">
                 <b-form-checkbox :value="c.id">

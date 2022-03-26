@@ -229,7 +229,7 @@
         </div>
       </div>
     </div>
-    <div class="faq container mt-5">
+    <div class="faq container mt-5"  v-if="CurrentUserEntreprise.id == userentreprise.id && promoted == false">
       <div class="faq-layouting layout-spacing">
         <div class="fq-comman-question-wrapper">
           <div class="row">
@@ -238,7 +238,7 @@
               <div class="row">
                 <div class="col-md-7">
                   <ul class="">
-                    <li class="list-unstyled ml-5" v-if="CurrentUserEntreprise.id == userentreprise.id && promoted == false">
+                    <li class="list-unstyled ml-5">
                       <h1><b-button variant="info" v-b-modal.promotion>Reach more people by boosting your company <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-miterlimit="5.759" d="M3 3v16a2 2 0 0 0 2 2h16"/><path stroke-miterlimit="5.759" d="m7 14l4-4l4 4l6-6"/><path d="M18 8h3v3"/></g></svg></b-button></h1>
                       <b-modal id="promotion" title="Promote your company !" centered>
                         <label>Number of days</label>

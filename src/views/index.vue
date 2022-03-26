@@ -86,7 +86,7 @@
     <div class="container">
         <div class="section-head">
             <h2 class="section-title">For businesses</h2>
-            <div class="section-line"></div>
+            <a href="/entreprises" class="btn btn-developers mt-4 mb-4">Entreprises</a>
             <p class="section-description">Our mission is to help companies to become close to their customers. This means helping companies to expose their portfolio in a very beautiful place.</p>
         </div>
 

@@ -140,7 +140,8 @@ export default {
         contactS:0,
         email:'',
         details:'',
-        typeS:0
+        typeS:0,
+        promoted:''
       },
       mode:false,
       image:null,
@@ -162,7 +163,7 @@ export default {
       }
        axios.get('/service/service-detail/' + this.$route.params.id + '/').then((response) => {
       this.form = response.data;
-    });
+    
       let existuserentreprise=false
       for (let ue in this.Userentreprises){
       if(this.Userentreprises[ue].userE==this.CurrentUser.id)
@@ -195,7 +196,7 @@ export default {
         
         this.$router.push('/auth/userinfo')
       }
-      }
+      }});
      
   },
     methods: {
@@ -241,6 +242,7 @@ export default {
         if (this.CurrentUser.is_superuser){
         formdata.append("accepted", true);
         }
+        formdata.append("promoted", this.form.promoted);
         formdata.append("userprofileS", this.form.userprofileS);
         await axios.post('/service/service-update/' + this.$route.params.id + '/',formdata);
         if (this.CurrentUser.is_superuser==false){

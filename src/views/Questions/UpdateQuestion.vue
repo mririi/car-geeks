@@ -110,7 +110,7 @@ export default {
     
     axios.get('/question/question-detail/' + this.$route.params.id + '/').then((response) => {
       this.form = response.data;
-    });
+    
     let existuserentreprise=false
       for (let ue in this.Userentreprises){
       if(this.Userentreprises[ue].userE==this.CurrentUser.id)
@@ -128,7 +128,7 @@ export default {
       for (let uu in this.Userprofiles){
       if(this.Userprofiles[uu].userU==this.CurrentUser.id)
         {
-          if(this.Userprofiles[uu].id!=this.form.userprofileS){
+          if(this.Userprofiles[uu].id!=this.form.userprofileQ){
             this.$router.push('/questions')
             this.$swal({
               
@@ -143,7 +143,7 @@ export default {
         
         this.$router.push('/auth/userinfo')
       }
-      }
+      }});
   },
   methods: {
     onFileChanged(event) {

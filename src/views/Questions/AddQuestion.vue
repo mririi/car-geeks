@@ -79,7 +79,7 @@ import '@/assets/sass/components/cards/card.scss';
 import '@/assets/sass/forms/file-upload-with-preview.min.css';
 import { mapGetters, mapActions } from 'vuex';
 //import VueTagsInput from '@johmun/vue-tags-input';
-
+import axios from 'axios'
 export default {
   metaInfo: { title: 'Add Question' },
   components: {
@@ -170,6 +170,7 @@ export default {
         formdata.append("categoryQ", this.form.categoryQ);
         if (this.CurrentUser.is_superuser){
         formdata.append("accepted", true);
+        axios.put('/userprofile/userprofile-update/'+this.form.userprofileQ+'/',{nbquestions:this.uprofile.nbquestions+1})
         }
         //formdata.append("tags", this.tags.text);
         formdata.append("userprofileQ", this.form.userprofileQ);

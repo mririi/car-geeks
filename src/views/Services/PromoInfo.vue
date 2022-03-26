@@ -76,7 +76,7 @@
                       <p class="w-title">Total Visits for {{s1.titleS}}</p>
                       <p class="w-stats">{{s1.nbvisits}}</p>
                     </div>
-                    <apexchart v-if="total_visit_options" height="58" type="line" :options="total_visit_options" :series="total_visit_series"></apexchart>
+                    <apexchart v-if="total_visit_options" height="58" type="line" class="mb-4" :options="total_visit_options" :series="total_visit_series"></apexchart>
                   </div>
                 </div>
               </span>

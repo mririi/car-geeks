@@ -6,7 +6,7 @@
 
       <perfect-scrollbar class="list-unstyled menu-categories" tag="ul" :options="{ wheelSpeed: 0.5, swipeEasing: !0, minScrollbarLength: 40, maxScrollbarLength: 300, suppressScrollX: true }">
         <li class="menu">
-          <router-link to="/dashboard/users"  v-b-toggle class="dropdown-toggle" @click.prevent>
+          <router-link to="/dashboard/users" v-b-toggle class="dropdown-toggle" @click.prevent>
             <div class="">
               <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1.25em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 640 512">
                 <path
@@ -51,6 +51,40 @@
             <ul class="collapse submenu list-unstyled show">
               <router-link tag="li" to="/dashboard/questionlist" @click.native="toggleMobileMenu"><a>Questions List</a></router-link>
               <router-link tag="li" to="/dashboard/questionrequests" @click.native="toggleMobileMenu"><a>Add Question requests</a></router-link>
+            </ul>
+          </b-collapse>
+        </li>
+        <li class="menu">
+          <a href="#questcat" v-b-toggle class="dropdown-toggle" @click.prevent>
+            <div class="">
+              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M11.15 3.4L7.43 9.48c-.41.66.07 1.52.85 1.52h7.43c.78 0 1.26-.86.85-1.52L12.85 3.4a.993.993 0 0 0-1.7 0z" />
+                <circle cx="17.5" cy="17.5" r="4.5" fill="currentColor" />
+                <path fill="currentColor" d="M4 21.5h6c.55 0 1-.45 1-1v-6c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1z" />
+              </svg>
+              <span>{{ $t('Quest Category') }}</span>
+            </div>
+            <div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-chevron-right"
+              >
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+          </a>
+          <b-collapse id="questcat" accordion="menu">
+            <ul class="collapse submenu list-unstyled show">
+              <router-link tag="li" to="/dashboard/categorylist" @click.native="toggleMobileMenu"><a>Category List</a></router-link>
+              <router-link tag="li" to="/dashboard/add" @click.native="toggleMobileMenu"><a>Add Category</a></router-link>
             </ul>
           </b-collapse>
         </li>
@@ -120,7 +154,6 @@
           <b-collapse id="comment" accordion="menu">
             <ul class="collapse submenu list-unstyled show">
               <router-link tag="li" to="/dashboard/commentslist" @click.native="toggleMobileMenu"><a>Comments List</a></router-link>
-             
             </ul>
           </b-collapse>
         </li>
@@ -156,6 +189,41 @@
             <ul class="collapse submenu list-unstyled show">
               <router-link tag="li" to="/dashboard/servicelist" @click.native="toggleMobileMenu"><a>Services List</a></router-link>
               <router-link tag="li" to="/dashboard/servicerequests" @click.native="toggleMobileMenu"><a>Add Service Requests</a></router-link>
+            </ul>
+          </b-collapse>
+        </li>
+        <li class="menu">
+          <a href="#servicetype" v-b-toggle class="dropdown-toggle" @click.prevent>
+            <div class="">
+              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                <path
+                  fill="currentColor"
+                  d="M5.5 4A1.5 1.5 0 0 0 4 5.5V8a1 1 0 0 1-2 0V5.5A3.5 3.5 0 0 1 5.5 2H8a1 1 0 0 1 0 2H5.5Zm0 16A1.5 1.5 0 0 1 4 18.5V16a1 1 0 1 0-2 0v2.5A3.5 3.5 0 0 0 5.5 22H8a1 1 0 1 0 0-2H5.5ZM20 5.5A1.5 1.5 0 0 0 18.5 4H16a1 1 0 1 1 0-2h2.5A3.5 3.5 0 0 1 22 5.5V8a1 1 0 1 1-2 0V5.5ZM18.5 20a1.5 1.5 0 0 0 1.5-1.5V16a1 1 0 1 1 2 0v2.5a3.5 3.5 0 0 1-3.5 3.5H16a1 1 0 1 1 0-2h2.5ZM7.75 6a1 1 0 0 0-1 1v1.5a1 1 0 0 0 2 0V8H11v8H9.75a1 1 0 1 0 0 2h4.5a1 1 0 1 0 0-2H13V8h2.25v.5a1 1 0 1 0 2 0V7a1 1 0 0 0-1-1h-8.5Z"
+                />
+              </svg>
+              <span>{{ $t('Service Types') }}</span>
+            </div>
+            <div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-chevron-right"
+              >
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+          </a>
+          <b-collapse id="servicetype" accordion="menu">
+            <ul class="collapse submenu list-unstyled show">
+              <router-link tag="li" to="/dashboard/servicelist" @click.native="toggleMobileMenu"><a>Types List</a></router-link>
+              <router-link tag="li" to="/dashboard/servicerequests" @click.native="toggleMobileMenu"><a>Add Type</a></router-link>
             </ul>
           </b-collapse>
         </li>
@@ -275,41 +343,6 @@
             <ul class="collapse submenu list-unstyled show">
               <router-link tag="li" to="/apps/chat" @click.native="toggleMobileMenu"><a>Groups List</a></router-link>
               <router-link tag="li" to="/apps/mailbox" @click.native="toggleMobileMenu"><a>Create Group Requests</a></router-link>
-              
-            </ul>
-          </b-collapse>
-        </li>
-        <li class="menu">
-          <a href="#cars" v-b-toggle class="dropdown-toggle" @click.prevent>
-            <div class="">
-              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
-                <path
-                  fill="currentColor"
-                  d="M499.99 176h-59.87l-16.64-41.6C406.38 91.63 365.57 64 319.5 64h-127c-46.06 0-86.88 27.63-103.99 70.4L71.87 176H12.01C4.2 176-1.53 183.34.37 190.91l6 24C7.7 220.25 12.5 224 18.01 224h20.07C24.65 235.73 16 252.78 16 272v48c0 16.12 6.16 30.67 16 41.93V416c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32v-32h256v32c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32v-54.07c9.84-11.25 16-25.8 16-41.93v-48c0-19.22-8.65-36.27-22.07-48H494c5.51 0 10.31-3.75 11.64-9.09l6-24c1.89-7.57-3.84-14.91-11.65-14.91zm-352.06-17.83c7.29-18.22 24.94-30.17 44.57-30.17h127c19.63 0 37.28 11.95 44.57 30.17L384 208H128l19.93-49.83zM96 319.8c-19.2 0-32-12.76-32-31.9S76.8 256 96 256s48 28.71 48 47.85s-28.8 15.95-48 15.95zm320 0c-19.2 0-48 3.19-48-15.95S396.8 256 416 256s32 12.76 32 31.9s-12.8 31.9-32 31.9z"
-                />
-              </svg>
-              <span>{{ $t('Cars') }}</span>
-            </div>
-            <div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="feather feather-chevron-right"
-              >
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
-            </div>
-          </a>
-          <b-collapse id="cars" accordion="menu">
-            <ul class="collapse submenu list-unstyled show">
-              <router-link tag="li" to="/apps/chat" @click.native="toggleMobileMenu"><a>Cars List</a></router-link>
             </ul>
           </b-collapse>
         </li>
@@ -355,7 +388,6 @@
           <b-collapse id="rec" accordion="menu">
             <ul class="collapse submenu list-unstyled show">
               <router-link tag="li" to="/dashboard/reclamations" @click.native="toggleMobileMenu"><a>Reclamations List</a></router-link>
-              
             </ul>
           </b-collapse>
         </li>

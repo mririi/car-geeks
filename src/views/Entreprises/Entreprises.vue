@@ -28,10 +28,10 @@
       <div class="panel-heading"></div>
       <div class="panel-body">
         <div class="container pricing-table">
-          <div id="pricingWrapper" class="row" v-for="s in filterByPromoted" :key="s.id">
+          <div id="pricingWrapper" >
             
-              <div class="col-md-6 col-lg-4">
-                <b-card class="stacked mt-5" header-class="pt-0">
+              <div class="row">
+                <b-card class="stacked mt-5 col-md-6 col-lg-3 mr-3" header-class="pt-0" v-for="s in filterByPromoted" :key="s.id">
                   <template #header>
                         <b-badge variant="danger" class="float-right mt-1">Promoted</b-badge>
                     <span class="card-price"><b-avatar :src="'http://127.0.0.1:8000' + s.imageE" size="5.5rem" class="mb-2" rounded="lg" alt="..." /></span>
@@ -54,13 +54,10 @@
                   </b-list-group>
                   <b-button tag="a" variant="primary" :href="'/entreprisedetails/'+s.id" block>Explore more</b-button>
                 </b-card>
-              </div>
-            
-          </div>
-          <div id="pricingWrapper" class="row" v-for="s in filterByNotPromoted" :key="s.id">
-            
-              <div class="col-md-6 col-lg-4">
-                <b-card class="stacked mt-5" header-class="pt-0">
+              
+           
+              
+                <b-card class="stacked mt-5 col-md-6 col-lg-3 mr-3" header-class="pt-0"  v-for="s in filterByNotPromoted" :key="s.id">
                   <template #header>
                     
                     <span class="card-price"><b-avatar :src="'http://127.0.0.1:8000' + s.imageE" size="5.5rem" class="mb-2" rounded="lg" alt="..." /></span>
