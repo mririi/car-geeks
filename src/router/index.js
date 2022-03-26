@@ -416,6 +416,42 @@ const routes = [
             layout: 'dashboard'
         },
     },
+     //Question Category Dashboard
+     {
+        path: "/dashboard/categorylist",
+        name: 'categorylist',
+        component: () => import('../views/Admin/QuestionCategoryList.vue'),
+        meta: {
+            layout: 'dashboard'
+        },
+    },
+     //Service Types Dashboard
+     {
+        path: "/dashboard/typeslist",
+        name: 'typeslist',
+        component: () => import('../views/Admin/ServiceTypesList.vue'),
+        meta: {
+            layout: 'dashboard'
+        },
+    },
+     //Add Category Dashboard
+     {
+        path: "/dashboard/addcategory",
+        name: 'addcategory',
+        component: () => import('../views/Admin/AddQuestionCategory.vue'),
+        meta: {
+            layout: 'dashboard'
+        },
+    },
+     //Add Type Dashboard
+     {
+        path: "/dashboard/addtype",
+        name: 'addtype',
+        component: () => import('../views/Admin/AddServiceType.vue'),
+        meta: {
+            layout: 'dashboard'
+        },
+    },
     //Questions Requests
     {
         path: "/dashboard/questionrequests",

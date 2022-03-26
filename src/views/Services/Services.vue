@@ -62,7 +62,7 @@
           <div class="row">
             <div class="col-lg-3 col-md-6 mb-lg-0 mb-4" v-for="s in filterByPromoted" :key="s.id">
               <b-badge variant="danger" class="ml-2">Sponsorised</b-badge>
-              <b-card :img-src="'http://127.0.0.1:8000' + s.imageS" img-top img-alt="Service" class="counter" img-width="100%" img-height="200px">
+              <b-card :img-src="'http://127.0.0.1:8000' + s.imageS" img-top img-alt="Service"  class="counter" img-width="100%" img-height="200px">
               
                 <router-link :to="'/servicedetails/' + s.id">
                   <div class="fq-rating text-center responsive ml-3">

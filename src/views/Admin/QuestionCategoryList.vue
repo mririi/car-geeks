@@ -6,8 +6,8 @@
           <div class="page-header">
             <nav class="breadcrumb-one" aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="javascript:;">Promotions</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><span>Services</span></li>
+                <li class="breadcrumb-item"><a href="javascript:;">Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><span>Question Categories</span></li>
               </ol>
             </nav>
           </div>
@@ -30,8 +30,10 @@
                     <b-select-option value="50">50</b-select-option>
                   </b-select>
                 </span>
+                 
               </div>
-
+            
+              
               <div class="header-search">
                 <b-input v-model="search" size="sm" placeholder="Search..." />
                 <div class="search-image">
@@ -53,7 +55,7 @@
                 </div>
               </div>
             </div>
-
+  
             <b-table
               ref="basic_table2"
               responsive
@@ -69,49 +71,58 @@
               @filtered="on_filtered"
               @sort-changed="clear_selection"
             >
-              <template #cell(serviceP)="data">
-                <span v-for="s in Services" :key="s.id">
-                  <span v-if="s.id == data.item.serviceP">
-                    <router-link :to="'/servicedetails/' + s.id">
-                      {{ s.titleS }}
-                    </router-link>
-                  </span>
-                </span>
-              </template>
-              <template #cell(Running)="data">
-                <span v-if="data.item.Running == true">
-                  <b-badge variant="success">Promoted</b-badge>
-                </span>
-                <span v-else>
-                  <b-badge variant="danger">Unpromoted</b-badge>
-                </span>
-              </template>
-              <template #cell(dateP)="data">
-                  <span v-if="data.item.dateP != null">
-                      {{data.item.dateP}}
-                  </span>
-              </template>
-               <template #cell(actions)="data">
-              <span @click="Accept(data.item.id,data.item.serviceP)">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-check-circle text-primary ac"
-                >
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
+            
+           
+            <template #cell(actions)="data">
+              <span v-b-modal="modalUpdateCategory(data.item.id)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 text-success"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+              </span>
+              <b-modal :id="'modalUpdateCategory' + data.item.id" hide-footer title="Modify Category" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
+                        <form class="mt-0">
+                          <div class="form-group">
+                            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                              <path
+                                fill="currentColor"
+                                d="m21.558 3.592l-1.15-1.15a1.49 1.49 0 0 0-2.12 0L13 7.731V11h3.27l5.288-5.288a1.49 1.49 0 0 0 0-2.12ZM15.579 9.45h-1.03V8.42L18 4.973l1.03 1.03Z"
+                              />
+                              <path fill="currentColor" d="M19 19H5V5h6V3H5a2.006 2.006 0 0 0-2 2v14a2.006 2.006 0 0 0 2 2h14a2.006 2.006 0 0 0 2-2v-6h-2Z" />
+                            </svg>
+                            <b-form-textarea
+                              type="text"
+                              v-model="data.item.typeC"
+                              class="mb-2"
+                              :class="[is_submit_updatecat ? (form.typeC && form.typeC.length < 20 && form.typeC.length > 4 ? 'is-valid' : 'is-invalid') : '']"
+                              placeholder="Enter your reply content here"
+                            ></b-form-textarea>
+                            <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
+                            <b-form-invalid-feedback :class="{ 'd-block': is_submit_updatecat && !form.typeC }">Please Enter content between 4 and 20 characters</b-form-invalid-feedback>
+                            <div class="mt-4 mb-5">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="mb-1" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                  <path d="M2 6a4 4 0 0 1 4-4h12a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V6Z" />
+                                  <circle cx="8.5" cy="8.5" r="2.5" />
+                                  <path d="M14.526 12.621L6 22h12.133A3.867 3.867 0 0 0 22 18.133V18c0-.466-.175-.645-.49-.99l-4.03-4.395a2 2 0 0 0-2.954.006Z" />
+                                </g>
+                              </svg>
+                              <b-file @change="onFileChanged"></b-file>
+                            </div>
+                          </div>
+                          <b-button variant="primary" block class="mt-2 mb-2" @click="updatecat(data.item.typeC , data.item.id)">Update</b-button>
+                        </form>
+                      </b-modal>
+            </template>
+             <template #cell(imageCat)="data">
+                <span v-if="data.item.imageCat!=null">
+                  
+              <b-avatar :src="'http://127.0.0.1:8000'+data.item.imageCat" size="4rem" rounded="lg"  alt="" srcset=""/>
+               
+              </span>
+              <span v-else>
+                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="4em" height="4em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 64 64"><path fill="currentColor" d="M32 2C15.432 2 2 15.432 2 32.001C2 48.567 15.432 62 32 62s30-13.433 30-29.999C62 15.432 48.568 2 32 2zm22 30.001c0 4.629-1.433 8.922-3.876 12.465l-30.591-30.59A21.889 21.889 0 0 1 32 10c12.15 0 22 9.851 22 22.001zm-44 0a21.9 21.9 0 0 1 3.876-12.468l30.591 30.591A21.887 21.887 0 0 1 32 54.001c-12.15 0-22-9.852-22-22z"/></svg>
               </span>
             </template>
             </b-table>
-
+             
             <div class="table-footer">
               <div class="dataTables_info">Showing {{ meta2.total_items ? meta2.start_index + 1 : 0 }} to {{ meta2.end_index + 1 }} of {{ meta2.total_items }}</div>
               <div class="paginating-container pagination-solid flex-column align-items-right">
@@ -164,21 +175,29 @@
 }
 </style>
 <script>
-import { mapGetters, mapActions } from 'vuex';
 import axios from 'axios'
+import { mapGetters, mapActions } from 'vuex';
 export default {
   metaInfo: { title: 'Bootstrap Custom Table' },
   data() {
     return {
+     
+
       //table 3
       items2: [],
       columns2: [],
       table_option2: { total_rows: 0, current_page: 1, page_size: 5, search_text: '' },
       meta2: {},
       is_select_all2: false,
+      is_submit_updatecat:false,
       selected_rows2: [],
-      search: '',
-      category: '',
+      search:'',
+      category:'',
+      form:
+      {
+          typeC:'',
+
+      }
     };
   },
   watch: {
@@ -204,60 +223,64 @@ export default {
       deep: true,
     },
   },
-  created: function () {
-    this.GetServices();
-    this.GetServicetypes();
-    this.GetServicepromotions();
-  },
+   created: function () {
+    this.GetQuestioncategories();
+        },
   mounted() {
     this.bind_data();
   },
-  computed: {
-    ...mapGetters({
-      Services: 'StateServices',
-      Servicepromotions: 'StateServicepromotions',
-      Userprofiles: 'StateUserprofiles',
-      Servicetypes: 'StateServicetypes',
-      User: 'StateUser',
-      Users: 'StateUsers',
+  computed:{
+ ...mapGetters({
+      Questioncategories: 'StateQuestioncategories',
+  
     }),
-    filteredList() {
-      return this.Servicepromotions.filter((service) => {
-        return service.nbDays.includes(this.search) && service.Running == false;
+     filteredList() {
+      return this.Questioncategories.filter((category) => {
+        return category.typeC.toLowerCase().includes(this.search.toLowerCase());
       });
     },
+    
   },
   methods: {
-    ...mapActions(['GetServices','CreateNotification', 'GetServicepromotions', 'GetServicetypes', 'GetUsers', 'GetUserprofiles']),
-    async Accept(id,serviceid) {
-      this.$swal({
-        icon: 'warning',
-        title: 'Are you sure?',
-        showCancelButton: true,
-        confirmButtonText: 'Accept',
-        padding: '2em',
-      }).then((result) => {
-        if (result.value) {
-        const current = new Date();
-      axios.post('/servicepromotion/servicepromotion-update/' + id + '/', { Running: true , dateP:current.getFullYear()+'-'+(current.getMonth()+1)+'-'+current.getDate() });
-       axios.post('/service/service-update/' + serviceid + '/', { promoted: true });
-      this.CreateNotification({message:'Your service promotion has been accepted ' ,serviceNo:serviceid,admin:true})
-      this.$router.go();
-      this.$swal('Accepted!', 'The service promotion has been accepted.', 'success');
+    ...mapActions(['GetQuestioncategories']),
+    modalUpdateCategory(id) {
+      return 'modalUpdateCategory' + id;
+    },
+     onFileChanged(event) {
+      this.image = event.target.files[0];
+    },
+     async updatecat(cat , id) {
+      try {
+        this.form.typeC = cat;
+        this.is_submit_updatecat = true;
+        if (this.form.typeC && this.form.typeC.length < 20 && this.form.typeC.length > 4) {
+          this.$bvModal.hide('modalUpdateCategory' + id);
+          var formdata = new FormData();
+          if (this.image != null) {
+            formdata.append('imageCat', this.image);
+          }
+          formdata.append('typeC', this.form.typeC);
+         
+          await axios.post('/questioncategory/questioncategory-update/' + id + '/', formdata);
+         
+        this.$swal('Good Job!', 'Category updated successfully !', 'success');
+        
+          this.is_submit_updatecat = false;
         }
-      });
+      } catch (error) {
+        throw 'Il ya un errora !';
+      }
     },
     bind_data() {
       //table 3
       this.columns2 = [
-        { key: 'serviceP', label: 'Service' },
-        { key: 'dateP', label: 'Date' },
-        { key: 'nbDays', label: 'Number of days' },
-        { key: 'Running', label: 'Status' },
-        { key: 'actions', label: 'Actions', class: 'text-center  ' },
-      ];
+        { key: 'imageCat', label: 'Image', class: 'text-center  ' },
+        { key: 'typeC', label: 'Title' },
+         { key: 'actions', label: 'Actions', class: 'text-center  ' },
+      ],
+      
 
-      this.table_option2.total_rows = this.filteredList.length;
+      this.table_option2.total_rows = this.Questioncategories.length;
       this.get_meta2();
     },
     on_filtered(filtered_items) {

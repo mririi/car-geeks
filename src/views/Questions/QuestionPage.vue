@@ -386,7 +386,9 @@
                           </b-modal>
                         </div>
                       </b-media>
+                      
                       <hr width="90%" />
+                      
                       <div v-for="c in Comments" :key="c.id">
                         <div v-if="c.replyCo == rep.id">
                           <div v-if="CurrentUserProfile.id == c.userprofileCo">
@@ -437,8 +439,9 @@
                               <b-dropdown-item @click="deleteComment(c)">Delete</b-dropdown-item>
                             </b-dropdown>
                           </div>
-                          <p class="float-right mr-4" style="font-size: 10px">{{ c.dateCo | formatDate }}</p>
-                          <b-card class="ml-5 bg-transparent border-0"
+                          
+                          <p class="float-right mr-5" style="font-size: 10px">{{ c.dateCo | formatDate }}</p>
+                          <b-card class="ml-5 bg-transparent border-0" style="height:45px"
                             ><b-card-text
                               >{{ c.contentCo }} -
                               <span v-for="u in Userprofiles" :key="u.id">

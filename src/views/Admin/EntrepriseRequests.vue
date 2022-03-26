@@ -238,9 +238,20 @@ export default {
   methods: {
    ...mapActions(['GetQuestions','CreateNotification','GetReplies', 'GetUsers', 'GetUserentreprises', 'GetQuestioncategories']),
    async Accept(id) {
-      await axios.put('/userentreprise/userentreprise-update/' + id + '/', { published: true });
+     this.$swal({
+        icon: 'warning',
+        title: 'Are you sure?',
+        showCancelButton: true,
+        confirmButtonText: 'Accept',
+        padding: '2em',
+      }).then((result) => {
+        if (result.value) {
+       axios.put('/userentreprise/userentreprise-update/' + id + '/', { published: true });
       this.CreateNotification({message:'Your entreprise has been accepted ' ,entrepriseNo:id,admin:true})
       this.$router.go()
+      this.$swal('Accepted!', 'The entreprise has been accepted.', 'success');
+        }
+      });
           },
      
     bind_data() {

@@ -253,7 +253,15 @@ export default {
   methods: {
    ...mapActions(['GetQuestions','CreateNotification','GetReplies', 'GetUsers', 'GetUserprofiles', 'GetQuestioncategories']),
  async Accept(id,userid) {
-      await axios.post('/reply/reply-update/' + id + '/', { accepted: true });
+   this.$swal({
+        icon: 'warning',
+        title: 'Are you sure?',
+        showCancelButton: true,
+        confirmButtonText: 'Accept',
+        padding: '2em',
+      }).then((result) => {
+        if (result.value) {
+      axios.post('/reply/reply-update/' + id + '/', { accepted: true });
        for(let u in this.Userprofiles)
       {
           if(this.Userprofiles[u].id==userid )
@@ -262,10 +270,10 @@ export default {
             {
              if(this.Replies[r].id==id && this.Replies[r].modified==false)
              {
-                await axios.put('/userprofile/userprofile-update/' + userid + '/', { nbreplies:this.Userprofiles[u].nbreplies+=1  });
+                 axios.put('/userprofile/userprofile-update/' + userid + '/', { nbreplies:this.Userprofiles[u].nbreplies+=1  });
                 for(let q in this.Questions){
                   if(this.Questions[q].id==this.Replies[r].questionRep){
-                  await axios.put('/question/question-update/' + this.Questions[q].id + '/', { nbrep:this.Questions[q].nbrep+=1  });
+                   axios.put('/question/question-update/' + this.Questions[q].id + '/', { nbrep:this.Questions[q].nbrep+=1  });
                   if(this.Questions[q].userprofileQ!=this.Replies[r].userprofileRep){
                   this.CreateNotification({message:' Replied to your question ' ,byuserprofileNo:this.Replies[r].userprofileRep,userprofileNo:this.Userprofiles[u].id,questionNo:this.Questions[q].id})
                   }
@@ -279,8 +287,14 @@ export default {
            
           }
       }
+                this.$router.go();
+                this.$swal('Accepted!', 'The reply has been accepted.', 'success');
+    
+
+        }
+      });
       
-      this.$router.go();
+     
     },
     bind_data() {
       //table 3

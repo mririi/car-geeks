@@ -286,12 +286,20 @@ export default {
   methods: {
     ...mapActions(['GetServices','CreateNotification','GetServicepromotions','GetServicetypes', 'GetUsers', 'GetUserprofiles','GetRoles']),
     async Accept(id,userid) {
-      await axios.post('/service/service-update/' + id + '/', { accepted: true });
+      this.$swal({
+        icon: 'warning',
+        title: 'Are you sure?',
+        showCancelButton: true,
+        confirmButtonText: 'Accept',
+        padding: '2em',
+      }).then((result) => {
+        if (result.value) {
+       axios.post('/service/service-update/' + id + '/', { accepted: true });
        this.CreateNotification({message:'Your service has been accepted ' ,serviceNo:id,admin:true})
-       await axios.get('/userprofile/userprofile-detail/' + userid + '/').then((response) => {
+       axios.get('/userprofile/userprofile-detail/' + userid + '/').then((response) => {
         this.userprofileservice = response.data;
        }),
-         await axios.get('/user/users/' + this.userprofileservice.userU + '/').then((response) => {
+          axios.get('/user/users/' + this.userprofileservice.userU + '/').then((response) => {
         this.userservice = response.data;
        });
 
@@ -299,10 +307,15 @@ export default {
        {
          if (this.Roles[r].userRole== this.userservice.id && this.Roles[r].service==false)
          {
-            await axios.post('/role/role-update/'+this.Roles[r].id+'/', { service: true , userRole:this.userservice.id ,admin:this.Roles[r].admin }); 
+             axios.post('/role/role-update/'+this.Roles[r].id+'/', { service: true , userRole:this.userservice.id ,admin:this.Roles[r].admin }); 
         }
        }
-      this.$router.go();
+        this.$router.go();
+        this.$swal('Accepted!', 'The service has been accepted.', 'success');
+       
+        }
+      });
+     
     },
     bind_data() {
       //table 3

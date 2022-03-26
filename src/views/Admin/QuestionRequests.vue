@@ -7,7 +7,7 @@
             <nav class="breadcrumb-one" aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:;">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><span>Services</span></li>
+                <li class="breadcrumb-item active" aria-current="page"><span>Questions Request</span></li>
               </ol>
             </nav>
           </div>
@@ -284,7 +284,15 @@ export default {
   methods: {
     ...mapActions(['GetQuestions','CreateNotification', 'GetUsers', 'GetUserprofiles', 'GetQuestioncategories']),
     async Accept(id , userid) {
-      await axios.put('/question/question-update/' + id + '/', { accepted: true });
+       this.$swal({
+        icon: 'warning',
+        title: 'Are you sure?',
+        showCancelButton: true,
+        confirmButtonText: 'Accept',
+        padding: '2em',
+      }).then((result) => {
+        if (result.value) {
+       axios.put('/question/question-update/' + id + '/', { accepted: true });
       for(let u in this.Userprofiles)
       {
           if(this.Userprofiles[u].id==userid )
@@ -293,15 +301,19 @@ export default {
             {
              if(this.Questions[q].id==id && this.Questions[q].modified==false)
              {
-               await axios.put('/userprofile/userprofile-update/' + userid + '/', { nbquestions:this.Userprofiles[u].nbquestions+=1  });
+               axios.put('/userprofile/userprofile-update/' + userid + '/', { nbquestions:this.Userprofiles[u].nbquestions+=1  });
               this.CreateNotification({message:'Your Question has been accepted ' ,questionNo:this.Questions[q].id,userprofileNo:userid,admin:true})
              }
             }
            
           }
       }
+      this.$swal('Accepted!', 'The question has been accepted.', 'success');
+       this.$router.go();
+        }
+         });
       
-      this.$router.go();
+     
     },
     bind_data() {
       //table 3

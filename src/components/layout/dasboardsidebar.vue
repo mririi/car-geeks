@@ -84,7 +84,7 @@
           <b-collapse id="questcat" accordion="menu">
             <ul class="collapse submenu list-unstyled show">
               <router-link tag="li" to="/dashboard/categorylist" @click.native="toggleMobileMenu"><a>Category List</a></router-link>
-              <router-link tag="li" to="/dashboard/add" @click.native="toggleMobileMenu"><a>Add Category</a></router-link>
+              <router-link tag="li" to="/dashboard/addcategory" @click.native="toggleMobileMenu"><a>Add Category</a></router-link>
             </ul>
           </b-collapse>
         </li>
@@ -222,8 +222,8 @@
           </a>
           <b-collapse id="servicetype" accordion="menu">
             <ul class="collapse submenu list-unstyled show">
-              <router-link tag="li" to="/dashboard/servicelist" @click.native="toggleMobileMenu"><a>Types List</a></router-link>
-              <router-link tag="li" to="/dashboard/servicerequests" @click.native="toggleMobileMenu"><a>Add Type</a></router-link>
+              <router-link tag="li" to="/dashboard/typeslist" @click.native="toggleMobileMenu"><a>Types List</a></router-link>
+              <router-link tag="li" to="/dashboard/addtype" @click.native="toggleMobileMenu"><a>Add Type</a></router-link>
             </ul>
           </b-collapse>
         </li>

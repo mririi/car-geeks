@@ -231,11 +231,23 @@ export default {
   methods: {
     ...mapActions(['GetUserentreprises','CreateNotification','GetEntreprisepromotions','GetServicetypes', 'GetUsers', 'GetUserprofiles']),
     async Accept(id,entrepriseid) {
+      this.$swal({
+        icon: 'warning',
+        title: 'Are you sure?',
+        showCancelButton: true,
+        confirmButtonText: 'Accept',
+        padding: '2em',
+      }).then((result) => {
+        if (result.value) {
         const current = new Date();
-      await axios.post('/entreprisepromotion/entreprisepromotion-update/' + id + '/', { Running: true , dateP:current.getFullYear()+'-'+(current.getMonth()+1)+'-'+current.getDate() });
-      await axios.put('/userentreprise/userentreprise-update/' + entrepriseid + '/', { promoted: true });
+       axios.post('/entreprisepromotion/entreprisepromotion-update/' + id + '/', { Running: true , datePE:current.getFullYear()+'-'+(current.getMonth()+1)+'-'+current.getDate() });
+       axios.put('/userentreprise/userentreprise-update/' + entrepriseid + '/', { promoted: true });
       this.CreateNotification({message:'Your entreprise promotion has been accepted ' ,entrepriseNo:entrepriseid,admin:true})
       this.$router.go();
+      this.$swal('Accepted!', 'The entreprise promotion has been accepted.', 'success');
+       
+        }
+      });
     },
     bind_data() {
       //table 3
