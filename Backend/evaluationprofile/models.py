@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 class EvaluationProfile(models.Model):
   nbEval = models.IntegerField(default=0)
+  commentEval = models.CharField(max_length=200,blank=True,null=True)
   userprofileEval = models.ForeignKey('userprofile.Userprofile',on_delete=models.CASCADE,null=True,blank=True)
   userEval = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
   def __str__(self):

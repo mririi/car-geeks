@@ -159,6 +159,12 @@
       </div>
       <b-modal id="Rating" :title="'Rate ' + userprofile.firstname + ' ' + userprofile.lastname" centered>
         <b-form-rating id="rating" v-model="nbEval" precision="2" show-value-max show-value color="primary" size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
+        <label >Your feedback </label>
+                    <b-form-group class="mb-3">
+                      <b-input type="text" placeholder="Feedback " v-model="form.commentEval" :class="[is_submit_form1 ? (form.commentEval && form.commentEval.length<100 && form.commentEval.length>15 ? 'is-valid' : 'is-invalid') : '']"></b-input>
+                      <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
+                      <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.commentEval  }">Please Enter a title between 15 and 100 characters</b-form-invalid-feedback>
+                    </b-form-group>
         <template #modal-footer>
           <b-button variant="primary" @click="Rating()">Submit your rating</b-button>
         </template>
@@ -310,6 +316,7 @@ export default {
       form:{
         categoryPref:'',
         userprofilePref:'',
+        commentEval:''
       },
       nbEval: '',
       search: '',
@@ -351,6 +358,7 @@ export default {
           userprofileEval: this.$route.params.id,
           userEval: this.CurrentUser.id,
           nbEval: this.nbEval,
+          commentEval:this.form.commentEval
         });
         this.GetEvaluationProfile()
       } else {
@@ -367,6 +375,7 @@ export default {
             userprofileEval: this.$route.params.id,
             userEval: this.CurrentUser.id,
             nbEval: this.nbEval,
+            commentEval:this.form.commentEval
           });
         }
 

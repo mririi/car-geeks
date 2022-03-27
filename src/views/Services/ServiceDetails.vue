@@ -148,7 +148,7 @@
               <div class="col-lg-12 col-md-12 p-0">
                 <b-carousel ref="carousel1" :interval="4000" controls indicators class="style-custom-1">
                   <span v-for="s in Services" :key="s.id">
-                    <span v-if="s.accepted == true">
+                    <span v-if="s.accepted == true && s.id!= service.id">
                       <a :href="'/servicedetails/'+s.id">
                       <b-carousel-slide>
                         <template #img>

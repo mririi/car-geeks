@@ -116,7 +116,7 @@
               <template #cell(imageVerif)="data">
                 <span v-if="data.item.imageVerif != null">
                   <CoolLightBox
-                    :srcName="'http://127.0.0.1:8000'+data.item.imageVerif"
+                    :images="'http://127.0.0.1:8000'+data.item.imageVerif"
                     :items="['http://127.0.0.1:8000'+data.item.imageVerif]"
                     :index="index"
                     :useZoomBar="true"
@@ -127,9 +127,7 @@
                     @close="index = null"
                   >
                   </CoolLightBox>
-                    <div class="images-wrapper">
-                    <div class="image"  @click="index = data.item.id" :style="{ backgroundImage: `url(${data.item.imageVerif})` }"></div>
-                  </div>
+                   
 
                   <b-avatar
                     :src="'http://127.0.0.1:8000' + data.item.imageVerif"
@@ -221,8 +219,6 @@ export default {
       items2: [],
       columns2: [],
       index: null,
-
-      allControls: false,
       table_option2: { total_rows: 0, current_page: 1, page_size: 5, search_text: '' },
       meta2: {},
       is_select_all2: false,

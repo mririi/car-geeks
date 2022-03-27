@@ -658,6 +658,7 @@ export default {
           formdata.append('userprofileRep', this.userprofileRep);
           if (this.CurrentUser.is_superuser){
             formdata.append("accepted", true);
+            await axios.put('/userprofile/userprofile-update/' + this.userprofileRep + '/', { nbreplies:this.CurrentUserProfile.nbreplies+=1  });
             }
           await this.CreateReply(formdata);
 
