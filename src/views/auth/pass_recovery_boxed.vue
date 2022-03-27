@@ -47,9 +47,9 @@
 </template>
 
 <script>
+import axios from 'axios'
 //import emailjs from 'emailjs-com';
 import '@/assets/sass/authentication/auth-boxed.scss';
-import axios from 'axios';
 export default {
   data() {
     return {
@@ -63,10 +63,33 @@ export default {
 
     sendEmail() {
 
-      let result=[]
+     /* let result=[]
       axios.post('/api/password_reset/',{email:this.email}).then((res) => {
         result = res.data;
-        console.log(result)
+        console.log(result)*/
+
+        const options = {
+  method: 'POST',
+  url: 'https://easymail.p.rapidapi.com/send',
+  headers: {
+    'content-type': 'application/json',
+    'X-RapidAPI-Host': 'easymail.p.rapidapi.com',
+    'X-RapidAPI-Key': '82afcb50c4msh7a1e7ea95bac2f4p1d00cfjsn222624a2eea0'
+  },
+  data: {
+    from: {name: 'Firas'},
+    to: {name: 'Wassim', address: 'wassim.mriri@gmail.com'},
+    subject: 'This is the mail subject',
+    message: 'Hello John, how are you ?',
+    show_noreply_warning: true
+  }
+};
+
+axios.request(options).then(function (response) {
+	console.log(response.data);
+}).catch(function (error) {
+	console.error(error);
+});
         /*
         if(result.status==="OK")
      {
@@ -82,8 +105,8 @@ export default {
           console.log('FAILED...', error);
         }
       );
-     }*/
-      });
+     }
+      });*/
    }
   },
 };

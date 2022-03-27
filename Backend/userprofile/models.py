@@ -16,6 +16,7 @@ class Userprofile(models.Model):
   nbvisits = models.IntegerField(default=0)
   dateinscrit = models.DateTimeField(auto_now_add=True)
   imageU = models.ImageField(upload_to='images/',null=True, blank=True)
+  imageVerif = models.ImageField(upload_to='images/',null=True, blank=True)
   roleU = models.ForeignKey('role.Role',on_delete=models.CASCADE,blank=True,null=True)
   badgeU = models.IntegerField(default=0)
   preferencesU = models.ForeignKey('preferences.Preferences',on_delete=models.CASCADE,blank=True,null=True)

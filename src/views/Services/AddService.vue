@@ -138,6 +138,7 @@ export default {
         titleS: '',
         addressS: '',
         userprofileS:'',
+        userentrepriseS:'',
         priceS:null,
         country:'',
         contactS:'',
@@ -149,10 +150,12 @@ export default {
       uprofile:[],
       CurrentUser:[],
       is_submit_form1:false, 
+      isprofile:false,
     };
   },
   created: function() {
     this.GetUsers()
+    this.GetRoles()
     this.GetUserprofiles()
     this.GetServicetypes()
     this.GetUserentreprises()
@@ -160,32 +163,31 @@ export default {
       if(this.Users[u].username==this.User)
         {
           this.CurrentUser = this.Users[u];
-        }
-      }
-      let existuserentreprise=false
-      for (let ue in this.Userentreprises){
-      if(this.Userentreprises[ue].userE==this.CurrentUser.id)
-        {
-          existuserentreprise = true
-          this.$router.push('/services')
-          this.$swal({
-              title: 'You cannot add a service as an entreprise, Please create a normal account !',
+          let exist=false
+          for(let r in this.Roles){
+            if(this.Users[u].id==this.Roles[r].userRole && this.Roles[r].service==true){
+              exist=true
+            }
+          }
+          if (exist==false){
+            this.$swal({
+              icon: 'info',
+              title: 'You are not verified to give a service !',
+              html: 'Please send a request to be verified ! ',
+              showCloseButton: true,
+              showCancelButton: true,
+              focusConfirm: false,
+              confirmButtonText: '<i class="flaticon-checked-1"></i> Great!',
+              confirmButtonAriaLabel: 'Thumbs up, great!',
+              cancelButtonText: '<i class="flaticon-cancel-circle"></i> Cancel',
+              cancelButtonAriaLabel: 'Thumbs down',
               padding: '2em'
           });
+            this.$router.push('/services')
+          }
         }
       }
-      if (existuserentreprise==false){
-        let existuserprofile=false
-      for (let uu in this.Userprofiles){
-      if(this.Userprofiles[uu].userU==this.CurrentUser.id)
-        {
-          existuserprofile = true
-        }
-      }
-      if (existuserprofile==false){
-        this.$router.push('/auth/userinfo')
-      }
-      }
+      
   },
     methods: {
     email_validate(email) {
@@ -196,7 +198,7 @@ export default {
       this.image = event.target.files[0]
       console.log(this.image)
     },
-    ...mapActions(["GetUserentreprises","GetServicetypes","CreateService","GetUsers","GetUserprofiles"]),
+    ...mapActions(["GetRoles","GetUserentreprises","GetServicetypes","CreateService","GetUsers","GetUserprofiles"]),
     async submit() {
       try {
         this.is_submit_form1 = true;
@@ -214,8 +216,16 @@ export default {
       if(this.Userprofiles[u].userU==this.CurrentUser.id)
         {
           this.form.userprofileS=this.Userprofiles[u].id;
-          
+          this.isprofile=true
         }
+      }
+      if(this.isprofile==false){
+        for (let ue in this.Userentreprises){
+      if(this.Userentreprises[ue].userE==this.CurrentUser.id)
+        {
+          this.form.userentrepriseS=this.Userentreprises[ue].id;
+        }
+      }
       }
       var formdata = new FormData();
       if (this.image!=null)
@@ -233,7 +243,12 @@ export default {
         formdata.append("accepted", true);
         }
         formdata.append("typeS", this.form.typeS);
-        formdata.append("userprofileS", this.form.userprofileS);
+        if (this.isprofile==true){
+          formdata.append("userprofileS", this.form.userprofileS);
+        }
+        if (this.isprofile==false){
+          formdata.append("userentrepriseS", this.form.userentrepriseS);
+        }
         await this.CreateService(formdata);
         if (this.CurrentUser.is_superuser==false){
         this.$swal('Good Job!', 'Your service has been created successfuly, Please wait for the administator to accept it !', 'success');
@@ -247,7 +262,7 @@ export default {
     
     },
     computed: {
-    ...mapGetters({Userentreprises:"StateUserentreprises", Servicetypes:"StateServicetypes",Userprofiles:"StateUserprofiles", User: "StateUser",Users: "StateUsers"}),
+    ...mapGetters({Roles:"StateRoles",Userentreprises:"StateUserentreprises", Servicetypes:"StateServicetypes",Userprofiles:"StateUserprofiles", User: "StateUser",Users: "StateUsers"}),
     isLoggedIn: function() {
       return this.$store.getters.isAuthenticated;
     },

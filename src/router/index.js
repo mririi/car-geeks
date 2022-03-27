@@ -442,6 +442,24 @@ const routes = [
             layout: 'dashboard'
         },
     },
+    //User service verfication Dashboard
+    {
+        path: "/dashboard/userverifications",
+        name: 'userverifications',
+        component: () => import('../views/Admin/UserserviceVerification.vue'),
+        meta: {
+            layout: 'dashboard'
+        },
+    },
+    //User service verfication Dashboard
+    {
+        path: "/dashboard/userverificationrequest",
+        name: 'userverificationrequest',
+        component: () => import('../views/Admin/UserserviceVerificationRequests.vue'),
+        meta: {
+            layout: 'dashboard'
+        },
+    },
      //Add Category Dashboard
      {
         path: "/dashboard/addcategory",

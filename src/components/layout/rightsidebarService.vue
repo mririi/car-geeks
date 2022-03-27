@@ -15,7 +15,7 @@
       "
     >
     <div class="mt-5">
-    <a
+    <a v-show="serviceuser==true"
           href="http://localhost:8080/addservice"
           
           class="mt-5 ml-5 mb-3"
@@ -23,6 +23,8 @@
           <b-button variant="primary" class="mt-5">
           Add a Service</b-button></a
         >
+          <b-button  v-show="serviceuser==false" v-b-modal.verify variant="primary" class="mt-5 ml-5 mb-3">
+          Get Verified</b-button>
     </div>
     <div >
     <a v-if="promo==true"
@@ -35,7 +37,16 @@
         >
     </div>
         
-      
+      <b-modal id="verify" title="Send Request" centered>
+        <label >Insert patent <span style="color:red">*</span></label>
+                    <div class="mb-4">
+                      <b-file @change="onFileChanged" :class="[is_submit_form1 ? (image ? 'is-valid' : 'is-invalid') : '']"></b-file>
+                    
+                    </div>
+      <template #modal-footer>
+        <b-button variant="primary" @click="submit()">Send</b-button>
+      </template>
+    </b-modal>
       
 
     </nav>
@@ -55,6 +66,8 @@ export default {
       promo:false,
       CurrentUserProfile:[],
       CurrentUser:[],
+      image:null,
+      is_submit_form1:false
     };
   },
   created: function () {
@@ -99,6 +112,33 @@ export default {
       "GetServicepromotions",
       "GetUserprofiles",
     ]),
+    onFileChanged (event) {
+      this.image = event.target.files[0]
+      console.log(this.image)
+    },
+    async submit() {
+      try {
+        this.is_submit_form1 = true;
+                if (
+                  this.image
+                ) {
+        
+      var formdata = new FormData();
+      
+        formdata.append("imageVerif", this.image);
+      
+        
+        await axios.put('/userprofile/userprofile-update/'+this.CurrentUserProfile.id+'/',formdata);
+        this.$bvModal.hide('verify');
+        if (this.CurrentUser.is_superuser==false){
+        this.$swal('Good Job!', 'Your request has been sent successfuly, Please wait for the administator to accept it !', 'success');
+        }
+        this.$router.push("/services");
+        }
+      } catch (error) {
+        throw "Il ya un error!"
+      }
+    },
   },
   components: {
     //NotificationDropdown,

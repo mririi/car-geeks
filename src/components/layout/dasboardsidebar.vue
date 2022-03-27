@@ -158,6 +158,36 @@
           </b-collapse>
         </li>
         <li class="menu">
+          <a href="#serviceverif" v-b-toggle class="dropdown-toggle" @click.prevent>
+            <div class="">
+             <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="m16.6 10.88l-1.42-1.42l-4.24 4.25l-2.12-2.13L7.4 13l3.54 3.54z"/><path fill="currentColor" d="M19 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V6a2 2 0 0 0-2-2zm0 14H5V8h14v10z"/></svg>
+              <span>{{ $t('Userservice Verif') }}</span>
+            </div>
+            <div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-chevron-right"
+              >
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+          </a>
+          <b-collapse id="serviceverif" accordion="menu">
+            <ul class="collapse submenu list-unstyled show">
+              <router-link tag="li" to="/dashboard/userverifications" @click.native="toggleMobileMenu"><a>Verif List</a></router-link>
+              <router-link tag="li" to="/dashboard/userverificationrequest" @click.native="toggleMobileMenu"><a>Verif Requests</a></router-link>
+            </ul>
+          </b-collapse>
+        </li>
+        <li class="menu">
           <a href="#services" v-b-toggle class="dropdown-toggle" @click.prevent>
             <div class="">
               <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
