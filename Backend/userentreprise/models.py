@@ -15,6 +15,8 @@ class Userentreprise(models.Model):
   nbEval = models.DecimalField(max_digits=20,decimal_places=1,default=0)
   dateinscritE = models.DateTimeField(auto_now_add=True)
   imageE = models.ImageField(upload_to='images/',null=True, blank=True)
+  imageVerif = models.ImageField(upload_to='images/',null=True, blank=True)
+  nbvisits = models.IntegerField(default=0)
   roleE = models.ForeignKey('role.Role',on_delete=models.CASCADE,blank=True,null=True)
   userE =models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
 

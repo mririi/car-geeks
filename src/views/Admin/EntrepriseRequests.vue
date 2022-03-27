@@ -30,10 +30,7 @@
                     <b-select-option value="50">50</b-select-option>
                   </b-select>
                 </span>
-                
               </div>
-
-             
 
               <div class="header-search">
                 <b-input v-model="search" size="sm" placeholder="Search..." />
@@ -72,45 +69,88 @@
               @filtered="on_filtered"
               @sort-changed="clear_selection"
             >
-               <template #cell(published)="data">
-              <span v-if="data.item.published == true">
-                <b-badge variant="success">Published</b-badge>
-              </span>
-              <span v-else>
-                <b-badge variant="danger">Unpublished</b-badge>
-              </span>
-            </template>
-            <template #cell(dateinscritE)="data">
-               {{data.item.dateinscritE |formatDate}}
-            </template>
-             <template #cell(actions)="data">
-              <span @click="Accept(data.item.id)">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-check-circle text-primary ac"
-                >
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
-              </span>
-            </template>
-            
-            <template #cell(imageE)="data">
-                <span v-if="data.item.imageE!=null">
-              <b-avatar :src="'http://127.0.0.1:8000'+data.item.imageE" size="4rem" rounded="lg"  alt="" srcset=""/>
-              </span>
-              <span v-else>
-                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="4em" height="4em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 64 64"><path fill="currentColor" d="M32 2C15.432 2 2 15.432 2 32.001C2 48.567 15.432 62 32 62s30-13.433 30-29.999C62 15.432 48.568 2 32 2zm22 30.001c0 4.629-1.433 8.922-3.876 12.465l-30.591-30.59A21.889 21.889 0 0 1 32 10c12.15 0 22 9.851 22 22.001zm-44 0a21.9 21.9 0 0 1 3.876-12.468l30.591 30.591A21.887 21.887 0 0 1 32 54.001c-12.15 0-22-9.852-22-22z"/></svg>
-              </span>
-            </template>
+              <template #cell(published)="data">
+                <span v-if="data.item.published == true">
+                  <b-badge variant="success">Published</b-badge>
+                </span>
+                <span v-else>
+                  <b-badge variant="danger">Unpublished</b-badge>
+                </span>
+              </template>
+              <template #cell(dateinscritE)="data">
+                {{ data.item.dateinscritE | formatDate }}
+              </template>
+              <template #cell(actions)="data">
+                <span @click="Accept(data.item.id)">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-check-circle text-primary ac"
+                  >
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                  </svg>
+                </span>
+              </template>
+
+              <template #cell(imageE)="data">
+                <span v-if="data.item.imageE != null">
+                  <b-avatar :src="'http://127.0.0.1:8000' + data.item.imageE" size="4rem" rounded="lg" alt="" srcset="" />
+                </span>
+                <span v-else>
+                  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="4em" height="4em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 64 64">
+                    <path
+                      fill="currentColor"
+                      d="M32 2C15.432 2 2 15.432 2 32.001C2 48.567 15.432 62 32 62s30-13.433 30-29.999C62 15.432 48.568 2 32 2zm22 30.001c0 4.629-1.433 8.922-3.876 12.465l-30.591-30.59A21.889 21.889 0 0 1 32 10c12.15 0 22 9.851 22 22.001zm-44 0a21.9 21.9 0 0 1 3.876-12.468l30.591 30.591A21.887 21.887 0 0 1 32 54.001c-12.15 0-22-9.852-22-22z"
+                    />
+                  </svg>
+                </span>
+              </template>
+              <template #cell(imageVerif)="data">
+                <span v-if="data.item.imageVerif != null">
+                  <CoolLightBox
+                    :srcName="'http://127.0.0.1:8000'+data.item.imageVerif"
+                    :items="['http://127.0.0.1:8000'+data.item.imageVerif]"
+                    :index="index"
+                    :useZoomBar="true"
+                    :gallery="false"
+                    :slideshow="false"
+                    :fullScreen="false"
+                    slideshow-color-bar="#2196f3"
+                    @close="index = null"
+                  >
+                  </CoolLightBox>
+                    <div class="images-wrapper">
+                    <div class="image"  @click="index = data.item.id" :style="{ backgroundImage: `url(${data.item.imageVerif})` }"></div>
+                  </div>
+
+                  <b-avatar
+                    :src="'http://127.0.0.1:8000' + data.item.imageVerif"
+                    href="javascript:;"
+                    :class="`img-${data.item.id + 1}`"
+                    @click="index = data.item.id"
+                    size="4rem"
+                    rounded="lg"
+                    alt=""
+                    srcset=""
+                  />
+                </span>
+                <span v-else>
+                  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="4em" height="4em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 64 64">
+                    <path
+                      fill="currentColor"
+                      d="M32 2C15.432 2 2 15.432 2 32.001C2 48.567 15.432 62 32 62s30-13.433 30-29.999C62 15.432 48.568 2 32 2zm22 30.001c0 4.629-1.433 8.922-3.876 12.465l-30.591-30.59A21.889 21.889 0 0 1 32 10c12.15 0 22 9.851 22 22.001zm-44 0a21.9 21.9 0 0 1 3.876-12.468l30.591 30.591A21.887 21.887 0 0 1 32 54.001c-12.15 0-22-9.852-22-22z"
+                    />
+                  </svg>
+                </span>
+              </template>
             </b-table>
 
             <div class="table-footer">
@@ -165,7 +205,13 @@
 }
 </style>
 <script>
-import axios from 'axios'
+import Vue from 'vue';
+import CoolLightBox from 'vue-cool-lightbox';
+import 'vue-cool-lightbox/dist/vue-cool-lightbox.min.css';
+Vue.component('CoolLightBox', CoolLightBox);
+
+import '@/assets/sass/components/custom-lightbox.scss';
+import axios from 'axios';
 import { mapGetters, mapActions } from 'vuex';
 export default {
   metaInfo: { title: 'Bootstrap Custom Table' },
@@ -174,6 +220,9 @@ export default {
       //table 3
       items2: [],
       columns2: [],
+      index: null,
+
+      allControls: false,
       table_option2: { total_rows: 0, current_page: 1, page_size: 5, search_text: '' },
       meta2: {},
       is_select_all2: false,
@@ -222,23 +271,25 @@ export default {
       Questioncategories: 'StateQuestioncategories',
       User: 'StateUser',
       Users: 'StateUsers',
-      Replies:'StateReplies'
+      Replies: 'StateReplies',
     }),
-     filteredList() {
+    filteredList() {
       return this.UserEntreprises.filter((entreprise) => {
-        return (entreprise.nameE.toLowerCase().includes(this.search.toLowerCase())||
-               entreprise.typeE.toLowerCase().includes(this.search.toLowerCase())||
-               entreprise.addressE.toLowerCase().includes(this.search.toLowerCase())||
-               entreprise.country.toLowerCase().includes(this.search.toLowerCase())) && entreprise.published==false
-        ;
+        return (
+          (entreprise.nameE.toLowerCase().includes(this.search.toLowerCase()) ||
+            entreprise.typeE.toLowerCase().includes(this.search.toLowerCase()) ||
+            entreprise.addressE.toLowerCase().includes(this.search.toLowerCase()) ||
+            entreprise.country.toLowerCase().includes(this.search.toLowerCase())) &&
+          entreprise.published == false
+        );
       });
     },
   },
 
   methods: {
-   ...mapActions(['GetQuestions','CreateNotification','GetReplies', 'GetUsers', 'GetUserentreprises', 'GetQuestioncategories']),
-   async Accept(id) {
-     this.$swal({
+    ...mapActions(['GetQuestions', 'CreateNotification', 'GetReplies', 'GetUsers', 'GetUserentreprises', 'GetQuestioncategories']),
+    async Accept(id) {
+      this.$swal({
         icon: 'warning',
         title: 'Are you sure?',
         showCancelButton: true,
@@ -246,29 +297,29 @@ export default {
         padding: '2em',
       }).then((result) => {
         if (result.value) {
-       axios.put('/userentreprise/userentreprise-update/' + id + '/', { published: true });
-      this.CreateNotification({message:'Your entreprise has been accepted ' ,entrepriseNo:id,admin:true})
-      this.$router.go()
-      this.$swal('Accepted!', 'The entreprise has been accepted.', 'success');
+          axios.put('/userentreprise/userentreprise-update/' + id + '/', { published: true });
+          this.CreateNotification({ message: 'Your entreprise has been accepted ', entrepriseNo: id, admin: true });
+          this.$router.go();
+          this.$swal('Accepted!', 'The entreprise has been accepted.', 'success');
         }
       });
-          },
-     
+    },
+
     bind_data() {
       //table 3
-      this.columns2 =[
-        { key: 'imageE', label: 'Image' ,class: 'text-center ' },
+      (this.columns2 = [
+        { key: 'imageE', label: 'Image', class: 'text-center ' },
+        { key: 'imageVerif', label: 'Patent', class: 'text-center ' },
         { key: 'nameE', label: 'Name' },
         { key: 'dateinscritE', label: 'Date' },
         { key: 'typeE', label: 'Type' },
         { key: 'addressE', label: 'Address' },
         { key: 'country', label: 'Country' },
         { key: 'contactE', label: 'Phone' },
-        { key: 'published', label: 'Status'},
+        { key: 'published', label: 'Status' },
         { key: 'actions', label: 'Actions', class: 'text-center  ' },
-      ],
-
-      this.table_option2.total_rows = this.filteredList.length;
+      ]),
+        (this.table_option2.total_rows = this.filteredList.length);
       this.get_meta2();
     },
     on_filtered(filtered_items) {
