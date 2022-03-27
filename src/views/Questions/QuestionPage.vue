@@ -152,9 +152,6 @@
               <span v-if="isLoggedIn && CurrentUserProfile.id != null">
                 <span v-b-modal.exampleModalCenter>Reply</span>
               </span>
-              <span v-else-if="existentreprise==true">
-                 <span @click="showAlert()">Reply</span>
-              </span>
               <span v-else>
                 <a href="/auth/userinfo"> <span>Reply</span> </a>
               </span>
@@ -643,19 +640,23 @@ export default {
         this.is_submit_reply = true;
         if (this.replies.contentR && this.replies.contentR.length < 500 && this.replies.contentR.length > 25) {
           this.$bvModal.hide('exampleModalCenter');
-          for (let u in this.Userprofiles) {
-            if (this.Userprofiles[u].userU == this.CurrentUser.id) {
-              this.userprofileRep = this.Userprofiles[u].id;
-              this.CurrentUserProfile = this.Userprofiles[u];
+          if(this.existentreprise==false){
+              this.userprofileRep = this.CurrentUserProfile.id;
+            
+          }}else if (this.existentreprise==true){
+              this.userentrepriseRep = this.CurrentUserEntreprise;
             }
-          }
           var formdata = new FormData();
           if (this.image != null) {
             formdata.append('imageR', this.image);
           }
           formdata.append('contentR', this.replies.contentR);
           formdata.append('questionRep', this.questionRep);
+          if(this.existentreprise==false){
           formdata.append('userprofileRep', this.userprofileRep);
+          }else if (this.existentreprise==true){
+            formdata.append('userentrepriseRep', this.userentrepriseRep);
+          }
           if (this.CurrentUser.is_superuser){
             formdata.append("accepted", true);
             await axios.put('/userprofile/userprofile-update/' + this.userprofileRep + '/', { nbreplies:this.CurrentUserProfile.nbreplies+=1  });
@@ -669,7 +670,7 @@ export default {
         }
           this.is_submit_reply = false;
         }
-      } catch (error) {
+      catch (error) {
         throw 'Il ya un error!';
       }
     },
@@ -780,6 +781,7 @@ export default {
       if(this.Userentreprises[ue].userE==this.CurrentUser.id)
         {
           this.existentreprise = true
+          this.CurrentUserEntreprise=this.Userentreprises[ue]
         }
       }
             for (let p in this.Userprofiles) {

@@ -9,6 +9,7 @@ class Reply(models.Model):
   dateR = models.DateTimeField(auto_now_add=True)
   imageR = models.ImageField(upload_to='images/',null=True, blank=True)
   userprofileRep = models.ForeignKey('userprofile.Userprofile',on_delete=models.CASCADE,null=True,blank=True)
+  userentrepriseRep = models.ForeignKey('userentreprise.Userentreprise',on_delete=models.CASCADE,null=True,blank=True)
   checked=models.BooleanField(default=False)
   accepted = models.BooleanField(default=False)
   modified = models.BooleanField(default=False)
