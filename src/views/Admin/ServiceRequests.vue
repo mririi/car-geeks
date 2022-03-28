@@ -298,16 +298,12 @@ export default {
        this.CreateNotification({message:'Your service has been accepted ' ,serviceNo:id,admin:true})
        axios.get('/userprofile/userprofile-detail/' + userid + '/').then((response) => {
         this.userprofileservice = response.data;
-       }),
-          axios.get('/user/users/' + this.userprofileservice.userU + '/').then((response) => {
-        this.userservice = response.data;
-       });
-
+       })
        for (let r in this.Roles)
        {
-         if (this.Roles[r].userRole== this.userservice.id && this.Roles[r].service==false)
+         if (this.Roles[r].userRole== userid && this.Roles[r].service==false)
          {
-             axios.post('/role/role-update/'+this.Roles[r].id+'/', { service: true , userRole:this.userservice.id ,admin:this.Roles[r].admin }); 
+             axios.post('/role/role-update/'+this.Roles[r].id+'/', { service: true , userRole:userid ,admin:this.Roles[r].admin }); 
         }
        }
         this.$router.go();

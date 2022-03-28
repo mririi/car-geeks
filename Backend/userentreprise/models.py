@@ -17,6 +17,8 @@ class Userentreprise(models.Model):
   imageE = models.ImageField(upload_to='images/',null=True, blank=True)
   imageVerif = models.ImageField(upload_to='images/',null=True, blank=True)
   nbvisits = models.IntegerField(default=0)
+  nbquestions = models.IntegerField(default=0)
+  nbreplies = models.IntegerField(default=0)
   roleE = models.ForeignKey('role.Role',on_delete=models.CASCADE,blank=True,null=True)
   userE =models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
 

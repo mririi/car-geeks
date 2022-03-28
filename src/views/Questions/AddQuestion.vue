@@ -93,10 +93,12 @@ export default {
         titleQ: '',
         contentQ: '',
         userprofileQ:'',
+        userentrepriseQ:'',
         categoryQ:0,
         
       },
       image:null,
+      uentreprise:[],
       uprofile:[],
       CurrentUser:[],
       is_submit_form1:false, 
@@ -119,11 +121,8 @@ export default {
       if(this.Userentreprises[ue].userE==this.CurrentUser.id)
         {
           existuserentreprise = true
-          this.$router.push('/questions')
-          this.$swal({
-              title: 'You cannot add a question as an entreprise, Please create a normal account !',
-              padding: '2em'
-          });
+          this.uentreprise=this.Userentreprises[ue]
+          this.form.userentrepriseQ=this.uentreprise.id
         }
       }
       if (existuserentreprise==false){
@@ -132,6 +131,9 @@ export default {
       if(this.Userprofiles[uu].userU==this.CurrentUser.id)
         {
           existuserprofile = true
+          this.uprofile=this.Userprofiles[uu]
+          this.form.userprofileQ=this.uprofile.id
+          
         }
       }
       if (existuserprofile==false){
@@ -153,13 +155,10 @@ export default {
                   this.form.contentQ && this.form.contentQ.length<500 && this.form.contentQ.length>25 &&
                   this.form.categoryQ
                 ) {
-        for (let u in this.Userprofiles){
-      if(this.Userprofiles[u].userU==this.CurrentUser.id)
-        {
-          this.form.userprofileQ=this.Userprofiles[u].id;
-          this.uprofile = this.Userprofiles[u];
-        }
-      }
+        
+          
+        
+       
       var formdata = new FormData();
       if (this.image!=null)
       {
@@ -174,7 +173,7 @@ export default {
         }
         //formdata.append("tags", this.tags.text);
         formdata.append("userprofileQ", this.form.userprofileQ);
-        console.log(this.form.categoryQ)
+        formdata.append("userentrepriseQ", this.form.userentrepriseQ);
         await this.CreateQuestion(formdata);
         if (this.CurrentUser.is_superuser==false){
         this.$swal('Good Job!', 'Your question has been created successfuly, Please wait for the administator to accept it !', 'success');

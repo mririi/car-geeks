@@ -12,6 +12,7 @@ class Question(models.Model):
   dateQ = models.DateTimeField(auto_now_add=True)
   imageQ = models.ImageField(upload_to='images/',null=True, blank=True)
   userprofileQ = models.ForeignKey('userprofile.Userprofile',on_delete=models.CASCADE,null=True,blank=True)
+  userentrepriseQ = models.ForeignKey('userentreprise.Userentreprise',on_delete=models.CASCADE,null=True,blank=True)
   categoryQ = models.ForeignKey('questioncategory.Questioncategory',on_delete=models.CASCADE,null=True,blank=True)
   tags = models.CharField(max_length=200,null=True,blank=True)
   

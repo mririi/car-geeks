@@ -15,7 +15,7 @@
     </portal>
     <div class="col-xl-12 mt-3 col-lg-6 col-md-12 col-sm-12 col-12 layout-spacing">
       <div class="widget widget-card-one">
-        <div v-if="CurrentUserProfile.id == question.userprofileQ">
+        <div v-if="CurrentUserProfile.id == question.userprofileQ && question.userprofileQ !=null|| CurrentUserEntreprise.id==question.userentrepriseQ &&question.userentrepriseQ!=null">
           <b-dropdown variant="icon-only" toggle-tag="a" size="1em" class="mb-4 mr-2 custom-dropdown mt-3 float-right">
             <template #button-content>
               <svg
@@ -40,7 +40,7 @@
             <b-dropdown-item @click="deleteQuestion(question.id)">Delete</b-dropdown-item>
           </b-dropdown>
         </div>
-        <div class="widget-heading">
+        <div v-if="question.userprofileQ !=null" class="widget-heading">
           <b-media>
             <template #aside>
               <div class="w-img">
@@ -51,7 +51,7 @@
             <router-link :to="'/profile/' + userprofile.id">
               <h6>{{ userprofile.firstname }} {{ userprofile.lastname }}</h6>
             </router-link>
-
+            
             <p class="meta-date-time">{{ question.dateQ | formatDate }}</p>
 
             <b-card class="bg-transparent border-0 col-12">
@@ -61,7 +61,27 @@
             >
           </b-media>
         </div>
+        <div v-if="question.userentrepriseQ !=null" class="widget-heading">
+          <b-media>
+            <template #aside>
+              <div class="w-img">
+                <img :src="'http://127.0.0.1:8000' + userentreprise.imageE" alt="avatar" />
+              </div>
+            </template>
 
+            <router-link :to="'/entreprisedetails/' + userentreprise.id">
+              <h6>{{ userentreprise.nameE }}</h6>
+            </router-link>
+            
+            <p class="meta-date-time">{{ question.dateQ | formatDate }}</p>
+
+            <b-card class="bg-transparent border-0 col-12">
+              <b-card-text>
+                <h4 class="font-weight-bold">{{ question.titleQ }}</h4></b-card-text
+              ></b-card
+            >
+          </b-media>
+        </div>
         <div class="widget-content">
           <b-card class="bg-transparent border-0 col-12">
             <b-card-text>
@@ -73,27 +93,10 @@
           </div>
           <div class="w-action">
             <div class="card-like ml-4">
-              <span v-if="isLoggedIn && CurrentUserProfile.id != null">
+              <span v-if="isLoggedIn && CurrentUserProfile.id != null || CurrentUserEntreprise.id !=null">
                 <svg
-                  v-show="likedQuestion == false && existentreprise==false"
+                  v-show="likedQuestion == false"
                   @click="liked()"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                  role="img"
-                  width="24"
-                  height="24"
-                  preserveAspectRatio="xMidYMid meet"
-                  viewBox="0 0 512 512"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M96 191.1H32c-17.67 0-32 14.33-32 31.1v223.1c0 17.67 14.33 31.1 32 31.1h64c17.67 0 32-14.33 32-31.1V223.1c0-16.8-14.3-32-32-32zM512 227c0-36.89-30.05-66.92-66.97-66.92h-99.86C354.7 135.1 360 113.5 360 100.8c0-33.8-26.2-68.78-70.06-68.78c-46.61 0-59.36 32.44-69.61 58.5c-31.66 80.5-60.33 66.39-60.33 93.47c0 12.84 10.36 23.99 24.02 23.99a23.88 23.88 0 0 0 14.97-5.26c76.76-61.37 57.97-122.7 90.95-122.7c16.08 0 22.06 12.75 22.06 20.79c0 7.404-7.594 39.55-25.55 71.59a23.934 23.934 0 0 0-3.066 11.72c0 13.92 11.43 23.1 24 23.1h137.6C455.5 208.1 464 216.6 464 227c0 9.809-7.766 18.03-17.67 18.71c-12.66.86-22.36 11.4-22.36 23.94c0 15.47 11.39 15.95 11.39 28.91c0 25.37-35.03 12.34-35.03 42.15c0 11.22 6.392 13.03 6.392 22.25c0 22.66-29.77 13.76-29.77 40.64c0 4.515 1.11 5.961 1.11 9.456c0 10.45-8.516 18.95-18.97 18.95h-52.53c-25.62 0-51.02-8.466-71.5-23.81l-36.66-27.51a23.851 23.851 0 0 0-14.38-4.811c-13.85 0-24.03 11.38-24.03 24.04c0 7.287 3.312 14.42 9.596 19.13l36.67 27.52C235 468.1 270.6 480 306.6 480h52.53c35.33 0 64.36-27.49 66.8-62.2c17.77-12.23 28.83-32.51 28.83-54.83a65.97 65.97 0 0 0-.64-9.122c17.84-12.15 29.28-32.58 29.28-55.28a66.33 66.33 0 0 0-1.876-15.64C499.9 270.1 512 250.2 512 227z"
-                  />
-                </svg>
-              </span>
-              <span v-else-if="existentreprise == true">
-              <svg
-                  @click="showAlertlike()"
                   xmlns="http://www.w3.org/2000/svg"
                   aria-hidden="true"
                   role="img"
@@ -149,10 +152,10 @@
                   />
                 </g>
               </svg>
-              <span v-if="isLoggedIn && CurrentUserProfile.id != null">
+              <span v-if="isLoggedIn && CurrentUserProfile.id != null || CurrentUserEntreprise.id != null">
                 <span v-b-modal.exampleModalCenter>Reply</span>
               </span>
-              <span v-else>
+              <span v-else-if="isLoggedIn && CurrentUserProfile.id == null || CurrentUserEntreprise.id == null">
                 <a href="/auth/userinfo"> <span>Reply</span> </a>
               </span>
             </div>
@@ -173,7 +176,7 @@
                     placeholder="Enter your reply content here"
                   ></b-form-textarea>
                   <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
-                  <b-form-invalid-feedback :class="{ 'd-block': is_submit_reply && !replies.contentR }">Please Enter content between 25 and 500 characters</b-form-invalid-feedback>
+                  <b-form-invalid-feedback :class="{ 'd-block': is_submit_reply && !replies.contentR && replies.contentR.length > 500 && replies.contentR.length <25 }">Please Enter content between 25 and 500 characters</b-form-invalid-feedback>
 
                   <div class="mt-4 mb-5">
                     <svg xmlns="http://www.w3.org/2000/svg" class="mb-1" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
@@ -247,8 +250,17 @@
                             </div>
                             <h6 class="">{{ u.firstname }} {{ u.lastname }}</h6>
                           </div>
-                        </div>
-                        <div v-if="CurrentUserProfile.id == rep.userprofileRep && rep.checked == false">
+                           </div>
+                          <div v-for="e in Userentreprises" :key="e.id">
+                          <div v-if="e.id == rep.userentrepriseRep">
+                            <div class="float-left">
+                              <b-avatar class="mr-3" :square="true" size="3rem" :src="'http://127.0.0.1:8000' + e.imageE" width="40px" />
+                            </div>
+                            <h6 class="">{{ e.nameE }}</h6>
+                          </div>
+                          </div>
+                       
+                        <div v-if="(CurrentUserProfile.id == rep.userprofileRep && rep.userprofileRep !=null|| CurrentUserEntreprise.id==rep.userentrepriseRep &&rep.userentrepriseRep!=null) && rep.checked == false">
                           <b-dropdown variant="icon-only" dropleft toggle-tag="a" class="mb-4 mr-2 custom-dropdown float-right">
                             <template #button-content>
                               <svg
@@ -301,12 +313,12 @@
                           <img :src="'http://127.0.0.1:8000' + rep.imageR" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
                         </div>
                         <div class="media-notation mb-4 float-right">
-                          <a v-if="existentreprise==false" href="javascript:void(0);" class="">
-                            <likecomponent :replyid="rep.id" :userprofile="CurrentUserProfile.id" />
+                          <a v-if="isLoggedIn" href="javascript:void(0);" class="">
+                            <likecomponent :replyid="rep.id" :userprofile="CurrentUserProfile.id" :userentreprise="CurrentUserEntreprise.id" />
                           </a>
                           <a v-else>
                             <svg
-                  @click="showAlertlike()"
+                  
                   xmlns="http://www.w3.org/2000/svg"
                   aria-hidden="true"
                   role="img"
@@ -345,13 +357,11 @@
                             >
                               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                             </svg>
-                            <span v-if="isLoggedIn && CurrentUserProfile.id != null">
+                            <span v-if="isLoggedIn && CurrentUserProfile.id != null||CurrentUserEntreprise!=null">
                               <span v-b-modal="modalCreateCommentNewest(rep.id)">Add a comment</span>
                             </span>
-                            <span v-else-if="existentreprise==true">
-                                <span @click="showAlertcomment()">Add a comment</span>
-                              </span>
-                            <span v-else>
+                            
+                            <span v-else-if="isLoggedIn && CurrentUserProfile.id == null||CurrentUserEntreprise==null">
                               <a href="/auth/userinfo"> <span>Add a comment</span></a>
                             </span>
                           </a>
@@ -446,6 +456,11 @@
                                   <a class="text-primary" :href="'/profile/' + u.id + '/'"> {{ u.firstname }} {{ u.lastname }}</a>
                                 </span>
                               </span>
+                              <span v-for="e in Userentreprises" :key="e.id">
+                                <span v-if="e.id == c.userentrepriseCo">
+                                  <a class="text-primary" :href="'/entreprisedetails/' + e.id + '/'"> {{ e.nameE }}</a>
+                                </span>
+                              </span>
                             </b-card-text></b-card
                           >
                           <hr width="90%" />
@@ -482,8 +497,11 @@ export default {
       alreadychecked: false,
       question: [],
       userprofile: [],
+      userentreprise : [],
       userprofileRep: [],
+      userentrepriseRep: [],
       CurrentUserProfile: [],
+      CurrentUserEntreprise: [],
       comment: {
         contentCo: '',
         replyCo: '',
@@ -500,6 +518,8 @@ export default {
       vote: {
         questionVo: '',
         userprofileVo: '',
+        userentrepriseVo: '',
+        
         replyVo: '',
       },
       existentreprise:false,
@@ -529,24 +549,7 @@ export default {
     onFileChanged(event) {
       this.image = event.target.files[0];
     },
-    async showAlert() {
-      this.$swal({
-        title: 'You cannot reply as an entreprise, Please create a normal account !',
-        padding: '2em',
-      });
-    },
-    async showAlertcomment() {
-      this.$swal({
-        title: 'You cannot comment as an entreprise, Please create a normal account !',
-        padding: '2em',
-      });
-    },
-    async showAlertlike() {
-      this.$swal({
-        title: 'You cannot like as an entreprise, Please create a normal account !',
-        padding: '2em',
-      });
-    },
+   
     deleteQuestion() {
       this.$swal({
         icon: 'warning',
@@ -558,9 +561,18 @@ export default {
       }).then((result) => {
         if (result.value) {
           axios.delete(`/question/question-delete/${this.question.id}/`);
+          if(this.existentreprise==null)
+          {
           axios.put('/userprofile/userprofile-update/' + this.CurrentUserProfile.id + '/', {
             nbquestions: (this.CurrentUserProfile.nbquestions -= 1),
           });
+          }
+          else
+          {
+            axios.put('/userentreprise/userentreprise-update/' + this.CurrentUserEntreprise.id + '/', {
+            nbquestions: (this.CurrentUserEntreprise.nbquestions -= 1),
+          });
+          }
           this.$swal('Deleted!', 'Your question has been deleted.', 'success');
           this.GetQuestions();
           this.$router.push('/questions');
@@ -569,7 +581,7 @@ export default {
     },
     deleteliked() {
       for (let v in this.Votes) {
-        if (this.Votes[v].questionVo === this.vote.questionVo && this.Votes[v].userprofileVo === this.vote.userprofileVo) {
+        if (this.Votes[v].questionVo === this.vote.questionVo && (this.Votes[v].userprofileVo === this.vote.userprofileVo &&  this.vote.userprofileVo!=null || this.Votes[v].userentrepriseVo === this.vote.userentrepriseVo && this.vote.userentrepriseVo!=null)) {
           axios.delete('/vote/vote-delete/' + this.Votes[v].id + '/');
         }
       }
@@ -626,10 +638,21 @@ export default {
       }).then((result) => {
         if (result.value) {
           axios.put('/question/question-update/' + this.question.id + '/', {
-            nblikes: (this.question.nblikes -= 1),
+            nbreplies: (this.question.nbreplies -= 1),
           });
           axios.delete(`http://127.0.0.1:8000/reply/reply-delete/${r.id}/`);
-          
+           if(this.existentreprise==null)
+          {
+          axios.put('/userprofile/userprofile-update/' + this.CurrentUserProfile.id + '/', {
+            nbreplies: (this.CurrentUserProfile.nbreplies -= 1),
+          });
+          }
+          else
+          {
+            axios.put('/userentreprise/userentreprise-update/' + this.CurrentUserEntreprise.id + '/', {
+            nbreplies: (this.CurrentUserEntreprise.nbreplies -= 1),
+          });
+          }
           this.$swal('Deleted!', 'Your comment has been deleted.', 'success');
           this.$router.go();
         }
@@ -642,9 +665,8 @@ export default {
           this.$bvModal.hide('exampleModalCenter');
           if(this.existentreprise==false){
               this.userprofileRep = this.CurrentUserProfile.id;
-            
-          }}else if (this.existentreprise==true){
-              this.userentrepriseRep = this.CurrentUserEntreprise;
+          }else if (this.existentreprise==true){
+              this.userentrepriseRep = this.CurrentUserEntreprise.id
             }
           var formdata = new FormData();
           if (this.image != null) {
@@ -652,11 +674,9 @@ export default {
           }
           formdata.append('contentR', this.replies.contentR);
           formdata.append('questionRep', this.questionRep);
-          if(this.existentreprise==false){
           formdata.append('userprofileRep', this.userprofileRep);
-          }else if (this.existentreprise==true){
-            formdata.append('userentrepriseRep', this.userentrepriseRep);
-          }
+          formdata.append('userentrepriseRep', this.userentrepriseRep);
+          
           if (this.CurrentUser.is_superuser){
             formdata.append("accepted", true);
             await axios.put('/userprofile/userprofile-update/' + this.userprofileRep + '/', { nbreplies:this.CurrentUserProfile.nbreplies+=1  });
@@ -669,7 +689,7 @@ export default {
         this.$swal('Good Job!', 'Your reply has been created successfuly, Please wait for the administator to accept it !', 'success');
         }
           this.is_submit_reply = false;
-        }
+        }}
       catch (error) {
         throw 'Il ya un error!';
       }
@@ -797,13 +817,30 @@ export default {
                 }
               }
             }
+            for (let pe in this.Userentreprises) {
+              if (this.Userentreprises[pe].userE == this.CurrentUser.id) {
+                this.CurrentUserEntreprise = this.Userentreprises[pe];
+                this.vote.questionVo = this.question.id;
+                this.vote.userentrepriseVo = this.CurrentUserEntreprise.id;
+                this.comment.userentrepriseCo = this.CurrentUserEntreprise.id;
+                for (let v in this.Votes) {
+                  if (this.Votes[v].userentrepriseVo == this.CurrentUserEntreprise.id && this.Votes[v].questionVo == this.question.id) {
+                    this.likedQuestion = true;
+                  }
+                }
+              }
+            }
           }
         }
-
+        if(this.question.userprofileQ!=null){
         axios.get('/userprofile/userprofile-detail/' + this.question.userprofileQ + '/').then((response) => {
           this.userprofile = response.data;
           this.questionRep = this.question.id;
-        });
+        });}else if(this.question.userentrepriseQ!=null){
+        axios.get('/userentreprise/userentreprise-detail/' + this.question.userentrepriseQ + '/').then((response) => {
+          this.userentreprise = response.data;
+          this.questionRep = this.question.id;
+        });}
       })
       .catch((err) => {
         console.log(err);

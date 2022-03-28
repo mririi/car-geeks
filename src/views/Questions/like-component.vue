@@ -1,5 +1,5 @@
 <template>
-    <span v-if="userprofile!=null">
+    <span v-if="userprofile!=null || userentreprise!=null">
     <span v-if="liked==true">
         <svg @click="likedreply()" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
       <path
@@ -38,6 +38,9 @@ export default {
         userprofile:{
         type: Number,
         },
+        userentreprise:{
+        type: Number,
+        },
   },
   data() {
     return {
@@ -58,7 +61,7 @@ export default {
         this.liked=false
         axios.post('/reply/reply-update/'+this.replyid+'/',{nblikesR:this.likes-1})
         for (let v in this.Votes) {
-        if (this.Votes[v].replyVo === this.replyid && this.Votes[v].userprofileVo === this.userprofile) {
+        if (this.Votes[v].replyVo === this.replyid && (this.Votes[v].userprofileVo === this.userprofile ||this.Votes[v].userentrepriseVo === this.userentreprise)) {
           axios.delete('/vote/vote-delete/' + this.Votes[v].id + '/');
         }
       }
@@ -66,12 +69,12 @@ export default {
     },
     deletedlike(){
         this.liked=true
-        this.CreateVote({ replyVo: this.replyid, userprofileVo: this.userprofile });
+        this.CreateVote({ replyVo: this.replyid, userprofileVo: this.userprofile, userentrepriseVo:this.userentreprise });
         axios.post('/reply/reply-update/' + this.replyid + '/', {nblikesR: this.likes+1});
         this.likes+=1
-        if(this.CurrentUserProfile.id!=this.question.userprofileQ){
+        /*if(this.CurrentUserProfile.id!=this.question.userprofileQ){
           this.CreateNotification({message:' liked your reply !',userprofileNo:this.userprofile,replyNo:this.replyid})
-      }
+      }*/
          
 
         
@@ -87,6 +90,9 @@ export default {
             if(this.userprofile==this.Votes[v].userprofileVo && this.Votes[v].replyVo==this.reply.id){
                
                 this.liked=true
+            }else if (this.userentreprise==this.Votes[v].userentrepriseVo && this.Votes[v].replyVo==this.reply.id)
+            {
+              this.liked=true
             }
         }
         });
