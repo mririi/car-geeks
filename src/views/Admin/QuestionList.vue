@@ -90,7 +90,7 @@
               hover
               bordered
               :items="filterByCategory"
-              :fields="columns2"
+              :fields="computedFields"
               :per-page="table_option2.page_size"
               :current-page="table_option2.current_page"
               :filter="table_option2.search_text"
@@ -113,7 +113,9 @@
             <template #cell(userprofileQ)="data">
               <span v-for="u in Userprofiles" :key="u.id">
                 <span v-if="u.id == data.item.userprofileQ">
+                  <router-link :to="'/profile/'+u.id">
                    {{u.firstname}} {{u.lastname}}
+                  </router-link>
                 </span>
               </span>
             </template>
@@ -122,6 +124,15 @@
                 <span v-if="c.id == data.item.categoryQ">
                    {{c.typeC}}
                 </span>
+              </span>
+            </template>
+             <template #cell(userentrepriseQ)="data">
+              <span v-for="e in Userentreprises" :key="e.id">
+                <span v-if="e.id == data.item.userentrepriseQ">
+                  <router-link :to="'/entreprisedetails/'+e.id">
+                   {{ e.nameE }} 
+                  </router-link>
+                   </span>
               </span>
             </template>
              <template #cell(imageQ)="data">
@@ -234,6 +245,7 @@ export default {
     this.GetUserprofiles();
     this.GetQuestioncategories();
     this.GetUsers();
+    this.GetUserentreprises();
         },
   mounted() {
     this.bind_data();
@@ -245,6 +257,7 @@ export default {
       Questioncategories: 'StateQuestioncategories',
       User: 'StateUser',
       Users: 'StateUsers',
+      Userentreprises:'StateUserentreprises',
     }),
      filteredList() {
       return this.Questions.filter((question) => {
@@ -256,9 +269,23 @@ export default {
         return this.filteredList.filter((question) => this.category.includes(question.categoryQ));
       } else return this.filteredList;
     },
+    computedFields() {
+       for(let q in this.Questions)
+      {
+      if(!this.Questions[q].userprofileQ==null)
+      {
+        return this.columns2.filter(field => !field.requiresUserentreprise);
+      }
+       else if(!this.Questions[q].userentrepriseQ==null)
+       {
+          return this.columns2.filter(field => !field.requiresUserprofile);
+       }
+      }
+        return this.columns2;
+    }
   },
   methods: {
-    ...mapActions(['GetQuestions', 'GetUsers', 'GetUserprofiles', 'GetQuestioncategories']),
+    ...mapActions(['GetQuestions', 'GetUsers', 'GetUserprofiles', 'GetQuestioncategories','GetUserentreprises']),
     
     bind_data() {
       //table 3
@@ -268,7 +295,8 @@ export default {
         { key: 'dateQ', label: 'Date' },
         { key: 'categoryQ', label: 'Category' },
         { key: 'nbrep', label: 'Replies' },
-        { key: 'userprofileQ', label: 'User' },
+        { key: 'userprofileQ', label: 'User' ,requiresUserprofile:true},
+        { key: 'userentrepriseQ', label: 'Company', requiresUserentreprise:true},
         { key: 'accepted', label: 'Status', class: 'text-center  ' },
       ],
       

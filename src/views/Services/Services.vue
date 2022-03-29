@@ -60,17 +60,17 @@
         <div class="fq-article-section">
           <h2>Services List</h2>
           <div class="row">
-            <div class="col-lg-3 col-md-6 mb-lg-0 mb-4" v-for="s in filterByPromoted" :key="s.id">
+            <div class="col-lg-4 col-md-6 mb-lg-0 mb-4" v-for="s in filterByPromoted" :key="s.id">
               <b-badge variant="danger" class="ml-2">Sponsorised</b-badge>
-              <b-card :img-src="'http://127.0.0.1:8000' + s.imageS" img-top img-alt="Service"  class="counter" img-width="100%" img-height="200px">
+              <b-card :img-src="'http://127.0.0.1:8000' + s.imageS" img-top img-alt="Service" style="height: 410px"  class="counter" img-width="100%" img-height="200px">
               
                 <router-link :to="'/servicedetails/' + s.id">
-                  <div class="fq-rating text-center responsive ml-3">
-                    <b-form-rating id="rating" v-model="s.nbEval" readonly variant="warning" class="bg-transparent border-0"> </b-form-rating>
+                  <div class="fq-rating text-center responsive ml-4">
+                    <b-form-rating id="rating" v-model="s.nbEval" readonly variant="warning" class="bg-transparent border-0 w-25"> </b-form-rating>
                   </div>
-                  <h5 class="card-title text-center mb-4">{{ s.titleS }}</h5>
-                  <b-badge variant="warning" class="float-right mb-3 h4">{{ s.priceS }} DT</b-badge>
-                  <p class="meta-text">
+                  <h5 class="card-title text-center">{{ s.titleS }}</h5>
+                  <b-badge variant="warning" class="float-right  h4 mt-3">{{ s.priceS }} DT</b-badge>
+                  <p class="meta-text mt-4">
                     <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
                       <path
                         fill="currentColor"
@@ -83,15 +83,15 @@
                 </router-link>
               </b-card>
             </div>
-            <div class="col-lg-3 col-md-6 mb-lg-0 mb-4 mt-4" v-for="s in filterByNotPromoted" :key="s.id">
-              <b-card :img-src="'http://127.0.0.1:8000' + s.imageS" img-top img-alt="faq-video-tutorials" img-width="100%" img-height="200px">
+            <div class="col-lg-4 col-md-6 mb-lg-0 mb-4 mt-4" v-for="s in filterByNotPromoted" :key="s.id">
+              <b-card :img-src="'http://127.0.0.1:8000' + s.imageS" img-top img-alt="faq-video-tutorials" style="height:410px" img-width="100%" img-height="200px">
                 <router-link :to="'/servicedetails/' + s.id">
-                  <div class="fq-rating text-center ml-3">
+                  <div class="fq-rating text-center ml-4">
                     <b-form-rating id="rating" v-model="s.nbEval" readonly variant="warning" class="bg-transparent border-0 w-25"> </b-form-rating>
                   </div>
-                  <h5 class="card-title text-center mb-4">{{ s.titleS }}</h5>
-                  <b-badge variant="warning" class="float-right mb-3 h4">{{ s.priceS }} DT</b-badge>
-                  <p class="meta-text">
+                  <h5 class="card-title text-center">{{ s.titleS }}</h5>
+                  <b-badge variant="warning" class="float-right h4 mt-3">{{ s.priceS }} DT</b-badge>
+                  <p class="meta-text mt-4">
                     <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
                       <path
                         fill="currentColor"

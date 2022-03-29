@@ -305,6 +305,7 @@ export default {
          {
              axios.post('/role/role-update/'+this.Roles[r].id+'/', { service: true , userRole:userid ,admin:this.Roles[r].admin }); 
         }
+        
        }
         this.$router.go();
         this.$swal('Accepted!', 'The service has been accepted.', 'success');

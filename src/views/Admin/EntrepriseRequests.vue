@@ -81,7 +81,7 @@
                 {{ data.item.dateinscritE | formatDate }}
               </template>
               <template #cell(actions)="data">
-                <span @click="Accept(data.item.id)">
+                <span @click="Accept(data.item)">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -255,6 +255,7 @@ export default {
     this.GetQuestioncategories();
     this.GetUsers();
     this.GetReplies();
+    this.GetRoles();
   },
   mounted() {
     this.bind_data();
@@ -263,14 +264,15 @@ export default {
   computed: {
     ...mapGetters({
       Questions: 'StateQuestions',
-      UserEntreprises: 'StateUserentreprises',
+      Userentreprises: 'StateUserentreprises',
       Questioncategories: 'StateQuestioncategories',
       User: 'StateUser',
       Users: 'StateUsers',
       Replies: 'StateReplies',
+      Roles:'StateRoles'
     }),
     filteredList() {
-      return this.UserEntreprises.filter((entreprise) => {
+      return this.Userentreprises.filter((entreprise) => {
         return (
           (entreprise.nameE.toLowerCase().includes(this.search.toLowerCase()) ||
             entreprise.typeE.toLowerCase().includes(this.search.toLowerCase()) ||
@@ -283,8 +285,8 @@ export default {
   },
 
   methods: {
-    ...mapActions(['GetQuestions', 'CreateNotification', 'GetReplies', 'GetUsers', 'GetUserentreprises', 'GetQuestioncategories']),
-    async Accept(id) {
+    ...mapActions(['CreateRole','GetQuestions', 'CreateNotification', 'GetReplies', 'GetUsers', 'GetUserentreprises', 'GetQuestioncategories','GetRoles']),
+    async Accept(e) {
       this.$swal({
         icon: 'warning',
         title: 'Are you sure?',
@@ -293,8 +295,15 @@ export default {
         padding: '2em',
       }).then((result) => {
         if (result.value) {
-          axios.put('/userentreprise/userentreprise-update/' + id + '/', { published: true });
-          this.CreateNotification({ message: 'Your entreprise has been accepted ', entrepriseNo: id, admin: true });
+          for (let r in this.Roles)
+          {
+            if(this.Roles[r].userRole==e.userE && this.Roles[r].entreprise==true)
+            {
+              axios.put('/userentreprise/userentreprise-update/' + e.id + '/', { roleE: this.Roles[r].id,published:true });
+              axios.post('/role/role-update/' + this.Roles[r].id + '/',{entreprise:true,service:true,userRole:e.userE});
+            }
+          }
+          this.CreateNotification({ message: 'Your entreprise has been accepted ', entrepriseNo: e.userE, admin: true });
           this.$router.go();
           this.$swal('Accepted!', 'The entreprise has been accepted.', 'success');
         }

@@ -110,10 +110,16 @@
               {{ data.item.dateQ | formatDate }}
             </template>
             <template #cell(userprofileQ)="data">
+              <span v-if="data.item.userprofileQ!=null">
               <span v-for="u in Userprofiles" :key="u.id">
                 <span v-if="u.id == data.item.userprofileQ"> {{ u.firstname }} {{ u.lastname }} </span>
-              </span>
+                </span></span>
+                <span v-if="data.item.userentrepriseQ!=null">
+                <span v-for="e in Userentreprises" :key="e.id">
+                <span v-if="e.id == data.item.userentrepriseQ"> {{ e.nameE }} </span>
+              </span></span>
             </template>
+            
             <template #cell(categoryQ)="data">
               <span v-for="c in Questioncategories" :key="c.id">
                 <span v-if="c.id == data.item.categoryQ">
@@ -225,7 +231,9 @@ export default {
       is_select_all2: false,
       selected_rows2: [],
       search: '',
-      category:''
+      category:'',
+      uentreprise:[],
+      uprofile:[],
     };
   },
   watch: {
@@ -256,6 +264,8 @@ export default {
     this.GetUserprofiles();
     this.GetQuestioncategories();
     this.GetUsers();
+    this.GetUserentreprises();
+   
   },
   mounted() {
     this.bind_data();
@@ -266,6 +276,7 @@ export default {
       Questions: 'StateQuestions',
       Userprofiles: 'StateUserprofiles',
       Questioncategories: 'StateQuestioncategories',
+      Userentreprises:'StateUserentreprises',
       User: 'StateUser',
       Users: 'StateUsers',
     }),
@@ -276,13 +287,16 @@ export default {
     },
     filterByCategory: function () {
       if (this.category != '') {
-        return this.filteredList.filter((question) => this.category.includes(question.categoryQ));
+        return this.filteredList.filter((question) =>
+         this.category.includes(question.categoryQ));
       } else return this.filteredList;
     },
+     
+   
   },
 
   methods: {
-    ...mapActions(['GetQuestions','CreateNotification', 'GetUsers', 'GetUserprofiles', 'GetQuestioncategories']),
+    ...mapActions(['GetQuestions','CreateNotification', 'GetUsers', 'GetUserprofiles', 'GetQuestioncategories','GetUserentreprises']),
     async Accept(id , userid) {
        this.$swal({
         icon: 'warning',
@@ -299,7 +313,7 @@ export default {
           {
             for(let q in this.Questions)
             {
-             if(this.Questions[q].id==id && this.Questions[q].modified==false)
+             if(this.Questions[q].id==id && this.Questions[q].modified==false &&  this.Questions[q].userprofileQ!=null)
              {
                axios.put('/userprofile/userprofile-update/' + userid + '/', { nbquestions:this.Userprofiles[u].nbquestions+=1  });
               this.CreateNotification({message:'Your Question has been accepted ' ,questionNo:this.Questions[q].id,userprofileNo:userid,admin:true})

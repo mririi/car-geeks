@@ -14,6 +14,7 @@ class Userprofile(models.Model):
   nbquestions = models.IntegerField(default=0)
   nbreplies = models.IntegerField(default=0)
   nbvisits = models.IntegerField(default=0)
+  verified=models.BooleanField(default=False)
   dateinscrit = models.DateTimeField(auto_now_add=True)
   imageU = models.ImageField(upload_to='images/',null=True, blank=True)
   imageVerif = models.ImageField(upload_to='images/',null=True, blank=True)

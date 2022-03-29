@@ -231,6 +231,99 @@
           >
           <span v-if="isLoggedIn">
             <b-dropdown toggle-tag="a" variant="icon-only" toggle-class="nav-link" menu-class="notification-scroll" class="nav-item notification-dropdown" :right="true">
+                        <template #button-content>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="feather feather-bell mt-2"
+                            >
+                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                            </svg>
+                            <span class="badge badge-success "></span>
+                        </template>
+                         <div v-for="n in Notifications" :key="n.id">
+                        <b-dropdown-item  :to="path(n)" @click="updatenotif(n)" v-if="Userprofile.id == n.userprofileNo && n.seen == false && n.admin == false">
+                            <b-media class="server-log">
+                                <template #aside>
+                                  <div v-for="u in Userprofiles" :key="u.id">
+                                    <div v-if="u.id == n.byuserprofileNo">
+                                    <b-avatar :src="'http://127.0.0.1:8000'+u.imageU" class="avatar-title rounded-circle"></b-avatar>
+                                    </div>
+                                  </div>
+                                </template>
+                                <div class="data-info">
+                                    <h6 class="">
+                                      <div v-for="u in Userprofiles" :key="u.id">
+                                    <div v-if="u.id == n.byuserprofileNo">
+                                      {{u.firstname}} {{u.lastname}} {{ n.message }}
+                                    </div></div></h6>
+                                    <p class="">{{ getDateago(n.dateNo) }} ago</p>
+                                </div>
+
+                                <div class="icon-status">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="feather feather-x"
+                                    >
+                                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                                    </svg>
+                                </div>
+                            </b-media>
+                        </b-dropdown-item>
+                        <b-dropdown-item  :to="path(n)" @click="updatenotif(n)" v-if="Userprofile.id == n.userprofileNo && n.seen == false && n.admin == true">
+                            <b-media class="server-log">
+                                <template #aside>
+                                  
+                                </template>
+                                <div class="data-info">
+                                    <h6 class="">
+                                      {{ n.message }}
+                                   </h6>
+                                    <p class="">{{ getDateago(n.dateNo) }} ago</p>
+                                </div>
+
+                                <div class="icon-status">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="feather feather-x"
+                                    >
+                                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                                    </svg>
+                                </div>
+                            </b-media>
+                        </b-dropdown-item>
+                        </div>
+                        
+                        
+                       
+                    </b-dropdown>
+            <!--<b-dropdown toggle-tag="a" variant="icon-only" toggle-class="nav-link" menu-class="notification-scroll" class="nav-item notification-dropdown" :right="true">
               <template #button-content>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -260,7 +353,7 @@
                     <p class="">{{ getDateago(n.dateNo) }} ago</p>
                   </div>
 
-                  <!--<div class="icon-status">
+                  <div class="icon-status">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         width="24"
@@ -276,7 +369,7 @@
                                         <line x1="18" y1="6" x2="6" y2="18"></line>
                                         <line x1="6" y1="6" x2="18" y2="18"></line>
                                     </svg>
-                                </div>-->
+                                </div>
                 </b-dropdown-item>
                 <b-dropdown-divider></b-dropdown-divider>
                 <b-dropdown-item class="" :to="path(n)" @click="updatenotif(n)" v-if="Userprofile.id == n.userprofileNo && n.seen == false && n.admin == false">
@@ -290,7 +383,7 @@
                     <p class="">{{ getDateago(n.dateNo) }} ago</p>
                   </div>
 
-                  <!--<div class="icon-status">
+                  <div class="icon-status">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         width="24"
@@ -306,11 +399,11 @@
                                         <line x1="18" y1="6" x2="6" y2="18"></line>
                                         <line x1="6" y1="6" x2="18" y2="18"></line>
                                     </svg>
-                                </div>-->
+                                </div>
                 </b-dropdown-item>
                 <b-dropdown-divider></b-dropdown-divider>
               </div> </b-dropdown
-          ></span>
+          >--></span>
           <span v-if="isLoggedIn">
             <b-dropdown toggle-tag="a" variant="icon-only" toggle-class="user nav-link" class="nav-item user-profile-dropdown" :right="true">
               <template #button-content>

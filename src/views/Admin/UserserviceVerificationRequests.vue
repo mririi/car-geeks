@@ -73,7 +73,7 @@
               @sort-changed="clear_selection"
             >
              <template #cell(status)="data">
-                <span v-if="data.item.imageVerif!=null">
+                <span v-if="data.item.verified==true">
                   <b-badge variant="success">Verified</b-badge>
               </span>
               <span v-else>
@@ -82,7 +82,7 @@
             </template>
             
             <template #cell(actions)="data">
-              <span @click="Accept(data.item.id,data.item.userprofileS)">
+              <span @click="Accept(data.item.id)">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -242,14 +242,14 @@ export default {
     }),
      filteredList() {
       return this.Userprofiles.filter((profile) => {
-        return profile.imageVerif==null;
+        return profile.verified==false;
       });
     },
     
   },
   methods: {
-    ...mapActions(['GetServices','GetServicepromotions','GetServicetypes', 'GetUsers', 'GetUserprofiles']),
-      async Accept(id,userid) {
+    ...mapActions(['GetServices','GetServicepromotions','GetServicetypes', 'GetUsers', 'GetUserprofiles','GetRoles']),
+      async Accept(userid) {
       this.$swal({
         icon: 'warning',
         title: 'Are you sure?',
@@ -258,14 +258,21 @@ export default {
         padding: '2em',
       }).then((result) => {
         if (result.value) {
-       
+        axios.put('/userprofile/userprofile-update/' + userid + '/', { verified:true });
+        let update=false
        for (let r in this.Roles)
        {
          if (this.Roles[r].userRole== userid && this.Roles[r].service==false)
          {
-             axios.post('/role/role-update/'+this.Roles[r].id+'/', { service: true , userRole:userid ,admin:this.Roles[r].admin }); 
+             axios.post('/role/role-update/'+this.Roles[r].id+'/', { service: true , userRole:this.Roles[r].userRole,admin:this.Roles[r].admin }); 
+            update=true
         }
+        
        }
+        if(update==false)
+        {
+          axios.post('/role/role-create/',{service:true,userRole:userid});
+        }
         this.$router.go();
         this.$swal('Accepted!', 'The person is been verified.', 'success');
        

@@ -62,7 +62,7 @@
                 <circle cx="17.5" cy="17.5" r="4.5" fill="currentColor" />
                 <path fill="currentColor" d="M4 21.5h6c.55 0 1-.45 1-1v-6c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1z" />
               </svg>
-              <span>{{ $t('Quest Category') }}</span>
+              <span>{{ $t('Categories') }}</span>
             </div>
             <div>
               <svg
@@ -161,7 +161,7 @@
           <a href="#serviceverif" v-b-toggle class="dropdown-toggle" @click.prevent>
             <div class="">
              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="m16.6 10.88l-1.42-1.42l-4.24 4.25l-2.12-2.13L7.4 13l3.54 3.54z"/><path fill="currentColor" d="M19 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V6a2 2 0 0 0-2-2zm0 14H5V8h14v10z"/></svg>
-              <span>{{ $t('Userservice Verif') }}</span>
+              <span>{{ $t('Verification') }}</span>
             </div>
             <div>
               <svg

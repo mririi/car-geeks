@@ -732,7 +732,7 @@ export default {
         try {
           await this.CreateComment(this.comment);
           if(this.CurrentUserProfile.id!=rep.userprofileRep){
-          this.CreateNotification({message:' commented on your reply !',userprofileNo:this.CurrentUserProfile.id,replyNo:rep.id})
+          this.CreateNotification({message:' commented on your reply !',byuserprofileNo:this.CurrentUserProfile.id,userprofileNo:rep.userprofileRep,replyNo:rep.id})
           }
           await axios.post('/reply/reply-update/' + rep.id + '/', {
             nbCommentR: (this.replydetails.nbCommentR += 1),
