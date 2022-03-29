@@ -11,6 +11,7 @@ class Notifications(models.Model):
   replyNo = models.ForeignKey('reply.Reply',on_delete=models.CASCADE,null=True,blank=True)
   questionNo = models.ForeignKey('question.Question',on_delete=models.CASCADE,null=True,blank=True)
   serviceNo = models.ForeignKey('service.Service',on_delete=models.CASCADE,null=True,blank=True)
+  byuserentrepriseNo = models.ForeignKey('userentreprise.Userentreprise',on_delete=models.CASCADE,null=True,blank=True,related_name="userentreprisedoneit")
   entrepriseNo = models.ForeignKey('userentreprise.Userentreprise',on_delete=models.CASCADE,null=True,blank=True)
   dateNo = models.DateTimeField(auto_now_add=True)
   

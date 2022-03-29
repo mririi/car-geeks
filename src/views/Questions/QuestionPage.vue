@@ -595,7 +595,7 @@ export default {
     liked() {
       this.CreateVote(this.vote);
       if(this.CurrentUserProfile.id!=this.question.userprofileQ){
-      this.CreateNotification({message:' liked your question !',userprofileNo:this.CurrentUserProfile.id,questionNo:this.question.id})
+      this.CreateNotification({message:' liked your question !',byuserprofileNo:this.CurrentUserProfile.id,userprofileNo:this.question.userprofileQ,byuserentrepriseNo:this.CurrentUserEntreprise.id,entrepriseNo:this.question.userentrepriseQ,questionNo:this.question.id})
       }
       axios.put('/question/question-update/' + this.$route.params.id + '/', {
         nblikes: this.likes + 1,
@@ -732,8 +732,17 @@ export default {
         try {
           await this.CreateComment(this.comment);
           if(this.CurrentUserProfile.id!=rep.userprofileRep){
-          this.CreateNotification({message:' commented on your reply !',userprofileNo:this.CurrentUserProfile.id,replyNo:rep.id})
-          }
+            if(this.CurrentUserProfile.id!=null && rep.userprofileRep!=null){
+          this.CreateNotification({message:' commented on your reply !',byuserprofileNo:this.CurrentUserProfile.id,userprofileNo:rep.userprofileRep,replyNo:rep.id})
+          }else if(this.CurrentUserProfile.id!=null && rep.userentrepriseRep!=null){
+          this.CreateNotification({message:' commented on your reply !',byuserprofileNo:this.CurrentUserProfile.id,entrepriseNo:rep.userentrepriseRep,replyNo:rep.id})
+          }else if (this.CurrentUserEntreprise.id!=null && rep.userentrepriseRep!=null){
+          this.CreateNotification({message:' commented on your reply !',byuserentrepriseNo:this.CurrentUserEntreprise.id,entrepriseNo:rep.userentrepriseRep,replyNo:rep.id})
+
+          }if (this.CurrentUserEntreprise.id!=null && rep.userprofileRep!=null){
+          this.CreateNotification({message:' commented on your reply !',byuserentrepriseNo:this.CurrentUserEntreprise.id,userprofileNo:rep.userprofileRep,replyNo:rep.id})
+
+          }}
           await axios.post('/reply/reply-update/' + rep.id + '/', {
             nbCommentR: (this.replydetails.nbCommentR += 1),
           });
