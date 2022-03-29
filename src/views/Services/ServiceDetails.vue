@@ -295,14 +295,14 @@ export default {
       let done = false;
       if (this.Evaluations.length == 0) {
         axios.post('/evaluation/evaluation-create/', {
-          userprofileEval: this.CurrentUserProfile.id,
+          userEval: this.CurrentUser.id,
           serviceEval: this.service.id,
           nbEval: this.nbEval,
         });
         this.GetEvaluations();
       } else {
         for (let e in this.Evaluations) {
-          if (this.Evaluations[e].userprofileEval == this.CurrentUserProfile.id && this.Evaluations[e].serviceEval == this.service.id) {
+          if (this.Evaluations[e].userEval == this.CurrentUser.id && this.Evaluations[e].serviceEval == this.service.id) {
             axios.post('/evaluation/evaluation-update/' + this.Evaluations[e].id + '/', {
               nbEval: this.nbEval,
             });
@@ -312,7 +312,7 @@ export default {
         }
         if (done == false) {
           axios.post('/evaluation/evaluation-create/', {
-            userprofileEval: this.CurrentUserProfile.id,
+            userEval: this.CurrentUser.id,
             serviceEval: this.service.id,
             nbEval: this.nbEval,
           });
