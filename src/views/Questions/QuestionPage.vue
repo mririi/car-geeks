@@ -686,6 +686,7 @@ export default {
           this.replies.contentR = '';
           this.GetReplies();
           if (this.CurrentUser.is_superuser==false){
+          await this.CreateNotification({message:' requested a Verification on their reply !',byuserentrepriseNo:this.CurrentUserEntreprise.id,byuserprofileNo:this.CurrentUserProfile.id,replyNo:1,foradmin:true})
         this.$swal('Good Job!', 'Your reply has been created successfuly, Please wait for the administator to accept it !', 'success');
         }
           this.is_submit_reply = false;
@@ -713,6 +714,7 @@ export default {
           await axios.post('/reply/reply-update/' + r.id + '/', formdata);
           this.GetReplies();
           if (this.CurrentUser.is_superuser==false){
+          await this.CreateNotification({message:' requested a Verification on their reply !',byuserentrepriseNo:this.CurrentUserEntreprise.id,byuserprofileNo:this.CurrentUserProfile.id,replyNo:r.id,foradmin:true})
         this.$swal('Good Job!', 'Your reply has been updated successfuly, Please wait for the administator to accept it !', 'success');
         }
           this.is_submit_replymodif = false;

@@ -252,7 +252,98 @@
                         </template>
                         <perfect-scrollbar>
                          <div v-for="n in Notifications" :key="n.id">
-                        <b-dropdown-item  @click="updatenotif(n)" v-if="Userprofile.id == n.userprofileNo && n.entrepriseNo==null && n.seen == false && n.admin == false">
+                           <b-dropdown-item  @click="updatenotif(n)" v-if="n.seen == false && n.foradmin == true && CurrentUser.is_superuser==true">
+                            <b-media class="server-log">
+                                <template #aside>
+                                  <b-badge variant="info" class="mt-2">Dashboard</b-badge>
+                                  
+                                </template>
+                                <div class="data-info" v-if="n.byuserprofileNo==null && n.byuserentrepriseNo!=null">
+                                    <h6 class="">
+                                      <div v-for="ue in Userentreprises" :key="ue.id">
+                                    <div v-if="ue.id == n.byuserentrepriseNo">
+                                      {{ue.nameE}} {{ n.message }}
+                                    </div></div></h6>
+                                    <p class="">{{ getDateago(n.dateNo) }} ago</p>
+                                </div>
+                                <div class="data-info" v-else-if="n.byuserentrepriseNo==null && n.byuserprofileNo!=null">
+                                    <h6 class="">
+                                      <div v-for="u in Userprofiles" :key="u.id">
+                                    <div v-if="u.id == n.byuserprofileNo">
+                                      {{u.firstname}} {{u.lastname}} {{ n.message }}
+                                    </div></div></h6>
+                                    <p class="">{{ getDateago(n.dateNo) }} ago</p>
+                                </div>
+                                <div class="data-info" v-if="n.byuserentrepriseNo==null && n.byuserprofileNo==null">
+                                    <h6 class="">
+                                      {{ n.message }}
+                                   </h6>
+                                    <p class="">{{ getDateago(n.dateNo) }} ago</p>
+                                </div>
+                                <div @click="deletenotif(n.id)" class="icon-status">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="feather feather-x"
+                                    >
+                                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                                    </svg>
+                                </div>
+                            </b-media>
+                        </b-dropdown-item>
+                        <b-dropdown-item  @click="updatenotif(n)" v-if="n.seen == true && n.foradmin == true && CurrentUser.is_superuser==true">
+                            <b-media class="server-log">
+                                <template #aside>
+                                  <b-badge variant="info" class="mt-2">Dashboard</b-badge>
+                                </template>
+                                <div class="data-info" v-if="n.byuserprofileNo==null && n.byuserentrepriseNo!=null">
+                                      <div v-for="ue in Userentreprises" :key="ue.id">
+                                    <div v-if="ue.id == n.byuserentrepriseNo">
+                                     <p> {{ue.nameE}} {{ n.message }}</p>
+                                    </div></div>
+                                    <p class="">{{ getDateago(n.dateNo) }} ago</p>
+                                </div>
+                                <div class="data-info" v-else-if="n.byuserentrepriseNo==null && n.byuserprofileNo!=null">
+                                      <div v-for="u in Userprofiles" :key="u.id">
+                                    <div v-if="u.id == n.byuserprofileNo">
+                                    <p>  {{u.firstname}} {{u.lastname}} {{ n.message }}</p>
+                                    </div></div>
+                                    <p class="">{{ getDateago(n.dateNo) }} ago</p>
+                                </div>
+                                <div class="data-info" v-if="n.byuserentrepriseNo==null && n.byuserprofileNo==null">
+                                    <h6 class="">
+                                      {{ n.message }}
+                                   </h6>
+                                    <p class="">{{ getDateago(n.dateNo) }} ago</p>
+                                </div>
+                                <div @click="deletenotif(n.id)" class="icon-status">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="feather feather-x"
+                                    >
+                                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                                    </svg>
+                                </div>
+                            </b-media>
+                        </b-dropdown-item>
+                        <b-dropdown-item  @click="updatenotif(n)" v-if="Userprofile.id == n.userprofileNo && n.entrepriseNo==null && n.seen == false && n.admin == false && n.foradmin==false">
                             <b-media class="server-log">
                                 <template #aside>
                                   <div v-if="n.byuserentrepriseNo==null">
@@ -307,7 +398,7 @@
                                 </div>
                             </b-media>
                         </b-dropdown-item>
-                        <b-dropdown-item  @click="updatenotif(n)" v-if="n.userprofileNo==null && Userentreprise.id == n.entrepriseNo && n.seen == false && n.admin == false">
+                        <b-dropdown-item  @click="updatenotif(n)" v-if="n.userprofileNo==null && Userentreprise.id == n.entrepriseNo && n.seen == false && n.admin == false && foradmin==false">
                             <b-media class="server-log">
                                 <template #aside>
                                   <div v-if="n.byuserentrepriseNo==null">
@@ -424,7 +515,7 @@
                                 </div>
                             </b-media>
                         </b-dropdown-item>
-                        <b-dropdown-item  @click="updatenotif(n)" v-if="Userprofile.id == n.userprofileNo && n.entrepriseNo==null && n.seen == true && n.admin == false">
+                        <b-dropdown-item  @click="updatenotif(n)" v-if="Userprofile.id == n.userprofileNo && n.entrepriseNo==null && n.seen == true && n.admin == false && n.foradmin == false">
                             <b-media class="server-log">
                                 <template #aside>
                                   <div v-if="n.byuserentrepriseNo==null">
@@ -477,7 +568,7 @@
                                 </div>
                             </b-media>
                         </b-dropdown-item>
-                        <b-dropdown-item  @click="updatenotif(n)" v-if="n.userprofileNo==null && Userentreprise.id == n.entrepriseNo && n.seen == true && n.admin == false">
+                        <b-dropdown-item  @click="updatenotif(n)" v-if="n.userprofileNo==null && Userentreprise.id == n.entrepriseNo && n.seen == true && n.admin == false && n.foradmin == false">
                             <b-media class="server-log">
                                 <template #aside>
                                   <div v-if="n.byuserentrepriseNo==null">
@@ -1510,14 +1601,30 @@ export default {
     },
     updatenotif(notif) {
       axios.put('/notifications/notification-update/' + notif.id + '/', { seen: true, admin: notif.admin });
-      if (notif.questionNo != null) {
+      if (notif.foradmin==false &&notif.questionNo != null) {
         this.$router.push('/questionpage/' + notif.questionNo + '/')
-      } else if (notif.entrepriseNo == null && notif.serviceNo == null && notif.questionNo == null && notif.replyNo == null) {
+      } else if (notif.foradmin==false &&notif.entrepriseNo == null && notif.serviceNo == null && notif.questionNo == null && notif.replyNo == null) {
         this.$router.push('/profile/' + notif.userprofileNo + '/')
-      } else if (notif.serviceNo != null) {
+      } else if (notif.foradmin==false &&notif.serviceNo != null) {
         this.$router.push('/servicedetails/' + notif.serviceNo + '/')
-      } else if (notif.userprofileNo == null && notif.serviceNo == null && notif.questionNo == null && notif.replyNo == null) {
+      } else if (notif.foradmin==false &&notif.userprofileNo == null && notif.serviceNo == null && notif.questionNo == null && notif.replyNo == null) {
         this.$router.push('/entreprisedetails/' + notif.entrepriseNo + '/')
+      }else if (notif.foradmin==true && notif.questionNo!=null ) {
+        this.$router.push('/dashboard/questionrequests')
+      }else if (notif.foradmin==true && notif.replyNo!=null) {
+        this.$router.push('/dashboard/replyrequests')
+      }else if (notif.foradmin==true && notif.serviceNo!=null && notif.promotionnotif==false) {
+        this.$router.push('/dashboard/servicerequests')
+      }else if (notif.foradmin==true && notif.serviceNo!=null && notif.promotionnotif==true) {
+        this.$router.push('/dashboard/promotionservicerequests')
+      }else if (notif.foradmin==true && notif.byuserentrepriseNo!=null && notif.promotionnotif==false) {
+        this.$router.push('/dashboard/entrepriserequests')
+      }else if (notif.foradmin==true && notif.byuserentrepriseNo==null && notif.questionNo==false && notif.replyNo==null&& notif.serviceNo==null && notif.byuserprofileNo==null) {
+        this.$router.push('/dashboard/entrepriserequests')
+      }else if (notif.foradmin==true && notif.byuserentrepriseNo!=null && notif.promotionnotif==true) {
+        this.$router.push('/dashboard/promotionentrepriserequests')
+      }else if (notif.foradmin==true && notif.byuserprofileNo!=null && notif.verifnotif==true) {
+        this.$router.push('/dashboard/userverificationrequest')
       } else if (notif.replyNo != null) {
         for (let r in this.Replies) {
           if (this.Replies[r].id == notif.replyNo) {

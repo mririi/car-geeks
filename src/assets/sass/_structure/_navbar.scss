@@ -175,8 +175,8 @@
         }
     }
     .navbar-item .nav-item.dropdown.notification-dropdown  .dropdown-menu {
-        min-width: 19rem;
-        left: 50% !important;
+        min-width: 22rem;
+        left: -50% !important;
         transform: translate(-90%, 0) !important;
         box-shadow: none;
         z-index: 1070;
