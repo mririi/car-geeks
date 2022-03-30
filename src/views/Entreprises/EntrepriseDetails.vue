@@ -187,7 +187,7 @@
                           </span>
                         </span>
                         <span v-else-if="isLoggedIn && existe==true">
-                          <span @click="showAlertUserentreprise()">
+                          <span @click="rating()">
                             <b-form-rating id="rating" v-model="average" variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
                           </span>
                         </span>
@@ -427,19 +427,13 @@ export default {
         }
         this.GetEvaluationentreprises();
       }
-      this.CreateNotification({message:' Rated your Entreprise '+this.nbEval+' Stars !',userprofileNo:this.CurrentUserProfile.id,entrepriseNo:this.$route.params.id})
+      this.CreateNotification({message:' Rated your Entreprise '+this.nbEval+' Stars !',byuserprofileNo:this.CurrentUserProfile.id,byuserentrepriseNo:this.CurrentUserEntreprise.id,entrepriseNo:this.$route.params.id})
 
       this.$router.go();
     },
     async showAlert() {
       this.$swal({
         title: 'You cannot rate your entreprise',
-        padding: '2em',
-      });
-    },
-    async showAlertUserentreprise() {
-      this.$swal({
-        title: 'You cannot rate an entreprise with a professional account',
         padding: '2em',
       });
     },

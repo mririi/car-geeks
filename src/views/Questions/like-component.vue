@@ -59,6 +59,7 @@ export default {
     ...mapActions(['GetVotes','CreateNotification','CreateVote']),
     likedreply(){
         this.liked=false
+        
         axios.post('/reply/reply-update/'+this.replyid+'/',{nblikesR:this.likes-1})
         for (let v in this.Votes) {
         if (this.Votes[v].replyVo === this.replyid && (this.Votes[v].userprofileVo === this.userprofile ||this.Votes[v].userentrepriseVo === this.userentreprise)) {
@@ -69,12 +70,13 @@ export default {
     },
     deletedlike(){
         this.liked=true
+        if(this.userprofile!=this.reply.userprofileRep || this.userentreprise!=this.reply.userentrepriseRep){
+      this.CreateNotification({message:' liked your reply !',byuserprofileNo:this.userprofile,userprofileNo:this.reply.userprofileRep,byuserentrepriseNo:this.userentreprise,entrepriseNo:this.reply.userentrepriseRep,replyNo:this.reply.id})
+      }
         this.CreateVote({ replyVo: this.replyid, userprofileVo: this.userprofile, userentrepriseVo:this.userentreprise });
         axios.post('/reply/reply-update/' + this.replyid + '/', {nblikesR: this.likes+1});
         this.likes+=1
-        /*if(this.CurrentUserProfile.id!=this.question.userprofileQ){
-          this.CreateNotification({message:' liked your reply !',userprofileNo:this.userprofile,replyNo:this.replyid})
-      }*/
+        
          
 
         
