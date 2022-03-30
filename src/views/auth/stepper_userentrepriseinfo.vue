@@ -165,7 +165,7 @@ export default {
     }),
   },
   methods: {
-    ...mapActions(['CreateRole', 'GetUsers','GetRoles', 'CreateUserentreprise', 'GetUserentreprises']),
+    ...mapActions(['CreateRole','CreateNotification', 'GetUsers','GetRoles', 'CreateUserentreprise', 'GetUserentreprises']),
     //upload image
     onFileChanged(event) {
       this.image = event.target.files[0];
@@ -201,6 +201,7 @@ export default {
         formdata.append('userE', this.form.userE.id);
         //
           this.CreateUserentreprise(formdata);
+          await this.CreateNotification({message:'New entreprise request !',foradmin:true})
           this.$swal('Good Job!', 'Your entreprise has been created successfuly, Please wait for the administrator to publish it !', 'success');
           this.$router.push('/')
         return true;

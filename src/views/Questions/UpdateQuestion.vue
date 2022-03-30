@@ -89,6 +89,7 @@ export default {
         titleQ: '',
         contentQ: '',
         userprofileQ: '',
+        userentrepriseQ:'',
         categoryQ: 0,
       },
       image: null,
@@ -150,7 +151,7 @@ export default {
       this.image = event.target.files[0];
       console.log(this.image);
     },
-    ...mapActions(['GetUserentreprises','GetQuestioncategories', 'CreateQuestion', 'GetUsers', 'GetUserprofiles']),
+    ...mapActions(['GetUserentreprises','CreateNotification','GetQuestioncategories', 'CreateQuestion', 'GetUsers', 'GetUserprofiles']),
     async submit() {
       try {
         this.is_submit_form1 = true;
@@ -172,6 +173,7 @@ export default {
         formdata.append('modified', true);
         axios.put('/question/question-update/' + this.$route.params.id + '/', formdata);
         if (this.CurrentUser.is_superuser==false){
+        await this.CreateNotification({message:' requested a Verification on their question !',byuserprofileNo:this.form.userprofileQ,byuserentrepriseNo:this.form.userentrepriseQ,questionNo:1,foradmin:true})
         this.$swal('Good Job!', 'Your question has been updated successfuly, Please wait for the administator to accept it !', 'success');
         }
         this.$router.push('/questions');

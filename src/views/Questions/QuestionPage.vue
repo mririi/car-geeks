@@ -594,7 +594,7 @@ export default {
     },
     liked() {
       this.CreateVote(this.vote);
-      if(this.CurrentUserProfile.id!=this.question.userprofileQ){
+      if(this.CurrentUserProfile.id!=this.question.userprofileQ || this.CurrentUserEntreprise.id!=this.question.userentrepriseQ){
       this.CreateNotification({message:' liked your question !',byuserprofileNo:this.CurrentUserProfile.id,userprofileNo:this.question.userprofileQ,byuserentrepriseNo:this.CurrentUserEntreprise.id,entrepriseNo:this.question.userentrepriseQ,questionNo:this.question.id})
       }
       axios.put('/question/question-update/' + this.$route.params.id + '/', {
@@ -686,6 +686,7 @@ export default {
           this.replies.contentR = '';
           this.GetReplies();
           if (this.CurrentUser.is_superuser==false){
+          await this.CreateNotification({message:' requested a Verification on their reply !',byuserentrepriseNo:this.CurrentUserEntreprise.id,byuserprofileNo:this.CurrentUserProfile.id,replyNo:1,foradmin:true})
         this.$swal('Good Job!', 'Your reply has been created successfuly, Please wait for the administator to accept it !', 'success');
         }
           this.is_submit_reply = false;
@@ -713,6 +714,7 @@ export default {
           await axios.post('/reply/reply-update/' + r.id + '/', formdata);
           this.GetReplies();
           if (this.CurrentUser.is_superuser==false){
+          await this.CreateNotification({message:' requested a Verification on their reply !',byuserentrepriseNo:this.CurrentUserEntreprise.id,byuserprofileNo:this.CurrentUserProfile.id,replyNo:r.id,foradmin:true})
         this.$swal('Good Job!', 'Your reply has been updated successfuly, Please wait for the administator to accept it !', 'success');
         }
           this.is_submit_replymodif = false;
@@ -731,18 +733,9 @@ export default {
         this.comment.replyCo = rep.id;
         try {
           await this.CreateComment(this.comment);
-          if(this.CurrentUserProfile.id!=rep.userprofileRep){
-            if(this.CurrentUserProfile.id!=null && rep.userprofileRep!=null){
-          this.CreateNotification({message:' commented on your reply !',byuserprofileNo:this.CurrentUserProfile.id,userprofileNo:rep.userprofileRep,replyNo:rep.id})
-          }else if(this.CurrentUserProfile.id!=null && rep.userentrepriseRep!=null){
-          this.CreateNotification({message:' commented on your reply !',byuserprofileNo:this.CurrentUserProfile.id,entrepriseNo:rep.userentrepriseRep,replyNo:rep.id})
-          }else if (this.CurrentUserEntreprise.id!=null && rep.userentrepriseRep!=null){
-          this.CreateNotification({message:' commented on your reply !',byuserentrepriseNo:this.CurrentUserEntreprise.id,entrepriseNo:rep.userentrepriseRep,replyNo:rep.id})
-
-          }if (this.CurrentUserEntreprise.id!=null && rep.userprofileRep!=null){
-          this.CreateNotification({message:' commented on your reply !',byuserentrepriseNo:this.CurrentUserEntreprise.id,userprofileNo:rep.userprofileRep,replyNo:rep.id})
-
-          }}
+          if(this.userprofile!=this.reply.userprofileRep || this.userentreprise!=this.reply.userentrepriseRep){
+      this.CreateNotification({message:' commented on your reply !',byuserprofileNo:this.CurrentUserProfile.id,userprofileNo:rep.userprofileRep,byuserentrepriseNo:this.CurrentUserEntreprise.id,entrepriseNo:rep.userentrepriseRep,replyNo:rep.id})
+      }
           await axios.post('/reply/reply-update/' + rep.id + '/', {
             nbCommentR: (this.replydetails.nbCommentR += 1),
           });

@@ -209,6 +209,7 @@ export default {
           formdata.append('bio', this.form.bio);
           formdata.append('contactE', this.form.contactE);
           axios.put('/userentreprise/userentreprise-update/' + this.$route.params.id + '/', formdata);
+          this.CreateNotification({message:' requested a Verification on their entreprise !',byuserentrepriseNo:this.form.id,foradmin:true})
           this.GetUserentreprises();
           this.$router.push('/entreprisedetails/' + this.form.id);
         }
@@ -216,7 +217,7 @@ export default {
         throw 'Il ya un error!';
       }
     },
-    ...mapActions(['GetUsers', 'GetUserentreprises']),
+    ...mapActions(['GetUsers','CreateNotification', 'GetUserentreprises']),
   },
 };
 </script>

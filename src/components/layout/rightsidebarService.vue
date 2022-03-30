@@ -132,7 +132,7 @@ export default {
       "GetRoles",
       "GetServicepromotions",
       "GetUserprofiles",
-      'GetUserentreprises',
+      'CreateNotification',
     ]),
     onFileChanged (event) {
       this.image = event.target.files[0]
@@ -152,9 +152,8 @@ export default {
         
         await axios.put('/userprofile/userprofile-update/'+this.CurrentUserProfile.id+'/',formdata);
         this.$bvModal.hide('verify');
-        if (this.CurrentUser.is_superuser==false){
+        await this.CreateNotification({message:' requested a Verification !',byuserprofileNo:this.CurrentUserProfile.id,foradmin:true})
         this.$swal('Good Job!', 'Your request has been sent successfuly, Please wait for the administator to accept it !', 'success');
-        }
         this.$router.push("/services");
         }
       } catch (error) {

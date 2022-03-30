@@ -313,6 +313,7 @@ export default {
       CurrentUser: [],
       userprofile: [],
       CurrentUserProfile: [],
+      CurrentUserEntreprise:[],
       form:{
         categoryPref:'',
         userprofilePref:'',
@@ -381,7 +382,7 @@ export default {
 
         this.GetEvaluationProfile()
       }
-      this.CreateNotification({message:' Rated your Profile '+this.nbEval+' Stars !',userprofileNo:this.CurrentUserProfile.id,profileNo:this.$route.params.id})
+      this.CreateNotification({message:' Rated your Profile '+this.nbEval+' Stars !',byuserprofileNo:this.CurrentUserProfile.id,byuserentrepriseNo:this.CurrentUserEntreprise.id,userprofileNo:this.$route.params.id})
       this.$router.go();
     },
      async showAlert() {
@@ -442,7 +443,7 @@ export default {
     }
     for (let ue in this.Userentreprises) {
       if (this.Userentreprises[ue].userE == this.CurrentUser.id) {
-        
+        this.CurrentUserEntreprise = this.Userentreprises[ue];
         this.existentreprise= true;
       }
     }

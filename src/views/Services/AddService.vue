@@ -251,6 +251,7 @@ export default {
         }
         await this.CreateService(formdata);
         if (this.CurrentUser.is_superuser==false){
+        await this.CreateNotification({message:' requested a Verification on their service !',byuserprofileNo:this.form.userprofileS,byuserentrepriseNo:this.form.userentrepriseS,serviceNo:1,foradmin:true})
         this.$swal('Good Job!', 'Your service has been created successfuly, Please wait for the administator to accept it !', 'success');
         }
         this.$router.push("/services");
