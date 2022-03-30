@@ -37,6 +37,7 @@ const state = {
   isEntreprise:null,
   notifications:null,
   countryList:[],
+  chats:null,
 };
 
 const getters = {
@@ -78,6 +79,7 @@ const getters = {
   StatePreferences: (state) => state.preferences,
   StateReclamations: (state) => state.reclamations,
   StateNotifications:(state) => state.notifications,
+  StateChats:(state) => state.chats,
 };
 
 const actions = {
@@ -283,6 +285,10 @@ const actions = {
     await axios.post("/notifications/notification-create/", notification);
     return await dispatch("GetNotifications");
   },
+  async CreateChat({ dispatch }, chat) {
+    await axios.post("/chat/chat-create/", chat);
+    return await dispatch("GetChats");
+  },
   async GetReclamations({ commit }) {
     let response = await axios.get("reclamation/reclamation-list/");
     commit("setReclamations", response.data);
@@ -290,6 +296,10 @@ const actions = {
   async GetNotifications({ commit }) {
     let response = await axios.get("notification/notification-list/");
     commit("setNotifications", response.data);
+  },
+  async GetChats({ commit }) {
+    let response = await axios.get("chat/chat-list/");
+    commit("setChats", response.data);
   },
 };
 
@@ -392,6 +402,10 @@ const mutations = {
   setNotifications(state,notifications)
   {
       state.notifications=notifications;
+  },
+  setChats(state,chats)
+  {
+      state.chats=chats;
   },
 };
 

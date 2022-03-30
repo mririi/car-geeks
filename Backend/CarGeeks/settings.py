@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "question",
     "emailapp",
     "reply",
+    "chat",
     "servicepromotion",
     "questioncategory",
     "evaluation",

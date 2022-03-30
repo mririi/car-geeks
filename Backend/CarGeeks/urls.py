@@ -17,6 +17,7 @@ urlpatterns = [
     path('notification/',include('notifications.urls')),
     path('reply/',include('reply.urls')),
     path('role/',include('role.urls')),
+    path('chat/',include('chat.urls')),
     path('service/',include('service.urls')),
     path('servicetype/',include('servicetype.urls')),
     path('userprofile/',include('userprofile.urls')),

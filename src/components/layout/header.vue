@@ -165,7 +165,6 @@
               <span class="ml-2">System</span>
             </a>
           </div>
-
           <b-dropdown toggle-tag="a" variant="icon-only" toggle-class="nav-link" class="nav-item language-dropdown">
             <template #button-content>
               <img v-if="selectedLang" :src="require(`@/assets/images/flags/${selectedLang.code}.png`)" class="flag-width" alt="flag" />
@@ -404,7 +403,7 @@
                                 </div>
                             </b-media>
                         </b-dropdown-item>
-                        <b-dropdown-item  @click="updatenotif(n)" v-if="n.userprofileNo==null && Userentreprise.id == n.entrepriseNo && n.seen == false && n.admin == false && foradmin==false">
+                        <b-dropdown-item  @click="updatenotif(n)" v-if="n.userprofileNo==null && Userentreprise.id == n.entrepriseNo && n.seen == false && n.admin == false && n.foradmin==false">
                             <b-media class="server-log">
                                 <template #aside>
                                   <div v-if="n.byuserentrepriseNo==null">
