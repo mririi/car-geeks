@@ -65,8 +65,12 @@
               <b-card :img-src="'http://127.0.0.1:8000' + s.imageS" img-top img-alt="Service" style="height: 410px"  class="counter" img-width="100%" img-height="200px">
               
                 <router-link :to="'/servicedetails/' + s.id">
-                  <div class="fq-rating text-center responsive ml-4">
-                    <b-form-rating id="rating" v-model="s.nbEval" readonly variant="warning" class="bg-transparent border-0 w-25"> </b-form-rating>
+                  <div class="fq-rating text-center responsive mt-3 mb-4">
+                    <span v-for="t in Servicetypes" :key="t.id">
+                      <span v-if="t.id == s.typeS"> 
+                         <b-badge variant="warning">{{t.descT}}</b-badge>
+                      </span>
+                    </span>
                   </div>
                   <h5 class="card-title text-center">{{ s.titleS }}</h5>
                   <b-badge variant="warning" class="float-right  h4 mt-3">{{ s.priceS }} DT</b-badge>
@@ -86,8 +90,12 @@
             <div class="col-lg-4 col-md-6 mb-lg-0 mb-4 mt-4" v-for="s in filterByNotPromoted" :key="s.id">
               <b-card :img-src="'http://127.0.0.1:8000' + s.imageS" img-top img-alt="faq-video-tutorials" style="height:410px" img-width="100%" img-height="200px">
                 <router-link :to="'/servicedetails/' + s.id">
-                  <div class="fq-rating text-center ml-4">
-                    <b-form-rating id="rating" v-model="s.nbEval" readonly variant="warning" class="bg-transparent border-0 w-25"> </b-form-rating>
+                  <div class="fq-rating text-center  mt-3 mb-4">
+                    <span v-for="t in Servicetypes" :key="t.id">
+                      <span v-if="t.id == s.typeS"> 
+                         <b-badge variant="warning">{{t.descT}}</b-badge>
+                      </span>
+                    </span>
                   </div>
                   <h5 class="card-title text-center">{{ s.titleS }}</h5>
                   <b-badge variant="warning" class="float-right h4 mt-3">{{ s.priceS }} DT</b-badge>

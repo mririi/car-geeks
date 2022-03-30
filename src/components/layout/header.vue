@@ -255,6 +255,11 @@
                            <b-dropdown-item  @click="updatenotif(n)" v-if="n.seen == false && n.foradmin == true && CurrentUser.is_superuser==true">
                             <b-media class="server-log">
                                 <template #aside>
+                                  <div v-for="u in Userprofiles" :key="u.id">
+                                    <div v-if="u.id == n.byuserprofileNo">
+                                    <b-avatar :src="'http://127.0.0.1:8000'+u.imageU" class="avatar-title" rounded="sm"></b-avatar>
+                                    </div>
+                                  </div>
                                   <b-badge variant="info" class="mt-2">Dashboard</b-badge>
                                   
                                 </template>
@@ -302,6 +307,7 @@
                         <b-dropdown-item  @click="updatenotif(n)" v-if="n.seen == true && n.foradmin == true && CurrentUser.is_superuser==true">
                             <b-media class="server-log">
                                 <template #aside>
+                                  <b-avatar  class="avatar-title" rounded="sm">Admin</b-avatar>
                                   <b-badge variant="info" class="mt-2">Dashboard</b-badge>
                                 </template>
                                 <div class="data-info" v-if="n.byuserprofileNo==null && n.byuserentrepriseNo!=null">

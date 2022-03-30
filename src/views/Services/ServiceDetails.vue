@@ -60,7 +60,7 @@
         <b-badge variant="success"> Promoted Service</b-badge>
       </div>
       <div class="float-child">
-        <img :src="'http://127.0.0.1:8000' + service.imageS" class="img-fluid img-thumbnail" style="height: 350px; width: 100%" />
+        <img :src="'http://127.0.0.1:8000' + service.imageS" class="img-fluid img-thumbnail mt-4" style="height: 450px; width: 100%" />
       </div>
       <div class="float-child">
         <strong class="card-category ml-4">
@@ -75,23 +75,175 @@
           <span v-if="service.userprofileS != CurrentUserProfile.id">
             <span v-if="isLoggedIn && existprofile == true">
               <span v-b-modal.Rating>
-                <b-form-rating id="rating" v-model="service.nbEval" variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
+                <div class="d-flex col-xl-12 col-lg-12 col-md-12 mt-4 mb-4 ml-4">
+                  <div class="text-center mt-3">
+                    <span class="h1 font-weight-bolder mr-1">{{ average }}</span
+                    ><br />
+                    <span class="p">out of 5</span>
+                  </div>
+                  <div class="flex-grow-1">
+                    <div class="row">
+                      <div class="col-lg-5 text-right">5</div>
+                      <div class="col-7 mt-2">
+                        <b-progress variant="gradient-warning" :value="nb5" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 text-right">4</div>
+                      <div class="col-7 mt-2">
+                        <b-progress variant="gradient-warning" :value="nb4" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 text-right">3</div>
+                      <div class="col-7 mt-2">
+                        <b-progress variant="gradient-warning" :value="nb3" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 text-right">2</div>
+                      <div class="col-7 mt-2">
+                        <b-progress variant="gradient-warning" :value="nb2" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 text-right">1</div>
+                      <div class="col-7 mt-2">
+                        <b-progress variant="gradient-warning" :value="nb1" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </span>
             </span>
             <span v-else-if="existentreprise == true">
               <span @click="showAlert1()">
-                <b-form-rating id="rating" v-model="service.nbEval" variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
+                <div class="d-flex col-xl-12 col-lg-12 col-md-12 mt-4 mb-4 ml-4">
+                  <div class="text-center mt-3">
+                    <span class="h1 font-weight-bolder mr-1">{{ average }}</span
+                    ><br />
+                    <span class="p">out of 5</span>
+                  </div>
+                  <div class="flex-grow-1">
+                    <div class="row">
+                      <div class="col-lg-5 text-right">5</div>
+                      <div class="col-7 mt-2">
+                        <b-progress variant="gradient-warning" :value="nb5" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 text-right">4</div>
+                      <div class="col-7 mt-2">
+                        <b-progress variant="gradient-warning" :value="nb4" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 text-right">3</div>
+                      <div class="col-7 mt-2">
+                        <b-progress variant="gradient-warning" :value="nb3" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 text-right">2</div>
+                      <div class="col-7 mt-2">
+                        <b-progress variant="gradient-warning" :value="nb2" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 text-right">1</div>
+                      <div class="col-7 mt-2">
+                        <b-progress variant="gradient-warning" :value="nb1" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </span>
             </span>
             <span v-else>
               <a href="/auth/login">
-                <b-form-rating id="rating" v-model="service.nbEval" variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
+                <div class="d-flex col-xl-12 col-lg-12 col-md-12 mt-4 mb-4 ml-4">
+                  <div class="text-center mt-3">
+                    <span class="h1 font-weight-bolder mr-1">{{ average }}</span
+                    ><br />
+                    <span class="p">out of 5</span>
+                  </div>
+                  <div class="flex-grow-1">
+                    <div class="row">
+                      <div class="col-lg-5 text-right">5</div>
+                      <div class="col-7 mt-2">
+                        <b-progress variant="gradient-warning" :value="nb5" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 text-right">4</div>
+                      <div class="col-7 mt-2">
+                        <b-progress variant="gradient-warning" :value="nb4" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 text-right">3</div>
+                      <div class="col-7 mt-2">
+                        <b-progress variant="gradient-warning" :value="nb3" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 text-right">2</div>
+                      <div class="col-7 mt-2">
+                        <b-progress variant="gradient-warning" :value="nb2" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 text-right">1</div>
+                      <div class="col-7 mt-2">
+                        <b-progress variant="gradient-warning" :value="nb1" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </a>
             </span>
           </span>
           <span v-else>
             <span @click="showAlert()">
-              <b-form-rating id="rating" v-model="service.nbEval" variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
+              <div class="d-flex col-xl-12 col-lg-12 col-md-12 mt-4 mb-4 ml-4">
+                <div class="text-center mt-3">
+                  <span class="h1 font-weight-bolder mr-1">{{ average }}</span
+                  ><br />
+                  <span class="p">out of 5</span>
+                </div>
+                <div class="flex-grow-1">
+                  <div class="row">
+                    <div class="col-lg-5 text-right">5</div>
+                    <div class="col-7 mt-2">
+                      <b-progress variant="gradient-warning" :value="nb5" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-5 text-right">4</div>
+                    <div class="col-7 mt-2">
+                      <b-progress variant="gradient-warning" :value="nb4" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-5 text-right">3</div>
+                    <div class="col-7 mt-2">
+                      <b-progress variant="gradient-warning" :value="nb3" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-5 text-right">2</div>
+                    <div class="col-7 mt-2">
+                      <b-progress variant="gradient-warning" :value="nb2" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-5 text-right">1</div>
+                    <div class="col-7 mt-2">
+                      <b-progress variant="gradient-warning" :value="nb1" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </span>
           </span>
         </div>
@@ -223,7 +375,13 @@ export default {
       nbDays: 7,
       promoted: false,
       nbEval: null,
-      Evaluation:[],
+      Evaluation: [],
+      nb1: 0,
+      nb2: 0,
+      nb3: 0,
+      nb4: 0,
+      nb5: 0,
+      nbTotal: 0,
     };
   },
   mounted: {
@@ -239,6 +397,7 @@ export default {
     this.GetEvaluations();
     this.GetServicepromotions();
     this.GetUserentreprises();
+    this.totalEval = this.Evaluations.length;
     for (let u in this.Users) {
       if (this.Users[u].username == this.User) {
         this.CurrentUser = this.Users[u];
@@ -284,6 +443,20 @@ export default {
           }
         }
       }
+      for (let ev in this.Evaluations) {
+        if (this.Evaluations[ev].serviceEval == this.service.id && this.Evaluations[ev].nbEval == 5) {
+          this.nb5++;
+        } else if (this.Evaluations[ev].serviceEval == this.service.id && this.Evaluations[ev].nbEval == 4) {
+          this.nb4++;
+        } else if (this.Evaluations[ev].serviceEval == this.service.id && this.Evaluations[ev].nbEval == 3) {
+          this.nb3++;
+        } else if (this.Evaluations[ev].serviceEval == this.service.id && this.Evaluations[ev].nbEval == 2) {
+          this.nb2++;
+        } else if (this.Evaluations[ev].serviceEval == this.service.id && this.Evaluations[ev].nbEval == 1) {
+          this.nb1++;
+        }
+      }
+      this.nbTotal = this.nb1 + this.nb2 + this.nb3 + this.nb4 + this.nb5;
       for (let t in this.Servicetypes) {
         if (this.Servicetypes[t].id == this.service.typeS) {
           this.type = this.Servicetypes[t];
@@ -336,7 +509,6 @@ export default {
           serviceEval: this.service.id,
           nbEval: this.nbEval,
         });
-     
       } else {
         for (let e in this.Evaluations) {
           if (this.Evaluations[e].userEval == this.CurrentUser.id && this.Evaluations[e].serviceEval == this.service.id) {
@@ -359,10 +531,9 @@ export default {
         }
         this.GetEvaluations();
       }
-
       this.CreateNotification({ message: ' Rated your Service ' + this.nbEval + ' Stars !', userprofileNo: this.CurrentUserProfile.id, serviceNo: this.service.id });
-      this.$router.go();
       this.$bvModal.hide('Rating');
+      this.$router.go();
     },
     async showAlert() {
       this.$swal({

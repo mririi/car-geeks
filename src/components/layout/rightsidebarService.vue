@@ -132,6 +132,7 @@ export default {
       "GetRoles",
       "GetServicepromotions",
       "GetUserprofiles",
+      'GetUserentreprises',
       'CreateNotification',
     ]),
     onFileChanged (event) {
