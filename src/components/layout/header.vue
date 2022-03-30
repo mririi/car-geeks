@@ -250,7 +250,7 @@
                             </svg>
                             <span class="badge badge-success "></span>
                         </template>
-                        
+                        <perfect-scrollbar>
                          <div v-for="n in Notifications" :key="n.id">
                         <b-dropdown-item  @click="updatenotif(n)" v-if="Userprofile.id == n.userprofileNo && n.entrepriseNo==null && n.seen == false && n.admin == false">
                             <b-media class="server-log">
@@ -593,7 +593,7 @@
                             </b-media>
                         </b-dropdown-item>
                         </div>
-                        
+                        </perfect-scrollbar>
                        
                     </b-dropdown>
             <!--<b-dropdown toggle-tag="a" variant="icon-only" toggle-class="nav-link" menu-class="notification-scroll" class="nav-item notification-dropdown" :right="true">
