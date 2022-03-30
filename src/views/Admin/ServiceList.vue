@@ -109,11 +109,22 @@
             </template>
             
             <template #cell(userprofileS)="data">
+              <span v-if="data.item.userprofileS!=null">
               <span v-for="u in Userprofiles" :key="u.id">
                 <span v-if="u.id == data.item.userprofileS">
-                   {{u.firstname}} {{u.lastname}}
-                </span>
-              </span>
+                  <router-link :to="'/profile/'+data.item.userprofileS">
+                   {{ u.firstname }} {{ u.lastname }} 
+                  </router-link>
+                   </span>
+                </span></span>
+                <span v-if="data.item.userentrepriseS!=null">
+                <span v-for="e in Userentreprises" :key="e.id">
+                <span v-if="e.id == data.item.userentrepriseS">
+                  <router-link :to="'/entreprisedetails/'+data.item.userentrepriseS">
+                   {{ e.nameE }} 
+                  </router-link>
+                   </span>
+              </span></span>
             </template>
              <template #cell(typeS)="data">
               <span v-for="t in Servicetypes" :key="t.id">
@@ -233,6 +244,7 @@ export default {
         this.GetServices();
         this.GetServicetypes();
         this.GetServicepromotions();
+        this.GetUserentreprises();
         },
   mounted() {
     this.bind_data();
@@ -245,6 +257,7 @@ export default {
       Servicetypes: 'StateServicetypes',
       User: 'StateUser',
       Users: 'StateUsers',
+      Userentreprises:'StateUserentreprises',
     }),
      filteredList() {
       return this.Services.filter((service) => {
@@ -258,7 +271,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['GetServices','GetServicepromotions','GetServicetypes', 'GetUsers', 'GetUserprofiles']),
+    ...mapActions(['GetServices','GetServicepromotions','GetServicetypes', 'GetUsers', 'GetUserprofiles','GetUserentreprises']),
     bind_data() {
       //table 3
       this.columns2 = [

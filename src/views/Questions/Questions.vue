@@ -53,7 +53,9 @@
         </b-card>
       </b-collapse>
     </div>
-
+   <hr>
+     <h4><b>Questions List</b></h4>
+   
     <div class="row layout-top-spacing">
       <div class="col-xl-12 col-md-12 col-sm-12 col-12 ">
         <div class="panel-body" v-for="q in filterByCategory" :key="q.id">

@@ -108,12 +108,23 @@
               </span>
             </template>
          
-            <template #cell(userprofileS)="data">
+             <template #cell(userprofileS)="data">
+              <span v-if="data.item.userprofileS!=null">
               <span v-for="u in Userprofiles" :key="u.id">
                 <span v-if="u.id == data.item.userprofileS">
-                   {{u.firstname}} {{u.lastname}}
-                </span>
-              </span>
+                  <router-link :to="'/profile/'+data.item.userprofileS">
+                   {{ u.firstname }} {{ u.lastname }} 
+                  </router-link>
+                   </span>
+                </span></span>
+                <span v-if="data.item.userentrepriseS!=null">
+                <span v-for="e in Userentreprises" :key="e.id">
+                <span v-if="e.id == data.item.userentrepriseS">
+                  <router-link :to="'/entreprisedetails/'+data.item.userentrepriseS">
+                   {{ e.nameE }} 
+                  </router-link>
+                   </span>
+              </span></span>
             </template>
              <template #cell(typeS)="data">
               <span v-for="t in Servicetypes" :key="t.id">
@@ -125,7 +136,7 @@
               </span>
             </template>
                <template #cell(actions)="data">
-              <span @click="Accept(data.item.id,data.item.userprofileS)">
+              <span @click="Accept(data.item)">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -225,7 +236,6 @@ export default {
       selected_rows2: [],
       search:'',
       category:'',
-      userprofileservice:[],
       userservice:[]
     };
   },
@@ -257,6 +267,7 @@ export default {
         this.GetServicetypes();
         this.GetServicepromotions();
         this.GetRoles();
+        this.GetUserentreprises();
         
         },
   mounted() {
@@ -270,7 +281,8 @@ export default {
       Servicetypes: 'StateServicetypes',
       User: 'StateUser',
       Users: 'StateUsers',
-      Roles:'StateRoles'
+      Roles:'StateRoles',
+      Userentreprises:'StateUserentreprises',
     }),
      filteredList() {
       return this.Services.filter((service) => {
@@ -284,8 +296,8 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['GetServices','CreateNotification','GetServicepromotions','GetServicetypes', 'GetUsers', 'GetUserprofiles','GetRoles']),
-    async Accept(id,userid) {
+    ...mapActions(['GetServices','CreateNotification','GetServicepromotions','GetServicetypes', 'GetUsers','GetUserentreprises', 'GetUserprofiles','GetRoles']),
+    async Accept(service) {
       this.$swal({
         icon: 'warning',
         title: 'Are you sure?',
@@ -294,19 +306,8 @@ export default {
         padding: '2em',
       }).then((result) => {
         if (result.value) {
-       axios.post('/service/service-update/' + id + '/', { accepted: true });
-       this.CreateNotification({message:'Your service has been accepted ' ,serviceNo:id,admin:true})
-       axios.get('/userprofile/userprofile-detail/' + userid + '/').then((response) => {
-        this.userprofileservice = response.data;
-       })
-       for (let r in this.Roles)
-       {
-         if (this.Roles[r].userRole== userid && this.Roles[r].service==false)
-         {
-             axios.post('/role/role-update/'+this.Roles[r].id+'/', { service: true , userRole:userid ,admin:this.Roles[r].admin }); 
-        }
-        
-       }
+       axios.post('/service/service-update/' + service.id + '/', { accepted: true });
+       this.CreateNotification({message:'Your service has been accepted ' ,serviceNo:service.id,admin:true})
         this.$router.go();
         this.$swal('Accepted!', 'The service has been accepted.', 'success');
        

@@ -24,6 +24,8 @@
         </div>
       </div>
     </div>
+    <hr>
+     <h3><b>Entreprises List</b></h3>
     <div class="col-lg-12 layout-spacing">
       <div class="panel-heading"></div>
       <div class="panel-body">

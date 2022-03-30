@@ -90,7 +90,7 @@
               hover
               bordered
               :items="filterByCategory"
-              :fields="computedFields"
+              :fields="columns2"
               :per-page="table_option2.page_size"
               :current-page="table_option2.current_page"
               :filter="table_option2.search_text"
@@ -110,14 +110,23 @@
             <template #cell(dateQ)="data">
                {{data.item.dateQ |formatDate}}
             </template>
-            <template #cell(userprofileQ)="data">
+             <template #cell(userprofileQ)="data">
+              <span v-if="data.item.userprofileQ!=null">
               <span v-for="u in Userprofiles" :key="u.id">
                 <span v-if="u.id == data.item.userprofileQ">
-                  <router-link :to="'/profile/'+u.id">
-                   {{u.firstname}} {{u.lastname}}
+                  <router-link :to="'/profile/'+data.item.userprofileQ">
+                   {{ u.firstname }} {{ u.lastname }} 
                   </router-link>
-                </span>
-              </span>
+                   </span>
+                </span></span>
+                <span v-if="data.item.userentrepriseQ!=null">
+                <span v-for="e in Userentreprises" :key="e.id">
+                <span v-if="e.id == data.item.userentrepriseQ">
+                  <router-link :to="'/entreprisedetails/'+data.item.userentrepriseQ">
+                   {{ e.nameE }} 
+                  </router-link>
+                   </span>
+              </span></span>
             </template>
             <template #cell(categoryQ)="data">
               <span v-for="c in Questioncategories" :key="c.id">
@@ -126,15 +135,7 @@
                 </span>
               </span>
             </template>
-             <template #cell(userentrepriseQ)="data">
-              <span v-for="e in Userentreprises" :key="e.id">
-                <span v-if="e.id == data.item.userentrepriseQ">
-                  <router-link :to="'/entreprisedetails/'+e.id">
-                   {{ e.nameE }} 
-                  </router-link>
-                   </span>
-              </span>
-            </template>
+             
              <template #cell(imageQ)="data">
                 <span v-if="data.item.imageQ!=null">
                   <router-link :to="'/questionpage/'+data.item.id">
@@ -269,20 +270,7 @@ export default {
         return this.filteredList.filter((question) => this.category.includes(question.categoryQ));
       } else return this.filteredList;
     },
-    computedFields() {
-       for(let q in this.Questions)
-      {
-      if(!this.Questions[q].userprofileQ==null)
-      {
-        return this.columns2.filter(field => !field.requiresUserentreprise);
-      }
-       else if(!this.Questions[q].userentrepriseQ==null)
-       {
-          return this.columns2.filter(field => !field.requiresUserprofile);
-       }
-      }
-        return this.columns2;
-    }
+    
   },
   methods: {
     ...mapActions(['GetQuestions', 'GetUsers', 'GetUserprofiles', 'GetQuestioncategories','GetUserentreprises']),
@@ -295,8 +283,7 @@ export default {
         { key: 'dateQ', label: 'Date' },
         { key: 'categoryQ', label: 'Category' },
         { key: 'nbrep', label: 'Replies' },
-        { key: 'userprofileQ', label: 'User' ,requiresUserprofile:true},
-        { key: 'userentrepriseQ', label: 'Company', requiresUserentreprise:true},
+        { key: 'userprofileQ', label: 'User'},
         { key: 'accepted', label: 'Status', class: 'text-center  ' },
       ],
       

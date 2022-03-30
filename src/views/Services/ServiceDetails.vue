@@ -1,8 +1,12 @@
 <template>
   <div class="col-xl-12 col-lg-12 col-md-12 mb-4 mt-4 float-container">
     <b-card class="b-l-card-1">
-      <div class="float-right bg-danger ml-2 del" style="border-radius: 50px; padding: 5px" v-if="CurrentUserProfile.id == service.userprofileS">
-        <a @click="deleteService()"
+      <div
+        class="float-right bg-danger ml-2 del"
+        style="border-radius: 50px; padding: 5px"
+        v-if="(CurrentUserProfile.id == service.userprofileS && service.userprofileS != null) || (CurrentUserEntreprise.id == service.userentrepriseS && service.userentrepriseS != null)"
+      >
+        <a @click="deleteService(service.id, index)"
           ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="18" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 22 24">
             <path
               fill="currentColor"
@@ -11,7 +15,11 @@
           </svg>
         </a>
       </div>
-      <div class="float-right bg-warning" style="border-radius: 100px; padding: 5px" v-if="CurrentUserProfile.id == service.userprofileS">
+      <div
+        class="float-right bg-warning"
+        style="border-radius: 100px; padding: 5px"
+        v-if="(CurrentUserProfile.id == service.userprofileS && service.userprofileS != null) || (CurrentUserEntreprise.id == service.userentrepriseS && service.userentrepriseS != null)"
+      >
         <a :href="'/updateservice/' + service.id"
           ><svg
             xmlns="http://www.w3.org/2000/svg"
@@ -30,18 +38,26 @@
           </svg>
         </a>
       </div>
-      <div class="float-right bg-success mr-2"  v-b-modal.promotion style="border-radius: 10px; padding: 5px" v-if="CurrentUserProfile.id == service.userprofileS && promoted==false">
-          Promote
+      <div
+        class="float-right bg-success mr-2"
+        v-b-modal.promotion
+        style="border-radius: 10px; padding: 5px"
+        v-if="
+          ((CurrentUserProfile.id == service.userprofileS && service.userprofileS != null) || (CurrentUserEntreprise.id == service.userentrepriseS && service.userentrepriseS != null)) &&
+          promoted == false
+        "
+      >
+        Promote
         <b-modal id="promotion" title="Promote your service !" centered>
           <label>Number of days</label>
-          <b-input placeholder="1,3,7..etc" type="number" v-model="nbDays" min=1 value="7"></b-input>
+          <b-input placeholder="1,3,7..etc" type="number" v-model="nbDays" min="1" value="7"></b-input>
           <template #modal-footer>
-        <b-button variant="primary" @click="promote()">Submit your promotion request</b-button>
-      </template>
+            <b-button variant="primary" @click="promote()">Submit your promotion request</b-button>
+          </template>
         </b-modal>
       </div>
-      <div v-if="service.promoted==true" class="float-right mr-1" style="border-radius: 5px;padding:5px" >
-       <b-badge variant="success"> Promoted Service</b-badge>
+      <div v-if="service.promoted == true" class="float-right mr-1" style="border-radius: 5px; padding: 5px">
+        <b-badge variant="success"> Promoted Service</b-badge>
       </div>
       <div class="float-child">
         <img :src="'http://127.0.0.1:8000' + service.imageS" class="img-fluid img-thumbnail" style="height: 350px; width: 100%" />
@@ -59,23 +75,23 @@
           <span v-if="service.userprofileS != CurrentUserProfile.id">
             <span v-if="isLoggedIn && existprofile == true">
               <span v-b-modal.Rating>
-                <b-form-rating id="rating" v-model="average" variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
+                <b-form-rating id="rating" v-model="service.nbEval" variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
               </span>
             </span>
-            <span v-else-if="existentreprise==true">
-              <span @click="showAlert1()" >
-                <b-form-rating id="rating" v-model="average" variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
+            <span v-else-if="existentreprise == true">
+              <span @click="showAlert1()">
+                <b-form-rating id="rating" v-model="service.nbEval" variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
               </span>
             </span>
             <span v-else>
               <a href="/auth/login">
-                <b-form-rating id="rating" v-model="average" variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
+                <b-form-rating id="rating" v-model="service.nbEval" variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
               </a>
             </span>
           </span>
           <span v-else>
             <span @click="showAlert()">
-              <b-form-rating id="rating" v-model="average" variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
+              <b-form-rating id="rating" v-model="service.nbEval" variant="warning" readonly size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
             </span>
           </span>
         </div>
@@ -127,7 +143,21 @@
               d="M213.3 384c0-87 65.2-158.7 149.3-169.2v-1.5c5.5-8 21.3-21.3 21.3-42.7s-21.3-42.7-21.3-53.3C362.7 32 319.2 0 256 0c-60.5 0-106.7 32-106.7 117.3c0 10.7-21.3 32-21.3 53.3s15.2 35.4 21.3 42.7c0 0 0 21.3 10.7 53.3c0 10.7 21.3 21.3 32 32c0 10.7 0 21.3-10.7 42.7L64 362.7C21.3 373.3 0 448 0 512h271.4c-35.5-31.3-58.1-77-58.1-128zM384 256c-70.7 0-128 57.3-128 128s57.3 128 128 128s128-57.3 128-128s-57.3-128-128-128zm85.3 149.3h-64v64h-42.7v-64h-64v-42.7h64v-64h42.7v64h64v42.7z"
             />
           </svg>
-          : <router-link v-if="existprofile==true" :to="'/profile/' + userprofile.id"> {{ userprofile.firstname }} {{ userprofile.lastname }} </router-link><router-link v-if="existentreprise==true" :to="'/entreprisedetails/' + userentreprise.id"> {{ userentreprise.nameE }} </router-link>
+          :
+          <span v-if="service.userprofileS != null">
+            <span v-for="u in Userprofiles" :key="u.id">
+              <span v-if="u.id == service.userprofileS">
+                <router-link :to="'/profile/' + u.id"> {{ u.firstname }} {{ u.lastname }} </router-link>
+              </span>
+            </span>
+          </span>
+          <span v-if="service.userentrepriseS != null">
+            <span v-for="e in Userentreprises" :key="e.id">
+              <span v-if="e.id == service.userentrepriseS">
+                <router-link :to="'/entreprisedetails/' + e.id"> {{ e.nameE }} </router-link>
+              </span>
+            </span>
+          </span>
         </h6>
       </div>
     </b-card>
@@ -146,19 +176,20 @@
             <div class="row">
               <h3 class="text-center mb-4">Related Services</h3>
               <div class="col-lg-12 col-md-12 p-0">
-                <b-carousel ref="carousel1" :interval="4000" controls indicators class="style-custom-1">
+                <b-carousel ref="carousel1" :interval="2000" controls indicators class="style-custom-1">
                   <span v-for="s in Services" :key="s.id">
-                    <span v-if="s.accepted == true && s.id!= service.id">
-                      <a :href="'/servicedetails/'+s.id">
+                    <span v-if="s.accepted == true && s.id != service.id">
                       <b-carousel-slide>
                         <template #img>
-                          <img class="d-block w-100 slide-image" height="350px" :src="'http://127.0.0.1:8000' + s.imageS" alt="First slide" />
+                          <a :href="'/servicedetails/' + s.id">
+                            <img class="d-block w-100 slide-image" height="350px" :src="'http://127.0.0.1:8000' + s.imageS" alt="First slide" />
+                          </a>
                         </template>
-                       
-                        <h3><b-badge variant="warning">{{s.titleS}}</b-badge></h3>
-                       
+
+                        <h3>
+                          <b-badge variant="warning">{{ s.titleS }}</b-badge>
+                        </h3>
                       </b-carousel-slide>
-                      </a>
                     </span>
                   </span>
                 </b-carousel>
@@ -181,19 +212,25 @@ export default {
     return {
       service: [],
       userprofile: [],
-      userentreprise:[],
+      userentreprise: [],
       type: [],
       CurrentUser: [],
       CurrentUserProfile: [],
+      CurrentUserEntreprise: [],
       existprofile: false,
       existentreprise: false,
       average: 0,
-      nbDays:7,
-      promoted:false,
+      nbDays: 7,
+      promoted: false,
       nbEval: null,
+      Evaluation:[],
     };
   },
-
+  mounted: {
+    Evaluations() {
+      this.GetEvaluations();
+    },
+  },
   created: function () {
     this.GetUserprofiles();
     this.GetServicetypes();
@@ -215,13 +252,13 @@ export default {
     }
     for (let ue in this.Userentreprises) {
       if (this.Userentreprises[ue].userE == this.CurrentUser.id) {
-        
-        this.existentreprise= true;
+        this.CurrentUserEntreprise = this.Userentreprises[ue];
+        this.existentreprise = true;
       }
     }
     axios.get('/service/service-detail/' + this.$route.params.id + '/').then((response) => {
       this.service = response.data;
-      if(this.service.accepted==false){
+      if (this.service.accepted == false) {
         this.$router.push('/services');
       }
       for (let u in this.Userprofiles) {
@@ -234,16 +271,16 @@ export default {
           this.userentreprise = this.Userentreprises[ue];
         }
       }
-      for (let s in this.Servicepromotions){
-        if(this.Servicepromotions[s].serviceP==this.service.id){
-          this.promoted=true
-          const d = new Date(this.Servicepromotions[s].dateP)
-          d.setDate(d.getDate() + parseInt(this.Servicepromotions[s].nbDays))
-          if(new Date()>d &&this.Servicepromotions[s].dateP!=null){
-            axios.delete(`http://127.0.0.1:8000/servicepromotion/servicepromotion-delete/${this.Servicepromotions[s].id}/`)
-            axios.post('/service/service-update/' + this.service.id + '/',{promoted:false,accepted:this.service.accepted})
-            this.promoted=false
-            this.$router.go()
+      for (let s in this.Servicepromotions) {
+        if (this.Servicepromotions[s].serviceP == this.service.id) {
+          this.promoted = true;
+          const d = new Date(this.Servicepromotions[s].dateP);
+          d.setDate(d.getDate() + parseInt(this.Servicepromotions[s].nbDays));
+          if (new Date() > d && this.Servicepromotions[s].dateP != null) {
+            axios.delete(`http://127.0.0.1:8000/servicepromotion/servicepromotion-delete/${this.Servicepromotions[s].id}/`);
+            axios.post('/service/service-update/' + this.service.id + '/', { promoted: false, accepted: this.service.accepted });
+            this.promoted = false;
+            this.$router.go();
           }
         }
       }
@@ -255,27 +292,26 @@ export default {
       var sum = 0;
       var nb = 0;
       for (let e in this.Evaluations) {
-        if (this.Evaluations[e].serviceEval == this.$route.params.id) {
+        if (this.Evaluations[e].serviceEval == this.service.id) {
           sum += this.Evaluations[e].nbEval;
           nb++;
         }
       }
       this.average = sum / nb;
       axios.post('/service/service-update/' + this.service.id + '/', {
+        nbvisits: this.service.nbvisits + 1,
         nbEval: this.average,
-        nbvisits:this.service.nbvisits+1
       });
-      this.service.nbEval = this.average;
     });
   },
   methods: {
-    ...mapActions(['GetUserentreprises','CreateNotification','GetServicepromotions','GetServices', 'GetUserprofiles','CreateServicepromotion', 'GetServicetypes', 'GetUsers', 'GetEvaluations']),
-    promote(){
-      this.CreateServicepromotion({serviceP:this.service.id,nbDays:this.nbDays})
-      this.promoted=true
+    ...mapActions(['GetUserentreprises', 'CreateNotification', 'GetServicepromotions', 'GetServices', 'GetUserprofiles', 'CreateServicepromotion', 'GetServicetypes', 'GetUsers', 'GetEvaluations']),
+    promote() {
+      this.CreateServicepromotion({ serviceP: this.service.id, nbDays: this.nbDays });
+      this.promoted = true;
       this.$swal('Good Job!', 'Your Service promotion has been sent, Please wait for the administrator to launch your promotion !', 'success');
     },
-    deleteService(){
+    deleteService(id) {
       this.$swal({
         icon: 'warning',
         title: 'Are you sure?',
@@ -285,12 +321,13 @@ export default {
         padding: '2em',
       }).then((result) => {
         if (result.value) {
-          axios.delete(`http://127.0.0.1:8000/service/service-delete/${this.service.id}/`);
+          axios.delete(`http://127.0.0.1:8000/service/service-delete/${id}/`);
           this.$swal('Deleted!', 'Your Service has been deleted.', 'success');
           this.$router.push('/services');
         }
       });
     },
+
     async rating() {
       let done = false;
       if (this.Evaluations.length == 0) {
@@ -299,13 +336,14 @@ export default {
           serviceEval: this.service.id,
           nbEval: this.nbEval,
         });
-        this.GetEvaluations();
+     
       } else {
         for (let e in this.Evaluations) {
           if (this.Evaluations[e].userEval == this.CurrentUser.id && this.Evaluations[e].serviceEval == this.service.id) {
             axios.post('/evaluation/evaluation-update/' + this.Evaluations[e].id + '/', {
               nbEval: this.nbEval,
             });
+
             done = true;
             this.GetEvaluations();
           }
@@ -316,12 +354,15 @@ export default {
             serviceEval: this.service.id,
             nbEval: this.nbEval,
           });
+
           this.GetEvaluations();
         }
         this.GetEvaluations();
       }
-      this.CreateNotification({message:' Rated your Service '+this.nbEval+' Stars !',userprofileNo:this.CurrentUserProfile.id,serviceNo:this.service.id})
+
+      this.CreateNotification({ message: ' Rated your Service ' + this.nbEval + ' Stars !', userprofileNo: this.CurrentUserProfile.id, serviceNo: this.service.id });
       this.$router.go();
+      this.$bvModal.hide('Rating');
     },
     async showAlert() {
       this.$swal({
@@ -329,12 +370,12 @@ export default {
         padding: '2em',
       });
     },
-    async showAlert1() {
+    /* async showAlert1() {
       this.$swal({
         title: 'You cannot rate this service as an entreprise',
         padding: '2em',
       });
-    },
+    },*/
   },
   computed: {
     ...mapGetters({
@@ -344,11 +385,14 @@ export default {
       User: 'StateUser',
       Users: 'StateUsers',
       Evaluations: 'StateEvaluations',
-      Servicepromotions:'StateServicepromotions',
+      Servicepromotions: 'StateServicepromotions',
       Services: 'StateServices',
     }),
     isLoggedIn: function () {
       return this.$store.getters.isAuthenticated;
+    },
+    postRating: function () {
+      return this.service.nbEval;
     },
   },
 };
@@ -364,8 +408,7 @@ export default {
   float: left;
   padding: 10px;
 }
-.del
-{
+.del {
   cursor: pointer;
 }
 </style>>
