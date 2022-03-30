@@ -58,11 +58,11 @@
                             </div>
                             <perfect-scrollbar class="people" :options="{ wheelSpeed: 0.5, swipeEasing: !0, minScrollbarLength: 40, maxScrollbarLength: 300, suppressScrollX: true }">
                                 <div
-                                    v-for="(person, index) in filterd_contact_list"
+                                    v-for="(person, index) in contact_list"
                                     class="person"
                                     :key="index"
-                                    :class="{ active: selected_user && selected_user.user_id == person.user_id }"
-                                    @click="select_user(person)"
+                                    :class="{ active: selected_user && selected_user.id == person.sender }"
+                                    @click="select_user(person.sender)"
                                 >
                                     <div class="user-info">
                                         <div class="f-head">
@@ -70,8 +70,8 @@
                                         </div>
                                         <div class="f-body">
                                             <div class="meta-info">
-                                                <span class="user-name" :class="{ 'text-primary': selected_user && selected_user.user_id == person.user_id }">{{ person.name }}</span>
-                                                <span class="user-meta-time" :class="{ 'text-primary': selected_user && selected_user.user_id == person.user_id }">{{ person.time }}</span>
+                                                <span class="user-name" :class="{ 'text-primary': selected_user && selected_user.id == person.sender }">{{ person.sender }}</span>
+                                                <span class="user-meta-time" :class="{ 'text-primary': selected_user && selected_user.id == person.sender }">{{ person.dateCh }}</span>
                                             </div>
                                             <span class="preview">{{ person.preview }}</span>
                                         </div>
@@ -105,7 +105,7 @@
                                     <div class="current-chat-user-name">
                                         <span>
                                             <img :src="require(`@/assets/images/${selected_user.path}`)" alt="dynamic-image" />
-                                            <span class="name">{{ selected_user.name }}</span>
+                                            <span class="name">{{ selected_user.id }}</span>
                                         </span>
                                     </div>
 
@@ -303,6 +303,7 @@
                                                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                                             </svg>
                                             <b-input v-model="text_message" class="mail-write-box" placeholder="Message" @keyup.enter.exact="send_message" />
+                                        <div></div>
                                         </div>
                                     </div>
                                 </div>
@@ -316,28 +317,42 @@
 </template>
 
 <script>
-    import '@/assets/sass/apps/chat.scss';
-
+import '@/assets/sass/apps/chat.scss';
+import { mapGetters, mapActions } from 'vuex';
     export default {
         metaInfo: { title: 'Chat Application' },
         components: {},
         data() {
             return {
                 is_show_user_menu: false,
-                contact_list: [],
                 filterd_contact_list: [],
                 selected_user: null,
                 login_user_id: 0, //system login user id
                 search_user: '',
-                text_message: ''
+                text_message: '',
+                CurrentUser:[],
             };
         },
         mounted() {
             this.bind_contact_list();
         },
+        computed: {
+    ...mapGetters({
+      User: 'StateUser',
+      Users: 'StateUsers',
+      Chats: 'StateChats',
+    }),
+    isLoggedIn: function () {
+      return this.$store.getters.isAuthenticated;
+    },
+    contact_list() {
+      return this.Chats.filter(c => c.reciever==this.CurrentUser.id);
+    },
+  },
         methods: {
+            ...mapActions(['GetUsers','GetChats']),
             bind_contact_list() {
-                this.contact_list = [
+               /* this.contact_list = [
                     {
                         user_id: 1,
                         name: 'Nia Hillyer',
@@ -419,7 +434,7 @@
                     { user_id: 10, name: 'Susan Phillips', path: 'profile-12.jpeg', time: '2:09 PM', preview: 'Wasup for the third time like is you bling bitch', messages: [] },
                     { user_id: 11, name: 'Dale Butler', path: 'profile-26.jpeg', time: '2:09 PM', preview: 'Wasup for the third time like is you bling bitch', messages: [] },
                     { user_id: 12, name: 'Grace Roberts', path: 'profile-20.jpeg', time: '2:09 PM', preview: 'Wasup for the third time like is you bling bitch', messages: [] }
-                ];
+                ]; */
                 this.search_users();
             },
             select_user(user) {
@@ -428,11 +443,12 @@
                 this.is_show_user_menu = false;
             },
             search_users() {
-                this.filterd_contact_list = this.contact_list.filter(d => d.name.toLowerCase().includes(this.search_user));
+                //this.filterd_contact_list = this.contact_list.filter(d => d.name.toLowerCase().includes(this.search_user));
             },
             send_message() {
                 if (this.text_message.trim()) {
-                    let user = this.contact_list.find(d => d.user_id == this.selected_user.user_id);
+                    //5dha luser selectioné
+                    let user = this.contact_list.find(d => d.sender == this.selected_user.id);
                     user.messages.push({ from_user_id: this.selected_user.user_id, to_usr_id: this.login_user_id, text: this.text_message });
                     this.text_message = '';
                     this.scroll_to_bottom();
@@ -443,6 +459,15 @@
                     document.querySelector('.chat-conversation-box').scrollTo({ left: 0, top: document.querySelector('.chat-conversation-box').scrollHeight, behavior: 'smooth' });
                 });
             }
-        }
+        },
+        created: function () {
+    this.GetUsers();
+    this.GetChats();
+    console.log(this.Chats)
+    for (let u in this.Users) {
+      if (this.Users[u].username == this.User) {
+        this.CurrentUser = this.Users[u];
+      }
+    }}
     };
 </script>
