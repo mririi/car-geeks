@@ -41,9 +41,9 @@
                             
                             <perfect-scrollbar class="people" :options="{ wheelSpeed: 0.5, swipeEasing: !0, minScrollbarLength: 40, maxScrollbarLength: 300, suppressScrollX: true }">
                                 <div
-                                    v-for="(person, index) in senders"
+                                    v-for="person in Contactlist"
                                     class="person"
-                                    :key="index"
+                                    :key="person.id"
                                     :class="{ active: selected_user && selected_user.id == person.id }"
                                     @click="select_user(person)"
                                 >
@@ -55,7 +55,10 @@
                                             <div class="meta-info">
                                                 <span class="user-name" :class="{ 'text-primary': selected_user && selected_user.id == person.id }">{{ person.firstname }}</span>
                                             </div>
-                                            <span class="preview">preview</span>
+                                            <span class="preview" >
+                                                <div >
+                                                    preview
+                                                </div></span>
                                         </div>
                                     </div>
                                 </div>
@@ -254,14 +257,15 @@
                                                 <span>Today, 6:48 AM</span>
                                             </div>
 
-                                            <template>
+                                            <template >
+                                                <div v-for="chat in Chats" :key="chat.id">
                                                 <div
-                                                    v-for="(chat, index) in Chats"
+                                                    v-if="chat.reciever==selected_user.userU || chat.sender==selected_user.userU"
                                                     class="bubble"
-                                                    :key="'msg' + index"
                                                     :class="[selected_user.userU == chat.reciever ? 'me' : 'you']"
                                                 >
                                                     {{ chat.message }}
+                                                </div>
                                                 </div>
                                             </template>
                                         </div>
@@ -323,24 +327,27 @@ import Pusher from 'pusher-js'
     isLoggedIn: function () {
       return this.$store.getters.isAuthenticated;
     },
-    contact_list() {
-      return this.Chats.filter(c => c.reciever==this.CurrentUser.id);
+    Contactlist() {
+      return this.Userprofiles.filter(c => c.userU!=this.CurrentUser.id);
     },
   },
   mounted(){
-     var pusher = new Pusher('027d486814c2e9262191', {
-                    cluster: 'eu'
-                    });
-                    let messages=this.Chats
-                    var channel = pusher.subscribe('chat');
-                    channel.bind('messagee', function(data) {
-                        
-                    messages.push({message:data.chat.message,sender:data.chat.sender,reciever:data.chat.reciever})
-                    }); 
-                    this.Chats=messages
+      this.connect();
+     
   },
         methods: {
             ...mapActions(['GetUsers','CreateChat','GetUserprofiles','GetChats']),
+            async connect(){
+                var pusher = new Pusher('027d486814c2e9262191', {
+                    cluster: 'eu'
+                    });
+                    let messages=this.messages
+                    var channel = pusher.subscribe('chat');
+                    channel.bind('messagee', function(data) {
+                    messages.push({id:500,message:data.chat.message,sender:data.chat.sender,reciever:data.chat.reciever})
+                    });
+                    this.messages=messages
+                    console.log(this.messages)},
             select_user(user) {
                 this.selected_user = user;
                 this.scroll_to_bottom();
@@ -348,10 +355,9 @@ import Pusher from 'pusher-js'
             },
             send_message() {
                  if (this.text_message.trim()) {
-                    let user = this.senders.find(d => d.userU == this.selected_user.userU);
-                    this.CreateChat({message:this.text_message,sender:this.CurrentUser.id,reciever:user.userU})
+                    let user = this.Userprofiles.find(d => d.userU == this.selected_user.userU);
+                    this.CreateChat({message:this.text_message,sender:this.CurrentUser.id,reciever:user.userU,preview:this.text_message.slice(0,10)})
                     //user.messages.push({ from_user_id: this.selected_user.user_id, to_usr_id: this.login_user_id, text: this.text_message });
-                    
                     
                     this.text_message = '';
                     this.scroll_to_bottom();
@@ -367,6 +373,7 @@ import Pusher from 'pusher-js'
     this.GetUsers();
     this.GetChats();
     this.GetUserprofiles()
+    this.messages=this.Chats
     for (let u in this.Users) {
       if (this.Users[u].username == this.User) {
         this.CurrentUser = this.Users[u];
