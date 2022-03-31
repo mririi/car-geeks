@@ -254,11 +254,6 @@
                            <b-dropdown-item  @click="updatenotif(n)" v-if="n.seen == false && n.foradmin == true && CurrentUser.is_superuser==true">
                             <b-media class="server-log">
                                 <template #aside>
-                                  <div v-for="u in Userprofiles" :key="u.id">
-                                    <div v-if="u.id == n.byuserprofileNo">
-                                    <b-avatar :src="'http://127.0.0.1:8000'+u.imageU" class="avatar-title" rounded="sm"></b-avatar>
-                                    </div>
-                                  </div>
                                   <b-badge variant="info" class="mt-2">Dashboard</b-badge>
                                   
                                 </template>
@@ -306,7 +301,6 @@
                         <b-dropdown-item  @click="updatenotif(n)" v-if="n.seen == true && n.foradmin == true && CurrentUser.is_superuser==true">
                             <b-media class="server-log">
                                 <template #aside>
-                                  <b-avatar  class="avatar-title" rounded="sm">Admin</b-avatar>
                                   <b-badge variant="info" class="mt-2">Dashboard</b-badge>
                                 </template>
                                 <div class="data-info" v-if="n.byuserprofileNo==null && n.byuserentrepriseNo!=null">
@@ -1107,6 +1101,7 @@
 <script>
 import axios from 'axios';
 import { mapGetters, mapActions } from 'vuex';
+import Pusher from 'pusher-js'
 //import SearchComponent from '@/components/SearchComponent'
 export default {
   data() {
@@ -1140,6 +1135,18 @@ export default {
     this.selectedLang = this.$appSetting.toggleLanguage();
 
     this.toggleMode();
+    var pusher = new Pusher('027d486814c2e9262191', {
+      cluster: 'eu',
+    });
+    let notifs = this.Notifications;
+
+    var channel = pusher.subscribe('notifications');
+    channel.bind('notification', function (data) {
+      let l = notifs[notifs.length - 1].id + 1;
+      notifs.push({ id: l, message: data.notification.message, seen: data.notification.seen,admin:data.notification.admin,foradmin:data.notification.foradmin,promotionnotif:data.notification.promotionnotif,verifnotif:data.notification.verifnotif,byuserprofileNo:data.notification.byuserprofileNo,userprofileNo:data.notification.userprofileNo,replyNo:data.notification.replyNo,questionNo:data.notification.questionNo,serviceNo:data.notification.serviceNo,byuserentrepriseNo:data.notification.byuserentrepriseNo,entrepriseNo:data.notification.entrepriseNo,dateNo: null });
+      this.Notifications = notifs;
+      console.log
+    });
     
   },
   computed: {

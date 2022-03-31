@@ -1,6 +1,7 @@
 
 from django.shortcuts import render
 from django.http import JsonResponse
+from .pusher import pusher_client
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -40,6 +41,7 @@ def notificationCreate(request):
 
 	if serializer.is_valid():
 		serializer.save()
+		pusher_client.trigger('notifications', 'notification',{'notification':request.data})
 
 	return Response(serializer.data)
 
