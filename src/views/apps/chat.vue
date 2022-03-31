@@ -38,42 +38,24 @@
                             </svg>
                         </div>
                         <div class="user-list-box" :class="{ 'user-list-box-show': is_show_user_menu }">
-                            <div class="search">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="feather feather-search"
-                                >
-                                    <circle cx="11" cy="11" r="8"></circle>
-                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                                </svg>
-                                <b-input v-model.trim="search_user" v-on:keyup="search_users()" placeholder="Search" />
-                            </div>
+                            
                             <perfect-scrollbar class="people" :options="{ wheelSpeed: 0.5, swipeEasing: !0, minScrollbarLength: 40, maxScrollbarLength: 300, suppressScrollX: true }">
                                 <div
-                                    v-for="(person, index) in contact_list"
+                                    v-for="(person, index) in senders"
                                     class="person"
                                     :key="index"
-                                    :class="{ active: selected_user && selected_user.id == person.sender }"
-                                    @click="select_user(person.sender)"
+                                    :class="{ active: selected_user && selected_user.id == person.id }"
+                                    @click="select_user(person)"
                                 >
                                     <div class="user-info">
                                         <div class="f-head">
-                                            <img :src="require(`@/assets/images/${person.path}`)" alt="avatar" />
+                                            <img :src="'http://127.0.0.1:8000' +person.imageU+'/'" alt="avatar" />
                                         </div>
                                         <div class="f-body">
                                             <div class="meta-info">
-                                                <span class="user-name" :class="{ 'text-primary': selected_user && selected_user.id == person.sender }">{{ person.sender }}</span>
-                                                <span class="user-meta-time" :class="{ 'text-primary': selected_user && selected_user.id == person.sender }">{{ person.dateCh }}</span>
+                                                <span class="user-name" :class="{ 'text-primary': selected_user && selected_user.id == person.id }">{{ person.firstname }}</span>
                                             </div>
-                                            <span class="preview">{{ person.preview }}</span>
+                                            <span class="preview">preview</span>
                                         </div>
                                     </div>
                                 </div>
@@ -104,8 +86,8 @@
                                 <div class="chat-meta-user chat-active">
                                     <div class="current-chat-user-name">
                                         <span>
-                                            <img :src="require(`@/assets/images/${selected_user.path}`)" alt="dynamic-image" />
-                                            <span class="name">{{ selected_user.id }}</span>
+                                            <img :src="'http://127.0.0.1:8000' +selected_user.imageU+'/'" alt="dynamic-image" />
+                                            <span class="name">{{ selected_user.firstname }} {{ selected_user.lastname }}</span>
                                         </span>
                                     </div>
 
@@ -272,14 +254,14 @@
                                                 <span>Today, 6:48 AM</span>
                                             </div>
 
-                                            <template v-if="selected_user.messages && selected_user.messages.length">
+                                            <template>
                                                 <div
-                                                    v-for="(message, index) in selected_user.messages"
+                                                    v-for="(chat, index) in Chats"
                                                     class="bubble"
                                                     :key="'msg' + index"
-                                                    :class="[selected_user.user_id == message.from_user_id ? 'me' : 'you']"
+                                                    :class="[selected_user.userU == chat.reciever ? 'me' : 'you']"
                                                 >
-                                                    {{ message.text }}
+                                                    {{ chat.message }}
                                                 </div>
                                             </template>
                                         </div>
@@ -303,7 +285,6 @@
                                                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                                             </svg>
                                             <b-input v-model="text_message" class="mail-write-box" placeholder="Message" @keyup.enter.exact="send_message" />
-                                        <div></div>
                                         </div>
                                     </div>
                                 </div>
@@ -315,32 +296,29 @@
         </div>
     </div>
 </template>
-
 <script>
 import '@/assets/sass/apps/chat.scss';
 import { mapGetters, mapActions } from 'vuex';
+import Pusher from 'pusher-js'
     export default {
         metaInfo: { title: 'Chat Application' },
         components: {},
         data() {
             return {
                 is_show_user_menu: false,
-                filterd_contact_list: [],
-                selected_user: null,
-                login_user_id: 0, //system login user id
-                search_user: '',
+                selected_user: [],
                 text_message: '',
                 CurrentUser:[],
+                senders:[],
+                messages:[],
             };
-        },
-        mounted() {
-            this.bind_contact_list();
         },
         computed: {
     ...mapGetters({
       User: 'StateUser',
       Users: 'StateUsers',
       Chats: 'StateChats',
+      Userprofiles: 'StateUserprofiles'
     }),
     isLoggedIn: function () {
       return this.$store.getters.isAuthenticated;
@@ -349,107 +327,32 @@ import { mapGetters, mapActions } from 'vuex';
       return this.Chats.filter(c => c.reciever==this.CurrentUser.id);
     },
   },
+  mounted(){
+     var pusher = new Pusher('027d486814c2e9262191', {
+                    cluster: 'eu'
+                    });
+                    let messages=this.Chats
+                    var channel = pusher.subscribe('chat');
+                    channel.bind('messagee', function(data) {
+                        
+                    messages.push({message:data.chat.message,sender:data.chat.sender,reciever:data.chat.reciever})
+                    }); 
+                    this.Chats=messages
+  },
         methods: {
-            ...mapActions(['GetUsers','GetChats']),
-            bind_contact_list() {
-               /* this.contact_list = [
-                    {
-                        user_id: 1,
-                        name: 'Nia Hillyer',
-                        path: 'profile-4.jpeg',
-                        time: '2:09 PM',
-                        preview: 'How do you do?',
-                        messages: [
-                            { from_user_id: this.login_user_id, to_usr_id: 1, text: 'Hi, I am back from vacation' },
-                            { from_user_id: this.login_user_id, to_usr_id: 1, text: 'How are you?' },
-                            { from_user_id: 1, to_usr_id: this.login_user_id, text: 'Welcom Back' },
-                            { from_user_id: 1, to_usr_id: this.login_user_id, text: 'I am all well' },
-                            { from_user_id: this.login_user_id, to_usr_id: 1, text: 'Coffee?' }
-                        ]
-                    },
-                    {
-                        user_id: 2,
-                        name: 'Sean Freeman',
-                        path: 'profile-3.jpeg',
-                        time: '2:09 PM',
-                        preview: 'I was wondering...',
-                        messages: [
-                            { from_user_id: this.login_user_id, to_usr_id: 2, text: 'Hello' },
-                            { from_user_id: this.login_user_id, to_usr_id: 2, text: "It's me" },
-                            { from_user_id: this.login_user_id, to_usr_id: 2, text: 'I have a question regarding project.' }
-                        ]
-                    },
-                    {
-                        user_id: 3,
-                        name: 'Alma Clarke',
-                        path: 'profile-11.jpeg',
-                        time: '1:44 PM',
-                        preview: 'I’ve forgotten how it felt before',
-                        messages: [
-                            { from_user_id: this.login_user_id, to_usr_id: 3, text: 'Hey Buddy.' },
-                            { from_user_id: this.login_user_id, to_usr_id: 3, text: "What's up" },
-                            { from_user_id: 3, to_usr_id: this.login_user_id, text: 'I am sick' },
-                            { from_user_id: this.login_user_id, to_usr_id: 3, text: 'Not comming to office today.' }
-                        ]
-                    },
-                    {
-                        user_id: 4,
-                        name: 'Alan Green',
-                        path: 'profile-23.jpeg',
-                        time: '2:09 PM',
-                        preview: 'But we’re probably gonna need a new carpet.',
-                        messages: [
-                            { from_user_id: this.login_user_id, to_usr_id: 4, text: 'Hi, collect your check' },
-                            { from_user_id: 4, to_usr_id: this.login_user_id, text: 'Ok, I will be there in 10 mins' }
-                        ]
-                    },
-                    {
-                        user_id: 5,
-                        name: 'Shaun Park',
-                        path: 'profile-7.jpeg',
-                        time: '2:09 PM',
-                        preview: 'It’s not that bad...',
-                        messages: [
-                            { from_user_id: this.login_user_id, to_usr_id: 3, text: 'Hi, I am back from vacation' },
-                            { from_user_id: this.login_user_id, to_usr_id: 3, text: 'How are you?' },
-                            { from_user_id: this.login_user_id, to_usr_id: 5, text: 'Welcom Back' },
-                            { from_user_id: this.login_user_id, to_usr_id: 5, text: 'I am all well' },
-                            { from_user_id: 5, to_usr_id: this.login_user_id, text: 'Coffee?' }
-                        ]
-                    },
-                    {
-                        user_id: 6,
-                        name: 'Roxanne',
-                        path: 'profile-15.jpeg',
-                        time: '2:09 PM',
-                        preview: 'Wasup for the third time like is you bling bitch',
-                        messages: [
-                            { from_user_id: this.login_user_id, to_usr_id: 6, text: 'Hi' },
-                            { from_user_id: this.login_user_id, to_usr_id: 6, text: 'Uploaded files to server.' }
-                        ]
-                    },
-                    { user_id: 7, name: 'Ernest Reeves', path: 'profile-32.jpeg', time: '2:09 PM', preview: 'Wasup for the third time like is you bling bitch', messages: [] },
-                    { user_id: 8, name: 'Laurie Fox', path: 'profile-33.jpeg', time: '2:09 PM', preview: 'Wasup for the third time like is you bling bitch', messages: [] },
-                    { user_id: 9, name: 'Xavier', path: 'profile-21.jpeg', time: '2:09 PM', preview: 'Wasup for the third time like is you bling bitch', messages: [] },
-                    { user_id: 10, name: 'Susan Phillips', path: 'profile-12.jpeg', time: '2:09 PM', preview: 'Wasup for the third time like is you bling bitch', messages: [] },
-                    { user_id: 11, name: 'Dale Butler', path: 'profile-26.jpeg', time: '2:09 PM', preview: 'Wasup for the third time like is you bling bitch', messages: [] },
-                    { user_id: 12, name: 'Grace Roberts', path: 'profile-20.jpeg', time: '2:09 PM', preview: 'Wasup for the third time like is you bling bitch', messages: [] }
-                ]; */
-                this.search_users();
-            },
+            ...mapActions(['GetUsers','CreateChat','GetUserprofiles','GetChats']),
             select_user(user) {
                 this.selected_user = user;
                 this.scroll_to_bottom();
                 this.is_show_user_menu = false;
             },
-            search_users() {
-                //this.filterd_contact_list = this.contact_list.filter(d => d.name.toLowerCase().includes(this.search_user));
-            },
             send_message() {
-                if (this.text_message.trim()) {
-                    //5dha luser selectioné
-                    let user = this.contact_list.find(d => d.sender == this.selected_user.id);
-                    user.messages.push({ from_user_id: this.selected_user.user_id, to_usr_id: this.login_user_id, text: this.text_message });
+                 if (this.text_message.trim()) {
+                    let user = this.senders.find(d => d.userU == this.selected_user.userU);
+                    this.CreateChat({message:this.text_message,sender:this.CurrentUser.id,reciever:user.userU})
+                    //user.messages.push({ from_user_id: this.selected_user.user_id, to_usr_id: this.login_user_id, text: this.text_message });
+                    
+                    
                     this.text_message = '';
                     this.scroll_to_bottom();
                 }
@@ -463,10 +366,25 @@ import { mapGetters, mapActions } from 'vuex';
         created: function () {
     this.GetUsers();
     this.GetChats();
-    console.log(this.Chats)
+    this.GetUserprofiles()
     for (let u in this.Users) {
       if (this.Users[u].username == this.User) {
         this.CurrentUser = this.Users[u];
+        for(let c in this.Chats){
+            if(this.Chats[c].reciever==this.CurrentUser.id ){
+                let senderr=this.Chats[c].sender
+                var exists = this.senders.some(function(sender) {
+                return sender.id === senderr
+                });
+                if (exists==false) {
+                for(let p in this.Userprofiles){
+                    if(this.Userprofiles[p].userU==this.Chats[c].sender){
+                        this.senders.push(this.Userprofiles[p])
+                    }
+                }
+                
+            }}
+        }
       }
     }}
     };
