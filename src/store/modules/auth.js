@@ -38,6 +38,9 @@ const state = {
   notifications:null,
   countryList:[],
   chats:null,
+  groups:null,
+  groupmembers:null,
+  groupposts:null,
 };
 
 const getters = {
@@ -80,6 +83,9 @@ const getters = {
   StateReclamations: (state) => state.reclamations,
   StateNotifications:(state) => state.notifications,
   StateChats:(state) => state.chats,
+  StateGroups:(state) => state.groups,
+  StateGroupMember:(state) => state.groupmembers,
+  StateGroupposts:(state) => state.groupposts,
 };
 
 const actions = {
@@ -301,6 +307,30 @@ const actions = {
     let response = await axios.get("chat/chat-list/");
     commit("setChats", response.data);
   },
+  async GetGroups({ commit }) {
+    let response = await axios.get("group/group-list/");
+    commit("setGroups", response.data);
+  },
+  async GetGroupmembers({ commit }) {
+    let response = await axios.get("groupmember/groupmember-list/");
+    commit("setGroupmembers", response.data);
+  },
+  async GetGroupposts({ commit }) {
+    let response = await axios.get("postgroup/postgroup-list/");
+    commit("setGroupposts", response.data);
+  },
+  async CreateGrouppost({ dispatch }, group) {
+    await axios.post("/postgroup/postgroup-create/", group);
+    return await dispatch("GetGroupposts");
+  },
+  async CreateGroup({ dispatch }, group) {
+    await axios.post("/group/group-create/", group);
+    return await dispatch("GetGroups");
+  },
+  async CreateGroupmember({ dispatch }, groupmember) {
+    await axios.post("/groupmember/groupmember-create/", groupmember);
+    return await dispatch("GetGroupmembers");
+  },
 };
 
 const mutations = {
@@ -406,6 +436,18 @@ const mutations = {
   setChats(state,chats)
   {
       state.chats=chats;
+  },
+  setGroups(state,groups)
+  {
+      state.groups=groups;
+  },
+  setGroupmembers(state,groupmembers)
+  {
+      state.groupmembers=groupmembers;
+  },
+  setGroupposts(state,groupposts)
+  {
+      state.groupposts=groupposts;
   },
 };
 

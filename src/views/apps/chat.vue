@@ -308,50 +308,53 @@ export default {
     isLoggedIn: function () {
       return this.$store.getters.isAuthenticated;
     },
-    contact_list() {
-      return this.Chats.filter((c) => c.reciever == this.CurrentUser.id);
+    Contactlist() {
+      return this.Userprofiles.filter(c => c.userU!=this.CurrentUser.id);
     },
   },
-  mounted() {
-      
-      Pusher.logToConsole = true;
-    var pusher = new Pusher('027d486814c2e9262191', {
-      cluster: 'eu',
-    });
-    let messages = this.Chats;
-    
-    var channel = pusher.subscribe('chat');
-    channel.bind('messagee', function(data) {
-      messages.push(JSON.stringify(data));
-    });
-    this.Chats = messages;
+  mounted(){
+      this.connect();
+     
   },
-  methods: {
-    ...mapActions(['GetUsers', 'CreateChat', 'GetUserprofiles', 'GetChats']),
-    select_user(user) {
-      this.selected_user = user;
-      this.scroll_to_bottom();
-      this.is_show_user_menu = false;
-    },
-    send_message() {
-      if (this.text_message.trim()) {
-        let user = this.senders.find((d) => d.userU == this.selected_user.userU);
-        this.CreateChat({ message: this.text_message, sender: this.CurrentUser.id, reciever: user.userU });
-        //user.messages.push({ from_user_id: this.selected_user.user_id, to_usr_id: this.login_user_id, text: this.text_message });
-        this.text_message = '';
-        this.scroll_to_bottom();
-      }
-    },
-    scroll_to_bottom() {
-      setTimeout(() => {
-        document.querySelector('.chat-conversation-box').scrollTo({ left: 0, top: document.querySelector('.chat-conversation-box').scrollHeight, behavior: 'smooth' });
-      });
-    },
-  },
-  created: function () {
+        methods: {
+            ...mapActions(['GetUsers','CreateChat','GetUserprofiles','GetChats']),
+            async connect(){
+                var pusher = new Pusher('027d486814c2e9262191', {
+                    cluster: 'eu'
+                    });
+                    let messages=this.messages
+                    var channel = pusher.subscribe('chat');
+                    channel.bind('messagee', function(data) {
+                    messages.push({id:500,message:data.chat.message,sender:data.chat.sender,reciever:data.chat.reciever})
+                    });
+                    this.messages=messages
+                    console.log(this.messages)},
+            select_user(user) {
+                this.selected_user = user;
+                this.scroll_to_bottom();
+                this.is_show_user_menu = false;
+            },
+            send_message() {
+                 if (this.text_message.trim()) {
+                    let user = this.Userprofiles.find(d => d.userU == this.selected_user.userU);
+                    this.CreateChat({message:this.text_message,sender:this.CurrentUser.id,reciever:user.userU,preview:this.text_message.slice(0,10)})
+                    //user.messages.push({ from_user_id: this.selected_user.user_id, to_usr_id: this.login_user_id, text: this.text_message });
+                    
+                    this.text_message = '';
+                    this.scroll_to_bottom();
+                }
+            },
+            scroll_to_bottom() {
+                setTimeout(() => {
+                    document.querySelector('.chat-conversation-box').scrollTo({ left: 0, top: document.querySelector('.chat-conversation-box').scrollHeight, behavior: 'smooth' });
+                });
+            }
+        },
+        created: function () {
     this.GetUsers();
     this.GetChats();
-    this.GetUserprofiles();
+    this.GetUserprofiles()
+    this.messages=this.Chats
     for (let u in this.Users) {
       if (this.Users[u].username == this.User) {
         this.CurrentUser = this.Users[u];

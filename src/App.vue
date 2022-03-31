@@ -13,6 +13,7 @@ import questionLayout from './layouts/question-layout.vue';
 import serviceLayout from './layouts/service-layout.vue';
 import dashboardLayout from './layouts/dashboard-layout.vue';
 import { mapGetters, mapActions } from "vuex";
+import groupLayout from './layouts/group-layout.vue';
     export default {
         metaInfo: {
             title: 'Home',
@@ -23,7 +24,8 @@ import { mapGetters, mapActions } from "vuex";
             auth: authLayout,
             question: questionLayout,
             service: serviceLayout,
-            dashboard: dashboardLayout
+            dashboard: dashboardLayout,
+            group: groupLayout
         },
         computed: {
             layout() {

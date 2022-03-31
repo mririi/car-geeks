@@ -384,6 +384,15 @@ const routes = [
         name: 'groups',
         component: () => import('../views/Groups/Groups.vue'),
         meta: {
+            layout: 'group'
+        }
+    },
+    //Group Details
+    {
+        path: '/groupdetail/:id',
+        name: 'groupdetail',
+        component: () => import('../views/Groups/GroupDetails.vue'),
+        meta: {
             layout: 'app'
         }
     },
@@ -932,6 +941,8 @@ router.beforeEach((to, from, next) => {
         store.commit('setLayout', 'service');
     } else if (to.meta && to.meta.layout && to.meta.layout == 'dashboard') {
         store.commit('setLayout', 'dashboard');
+    } else if (to.meta && to.meta.layout && to.meta.layout == 'group') {
+        store.commit('setLayout', 'group');
     } else {
         store.commit('setLayout', 'app');
     }

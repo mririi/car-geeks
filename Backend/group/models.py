@@ -4,6 +4,8 @@ from django.db import models
 
 class Group(models.Model):
   titleG = models.CharField(max_length=200,blank=True,null=True)
+  countryG = models.CharField(max_length=200,blank=True,null=True)
+  accepted = models.BooleanField(default=False)
   nbposts = models.IntegerField(default=0)
   nbmembers = models.IntegerField(default=0)
   dateinscrit = models.DateTimeField(auto_now_add=True)

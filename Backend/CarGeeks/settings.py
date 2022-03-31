@@ -62,6 +62,9 @@ INSTALLED_APPS = [
     "vote",
     "django_rest_passwordreset",
     "notifications",
+    'group',
+    'groupmember',
+    'postgroup',
 ]
 
 MIDDLEWARE = [
