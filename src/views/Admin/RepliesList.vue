@@ -84,11 +84,20 @@
                {{data.item.dateR |formatDate}}
             </template>
             <template #cell(userprofileRep)="data">
+               <span v-if="data.item.userprofileRep!=null">
               <span v-for="u in Userprofiles" :key="u.id">
                 <span v-if="u.id == data.item.userprofileRep">
                    {{u.firstname}} {{u.lastname}}
                 </span>
               </span>
+               </span>
+                <span v-if="data.item.userentrepriseRep!=null">
+              <span v-for="e in Userentreprises" :key="e.id">
+                <span v-if="e.id == data.item.userentrepriseRep">
+                   {{e.nameE}}
+                </span>
+              </span>
+               </span>
             </template>
             <template #cell(questionRep)="data">
               <span v-for="q in Questions" :key="q.id">
@@ -205,6 +214,7 @@ export default {
     this.GetQuestioncategories();
     this.GetUsers();
     this.GetReplies();
+    this.GetUserentreprises();
   },
   mounted() {
     this.bind_data();
@@ -217,7 +227,8 @@ export default {
       Questioncategories: 'StateQuestioncategories',
       User: 'StateUser',
       Users: 'StateUsers',
-      Replies:'StateReplies'
+      Replies:'StateReplies',
+      Userentreprises:'StateUserentreprises',
     }),
      filteredList() {
       return this.Replies.filter((rep) => {
@@ -227,7 +238,7 @@ export default {
   },
 
   methods: {
-   ...mapActions(['GetQuestions','GetReplies', 'GetUsers', 'GetUserprofiles', 'GetQuestioncategories']),
+   ...mapActions(['GetQuestions','GetReplies', 'GetUsers', 'GetUserprofiles', 'GetQuestioncategories','GetUserentreprises']),
 
     bind_data() {
       //table 3

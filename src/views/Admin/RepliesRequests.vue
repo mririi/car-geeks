@@ -30,10 +30,7 @@
                     <b-select-option value="50">50</b-select-option>
                   </b-select>
                 </span>
-                
               </div>
-
-             
 
               <div class="header-search">
                 <b-input v-model="search" size="sm" placeholder="Search..." />
@@ -72,60 +69,72 @@
               @filtered="on_filtered"
               @sort-changed="clear_selection"
             >
-               <template #cell(accepted)="data">
-              <span v-if="data.item.accepted == true">
-                <b-badge variant="success">Accepted</b-badge>
-              </span>
-              <span v-else>
-                <b-badge variant="danger">Pending</b-badge>
-              </span>
-            </template>
-            <template #cell(dateR)="data">
-               {{data.item.dateR |formatDate}}
-            </template>
-            <template #cell(userprofileRep)="data">
-              <span v-for="u in Userprofiles" :key="u.id">
-                <span v-if="u.id == data.item.userprofileRep">
-                   {{u.firstname}} {{u.lastname}}
+              <template #cell(accepted)="data">
+                <span v-if="data.item.accepted == true">
+                  <b-badge variant="success">Accepted</b-badge>
                 </span>
-              </span>
-            </template>
-            <template #cell(questionRep)="data">
-              <span v-for="q in Questions" :key="q.id">
-                <span v-if="q.id == data.item.questionRep">
-                    <router-link :to="'/questionpage/'+q.id">
-                   {{q.titleQ}}
+                <span v-else>
+                  <b-badge variant="danger">Pending</b-badge>
+                </span>
+              </template>
+              <template #cell(dateR)="data">
+                {{ data.item.dateR | formatDate }}
+              </template>
+              <template #cell(userprofileRep)="data">
+                <span v-if="data.item.userprofileRep != null">
+                  <span v-for="u in Userprofiles" :key="u.id">
+                    <span v-if="u.id == data.item.userprofileRep"> {{ u.firstname }} {{ u.lastname }} </span>
+                  </span>
+                </span>
+                <span v-if="data.item.userentrepriseRep != null">
+                  <span v-for="e in Userentreprises" :key="e.id">
+                    <span v-if="e.id == data.item.userentrepriseRep">
+                      {{ e.nameE }}
+                    </span>
+                  </span>
+                </span>
+              </template>
+              <template #cell(questionRep)="data">
+                <span v-for="q in Questions" :key="q.id">
+                  <span v-if="q.id == data.item.questionRep">
+                    <router-link :to="'/questionpage/' + q.id">
+                      {{ q.titleQ }}
                     </router-link>
+                  </span>
                 </span>
-              </span>
-            </template>
-            <template #cell(imageR)="data">
-                <span v-if="data.item.imageR!=null">
-              <b-avatar :src="'http://127.0.0.1:8000'+data.item.imageR" size="4rem" rounded="lg"  alt="" srcset=""/>
-              </span>
-              <span v-else>
-                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="4em" height="4em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 64 64"><path fill="currentColor" d="M32 2C15.432 2 2 15.432 2 32.001C2 48.567 15.432 62 32 62s30-13.433 30-29.999C62 15.432 48.568 2 32 2zm22 30.001c0 4.629-1.433 8.922-3.876 12.465l-30.591-30.59A21.889 21.889 0 0 1 32 10c12.15 0 22 9.851 22 22.001zm-44 0a21.9 21.9 0 0 1 3.876-12.468l30.591 30.591A21.887 21.887 0 0 1 32 54.001c-12.15 0-22-9.852-22-22z"/></svg>
-              </span>
-            </template>
-            <template #cell(actions)="data">
-              <span @click="Accept(data.item.id,data.item.userprofileRep)">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-check-circle text-primary ac"
-                >
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
-              </span>
-            </template>
+              </template>
+              <template #cell(imageR)="data">
+                <span v-if="data.item.imageR != null">
+                  <b-avatar :src="'http://127.0.0.1:8000' + data.item.imageR" size="4rem" rounded="lg" alt="" srcset="" />
+                </span>
+                <span v-else>
+                  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="4em" height="4em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 64 64">
+                    <path
+                      fill="currentColor"
+                      d="M32 2C15.432 2 2 15.432 2 32.001C2 48.567 15.432 62 32 62s30-13.433 30-29.999C62 15.432 48.568 2 32 2zm22 30.001c0 4.629-1.433 8.922-3.876 12.465l-30.591-30.59A21.889 21.889 0 0 1 32 10c12.15 0 22 9.851 22 22.001zm-44 0a21.9 21.9 0 0 1 3.876-12.468l30.591 30.591A21.887 21.887 0 0 1 32 54.001c-12.15 0-22-9.852-22-22z"
+                    />
+                  </svg>
+                </span>
+              </template>
+              <template #cell(actions)="data">
+                <span @click="Accept(data.item)">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-check-circle text-primary ac"
+                  >
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                  </svg>
+                </span>
+              </template>
             </b-table>
 
             <div class="table-footer">
@@ -178,14 +187,13 @@
 .table3 .actions svg {
   padding: 2px;
 }
-.ac
-{
+.ac {
   cursor: pointer;
 }
 </style>
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import axios from 'axios'
+import axios from 'axios';
 export default {
   metaInfo: { title: 'Bootstrap Custom Table' },
   data() {
@@ -229,6 +237,7 @@ export default {
     this.GetQuestioncategories();
     this.GetUsers();
     this.GetReplies();
+    this.GetUserentreprises();
   },
   mounted() {
     this.bind_data();
@@ -241,19 +250,20 @@ export default {
       Questioncategories: 'StateQuestioncategories',
       User: 'StateUser',
       Users: 'StateUsers',
-      Replies:'StateReplies'
+      Replies: 'StateReplies',
+      Userentreprises: 'StateUserentreprises',
     }),
-     filteredList() {
+    filteredList() {
       return this.Replies.filter((rep) => {
-        return rep.contentR.toLowerCase().includes(this.search.toLowerCase())&& rep.accepted==false;
+        return rep.contentR.toLowerCase().includes(this.search.toLowerCase()) && rep.accepted == false;
       });
     },
   },
 
   methods: {
-   ...mapActions(['GetQuestions','CreateNotification','GetReplies', 'GetUsers', 'GetUserprofiles', 'GetQuestioncategories']),
- async Accept(id,userid) {
-   this.$swal({
+    ...mapActions(['GetQuestions', 'CreateNotification', 'GetReplies', 'GetUsers', 'GetUserprofiles', 'GetQuestioncategories', 'GetUserentreprises']),
+    async Accept(rep) {
+      this.$swal({
         icon: 'warning',
         title: 'Are you sure?',
         showCancelButton: true,
@@ -261,56 +271,80 @@ export default {
         padding: '2em',
       }).then((result) => {
         if (result.value) {
-      axios.post('/reply/reply-update/' + id + '/', { accepted: true });
-       for(let u in this.Userprofiles)
-      {
-          if(this.Userprofiles[u].id==userid )
+          axios.post('/reply/reply-update/' + rep.id + '/', { accepted: true });
+          if(rep.userprofileRep!=null)
           {
-            for(let r in this.Replies)
-            {
-             if(this.Replies[r].id==id && this.Replies[r].modified==false)
-             {
-                 axios.put('/userprofile/userprofile-update/' + userid + '/', { nbreplies:this.Userprofiles[u].nbreplies+=1  });
-                for(let q in this.Questions){
-                  if(this.Questions[q].id==this.Replies[r].questionRep){
-                   axios.put('/question/question-update/' + this.Questions[q].id + '/', { nbrep:this.Questions[q].nbrep+=1  });
-                  if(this.Questions[q].userprofileQ!=this.Replies[r].userprofileRep){
-                  this.CreateNotification({message:' Replied to your question ' ,byuserprofileNo:this.Replies[r].userprofileRep,userprofileNo:this.Userprofiles[u].id,questionNo:this.Questions[q].id})
+          for (let u in this.Userprofiles) {
+            if (this.Userprofiles[u].id == rep.userprofileRep) {
+              for (let r in this.Replies) {
+                if (this.Replies[r].id == rep.id && this.Replies[r].modified == false) {
+                  axios.put('/userprofile/userprofile-update/' + rep.userprofileRep + '/', { nbreplies: (this.Userprofiles[u].nbreplies += 1) });
+                  for (let q in this.Questions) {
+                    if (this.Questions[q].id == this.Replies[r].questionRep) {
+                      axios.put('/question/question-update/' + this.Questions[q].id + '/', { nbrep: (this.Questions[q].nbrep += 1) });
+                      if (this.Questions[q].userprofileQ != this.Replies[r].userprofileRep) {
+                        this.CreateNotification({
+                          message: ' Replied to your question ',
+                          byuserprofileNo: this.Replies[r].userprofileRep,
+                          userprofileNo: this.Userprofiles[u].id,
+                          questionNo: this.Questions[q].id,
+                        });
+                      }
+                    }
                   }
-                  }
-                }
-               
-                
-                this.CreateNotification({message:'Your reply has been accepted ' ,replyNo:this.Replies[r].id,admin:true})
-             }
-            }
-           
-          }
-      }
-                this.$router.go();
-                this.$swal('Accepted!', 'The reply has been accepted.', 'success');
-    
 
+                  this.CreateNotification({ message: 'Your reply has been accepted ', replyNo: this.Replies[r].id, admin: true });
+                }
+              }
+            }
+          }
+          }
+          else if(rep.userentrepriseRep!=null)
+          {
+          for (let e in this.Userentreprises) {
+            if (this.Userentreprises[e].id == rep.userentrepriseRep) {
+              for (let r in this.Replies) {
+                if (this.Replies[r].id == rep.id && this.Replies[r].modified == false) {
+                  axios.put('/userentreprise/userentreprise-update/' + rep.userentrepriseRep + '/', { nbreplies: (this.Userentreprises[e].nbreplies += 1) });
+                  for (let q in this.Questions) {
+                    if (this.Questions[q].id == this.Replies[r].questionRep) {
+                      axios.put('/question/question-update/' + this.Questions[q].id + '/', { nbrep: (this.Questions[q].nbrep += 1) });
+                      if (this.Questions[q].userprofileQ != this.Replies[r].userprofileRep) {
+                        this.CreateNotification({
+                          message: ' Replied to your question ',
+                          byuserprofileNo: this.Replies[r].userprofileRep,
+                          userentrepriseNo: this.Userentreprises[e].id,
+                          questionNo: this.Questions[q].id,
+                        });
+                      }
+                    }
+                  }
+
+                  this.CreateNotification({ message: 'Your reply has been accepted ', replyNo: this.Replies[r].id, admin: true });
+                }
+              }
+            }
+          }
+          }
+          this.$router.go();
+          this.$swal('Accepted!', 'The reply has been accepted.', 'success');
         }
       });
-      
-     
     },
     bind_data() {
       //table 3
-      this.columns2 =[
-        { key: 'imageR', label: 'Image' ,class: 'text-center ' },
+      (this.columns2 = [
+        { key: 'imageR', label: 'Image', class: 'text-center ' },
         { key: 'contentR', label: 'Content' },
         { key: 'dateR', label: 'Date' },
         { key: 'nblikesR', label: 'Likes' },
         { key: 'nbCommentR', label: 'Comments' },
         { key: 'userprofileRep', label: 'User' },
-        { key: 'questionRep', label: 'Question'},
+        { key: 'questionRep', label: 'Question' },
         { key: 'accepted', label: 'Status', class: 'text-center' },
         { key: 'actions', label: 'Actions', class: 'text-center  ' },
-      ],
-
-      this.table_option2.total_rows = this.Replies.length;
+      ]),
+        (this.table_option2.total_rows = this.Replies.length);
       this.get_meta2();
     },
     on_filtered(filtered_items) {

@@ -254,6 +254,11 @@
                            <b-dropdown-item  @click="updatenotif(n)" v-if="n.seen == false && n.foradmin == true && CurrentUser.is_superuser==true">
                             <b-media class="server-log">
                                 <template #aside>
+                                  <div v-for="u in Userprofiles" :key="u.id">
+                                    <div v-if="u.id == n.byuserprofileNo">
+                                    <b-avatar :src="'http://127.0.0.1:8000'+u.imageU" class="avatar-title" rounded="sm"></b-avatar>
+                                    </div>
+                                  </div>
                                   <b-badge variant="info" class="mt-2">Dashboard</b-badge>
                                   
                                 </template>
@@ -301,6 +306,7 @@
                         <b-dropdown-item  @click="updatenotif(n)" v-if="n.seen == true && n.foradmin == true && CurrentUser.is_superuser==true">
                             <b-media class="server-log">
                                 <template #aside>
+                                  <b-avatar  class="avatar-title" rounded="sm">Admin</b-avatar>
                                   <b-badge variant="info" class="mt-2">Dashboard</b-badge>
                                 </template>
                                 <div class="data-info" v-if="n.byuserprofileNo==null && n.byuserentrepriseNo!=null">
@@ -939,533 +945,111 @@
       <nav class="topbar">
         <ul class="list-unstyled menu-categories" id="topAccordion">
           <li class="menu single-menu">
-            <a href="javascript:;" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle autodroprown">
-              <div class="">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-home"
-                >
-                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-                <span>{{ $t('dashboard') }}</span>
-              </div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="feather feather-chevron-down"
-              >
-                <polyline points="6 9 12 15 18 9"></polyline>
+             <router-link to="/questions" v-b-toggle class="dropdown-toggle" @click.prevent>
+            <div class="">
+              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
+                <path
+                  fill="currentColor"
+                  d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758c-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122c17.864-22.658 30.113-35.797 57.303-35.797c20.429 0 45.698 13.148 45.698 32.958c0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667c0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46c0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z"
+                />
               </svg>
-            </a>
-            <ul class="collapse submenu list-unstyled" id="dashboard" data-parent="#topAccordion">
-              <router-link tag="li" to="/"
-                ><a>{{ $t('sales') }}</a></router-link
-              >
-              <router-link tag="li" to="/index2"
-                ><a>{{ $t('analytics') }}</a></router-link
-              >
-            </ul>
+              <span>{{ $t('Questions')}} </span>
+            </div>
+          </router-link>
           </li>
 
           <li class="menu single-menu">
-            <a href="javascript:;" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-              <div class="">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-cpu"
-                >
-                  <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
-                  <rect x="9" y="9" width="6" height="6"></rect>
-                  <line x1="9" y1="1" x2="9" y2="4"></line>
-                  <line x1="15" y1="1" x2="15" y2="4"></line>
-                  <line x1="9" y1="20" x2="9" y2="23"></line>
-                  <line x1="15" y1="20" x2="15" y2="23"></line>
-                  <line x1="20" y1="9" x2="23" y2="9"></line>
-                  <line x1="20" y1="14" x2="23" y2="14"></line>
-                  <line x1="1" y1="9" x2="4" y2="9"></line>
-                  <line x1="1" y1="14" x2="4" y2="14"></line>
-                </svg>
-                <span>{{ $t('apps') }}</span>
-              </div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="feather feather-chevron-down"
-              >
-                <polyline points="6 9 12 15 18 9"></polyline>
+             <router-link to="/services" v-b-toggle class="dropdown-toggle" @click.prevent>
+            <div class="">
+              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
+                <path
+                  fill="currentColor"
+                  d="M501.1 395.7L384 278.6c-23.1-23.1-57.6-27.6-85.4-13.9L192 158.1V96L64 0L0 64l96 128h62.1l106.6 106.6c-13.6 27.8-9.2 62.3 13.9 85.4l117.1 117.1c14.6 14.6 38.2 14.6 52.7 0l52.7-52.7c14.5-14.6 14.5-38.2 0-52.7zM331.7 225c28.3 0 54.9 11 74.9 31l19.4 19.4c15.8-6.9 30.8-16.5 43.8-29.5c37.1-37.1 49.7-89.3 37.9-136.7c-2.2-9-13.5-12.1-20.1-5.5l-74.4 74.4l-67.9-11.3L334 98.9l74.4-74.4c6.6-6.6 3.4-17.9-5.7-20.2c-47.4-11.7-99.6.9-136.6 37.9c-28.5 28.5-41.9 66.1-41.2 103.6l82.1 82.1c8.1-1.9 16.5-2.9 24.7-2.9zm-103.9 82l-56.7-56.7L18.7 402.8c-25 25-25 65.5 0 90.5s65.5 25 90.5 0l123.6-123.6c-7.6-19.9-9.9-41.6-5-62.7zM64 472c-13.2 0-24-10.8-24-24c0-13.3 10.7-24 24-24s24 10.7 24 24c0 13.2-10.7 24-24 24z"
+                />
               </svg>
-            </a>
-            <ul class="collapse submenu list-unstyled" id="app" data-parent="#topAccordion">
-              <router-link tag="li" to="/apps/chat"><a>Chat</a></router-link>
-              <router-link tag="li" to="/apps/mailbox"><a>Mailbox</a></router-link>
-              <router-link tag="li" to="/apps/todo-list"><a>Todo List</a></router-link>
-              <router-link tag="li" to="/apps/notes"><a>Notes</a></router-link>
-              <router-link tag="li" to="/apps/scrumboard"><a>Scrumboard</a></router-link>
-              <router-link tag="li" to="/apps/contacts"><a>Contacts</a></router-link>
-
-              <li class="sub-sub-submenu-list">
-                <a href="javascript:;" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                  Invoice
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-chevron-right"
-                  >
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                  </svg>
-                </a>
-                <ul class="collapse list-unstyled sub-submenu" id="appInvoice" data-parent="#app">
-                  <router-link tag="li" to="/apps/invoice/list"><a>List</a></router-link>
-                  <router-link tag="li" to="/apps/invoice/preview"><a>Preview</a></router-link>
-                  <router-link tag="li" to="/apps/invoice/add"><a>Add</a></router-link>
-                  <router-link tag="li" to="/apps/invoice/edit"><a>Edit</a></router-link>
-                </ul>
-              </li>
-              <router-link tag="li" to="/apps/calendar"><a>Calendar</a></router-link>
-            </ul>
+              <span>{{ $t('Services') }} </span>
+            </div>
+          </router-link>
           </li>
 
           <li class="menu single-menu">
-            <a href="javascript:;" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-              <div class="">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-box"
-                >
-                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                  <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                </svg>
-                <span>{{ $t('components') }}</span>
-              </div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="feather feather-chevron-down"
-              >
-                <polyline points="6 9 12 15 18 9"></polyline>
+           <router-link to="/entreprises" v-b-toggle class="dropdown-toggle" @click.prevent>
+            <div class="">
+              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.88em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 448 512">
+                <path
+                  fill="currentColor"
+                  d="M436 480h-20V24c0-13.255-10.745-24-24-24H56C42.745 0 32 10.745 32 24v456H12c-6.627 0-12 5.373-12 12v20h448v-20c0-6.627-5.373-12-12-12zM128 76c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v40c0 6.627-5.373 12-12 12h-40c-6.627 0-12-5.373-12-12V76zm0 96c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v40c0 6.627-5.373 12-12 12h-40c-6.627 0-12-5.373-12-12v-40zm52 148h-40c-6.627 0-12-5.373-12-12v-40c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v40c0 6.627-5.373 12-12 12zm76 160h-64v-84c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v84zm64-172c0 6.627-5.373 12-12 12h-40c-6.627 0-12-5.373-12-12v-40c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v40zm0-96c0 6.627-5.373 12-12 12h-40c-6.627 0-12-5.373-12-12v-40c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v40zm0-96c0 6.627-5.373 12-12 12h-40c-6.627 0-12-5.373-12-12V76c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v40z"
+                />
               </svg>
-            </a>
-            <ul class="collapse submenu list-unstyled" id="components" data-parent="#topAccordion">
-              <router-link tag="li" to="/components/tabs"><a>Tabs</a></router-link>
-              <router-link tag="li" to="/components/accordions"><a>Accordions</a></router-link>
-              <router-link tag="li" to="/components/modals"><a>Modals</a></router-link>
-              <router-link tag="li" to="/components/cards"><a>Cards</a></router-link>
-              <router-link tag="li" to="/components/carousel"><a>Carousel</a></router-link>
-              <router-link tag="li" to="/components/countdown"><a>Countdown</a></router-link>
-              <router-link tag="li" to="/components/counter"><a>Counter</a></router-link>
-              <router-link tag="li" to="/components/sweetalert"><a>Sweet Alerts</a></router-link>
-              <router-link tag="li" to="/components/timeline"><a>Timeline</a></router-link>
-              <router-link tag="li" to="/components/notifications"><a>Notifications</a></router-link>
-              <router-link tag="li" to="/components/media-object"><a>Media Object</a></router-link>
-              <router-link tag="li" to="/components/list-group"><a>List Group</a></router-link>
-              <router-link tag="li" to="/components/pricing-table"><a>Pricing Tables</a></router-link>
-              <router-link tag="li" to="/components/lightbox"><a> Lightbox </a></router-link>
-            </ul>
+              <span>{{ $t('Entreprises') }} </span>
+            </div>
+          </router-link>
           </li>
 
           <li class="menu single-menu">
-            <a href="javascript:;" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-              <div class="">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-zap"
-                >
-                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                </svg>
-                <span>{{ $t('ui_kit') }}</span>
-              </div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="feather feather-chevron-down"
-              >
-                <polyline points="6 9 12 15 18 9"></polyline>
+            <router-link to="/groups" v-b-toggle class="dropdown-toggle" @click.prevent>
+            <div class="">
+              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36">
+                <path
+                  fill="currentColor"
+                  d="M12 16.14h-.87a8.67 8.67 0 0 0-6.43 2.52l-.24.28v8.28h4.08v-4.7l.55-.62l.25-.29a11 11 0 0 1 4.71-2.86A6.59 6.59 0 0 1 12 16.14Z"
+                  class="clr-i-solid clr-i-solid-path-1"
+                />
+                <path
+                  fill="currentColor"
+                  d="M31.34 18.63a8.67 8.67 0 0 0-6.43-2.52a10.47 10.47 0 0 0-1.09.06a6.59 6.59 0 0 1-2 2.45a10.91 10.91 0 0 1 5 3l.25.28l.54.62v4.71h3.94v-8.32Z"
+                  class="clr-i-solid clr-i-solid-path-2"
+                />
+                <path fill="currentColor" d="M11.1 14.19h.31a6.45 6.45 0 0 1 3.11-6.29a4.09 4.09 0 1 0-3.42 6.33Z" class="clr-i-solid clr-i-solid-path-3" />
+                <path fill="currentColor" d="M24.43 13.44a6.54 6.54 0 0 1 0 .69a4.09 4.09 0 0 0 .58.05h.19A4.09 4.09 0 1 0 21.47 8a6.53 6.53 0 0 1 2.96 5.44Z" class="clr-i-solid clr-i-solid-path-4" />
+                <circle cx="17.87" cy="13.45" r="4.47" fill="currentColor" class="clr-i-solid clr-i-solid-path-5" />
+                <path
+                  fill="currentColor"
+                  d="M18.11 20.3A9.69 9.69 0 0 0 11 23l-.25.28v6.33a1.57 1.57 0 0 0 1.6 1.54h11.49a1.57 1.57 0 0 0 1.6-1.54V23.3l-.24-.3a9.58 9.58 0 0 0-7.09-2.7Z"
+                  class="clr-i-solid clr-i-solid-path-6"
+                />
+                <path fill="none" d="M0 0h36v36H0z" />
               </svg>
-            </a>
-            <ul class="collapse submenu list-unstyled" id="uiKit" data-parent="#topAccordion">
-              <router-link tag="li" to="/elements/alerts"><a>Alerts</a></router-link>
-              <router-link tag="li" to="/elements/avatar"><a>Avatar</a></router-link>
-              <router-link tag="li" to="/elements/badges"><a>Badges</a></router-link>
-              <router-link tag="li" to="/elements/breadcrumbs"><a>Breadcrumbs</a></router-link>
-              <router-link tag="li" to="/elements/buttons"><a>Buttons</a></router-link>
-              <router-link tag="li" to="/elements/buttons-group"><a>Button Groups</a></router-link>
-              <router-link tag="li" to="/elements/color-library"><a>Color Library</a></router-link>
-              <router-link tag="li" to="/elements/dropdown"><a>Dropdown</a></router-link>
-              <router-link tag="li" to="/elements/infobox"><a>Infobox</a></router-link>
-              <router-link tag="li" to="/elements/jumbotron"><a>Jumbotron</a></router-link>
-              <router-link tag="li" to="/elements/loader"><a>Loader</a></router-link>
-              <router-link tag="li" to="/elements/pagination"><a>Pagination</a></router-link>
-              <router-link tag="li" to="/elements/popovers"><a>Popovers</a></router-link>
-              <router-link tag="li" to="/elements/progress-bar"><a>Progress Bar</a></router-link>
-              <router-link tag="li" to="/elements/search"><a>Search</a></router-link>
-              <router-link tag="li" to="/elements/tooltips"><a>Tooltips</a></router-link>
-              <router-link tag="li" to="/elements/treeview"><a>Treeview</a></router-link>
-              <router-link tag="li" to="/elements/typography"><a>Typography</a></router-link>
-            </ul>
+              <span>{{ $t('Groups') }}</span>
+            </div>
+          </router-link>
           </li>
 
           <li class="menu single-menu">
-            <a href="javascript:;" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-              <div class="">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-layout"
-                >
-                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                  <line x1="3" y1="9" x2="21" y2="9"></line>
-                  <line x1="9" y1="21" x2="9" y2="9"></line>
-                </svg>
-                <span>{{ $t('tables') }}</span>
-              </div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="feather feather-chevron-down"
-              >
-                <polyline points="6 9 12 15 18 9"></polyline>
+           <router-link to="/news" v-b-toggle class="dropdown-toggle" @click.prevent>
+            <div class="">
+              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1.13em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 576 512">
+                <path
+                  fill="currentColor"
+                  d="M552 64H88c-13.255 0-24 10.745-24 24v8H24c-13.255 0-24 10.745-24 24v272c0 30.928 25.072 56 56 56h472c26.51 0 48-21.49 48-48V88c0-13.255-10.745-24-24-24zM56 400a8 8 0 0 1-8-8V144h16v248a8 8 0 0 1-8 8zm236-16H140c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h152c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12zm208 0H348c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h152c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12zm-208-96H140c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h152c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12zm208 0H348c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h152c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12zm0-96H140c-6.627 0-12-5.373-12-12v-40c0-6.627 5.373-12 12-12h360c6.627 0 12 5.373 12 12v40c0 6.627-5.373 12-12 12z"
+                />
               </svg>
-            </a>
-            <ul class="collapse submenu list-unstyled" id="tables" data-parent="#topAccordion">
-              <router-link tag="li" to="/tables/basic"><a>Basic</a></router-link>
-              <li class="sub-sub-submenu-list">
-                <a href="javascript:;" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                  DataTables
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-chevron-right"
-                  >
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                  </svg>
-                </a>
-                <ul class="collapse list-unstyled sub-submenu" id="datatable" data-parent="#datatable">
-                  <router-link tag="li" to="/tables/basic"><a>Basic</a></router-link>
-                  <router-link tag="li" to="/tables/striped"><a>Striped Table</a></router-link>
-                  <router-link tag="li" to="/tables/order-sorting"><a>Order Sorting</a></router-link>
-                  <router-link tag="li" to="/tables/multi-column"><a>Multi Column</a></router-link>
-                  <router-link tag="li" to="/tables/multiple-tables"><a>Multiple Tables</a></router-link>
-                  <router-link tag="li" to="/tables/alt-pagination"><a>Alt. Pagination</a></router-link>
-                  <router-link tag="li" to="/tables/custom"><a>Custom</a></router-link>
-                  <router-link tag="li" to="/tables/range-search"><a>Range Search</a></router-link>
-                  <router-link tag="li" to="/tables/export"><a>Export</a></router-link>
-                  <router-link tag="li" to="/tables/live-dom-ordering"><a>Live DOM ordering</a></router-link>
-                  <router-link tag="li" to="/tables/miscellaneous"><a>Miscellaneous</a></router-link>
-                </ul>
-              </li>
-            </ul>
+              <span>{{ $t('News') }}</span>
+            </div>
+          </router-link>
           </li>
 
           <li class="menu single-menu">
-            <a href="javascript:;" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-              <div class="">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-clipboard"
-                >
-                  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-                  <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
-                </svg>
-                <span>{{ $t('forms') }}</span>
-              </div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="feather feather-chevron-down"
-              >
-                <polyline points="6 9 12 15 18 9"></polyline>
-              </svg>
-            </a>
-            <ul class="collapse submenu list-unstyled" id="forms" data-parent="#topAccordion">
-              <router-link tag="li" to="/forms/basic"><a>Basic</a></router-link>
-              <router-link tag="li" to="/forms/input-group"><a>Input Group</a></router-link>
-              <router-link tag="li" to="/forms/layouts"><a>Layouts</a></router-link>
-              <router-link tag="li" to="/forms/validation"><a>Validation</a></router-link>
-              <router-link tag="li" to="/forms/input-mask"><a>Input Mask</a></router-link>
-              <router-link tag="li" to="/forms/select2"><a>Select2</a></router-link>
-              <router-link tag="li" to="/forms/touchspin"><a>TouchSpin</a></router-link>
-              <router-link tag="li" to="/forms/checkbox-radio"><a>Checkbox &amp; Radio</a></router-link>
-              <router-link tag="li" to="/forms/switches"><a>Switches</a></router-link>
-              <router-link tag="li" to="/forms/wizards"><a>Wizards</a></router-link>
-              <router-link tag="li" to="/forms/file-upload"><a>File Upload</a></router-link>
-              <router-link tag="li" to="/forms/quill-editor"><a>Quill Editor</a></router-link>
-              <router-link tag="li" to="/forms/markdown-editor"><a>Markdown Editor</a></router-link>
-              <router-link tag="li" to="/forms/date-picker"><a>Date &amp; Range Picker </a></router-link>
-              <router-link tag="li" to="/forms/clipboard"><a>Clipboard</a></router-link>
-            </ul>
+            <router-link to="/faq" v-b-toggle class="dropdown-toggle" @click.prevent>
+            <div class="">
+              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 26 26"><path fill="currentColor" d="M13 0c-1.7 0-3 1.3-3 3v6c0 1.7 1.3 3 3 3h6l4 4v-4c1.7 0 3-1.3 3-3V3c0-1.7-1.3-3-3-3H13zm4.188 3h1.718l1.688 6h-1.5l-.407-1.5h-1.5L16.813 9H15.5l1.688-6zM18 4c-.1.4-.212.888-.313 1.188l-.28 1.312h1.187l-.282-1.313C18.113 4.888 18 4.4 18 4zM3 10c-1.7 0-3 1.3-3 3v6c0 1.7 1.3 3 3 3v4l4-4h6c1.7 0 3-1.3 3-3v-6h-3c-1.9 0-3.406-1.3-3.906-3H3zm4.594 2.906c1.7 0 2.5 1.4 2.5 3c0 1.4-.481 2.288-1.281 2.688c.4.2.874.306 1.374.406l-.374 1c-.7-.2-1.426-.512-2.126-.813c-.1-.1-.275-.093-.375-.093C6.112 18.994 5 18 5 16c0-1.7.994-3.094 2.594-3.094zm0 1.094c-.8 0-1.188.9-1.188 2c0 1.2.388 2 1.188 2c.8 0 1.218-.9 1.218-2s-.418-2-1.218-2z"/></svg>
+              <span>{{ $t('FAQ') }}</span>
+            </div>
+          </router-link>
           </li>
 
           <li class="menu single-menu">
-            <a href="javascript:;" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-              <div class="">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-file"
-                >
-                  <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
-                  <polyline points="13 2 13 9 20 9"></polyline>
-                </svg>
-                <span>{{ $t('pages') }}</span>
-              </div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="feather feather-chevron-down"
-              >
-                <polyline points="6 9 12 15 18 9"></polyline>
+            <router-link to="/contact-us" v-b-toggle class="dropdown-toggle" @click.prevent>
+            <div class="">
+              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1536 1536">
+                <path
+                  fill="currentColor"
+                  d="M515 783v128H263V783h252zm0-255v127H263V528h252zm758 511v128H932v-128h341zm0-256v128H601V783h672zm0-255v127H601V528h672zm135 860V148q0-8-6-14t-14-6h-32L978 384L768 213L558 384L180 128h-32q-8 0-14 6t-6 14v1240q0 8 6 14t14 6h1240q8 0 14-6t6-14zM553 278l185-150H332zm430 0l221-150H798zm553-130v1240q0 62-43 105t-105 43H148q-62 0-105-43T0 1388V148Q0 86 43 43T148 0h1240q62 0 105 43t43 105z"
+                />
               </svg>
-            </a>
-            <ul class="collapse submenu list-unstyled" id="page" data-parent="#topAccordion">
-              <router-link tag="li" to="/pages/helpdesk"><a>Helpdesk</a></router-link>
-              <router-link tag="li" to="/pages/contact-us"><a>Contact Form</a></router-link>
-              <router-link tag="li" to="/pages/faq"><a>FAQ</a></router-link>
-              <router-link tag="li" to="/pages/faq2"><a>FAQ 2</a></router-link>
-              <router-link tag="li" to="/pages/privacy-policy"><a>Privacy Policy</a></router-link>
-              <li><a target="_blank" href="/pages/coming-soon">Coming Soon</a></li>
-              <router-link tag="li" to="/pages/blank-page"><a>Blank Page</a></router-link>
-              <router-link tag="li" to="/pages/sample"><a>Sample Page</a></router-link>
-              <router-link tag="li" to="/profile/"><a>Profile</a></router-link>
-              <router-link tag="li" to="/users/account-setting"><a>Account Settings</a></router-link>
-              <li class="sub-sub-submenu-list">
-                <a href="javascript:;" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                  Error
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-chevron-right"
-                  >
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                  </svg>
-                </a>
-                <ul class="collapse list-unstyled sub-submenu" id="pages-error" data-parent="#more">
-                  <li><a target="_blank" href="/pages/error404">404</a></li>
-                  <li><a target="_blank" href="/pages/error500">500</a></li>
-                  <li><a target="_blank" href="/pages/error503">503</a></li>
-                  <li><a target="_blank" href="/pages/maintenence">Maintanence</a></li>
-                </ul>
-              </li>
-              <li class="sub-sub-submenu-list">
-                <a href="javascript:;" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                  Login
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-chevron-right"
-                  >
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                  </svg>
-                </a>
-                <ul class="collapse list-unstyled sub-submenu" id="user-login" data-parent="#page">
-                  <li><a target="_blank" href="/auth/login">Login Cover</a></li>
-                  <li><a target="_blank" href="/auth/login-boxed">Login Boxed</a></li>
-                </ul>
-              </li>
-              <li class="sub-sub-submenu-list">
-                <a href="javascript:;" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                  Register
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-chevron-right"
-                  >
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                  </svg>
-                </a>
-                <ul class="collapse list-unstyled sub-submenu" id="user-register" data-parent="#page">
-                  <li><a target="_blank" href="/auth/register">Register Cover</a></li>
-                  <li><a target="_blank" href="/auth/register-boxed">Register Boxed</a></li>
-                </ul>
-              </li>
-
-              <li class="sub-sub-submenu-list">
-                <a href="javascript:;" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                  Password Recovery
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-chevron-right"
-                  >
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                  </svg>
-                </a>
-                <ul class="collapse list-unstyled sub-submenu" id="user-passRecovery" data-parent="#page">
-                  <li><a target="_blank" href="/auth/pass-recovery">Recover ID Cover</a></li>
-                  <li><a target="_blank" href="/auth/pass-recovery-boxed">Recover ID Boxed</a></li>
-                </ul>
-              </li>
-
-              <li class="sub-sub-submenu-list">
-                <a href="javascript:;" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                  Lockscreen
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-chevron-right"
-                  >
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                  </svg>
-                </a>
-                <ul class="collapse list-unstyled sub-submenu" id="user-lockscreen" data-parent="#page">
-                  <li><a target="_blank" href="/auth/lockscreen">Unlock Cover</a></li>
-                  <li><a target="_blank" href="/auth/lockscreen-boxed">Unlock Boxed</a></li>
-                </ul>
-              </li>
-            </ul>
+              <span>{{ $t('Contact Us') }}</span>
+            </div>
+          </router-link>
           </li>
 
           <li class="menu single-menu">

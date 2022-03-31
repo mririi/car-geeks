@@ -65,6 +65,7 @@ export default {
       serviceuser:false,
       promo:false,
       CurrentUserProfile:[],
+      CurrentUserEntreprise:[],
       CurrentUser:[],
       image:null,
       is_submit_form1:false
@@ -77,6 +78,7 @@ export default {
     this.GetRoles();
     this.GetServicepromotions();
     this.GetUserprofiles();
+    this.GetUserentreprises();
     for (let u in this.Users){
       if(this.Users[u].username==this.User){
         this.CurrentUser=this.Users[u]
@@ -85,7 +87,7 @@ export default {
          this.CurrentUserProfile=this.Userprofiles[up]
          for(let p in this.Servicepromotions){
       axios.get('/service/service-detail/' + this.Servicepromotions[p].serviceP + '/').then((response) => {
-      if(response.data.userprofileS==this.CurrentUserProfile.id){
+      if(response.data.userprofileS==this.CurrentUserProfile.id ){
         this.promo=true
       }})
     }
@@ -93,8 +95,27 @@ export default {
      }
       }
     }
+    if(this.promo==false)
+    {
+    for (let u in this.Users){
+      if(this.Users[u].username==this.User){
+        this.CurrentUser=this.Users[u]
+        for(let ue in this.Userentreprises){
+       if(this.Userentreprises[ue].userE==this.CurrentUser.id){
+         this.CurrentUserEntreprise=this.Userentreprises[ue]
+         for(let p in this.Servicepromotions){
+      axios.get('/service/service-detail/' + this.Servicepromotions[p].serviceP + '/').then((response) => {
+      if(response.data.userentrepriseS==this.CurrentUserEntreprise.id ){
+        this.promo=true
+      }})
+    }
+       }
+     }
+      }
+      }
+    }
     for (let r in this.Roles){
-      if(this.Roles[r].userRole==this.CurrentUser.id && this.Roles[r].service==true){
+      if((this.Roles[r].userRole==this.CurrentUserEntreprise.id || this.Roles[r].userRole==this.CurrentUserProfile.id ) && this.Roles[r].service==true){
         this.serviceuser=true
       }
     }
@@ -111,6 +132,7 @@ export default {
       "GetRoles",
       "GetServicepromotions",
       "GetUserprofiles",
+      'GetUserentreprises',
       'CreateNotification',
     ]),
     onFileChanged (event) {
@@ -152,7 +174,8 @@ export default {
       Users: "StateUsers",
       User:"StateUser",
       Servicepromotions:"StateServicepromotions",
-      Userprofiles:"StateUserprofiles"
+      Userprofiles:"StateUserprofiles",
+      Userentreprises: 'StateUserentreprises',
     }),
     isLoggedIn: function () {
       return this.$store.getters.isAuthenticated;

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="">
     <nav class="md:block mt-4 sizee shadow-xl dash items-center justify-between float-right">
       <div class="mt-5">
         <a href="/addquestion" class="mt-5 ml-5 mb-3"> <b-button variant="primary" class="mt-5"> Ask a question</b-button></a>
@@ -221,7 +221,7 @@ export default {
   background-color: transparent;
 }
 .sizee {
-  height: 1200px;
+  height: 300vh;
   width: 220px;
   display: inline-block;
   border-left: 0.1px solid #0e1726;

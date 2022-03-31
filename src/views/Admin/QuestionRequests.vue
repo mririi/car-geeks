@@ -112,11 +112,19 @@
             <template #cell(userprofileQ)="data">
               <span v-if="data.item.userprofileQ!=null">
               <span v-for="u in Userprofiles" :key="u.id">
-                <span v-if="u.id == data.item.userprofileQ"> {{ u.firstname }} {{ u.lastname }} </span>
+                <span v-if="u.id == data.item.userprofileQ">
+                  <router-link :to="'/profile/'+data.item.userprofileQ">
+                   {{ u.firstname }} {{ u.lastname }} 
+                  </router-link>
+                   </span>
                 </span></span>
                 <span v-if="data.item.userentrepriseQ!=null">
                 <span v-for="e in Userentreprises" :key="e.id">
-                <span v-if="e.id == data.item.userentrepriseQ"> {{ e.nameE }} </span>
+                <span v-if="e.id == data.item.userentrepriseQ">
+                  <router-link :to="'/entreprisedetails/'+data.item.userentrepriseQ">
+                   {{ e.nameE }} 
+                  </router-link>
+                   </span>
               </span></span>
             </template>
             
@@ -128,7 +136,7 @@
               </span>
             </template>
             <template #cell(actions)="data">
-              <span @click="Accept(data.item.id,data.item.userprofileQ)">
+              <span @click="Accept(data.item)">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -297,7 +305,7 @@ export default {
 
   methods: {
     ...mapActions(['GetQuestions','CreateNotification', 'GetUsers', 'GetUserprofiles', 'GetQuestioncategories','GetUserentreprises']),
-    async Accept(id , userid) {
+    async Accept(quest) {
        this.$swal({
         icon: 'warning',
         title: 'Are you sure?',
@@ -306,21 +314,42 @@ export default {
         padding: '2em',
       }).then((result) => {
         if (result.value) {
-       axios.put('/question/question-update/' + id + '/', { accepted: true });
+       axios.put('/question/question-update/' + quest.id + '/', { accepted: true });
+       if(quest.userprofileQ!=null)
+       {
       for(let u in this.Userprofiles)
       {
-          if(this.Userprofiles[u].id==userid )
+          if(this.Userprofiles[u].id==quest.userprofileQ )
           {
             for(let q in this.Questions)
             {
-             if(this.Questions[q].id==id && this.Questions[q].modified==false &&  this.Questions[q].userprofileQ!=null)
+             if(this.Questions[q].id==quest.id && this.Questions[q].modified==false)
              {
-               axios.put('/userprofile/userprofile-update/' + userid + '/', { nbquestions:this.Userprofiles[u].nbquestions+=1  });
-              this.CreateNotification({message:'Your Question has been accepted ' ,questionNo:this.Questions[q].id,userprofileNo:userid,admin:true})
+               axios.put('/userprofile/userprofile-update/' + quest.userprofileQ + '/', { nbquestions:this.Userprofiles[u].nbquestions+=1  });
+              this.CreateNotification({message:'Your Question has been accepted ' ,questionNo:this.Questions[q].id,userprofileNo:quest.userprofileQ,admin:true})
              }
             }
            
           }
+      }
+      }
+      else if(quest.userentrepriseQ!=null)
+       {
+      for(let e in this.Userentreprises)
+      {
+          if(this.Userentreprises[e].id==quest.userentrepriseQ )
+          {
+            for(let q in this.Questions)
+            {
+             if(this.Questions[q].id==quest.id && this.Questions[q].modified==false)
+             {
+               axios.put('/userentreprise/userentreprise-update/' + quest.userentrepriseQ + '/', { nbquestions:this.Userentreprises[e].nbquestions+=1  });
+              this.CreateNotification({message:'Your Question has been accepted ' ,questionNo:this.Questions[q].id,entrepriseNo:quest.userentrepriseQ,admin:true})
+             }
+            }
+           
+          }
+      }
       }
       this.$swal('Accepted!', 'The question has been accepted.', 'success');
        this.$router.go();
