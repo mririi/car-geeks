@@ -39,7 +39,7 @@ def chatCreate(request):
 
 	if serializer.is_valid():
 		serializer.save()
-		pusher_client.trigger('chat', 'messagee',{'chat':request.data})
+		pusher_client.trigger('chat', 'message',{'chats':request.data})
 
 	return Response(request.data)
 
