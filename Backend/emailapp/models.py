@@ -1,11 +1,7 @@
-from django.core.mail import send_mail  
+from django.db import models
+# Create your models here.
 
-send_mail(
-            'subject', 
-            'body of the message', 
-            'sender@example.com', 
-            [
-                'receiver1@example.com', 
-                'receiver2@example.com'
-            ]
-        ) 
+class Email(models.Model):
+  subject = models.TextField(null=True,blank=True)
+  message = models.TextField(null=True,blank=True)
+  to = models.CharField(max_length=200,null=True,blank=True)

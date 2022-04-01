@@ -295,6 +295,9 @@ const actions = {
     await axios.post("/chat/chat-create/", chat);
     return await dispatch("GetChats");
   },
+  async SendEmail(mailinfo) {
+    await axios.post("/emailapp/email-create/", mailinfo);
+  },
   async GetReclamations({ commit }) {
     let response = await axios.get("reclamation/reclamation-list/");
     commit("setReclamations", response.data);

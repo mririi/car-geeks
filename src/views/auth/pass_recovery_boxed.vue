@@ -7,7 +7,7 @@
             <div class="form-content">
               <h1 class="">Password Recovery</h1>
               <p class="signup-link recovery">Enter your email and instructions will sent to you!</p>
-              <b-form class="text-left" @submit.prevent="sendEmail">
+              <b-form class="text-left" @submit.prevent="submit">
                 <div class="form">
                   <div id="email-field" class="field-wrapper input">
                     <div class="d-flex justify-content-between">
@@ -48,49 +48,31 @@
 
 <script>
 import axios from 'axios'
-//import emailjs from 'emailjs-com';
+import { mapActions } from 'vuex';
 import '@/assets/sass/authentication/auth-boxed.scss';
 export default {
   data() {
     return {
       email: '',
-      result:[]
+      result:[],
+      CurrentUser:[]
     };
   },
   metaInfo: { title: 'Password Recovery Boxed' },
   mounted() {},
   methods: {
-
-    sendEmail() {
-
-     /* let result=[]
+    ...mapActions(['SendEmail','GetUsers']),
+    submit() {
+      let result=[]
       axios.post('/api/password_reset/',{email:this.email}).then((res) => {
         result = res.data;
-        console.log(result)*/
-
-        const options = {
-  method: 'POST',
-  url: 'https://easymail.p.rapidapi.com/send',
-  headers: {
-    'content-type': 'application/json',
-    'X-RapidAPI-Host': 'easymail.p.rapidapi.com',
-    'X-RapidAPI-Key': '82afcb50c4msh7a1e7ea95bac2f4p1d00cfjsn222624a2eea0'
-  },
-  data: {
-    from: {name: 'Firas'},
-    to: {name: 'Wassim', address: 'wassim.mriri@gmail.com'},
-    subject: 'This is the mail subject',
-    message: 'Hello John, how are you ?',
-    show_noreply_warning: true
-  }
-};
-
-axios.request(options).then(function (response) {
-	console.log(response.data);
-}).catch(function (error) {
-	console.error(error);
-});
-        /*
+        if(result.status==="OK")
+     {
+      this.$swal('Email Sent!','Please check your email !','success')
+     }
+      })
+    }}
+ /*
         if(result.status==="OK")
      {
       var templateParams = {
@@ -107,7 +89,6 @@ axios.request(options).then(function (response) {
       );
      }
       });*/
-   }
-  },
+   
 };
 </script>
