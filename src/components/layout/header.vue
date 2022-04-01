@@ -176,57 +176,9 @@
             </perfect-scrollbar>
           </b-dropdown>
           <span class="mt-2" v-if="isLoggedIn">
-            <b-dropdown toggle-tag="a" variant="icon-only" toggle-class="nav-link" class="nav-item message-dropdown" :right="true">
-              <template #button-content>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-mail"
-                >
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                  <polyline points="22,6 12,13 2,6"></polyline>
-                </svg>
-              </template>
-
-              <b-dropdown-item>
-                <b-media class="media">
-                  <template #aside>
-                    <div class="avatar avatar-xl">
-                      <span class="avatar-title rounded-circle">KY</span>
-                    </div>
-                  </template>
-                  <h5 class="usr-name">Kara Young</h5>
-                  <p class="msg-title">ACCOUNT UPDATE</p>
-                </b-media>
-              </b-dropdown-item>
-              <b-dropdown-item>
-                <b-media class="media">
-                  <template #aside>
-                    <img src="@/assets/images/profile-15.jpeg" alt="avatar" />
-                  </template>
-                  <h5 class="usr-name">Daisy Anderson</h5>
-                  <p class="msg-title">ACCOUNT UPDATE</p>
-                </b-media>
-              </b-dropdown-item>
-              <b-dropdown-item>
-                <b-media class="media">
-                  <template #aside>
-                    <div class="avatar avatar-xl">
-                      <span class="avatar-title rounded-circle">OG</span>
-                    </div>
-                  </template>
-                  <h5 class="usr-name">Oscar Garner</h5>
-                  <p class="msg-title">ACCOUNT UPDATE</p>
-                </b-media>
-              </b-dropdown-item>
-            </b-dropdown></span
+            <a href="http://localhost:8080/apps/chat" class=" ml-3 ">
+            <svg xmlns="http://www.w3.org/2000/svg" role="img" width="25" height="25" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.486 2 2 5.589 2 10c0 2.908 1.898 5.515 5 6.934V22l5.34-4.005C17.697 17.852 22 14.32 22 10c0-4.411-4.486-8-10-8zm0 14h-.333L9 18v-2.417l-.641-.247C5.67 14.301 4 12.256 4 10c0-3.309 3.589-6 8-6s8 2.691 8 6s-3.589 6-8 6z"/><path fill="currentColor" d="M7 7h10v2H7zm0 4h7v2H7z"/></svg>              
+            </a></span
           >
           <span v-if="isLoggedIn">
             <b-dropdown toggle-tag="a" variant="icon-only" toggle-class="nav-link" menu-class="notification-scroll" class="nav-item notification-dropdown" :right="true">
