@@ -54,7 +54,7 @@
                       <circle cx="11" cy="11" r="8"></circle>
                       <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                   </svg>
-                  <b-input v-model="search" placeholder="Search Questions" @keyup="search" />
+                  <b-input v-model="search" placeholder="Search User" @keyup="search" />
               </div>
               <perfect-scrollbar class="people" :options="{ wheelSpeed: 0.5, swipeEasing: !0, minScrollbarLength: 40, maxScrollbarLength: 300, suppressScrollX: true }">
                 <div v-for="person in filteredList" class="person" :key="person.id" :class="{ active: selected_user && selected_user.id == person.id }" @click="select_user(person)">
@@ -108,7 +108,7 @@
                     <div class="chat active-chat">
                       <template>
                         <div v-for="(chat,index) in messages" :key="'msg' + index">
-                          <div v-if="chat.reciever == selected_user.userU || chat.sender == selected_user.userU" class="bubble" :class="[selected_user.userU == chat.reciever ? 'me' : 'you']">
+                          <div v-if="(chat.reciever == selected_user.userU && chat.sender==CurrentUser.id) || (chat.sender == selected_user.userU && chat.reciever== CurrentUser.id)" class="bubble" :class="[selected_user.userU == chat.reciever ? 'me' : 'you']">
                             {{ chat.message }}
                           </div>
                         </div>
@@ -161,6 +161,7 @@ export default {
       senders: [],
       messages: [],
       search: '',
+      Contactlist:[]
     };
   },
   computed: {
@@ -173,9 +174,7 @@ export default {
     isLoggedIn: function () {
       return this.$store.getters.isAuthenticated;
     },
-    Contactlist() {
-      return this.Userprofiles.filter((c) => c.userU != this.CurrentUser.id);
-    },
+    
     filteredList() {
       return this.Contactlist.filter((user) => {
         return user.firstname.toLowerCase().includes(this.search.toLowerCase());
@@ -188,24 +187,25 @@ export default {
       cluster: 'eu',
     });
     let messages = this.messages;
-
     var channel = pusher.subscribe('chat');
     channel.bind('message', function (data) {
       let l = messages[messages.length - 1].id + 1;
       messages.push({ id: l, message: data.chats.message, sender: data.chats.sender, reciever: data.chats.reciever, dateCh: null, preview: '' });
       this.messages = messages;
-      this.scroll_to_bottom();
+      setTimeout(() => {
+        document.querySelector('.chat-conversation-box').scrollTo({ left: 0, top: document.querySelector('.chat-conversation-box').scrollHeight, behavior: 'smooth' });
+      });
     });
   },
   methods: {
     ...mapActions(['GetUsers', 'CreateChat', 'GetUserprofiles', 'GetChats']),
+    
     preview(person) {
       var ms=this.messages.filter((c) => c.sender == person.userU && c.reciever==this.CurrentUser.id);
       if(ms.length!=0)
       return ms[ms.length-1].preview+"..."
       else return "No messages"
     },
-    
     select_user(user) {
       this.selected_user = user;
       this.scroll_to_bottom();
@@ -230,9 +230,28 @@ export default {
     this.GetChats();
     this.GetUserprofiles();
     this.messages = this.Chats;
+    
     for (let u in this.Users) {
       if (this.Users[u].username == this.User) {
         this.CurrentUser = this.Users[u];
+        let contact=[]
+      for (let c in this.messages.sort(function(a, b){return b-a})){
+        if(contact.find((d)=>d==this.messages[c].sender)==null&&this.messages[c].reciever==this.CurrentUser.id){
+            contact.push(this.messages[c].sender)
+        }
+      }
+      for(let c in contact){
+        for(let u in this.Userprofiles){
+        if(this.Userprofiles[u].userU != this.CurrentUser.id && this.Userprofiles[u].userU==contact[c]){
+         this.Contactlist.push(this.Userprofiles[u])
+        }
+        }
+      }
+      for(let u in this.Userprofiles){
+        if(this.Userprofiles[u].userU != this.CurrentUser.id && contact.find((d)=>d==this.Userprofiles[u].userU)==null){
+         this.Contactlist.push(this.Userprofiles[u])
+        }
+        }
         for (let c in this.Chats) {
           if (this.Chats[c].reciever == this.CurrentUser.id) {
             let senderr = this.Chats[c].sender;
