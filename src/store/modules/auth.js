@@ -41,6 +41,7 @@ const state = {
   groups:null,
   groupmembers:null,
   groupposts:null,
+  groupcomments:null,
 };
 
 const getters = {
@@ -84,8 +85,9 @@ const getters = {
   StateNotifications:(state) => state.notifications,
   StateChats:(state) => state.chats,
   StateGroups:(state) => state.groups,
-  StateGroupMember:(state) => state.groupmembers,
+  StateGroupmembers:(state) => state.groupmembers,
   StateGroupposts:(state) => state.groupposts,
+  StateGroupcomments:(state) => state.groupcomments,
 };
 
 const actions = {
@@ -322,6 +324,10 @@ const actions = {
     let response = await axios.get("postgroup/postgroup-list/");
     commit("setGroupposts", response.data);
   },
+  async GetGroupcomments({ commit }) {
+    let response = await axios.get("groupcomment/groupcomment-list/");
+    commit("setGroupcomments", response.data);
+  },
   async CreateGrouppost({ dispatch }, group) {
     await axios.post("/postgroup/postgroup-create/", group);
     return await dispatch("GetGroupposts");
@@ -333,6 +339,10 @@ const actions = {
   async CreateGroupmember({ dispatch }, groupmember) {
     await axios.post("/groupmember/groupmember-create/", groupmember);
     return await dispatch("GetGroupmembers");
+  },
+  async CreateGroupcomment({ dispatch }, groupcomment) {
+    await axios.post("/groupcomment/groupcomment-create/", groupcomment);
+    return await dispatch("GetGroupcomments");
   },
 };
 
@@ -451,6 +461,10 @@ const mutations = {
   setGroupposts(state,groupposts)
   {
       state.groupposts=groupposts;
+  },
+  setGroupcomments(state,groupcomments)
+  {
+      state.groupcomments=groupcomments;
   },
 };
 

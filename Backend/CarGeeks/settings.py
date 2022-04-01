@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'group',
     'groupmember',
     'postgroup',
+    'groupcomment',
 ]
 
 MIDDLEWARE = [

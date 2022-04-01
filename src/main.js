@@ -57,6 +57,10 @@ Vue.filter("formatDate", function (value) {
     return moment(String(value)).format("DD MMMM YYYY H:mm");
   }
 });
+import numeral from 'numeral'
+Vue.filter("formatNumber", function (value) {
+  return numeral(value).format("0,0"); // displaying other groupings/separators is possible, look at the docs
+});
 //
 import 'vue-phone-number-input/dist/vue-phone-number-input.css';
 

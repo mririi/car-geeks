@@ -322,7 +322,7 @@
               <a href="/auth/login">
                  <div class="d-flex col-xl-12 col-lg-12 col-md-12 mt-4 mb-4 ">
                   <div class="text-center mt-3">
-                    <span class="h1 font-weight-bolder mr-1">{{ average }}</span
+                    <span class="h1 font-weight-bolder mr-1">{{ average | formatNumber}}</span
                     ><br />
                     <span class="p">out of 5</span>
                   </div>

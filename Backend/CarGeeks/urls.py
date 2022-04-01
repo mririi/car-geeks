@@ -24,6 +24,7 @@ urlpatterns = [
     path('group/',include('group.urls')),
     path('groupmember/',include('groupmember.urls')),
     path('postgroup/',include('postgroup.urls')),
+    path('groupcomment/',include('groupcomment.urls')),
     path('vote/',include('vote.urls')),
     path('notifications/',include('notifications.urls')),
     path('servicepromotion/',include('servicepromotion.urls')),

@@ -31,6 +31,7 @@
         "libphonenumber-js": "^1.9.49",
         "maz-ui": "^2.3.13",
         "moment": "^2.29.1",
+        "numeral": "^2.0.6",
         "perfect-scrollbar": "^1.5.5",
         "portal-vue": "^2.1.7",
         "pusher-js": "^7.0.6",
