@@ -30,22 +30,27 @@
                   <h6>Private Group</h6>
                 </div>
                 <div class="col-md-6 pl-0 col-sm-6 col-12 text-right">
-                  <span v-if="group.userprofileG != CurrentUserProfile.id">
-                  <b-button variant="primary"  @click="Join()"
-                    ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                      <path
-                        fill="currentColor"
-                        d="M22 9V7h-2v2h-2v2h2v2h2v-2h2V9zM8 12c2.21 0 4-1.79 4-4s-1.79-4-4-4s-4 1.79-4 4s1.79 4 4 4zm0 1c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4zm4.51-8.95C13.43 5.11 14 6.49 14 8s-.57 2.89-1.49 3.95C14.47 11.7 16 10.04 16 8s-1.53-3.7-3.49-3.95zm4.02 9.78C17.42 14.66 18 15.7 18 17v3h2v-3c0-1.45-1.59-2.51-3.47-3.17z"
-                      />
-                    </svg>
-                    Join Group</b-button
+                  <span v-for="m in members" :key="m.id">
+                   <span v-if="m.userprofileMem==CurrentUserProfile.id">
+                       <b-button variant="primary" :href="'/group/'+group.id+'/addpost'" 
+                    ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M17 19.22H5V7h7V5H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-7h-2v7.22z"/><path fill="currentColor" d="M19 2h-2v3h-3c.01.01 0 2 0 2h3v2.99c.01.01 2 0 2 0V7h3V5h-3V2zM7 9h8v2H7zm0 3v2h8v-2h-3zm0 3h8v2H7z"/></svg>
+                    Add Post</b-button
                   >
-                  </span>
-                  <span v-else>
+                   </span>
+                    </span>
+                  <span v-if="group.userprofileG==CurrentUserProfile.id">
                    <b-button variant="primary"  :href="'/groupdashboard/'+group.id+'/dashboard'"
                     ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill="currentColor" d="M12 16.14h-.87a8.67 8.67 0 0 0-6.43 2.52l-.24.28v8.28h4.08v-4.7l.55-.62l.25-.29a11 11 0 0 1 4.71-2.86A6.58 6.58 0 0 1 12 16.14Z" class="clr-i-solid--badged clr-i-solid-path-1--badged"/><path fill="currentColor" d="M31.34 18.63a8.67 8.67 0 0 0-6.43-2.52a10.47 10.47 0 0 0-1.09.06a6.59 6.59 0 0 1-2 2.45a10.91 10.91 0 0 1 5 3l.25.28l.54.62v4.71h3.94v-8.32Z" class="clr-i-solid--badged clr-i-solid-path-2--badged"/><path fill="currentColor" d="M11.1 14.19h.31a6.45 6.45 0 0 1 3.11-6.29a4.09 4.09 0 1 0-3.42 6.33Z" class="clr-i-solid--badged clr-i-solid-path-3--badged"/><circle cx="17.87" cy="13.45" r="4.47" fill="currentColor" class="clr-i-solid--badged clr-i-solid-path-4--badged"/><path fill="currentColor" d="M18.11 20.3A9.69 9.69 0 0 0 11 23l-.25.28v6.33a1.57 1.57 0 0 0 1.6 1.54h11.49a1.57 1.57 0 0 0 1.6-1.54V23.3l-.24-.3a9.58 9.58 0 0 0-7.09-2.7Z" class="clr-i-solid--badged clr-i-solid-path-5--badged"/><path fill="currentColor" d="M24.43 13.44a6.54 6.54 0 0 1 0 .69a4.09 4.09 0 0 0 .58.05h.19a4.05 4.05 0 0 0 2.52-1a7.5 7.5 0 0 1-5.14-6.32A4.13 4.13 0 0 0 21.47 8a6.53 6.53 0 0 1 2.96 5.44Z" class="clr-i-solid--badged clr-i-solid-path-6--badged"/><circle cx="30" cy="6" r="5" fill="currentColor" class="clr-i-solid--badged clr-i-solid-path-7--badged clr-i-badge"/><path fill="none" d="M0 0h36v36H0z"/></svg>
                     Manage Group</b-button
                   >
+                 
+                  </span>
+                  <span v-if="existmember==false">
+                   <b-button variant="primary"  @click="Join()"
+                    ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill="currentColor" d="M12 16.14h-.87a8.67 8.67 0 0 0-6.43 2.52l-.24.28v8.28h4.08v-4.7l.55-.62l.25-.29a11 11 0 0 1 4.71-2.86A6.58 6.58 0 0 1 12 16.14Z" class="clr-i-solid--badged clr-i-solid-path-1--badged"/><path fill="currentColor" d="M31.34 18.63a8.67 8.67 0 0 0-6.43-2.52a10.47 10.47 0 0 0-1.09.06a6.59 6.59 0 0 1-2 2.45a10.91 10.91 0 0 1 5 3l.25.28l.54.62v4.71h3.94v-8.32Z" class="clr-i-solid--badged clr-i-solid-path-2--badged"/><path fill="currentColor" d="M11.1 14.19h.31a6.45 6.45 0 0 1 3.11-6.29a4.09 4.09 0 1 0-3.42 6.33Z" class="clr-i-solid--badged clr-i-solid-path-3--badged"/><circle cx="17.87" cy="13.45" r="4.47" fill="currentColor" class="clr-i-solid--badged clr-i-solid-path-4--badged"/><path fill="currentColor" d="M18.11 20.3A9.69 9.69 0 0 0 11 23l-.25.28v6.33a1.57 1.57 0 0 0 1.6 1.54h11.49a1.57 1.57 0 0 0 1.6-1.54V23.3l-.24-.3a9.58 9.58 0 0 0-7.09-2.7Z" class="clr-i-solid--badged clr-i-solid-path-5--badged"/><path fill="currentColor" d="M24.43 13.44a6.54 6.54 0 0 1 0 .69a4.09 4.09 0 0 0 .58.05h.19a4.05 4.05 0 0 0 2.52-1a7.5 7.5 0 0 1-5.14-6.32A4.13 4.13 0 0 0 21.47 8a6.53 6.53 0 0 1 2.96 5.44Z" class="clr-i-solid--badged clr-i-solid-path-6--badged"/><circle cx="30" cy="6" r="5" fill="currentColor" class="clr-i-solid--badged clr-i-solid-path-7--badged clr-i-badge"/><path fill="none" d="M0 0h36v36H0z"/></svg>
+                    Join Group</b-button
+                  >
+                 
                   </span>
                 </div>
               </div>
@@ -123,7 +128,7 @@
                               </svg>
                               {{ p.nblikes }} Likes
                             </a>
-                            <a href="javascript:void(0);" v-b-toggle="collapseComment(p.id)" class=""
+                            <a href="javascript:void(0);" v-b-toggle="collapseComment(p.id)" class="mr-5"
                               ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1.28em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1792 1408">
                                 <path
                                   fill="currentColor"
@@ -131,6 +136,10 @@
                                 />
                               </svg>
                               {{ p.nbcomments }} Comments
+                            </a>
+                             <a href="javascript:void(0);" class="mr-5"
+                              ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512"><path fill="currentColor" d="M256 32C114.62 32 0 125.12 0 240c0 49.56 21.41 95 57 130.74C44.46 421.05 2.7 466 2.2 466.5A8 8 0 0 0 8 480c66.26 0 116-31.75 140.6-51.38A304.66 304.66 0 0 0 256 448c141.39 0 256-93.12 256-208S397.39 32 256 32zm96 232a8 8 0 0 1-8 8h-56v56a8 8 0 0 1-8 8h-48a8 8 0 0 1-8-8v-56h-56a8 8 0 0 1-8-8v-48a8 8 0 0 1 8-8h56v-56a8 8 0 0 1 8-8h48a8 8 0 0 1 8 8v56h56a8 8 0 0 1 8 8z"/></svg>
+                              Add Comment
                             </a>
                           </div>
                           <b-collapse :id="'collapse-hd-statistics-' + p.id" accordion="helpdesk-accordion" class="mb-5 col-xl-12">
@@ -144,7 +153,7 @@
                                           <router-link :to="'/profile/' + up.id" class="text-primary">
                                             <b-avatar :src="'http://127.0.0.1:8000' + up.imageU" class="avatar-title rounded-circle mr-5"></b-avatar>
                                           </router-link>
-                                          <p class="mt-2">{{ c.contentCom }}</p>
+                                          <p class="mt-1">{{ c.contentCom }}</p>
                                         </template>
                                       </b-media>
                                     </span>
@@ -179,6 +188,8 @@ export default {
       group: [],
       CurrentUser: [],
       CurrentUserProfile: [],
+      members: [],
+      existmember:false
     };
   },
   created: function () {
@@ -201,6 +212,16 @@ export default {
         this.CurrentUserProfile = this.Userprofiles[u];
       }
     }
+    
+    for (let m in this.Members) {
+        if (this.Members[m].groupMem == this.group.id && this.Members[m].accepted == true) {
+          this.members.push(this.Members[m]);
+        }
+        if(this.Members[m].userprofileMem==this.CurrentUserProfile.id)
+        {
+          this.existmember=true
+        }
+      }
     });
   },
   mounted() {},

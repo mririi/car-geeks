@@ -396,6 +396,15 @@ const routes = [
             layout: 'app'
         }
     },
+     //Add Post Group
+     {
+        path: '/group/:id/addpost/',
+        name: 'addpost',
+        component: () => import('../views/Groups/AddPost.vue'),
+        meta: {
+            layout: 'app'
+        }
+    },
     //Dashboard
     {
         path: '/dashboard',
@@ -605,7 +614,7 @@ const routes = [
             layout: 'groupdashboard'
         },
     },
-    //Group Dashboard
+    //Group Dashboard Users
     {
         path: "/groupdashboard/:id/users",
         name: 'groupdashboardusers',
