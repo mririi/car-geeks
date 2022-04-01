@@ -595,6 +595,53 @@ const routes = [
             layout: 'dashboard'
         },
     },
+
+    //Group Dashboard
+    {
+        path: "/groupdashboard/:id/dashboard",
+        name: 'groupdashboard',
+        component: () => import('../views/Group Admin/Dashboard.vue'),
+        meta: {
+            layout: 'groupdashboard'
+        },
+    },
+    //Group Dashboard
+    {
+        path: "/groupdashboard/:id/users",
+        name: 'groupdashboardusers',
+        component: () => import('../views/Group Admin/Users.vue'),
+        meta: {
+            layout: 'groupdashboard'
+        },
+    },
+    //Group Dashboard Join requests
+    {
+        path: "/groupdashboard/:id/join",
+        name: 'groupdashboardjoin',
+        component: () => import('../views/Group Admin/JoinRequests.vue'),
+        meta: {
+            layout: 'groupdashboard'
+        },
+    },
+    //Group Dashboard Posts List
+    {
+        path: "/groupdashboard/:id/postslist",
+        name: 'groupdashboardpostslist',
+        component: () => import('../views/Group Admin/PostsList.vue'),
+        meta: {
+            layout: 'groupdashboard'
+        },
+    },
+    //Group Dashboard PostRequests
+    {
+        path: "/groupdashboard/:id/postrequests",
+        name: 'groupdashboardpostrequests',
+        component: () => import('../views/Group Admin/PostRequests.vue'),
+        meta: {
+            layout: 'groupdashboard'
+        },
+    },
+
     //elements
     {
         path: '/elements/alerts',
@@ -943,6 +990,8 @@ router.beforeEach((to, from, next) => {
         store.commit('setLayout', 'dashboard');
     } else if (to.meta && to.meta.layout && to.meta.layout == 'group') {
         store.commit('setLayout', 'group');
+    } else if (to.meta && to.meta.layout && to.meta.layout == 'groupdashboard') {
+        store.commit('setLayout', 'groupdashboard');
     } else {
         store.commit('setLayout', 'app');
     }

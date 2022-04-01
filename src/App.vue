@@ -14,6 +14,7 @@ import serviceLayout from './layouts/service-layout.vue';
 import dashboardLayout from './layouts/dashboard-layout.vue';
 import { mapGetters, mapActions } from 'vuex';
 import groupLayout from './layouts/group-layout.vue';
+import groupdashboardLayout from './layouts/groupdashboard-layout.vue';
 export default {
   metaInfo: {
     title: 'Home',
@@ -26,6 +27,7 @@ export default {
     service: serviceLayout,
     dashboard: dashboardLayout,
     group: groupLayout,
+    groupdashboard:groupdashboardLayout
   },
   computed: {
     layout() {
