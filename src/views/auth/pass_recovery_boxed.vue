@@ -72,23 +72,6 @@ export default {
      }
       })
     }}
- /*
-        if(result.status==="OK")
-     {
-      var templateParams = {
-        email: this.email,
-        
-      };
-      emailjs.send('service_mbc13jf', 'template_jo628km', templateParams, 'qI8OZpK-1liHehAv8').then(
-        function (response) {
-          console.log('SUCCESS!', response.status);
-        },
-        function (error) {
-          console.log('FAILED...', error);
-        }
-      );
-     }
-      });*/
    
 };
 </script>

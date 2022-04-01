@@ -326,7 +326,7 @@ export default {
              if(this.Questions[q].id==quest.id && this.Questions[q].modified==false)
              {
                axios.put('/userprofile/userprofile-update/' + quest.userprofileQ + '/', { nbquestions:this.Userprofiles[u].nbquestions+=1  });
-              this.CreateNotification({message:'Your Question has been accepted ' ,questionNo:this.Questions[q].id,userprofileNo:quest.userprofileQ,admin:true})
+              this.CreateNotification({message:'Your Question has been accepted !' ,questionNo:quest.id,userprofileNo:quest.userprofileQ,userentrepriseNo:quest.userentrepriseQ,admin:true})
              }
             }
            

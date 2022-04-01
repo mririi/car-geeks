@@ -1053,7 +1053,6 @@
 <script>
 import axios from 'axios';
 import { mapGetters, mapActions } from 'vuex';
-import Pusher from 'pusher-js'
 //import SearchComponent from '@/components/SearchComponent'
 export default {
   data() {
@@ -1087,18 +1086,6 @@ export default {
     this.selectedLang = this.$appSetting.toggleLanguage();
 
     this.toggleMode();
-    var pusher = new Pusher('027d486814c2e9262191', {
-      cluster: 'eu',
-    });
-    let notifs = this.Notifications;
-
-    var channel = pusher.subscribe('notifications');
-    channel.bind('notification', function (data) {
-      let l = notifs[notifs.length - 1].id + 1;
-      notifs.push({ id: l, message: data.notification.message, seen: data.notification.seen,admin:data.notification.admin,foradmin:data.notification.foradmin,promotionnotif:data.notification.promotionnotif,verifnotif:data.notification.verifnotif,byuserprofileNo:data.notification.byuserprofileNo,userprofileNo:data.notification.userprofileNo,replyNo:data.notification.replyNo,questionNo:data.notification.questionNo,serviceNo:data.notification.serviceNo,byuserentrepriseNo:data.notification.byuserentrepriseNo,entrepriseNo:data.notification.entrepriseNo,dateNo: null });
-      this.Notifications = notifs;
-      console.log
-    });
     
   },
   computed: {
@@ -1154,7 +1141,7 @@ export default {
       }else if (notif.foradmin==true && notif.questionNo!=null ) {
         this.$router.push('/dashboard/questionrequests')
       }else if (notif.foradmin==true && notif.replyNo!=null) {
-        this.$router.push('/dashboard/replyrequests')
+        this.$router.push('/dashboard/repliesrequests')
       }else if (notif.foradmin==true && notif.serviceNo!=null && notif.promotionnotif==false) {
         this.$router.push('/dashboard/servicerequests')
       }else if (notif.foradmin==true && notif.serviceNo!=null && notif.promotionnotif==true) {

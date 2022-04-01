@@ -284,17 +284,18 @@ export default {
                       axios.put('/question/question-update/' + this.Questions[q].id + '/', { nbrep: (this.Questions[q].nbrep += 1) });
                       if (this.Questions[q].userprofileQ != this.Replies[r].userprofileRep) {
                         this.CreateNotification({
-                          message: ' Replied to your question ',
+                          message: ' Replied to your question!',
                           byuserprofileNo: this.Replies[r].userprofileRep,
-                          userprofileNo: this.Userprofiles[u].id,
+                          byuserentrepriseNo: this.Replies[r].userentrepriseRep,
+                          userprofileNo: this.Questions[q].userprofileQ,
+                          userentrepriseNo: this.Questions[q].userentrepriseQ,
                           questionNo: this.Questions[q].id,
                         });
                       }
                     }
                   }
 
-                  this.CreateNotification({ message: 'Your reply has been accepted ', replyNo: this.Replies[r].id, admin: true });
-                }
+this.CreateNotification({ message: 'Your reply has been accepted!',entrepriseNo:this.Replies[r].userentrepriseRep,userprofileNo:this.Replies[r].userprofileRep, replyNo: this.Replies[r].id, admin: true });                }
               }
             }
           }
@@ -311,16 +312,17 @@ export default {
                       axios.put('/question/question-update/' + this.Questions[q].id + '/', { nbrep: (this.Questions[q].nbrep += 1) });
                       if (this.Questions[q].userprofileQ != this.Replies[r].userprofileRep) {
                         this.CreateNotification({
-                          message: ' Replied to your question ',
+                          message: ' Replied to your question!',
                           byuserprofileNo: this.Replies[r].userprofileRep,
-                          userentrepriseNo: this.Userentreprises[e].id,
+                          byuserentrepriseNo: this.Replies[r].userentrepriseRep,
+                          userprofileNo: this.Questions[q].userprofileQ,
+                          userentrepriseNo: this.Questions[q].userentrepriseQ,
                           questionNo: this.Questions[q].id,
                         });
                       }
                     }
                   }
-
-                  this.CreateNotification({ message: 'Your reply has been accepted ', replyNo: this.Replies[r].id, admin: true });
+                  this.CreateNotification({ message: 'Your reply has been accepted!',entrepriseNo:this.Replies[r].userentrepriseRep,userprofileNo:this.Replies[r].userprofileRep, replyNo: this.Replies[r].id, admin: true });
                 }
               }
             }

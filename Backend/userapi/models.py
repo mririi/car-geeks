@@ -10,15 +10,15 @@ from django.core.mail import send_mail
 @receiver(reset_password_token_created)
 def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
 
-    email_plaintext_message = "{}?token={}".format(reverse('password_reset:reset-password-request'), reset_password_token.key)
+    email_plaintext_message = "This is the link to reset your password {}?token={}".format(reverse('password_reset:reset-password-request'), reset_password_token.key)
 
     send_mail(
         # title:
-        "Password Reset for {title}".format(title="Some website title"),
+        "Password Reset {title}".format(title="Car Geeks"),
         # message:
         email_plaintext_message,
         # from:
-        "noreply@somehost.local",
+        "noreply@cargeeks.local",
         # to:
         [reset_password_token.user.email]
     )

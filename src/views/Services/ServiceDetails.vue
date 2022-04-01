@@ -854,7 +854,7 @@ export default {
         }
         this.GetEvaluations();
       }
-      this.CreateNotification({ message: ' Rated your Service ' + this.nbEval + ' Stars !', userprofileNo: this.CurrentUserProfile.id, serviceNo: this.service.id });
+      this.CreateNotification({ message: ' Rated your Service ' + this.nbEval + ' Stars !',byuserprofileNo:this.CurrentUserProfile.id,byuserentrepriseNo:this.CurrentUserEntreprise.id,userprofileNo:this.service.userprofileS,entrepriseNo:this.service.userentrepriseS, serviceNo: this.service.id });
       this.$bvModal.hide('Rating');
       this.$router.go();
     },
