@@ -241,7 +241,11 @@ export default {
         const current = new Date();
       axios.post('/servicepromotion/servicepromotion-update/' + id + '/', { Running: true , dateP:current.getFullYear()+'-'+(current.getMonth()+1)+'-'+current.getDate() });
        axios.post('/service/service-update/' + serviceid + '/', { promoted: true });
-      this.CreateNotification({message:'Your service promotion has been accepted ' ,serviceNo:serviceid,admin:true})
+       for(let s in this.Services){
+         if(this.Services[s].id==serviceid){
+          this.CreateNotification({message:'Your service promotion has been accepted !' ,userprofileNo:this.Services[s].userprofileS,entrepriseNo:this.Services[s].userentrepriseS,serviceNo:serviceid,admin:true})
+         }
+       }
       this.$router.go();
       this.$swal('Accepted!', 'The service promotion has been accepted.', 'success');
         }

@@ -307,7 +307,7 @@ export default {
       }).then((result) => {
         if (result.value) {
        axios.post('/service/service-update/' + service.id + '/', { accepted: true });
-       this.CreateNotification({message:'Your service has been accepted ' ,serviceNo:service.id,admin:true})
+       this.CreateNotification({message:'Your service has been accepted ' ,userprofileNo:service.userprofileS,entrepriseNo:service.userentrepriseS,serviceNo:service.id,admin:true})
         this.$router.go();
         this.$swal('Accepted!', 'The service has been accepted.', 'success');
        
