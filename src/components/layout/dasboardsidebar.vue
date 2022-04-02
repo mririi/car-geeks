@@ -371,8 +371,8 @@
           </a>
           <b-collapse id="groups" accordion="menu">
             <ul class="collapse submenu list-unstyled show">
-              <router-link tag="li" to="/apps/chat" @click.native="toggleMobileMenu"><a>Groups List</a></router-link>
-              <router-link tag="li" to="/apps/mailbox" @click.native="toggleMobileMenu"><a>Create Group Requests</a></router-link>
+              <router-link tag="li" to="/dashboard/grouplist" @click.native="toggleMobileMenu"><a>Groups List</a></router-link>
+              <router-link tag="li" to="/dashboard/grouprequests" @click.native="toggleMobileMenu"><a>Group Requests</a></router-link>
             </ul>
           </b-collapse>
         </li>

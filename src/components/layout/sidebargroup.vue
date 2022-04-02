@@ -2,7 +2,7 @@
   <div class="">
     <nav class="md:block mt-4 sizee shadow-xl dash items-center justify-between float-right">
       <div class="mt-5">
-        <a href="/addquestion" class="mt-5 ml-5 mb-3"> <b-button variant="primary" class="mt-5"> Create Group</b-button></a>
+        <a href="/creategroup" class="mt-5 ml-5 mb-3"> <b-button variant="primary" class="mt-5"> Create Group</b-button></a>
       </div>
   
     </nav>

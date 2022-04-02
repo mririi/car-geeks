@@ -6,7 +6,7 @@
           <div class="page-header">
             <nav class="breadcrumb-one" aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item active" aria-current="page"><span>Add Post</span></li>
+                <li class="breadcrumb-item active" aria-current="page"><span>Add Group</span></li>
               </ol>
             </nav>
           </div>
@@ -23,24 +23,19 @@
                 <div class="panel-heading">
                   <div class="row">
                     <div class="col-xl-10 col-md-12 col-sm-12 col-12">
-                      <h4>Add Post</h4>
+                      <h4>Create Group</h4>
                     </div>
                   </div>
                 </div>
                 <div class="panel-body">
                   <b-form novalidate @submit.prevent="submit">
-                    <label>Post details <span style="color: red">*</span></label>
+                     <label >Group title <span style="color:red">*</span></label>
                     <b-form-group class="mb-3">
-                      <b-textarea
-                        rows="4"
-                        type="text"
-                        v-model="form.detailsP"
-                        placeholder="Post details"
-                        :class="[is_submit_form1 ? (form.detailsP && form.detailsP.length < 500 && form.detailsP.length > 15 ? 'is-valid' : 'is-invalid') : '']"
-                      ></b-textarea>
+                      <b-input type="text" placeholder="Group title " v-model="form.titleG" :class="[is_submit_form1 ? (form.titleG && form.titleG.length<30 && form.titleG.length>15 ? 'is-valid' : 'is-invalid') : '']"></b-input>
                       <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
-                      <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.detailsP }">Please Enter details between 15 and 500 characters</b-form-invalid-feedback>
+                      <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.titleG  }">Please Enter a title between 15 and 30 characters</b-form-invalid-feedback>
                     </b-form-group>
+                    
                     <label>Insert image</label>
                     <div class="mb-4">
                       <b-file @change="onFileChanged"></b-file>
@@ -73,7 +68,7 @@ import '@/assets/sass/components/cards/card.scss';
 import '@/assets/sass/forms/file-upload-with-preview.min.css';
 import { mapGetters, mapActions } from 'vuex';
 //import VueTagsInput from '@johmun/vue-tags-input';
-import axios from 'axios';
+//import axios from 'axios';
 export default {
   metaInfo: { title: 'Add Post' },
   components: {
@@ -83,7 +78,7 @@ export default {
     return {
       
       form: {
-        detailsP: '',
+        titleG: '',
       },
       image: null,
       uentreprise: [],
@@ -99,8 +94,7 @@ export default {
     this.GetUserprofiles();
     this.GetGroups();
     this.GetGroupposts();
-     axios.get('/group/group-detail/' + this.$route.params.id + '/').then((response) => {
-      this.group = response.data;
+    this.Groupmemebers();
     for (let u in this.Users) {
       if (this.Users[u].username == this.User) {
         this.CurrentUser = this.Users[u];
@@ -110,39 +104,38 @@ export default {
       if (this.Userprofiles[u].userU == this.CurrentUser.id) {
         this.CurrentUserProfile = this.Userprofiles[u];
       }
-    }})
+    }
   },
   methods: {
     onFileChanged(event) {
       this.image = event.target.files[0];
     },
-    ...mapActions(['CreateNotification', 'GetUsers', 'GetUserprofiles', 'GetGroups','GetGroupposts' ,'CreateGrouppost']),
+    ...mapActions(['CreateNotification', 'GetUsers', 'GetUserprofiles', 'GetGroups','GetGroupposts' ,'CreateGroup','CreateGroupmembers']),
     async submit() {
       try {
         this.is_submit_form1 = true;
         if (
-          this.form.detailsP.length < 500 &&
-          this.form.detailsP.length > 15
+          this.form.titleG.length < 30 &&
+          this.form.titleG.length > 15
         ) {
           var formdata = new FormData();
           if (this.image != null) {
-            formdata.append('imagePost', this.image);
+            formdata.append('imageG', this.image);
           }
-          formdata.append('detailsP', this.form.detailsP);
+          formdata.append('titleG', this.form.titleG);
          /* if (this.CurrentUser.is_superuser) {
             formdata.append('accepted', true);
             axios.put('/userprofile/userprofile-update/' + this.form.userprofileQ + '/', { nbquestions: this.uprofile.nbquestions + 1 });
           }*/
           //formdata.append("tags", this.tags.text);
-          formdata.append('userprofilePost', this.CurrentUserProfile.id);
-          formdata.append('groupPost', this.$route.params.id);
-          if(this.group.userprofileG==this.CurrentUserProfile.id)
+          formdata.append('countryG', this.CurrentUserProfile.country);
+          formdata.append('userprofileG', this.CurrentUserProfile.id);
+          if(this.CurrentUser.is_superuser)
           {
             formdata.append('accepted', true);
-            axios.put('/group/group-update/' + this.$route.params.id + '/', { nbposts: this.group.nbposts + 1 });
-             this.$swal('Good Job!', 'Your Post has been created successfuly!', 'success');
+            this.$swal('Good Job!', 'The group has been created successfuly!', 'success');
           }
-          await this.CreateGrouppost(formdata);
+          await this.CreateGroup(formdata);
           
         /*  if (this.CurrentUser.is_superuser == false) {
             await this.CreateNotification({
@@ -154,7 +147,7 @@ export default {
             });
             this.$swal('Good Job!', 'Your question has been created successfuly, Please wait for the administator to accept it !', 'success');
           }*/
-          this.$router.push('/groupdetail/'+this.group.id);
+          this.$router.push('/groups');
         }
       } catch (error) {
         throw 'Il ya un error!';

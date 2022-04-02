@@ -403,6 +403,15 @@ const routes = [
             layout: 'app'
         }
     },
+    //Create Group
+    {
+        path: '/creategroup',
+        name: 'creategroup',
+        component: () => import('../views/Groups/CreateGroup.vue'),
+        meta: {
+            layout: 'app'
+        }
+    },
      //Add Post Group
      {
         path: '/group/:id/addpost/',
@@ -607,6 +616,24 @@ const routes = [
         path: "/dashboard/promotionentrepriserequests",
         name: 'promotionentrepriserequests',
         component: () => import('../views/Admin/PromotionEntrepriseRequests.vue'),
+        meta: {
+            layout: 'dashboard'
+        },
+    },
+    //Group List Dashboard
+    {
+        path: "/dashboard/grouplist",
+        name: 'grouplist',
+        component: () => import('../views/Admin/GroupList.vue'),
+        meta: {
+            layout: 'dashboard'
+        },
+    },
+    //Group Requests Dashboard
+    {
+        path: "/dashboard/grouprequests",
+        name: 'grouprequests',
+        component: () => import('../views/Admin/GroupRequests.vue'),
         meta: {
             layout: 'dashboard'
         },

@@ -63,7 +63,7 @@
                     
                     <span v-for="m in Members" :key="m.id">
                       <span v-if="m.groupMem==group.id && m.userprofileMem && m.accepted==true">
-                        <span v-for="uu in Userprofiles.slice(0, 4)" :key="uu.id">
+                        <span v-for="uu in Userprofiles.slice(0, m.id)" :key="uu.id">
                           <span v-if="uu.id == m.userprofileMem">
                         <li class="list-inline-item chat-online-usr">
                           <router-link :to="'/profile/'+uu.id">
@@ -76,7 +76,7 @@
                     </span>
                     <li class="list-inline-item badge-notify">
                       <div class="notification">
-                        <span class="badge badge-info badge-pill">+{{ group.nbmembers - 4 }} more</span>
+                        <span class="badge badge-info badge-pill">+{{ group.nbmembers}} more</span>
                       </div>
                     </li>
                   </ul>
@@ -137,11 +137,34 @@
                               </svg>
                               {{ p.nbcomments }} Comments
                             </a>
-                             <a href="javascript:void(0);" class="mr-5"
+                             <a href="javascript:void(0);" v-b-modal="modalAddComment(p.id)" class="mr-5"
                               ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512"><path fill="currentColor" d="M256 32C114.62 32 0 125.12 0 240c0 49.56 21.41 95 57 130.74C44.46 421.05 2.7 466 2.2 466.5A8 8 0 0 0 8 480c66.26 0 116-31.75 140.6-51.38A304.66 304.66 0 0 0 256 448c141.39 0 256-93.12 256-208S397.39 32 256 32zm96 232a8 8 0 0 1-8 8h-56v56a8 8 0 0 1-8 8h-48a8 8 0 0 1-8-8v-56h-56a8 8 0 0 1-8-8v-48a8 8 0 0 1 8-8h56v-56a8 8 0 0 1 8-8h48a8 8 0 0 1 8 8v56h56a8 8 0 0 1 8 8z"/></svg>
                               Add Comment
                             </a>
                           </div>
+                          <b-modal :id="'modaladdcomment' + p.id" hide-footer title="Add Comment" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
+                            <form class="mt-0">
+                              <div class="form-group">
+                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                  <path
+                                    fill="currentColor"
+                                    d="m21.558 3.592l-1.15-1.15a1.49 1.49 0 0 0-2.12 0L13 7.731V11h3.27l5.288-5.288a1.49 1.49 0 0 0 0-2.12ZM15.579 9.45h-1.03V8.42L18 4.973l1.03 1.03Z"
+                                  />
+                                  <path fill="currentColor" d="M19 19H5V5h6V3H5a2.006 2.006 0 0 0-2 2v14a2.006 2.006 0 0 0 2 2h14a2.006 2.006 0 0 0 2-2v-6h-2Z" />
+                                </svg>
+                                <b-form-textarea
+                                  type="text"
+                                  class="mb-2"
+                                  v-model="form.contentCom"
+                                  :class="[is_submit_comment ? (form.contentCom && form.contentCom.length < 200 && form.contentCom.length > 15 ? 'is-valid' : 'is-invalid') : '']"
+                                  placeholder="Enter your comment here"
+                                ></b-form-textarea>
+                                <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
+                                <b-form-invalid-feedback :class="{ 'd-block': is_submit_comment && !form.contentCom }">Please Enter content between 15 and 200 characters</b-form-invalid-feedback>
+                              </div>
+                              <b-button variant="primary" block class="mt-2 mb-2" @click="commentaire(p)">Submit</b-button>
+                            </form>
+                          </b-modal>
                           <b-collapse :id="'collapse-hd-statistics-' + p.id" accordion="helpdesk-accordion" class="mb-5 col-xl-12">
                             <span v-for="c in Comments" :key="c.id">
                               <span v-if="c.postCom == p.id">
@@ -188,8 +211,13 @@ export default {
       group: [],
       CurrentUser: [],
       CurrentUserProfile: [],
+      postdetails:[],
       members: [],
-      existmember:false
+      existmember:false,
+      form:{
+        contentCom:''
+      },
+      is_submit_comment:false
     };
   },
   created: function () {
@@ -199,6 +227,7 @@ export default {
     this.GetGroupcomments();
     this.GetGroupmembers();
     this.GetUsers();
+
     axios.get('/group/group-detail/' + this.$route.params.id + '/').then((response) => {
       this.group = response.data;
    
@@ -237,16 +266,42 @@ export default {
     }),
   },
   methods: {
-    ...mapActions(['GetGroups', 'GetGroupposts','GetUsers', 'GetUserprofiles', 'GetGroupcomments', 'GetGroupmembers','CreateGroupmember']),
+    ...mapActions(['GetGroups', 'GetGroupposts','GetUsers', 'GetUserprofiles','CreateGroupcomment', 'GetGroupcomments', 'GetGroupmembers','CreateGroupmember']),
 
     collapseComment(i) {
       return 'collapse-hd-statistics-' + i;
     },
-
+    modalAddComment(id) {
+      return 'modaladdcomment' + id;
+    },
     Join()
     {
        this.CreateGroupmember({userprofileMem:this.CurrentUserProfile.id , groupMem:this.group.id});
-    }
+    },
+     async commentaire(post) {
+      this.is_submit_comment = true;
+      if (this.form.contentCom && this.form.contentCom.length < 200 && this.form.contentCom.length > 15) {
+        this.$bvModal.hide('modaladdcomment' + post.id);
+         axios.get('/postgroup/postgroup-detail/' + post.id + '/').then((response) => {
+          this.postdetails = response.data;
+        });
+        try {
+          await this.CreateGroupcomment({contentCom:this.form.contentCom,userprofileCom:this.CurrentUserProfile.id,postCom:post.id});
+         /* if(this.userprofile!=this.reply.userprofileRep || this.userentreprise!=this.reply.userentrepriseRep){
+      this.CreateNotification({message:' commented on your reply !',byuserprofileNo:this.CurrentUserProfile.id,userprofileNo:rep.userprofileRep,byuserentrepriseNo:this.CurrentUserEntreprise.id,entrepriseNo:rep.userentrepriseRep,replyNo:rep.id})
+      }*/
+          await axios.put('/postgroup/postgroup-update/' + post.id + '/', {
+            nbcomments: (this.postdetails.nbcomments += 1),
+          });
+          this.GetGroupposts();
+          this.form.contentCom = '';
+          this.is_submit_comment = false;
+        this.$swal('Good Job!', 'Your comment has been created successfuly !', 'success');
+        } catch (error) {
+          throw 'Il ya un errora !';
+        }
+      }
+    },
   },
 };
 </script>

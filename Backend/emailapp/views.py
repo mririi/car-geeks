@@ -42,7 +42,7 @@ def emailCreate(request):
 	serializer = EmailSerializer(data=request.data)
 	if serializer.is_valid():
          serializer.save()
-         send_mail(str(request.data.get('subject')), str(request.data.get('message')), 'fruine6@gmail.com', [str(request.data.get('to'))], fail_silently=False)
+         send_mail(str(request.data.get('subject')), str(request.data.get('message')), 'contact.cargeeks@gmail.com', [str(request.data.get('to'))], fail_silently=False)
          return Response(request.data)
 
 @api_view(['POST'])

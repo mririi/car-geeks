@@ -14,38 +14,48 @@
         </li>
       </ul>
     </portal>
-    
-    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing mt-5">
-      <div class="widget widget-card-two">
-          <span v-for="g in Groups" :key="g.id">
-        <div class="widget-heading">
-          <b-media>
-            <template #aside>
-              <div class="w-img">
-                <img :src="'http://127.0.0.1:8000' + g.imageG" alt="avatar" />
+
+    <div class="row">
+      <span v-for="g in Groups" :key="g.id">
+        <span v-if="g.accepted==true">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing mt-5">
+          <div class="widget widget-card-two">
+            <div class="widget-heading">
+              <b-media>
+                <template #aside>
+                  <div class="w-img">
+                    <img :src="'http://127.0.0.1:8000' + g.imageG" alt="avatar" />
+                  </div>
+                </template>
+                <h6>{{ g.titleG }}</h6>
+                <p class="meta-date-time">{{ g.countryG }}</p>
+              </b-media>
+            </div>
+            <div class="widget-content">
+              <h5>{{ g.nbmembers }} Members Going</h5>
+              <div class="img-group">
+                <span v-for="m in Members" :key="m.id">
+                  <span v-if="m.groupMem == g.id && m.accepted == true">
+                    <span v-for="uu in Userprofiles.slice(0,m.id)" :key="uu.id">
+                      <span v-if="uu.id == m.userprofileMem">
+                        <img :src="'http://127.0.0.1:8000' + uu.imageU" alt="avatar" />
+                      </span>
+                    </span>
+                  </span>
+                </span>
               </div>
-            </template>
-            <h6>{{g.titleG}}</h6>
-            <p class="meta-date-time">{{g.countryG}}</p>
-          </b-media>
-        </div>
-        <div class="widget-content">
-          <h5>{{g.nbmembers}} Members Going</h5>
-          <div class="img-group">
-            <img src="@/assets/images/profile-19.jpeg" alt="avatar" />
-            <img src="@/assets/images/profile-6.jpeg" alt="avatar" />
-            <img src="@/assets/images/profile-8.jpeg" alt="avatar" />
-            <img src="@/assets/images/profile-3.jpeg" alt="avatar" />
+              <b-button :href="'/groupdetail/' + g.id" tag="a">View Details</b-button>
+            </div>
           </div>
-          <b-button :href="'/groupdetail/'+g.id" tag="a">View Details</b-button>
         </div>
-        </span>
-      </div>
+      </span>
+      </span>
     </div>
   </div>
 </template>
 
 <script>
+import '@/assets/sass/widgets/widgets.scss';
 import { mapGetters, mapActions } from 'vuex';
 export default {
   metaInfo: { title: 'Groups' },
@@ -54,15 +64,19 @@ export default {
   },
   created: function () {
     this.GetGroups();
+    this.GetGroupmembers();
+    this.GetUserprofiles();
   },
   mounted() {},
   computed: {
     ...mapGetters({
       Groups: 'StateGroups',
+      Members: 'StateGroupmembers',
+      Userprofiles: 'StateUserprofiles',
     }),
   },
   methods: {
-    ...mapActions(['GetGroups']),
+    ...mapActions(['GetGroups', 'GetGroupmembers', 'GetUserprofiles']),
   },
 };
 </script>
