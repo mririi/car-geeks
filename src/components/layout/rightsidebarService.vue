@@ -87,7 +87,7 @@ export default {
          this.CurrentUserProfile=this.Userprofiles[up]
          for(let p in this.Servicepromotions){
       axios.get('/service/service-detail/' + this.Servicepromotions[p].serviceP + '/').then((response) => {
-      if(response.data.userprofileS==this.CurrentUserProfile.id ){
+      if(response.data.userprofileS==this.CurrentUserProfile.id && response.data.promoted==true){
         this.promo=true
       }})
     }
@@ -105,7 +105,7 @@ export default {
          this.CurrentUserEntreprise=this.Userentreprises[ue]
          for(let p in this.Servicepromotions){
       axios.get('/service/service-detail/' + this.Servicepromotions[p].serviceP + '/').then((response) => {
-      if(response.data.userentrepriseS==this.CurrentUserEntreprise.id ){
+      if(response.data.userentrepriseS==this.CurrentUserEntreprise.id && response.data.promoted==true){
         this.promo=true
       }})
     }

@@ -19,7 +19,7 @@
         <div class="panel br-4">
           <div class="panel-body">
             <form-wizard title="" @on-complete="onComplete" subtitle="" shape="circle" color="#4361ee">
-              <tab-content title="More Informations" :before-change="beforeTabSwitch" icon="far fa-user">
+            <tab-content title="More Informations" :before-change="beforeTabSwitch" icon="far fa-user">
                 <b-form>
                   <b-form-row class="mb-4">
                     <b-form-group label="First name" class="col-md-6">
@@ -82,17 +82,27 @@
                   </b-form-row>
                 </b-form>
               </tab-content>
-              <tab-content title="Preferences" icon="far fa-heart">
-                <div class="col-4 pl-4">
-                  <h5>Question Category:</h5>
-                  <b-select v-model="form.category" value="Default select">
-                    <b-select-option value="0">Select Category</b-select-option>
-                    <b-select-option v-for="c in Questioncategories" :key="c.id" :value="c.id">{{ c.typeC }}</b-select-option>
-                  </b-select>
+              <tab-content title="Preferences" icon="far fa-heart ">
+                <h7 class="mb-5">Choose 1 to 3 Question categories or skip to finish your profile creation ! ({{category.length}} Chosen)</h7>
+                <b-form-checkbox-group class="row mt-4" v-model="category">
+                  
+                <b-card  v-for="c in Questioncategories" :key="c.id" class="component-card_4  mb-3" style="margin-left:10%" >
+                <div class="user-profile">
+                    <img :src="'http://127.0.0.1:8000'+c.imageCat" class="mb-2" style="width:250px;height:200px;">
                 </div>
+                <div class="user-info">
+                    <b-card-text class="col-12"><b-form-checkbox :value="c.id" v-show="category.length<=2" class="slider round">{{ c.typeC }}</b-form-checkbox><b-form-checkbox :value="c.id" v-show="category.length>2" disabled class="slider round">{{ c.typeC }}</b-form-checkbox></b-card-text>
+                    </div>
+            </b-card>
+                        <b-button @click="resetbtn" variant="danger" class=" mb-2" style="max-height:80px;margin-top:7%;margin-left:17%">Reset</b-button>
+
+                </b-form-checkbox-group>
+           
               </tab-content>
+              
             </form-wizard>
           </div>
+        
         </div>
       </div>
     </div>
@@ -121,6 +131,7 @@ export default {
   },
   data() {
     return {
+      category:[],
       form: {
         firstname: '',
         lastname: '',
@@ -129,8 +140,6 @@ export default {
         tel: '',
         country: '',
         userU: [],
-        //pref
-        category: 0,
         //role
         roleU: null,
       },
@@ -160,6 +169,10 @@ export default {
   },
   methods: {
     ...mapActions(['CreateRole', 'CreatePreference', 'GetPreferences', 'GetRoles', 'GetUsers', 'CreateUserprofile', 'GetUserprofiles', 'GetQuestioncategories']),
+    
+    resetbtn(){
+      this.category=[]
+    },
     //upload image
     onFileChanged(event) {
       this.image = event.target.files[0];
@@ -207,17 +220,17 @@ export default {
       }
     },
     onComplete: async function () {
+      if(this.category.length!=0){
       for (let u in this.Userprofiles) {
         if (this.Userprofiles[u].userU == this.form.userU.id) {
-          await this.CreatePreference({ userprofilePref: this.Userprofiles[u].id, categoryPref: this.form.category, brandPref: null });
-          console.log(this.Preferences);
+          await this.CreatePreference({ userprofilePref: this.Userprofiles[u].id, categoryPref1: this.category[0],categoryPref2: this.category[1],categoryPref3: this.category[2] });
           for (let p in this.Preferences) {
             if (this.Preferences[p].userprofilePref == this.Userprofiles[u].id) {
               axios.put('/userprofile/userprofile-update/' + this.Userprofiles[u].id + '/', { preferencesU: this.Preferences[p].id });
             }
           }
         }
-      }
+      }}
       this.$swal('Good Job!', 'Your profile has been created successfuly.', 'success');
       this.$router.push('/questions');
     },
@@ -229,6 +242,7 @@ export default {
     this.GetUserprofiles();
     this.GetRoles();
     this.GetPreferences();
+    console.log(this.category.find((d)=>d==999))
     if(this.User==null){
       this.$router.push('/login');
     }
@@ -237,7 +251,7 @@ export default {
         this.CurrentUser = this.Users[u];
         for (let u in this.Userprofiles) {
           if (this.Userprofiles[u].userU == this.CurrentUser.id) {
-            this.$router.push('/questions');
+            //this.$router.push('/questions');
           }
         }
       }

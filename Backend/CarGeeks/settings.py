@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'groupmember',
     'postgroup',
     'groupcomment',
+    'groupvote'
 ]
 
 MIDDLEWARE = [
@@ -151,9 +152,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, '../Frontend/src/assets/images/')
-]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'

@@ -85,16 +85,19 @@ export default {
       uprofile: [],
       CurrentUser: [],
       CurrentUserProfile: [],
+      CurrentUserEntreprise:[],
       is_submit_form1: false,
-      group:[]
+      group:[],
+      existentreprise:false,
+      existprofile:false
     };
   },
   created: function () {
     this.GetUsers();
     this.GetUserprofiles();
+    this.GetUserentreprises();
     this.GetGroups();
     this.GetGroupposts();
-    this.Groupmemebers();
     for (let u in this.Users) {
       if (this.Users[u].username == this.User) {
         this.CurrentUser = this.Users[u];
@@ -103,14 +106,23 @@ export default {
     for (let u in this.Userprofiles) {
       if (this.Userprofiles[u].userU == this.CurrentUser.id) {
         this.CurrentUserProfile = this.Userprofiles[u];
+        //this.existprofile = true;
       }
+    }
+    for (let ue in this.Userentreprises) {
+      if (this.Userentreprises[ue].userE == this.CurrentUser.id) {
+        this.CurrentUserEntreprise = this.Userentreprises[ue];
+        //this.existentreprise = true;
+        console.log("waaaaa")
+      }
+      
     }
   },
   methods: {
     onFileChanged(event) {
       this.image = event.target.files[0];
     },
-    ...mapActions(['CreateNotification', 'GetUsers', 'GetUserprofiles', 'GetGroups','GetGroupposts' ,'CreateGroup','CreateGroupmembers']),
+    ...mapActions(['CreateNotification', 'GetUsers','GetUserentreprises', 'GetUserprofiles', 'GetGroups','GetGroupposts' ,'CreateGroup','CreateGroupmembers']),
     async submit() {
       try {
         this.is_submit_form1 = true;
@@ -123,30 +135,17 @@ export default {
             formdata.append('imageG', this.image);
           }
           formdata.append('titleG', this.form.titleG);
-         /* if (this.CurrentUser.is_superuser) {
-            formdata.append('accepted', true);
-            axios.put('/userprofile/userprofile-update/' + this.form.userprofileQ + '/', { nbquestions: this.uprofile.nbquestions + 1 });
-          }*/
-          //formdata.append("tags", this.tags.text);
+     
           formdata.append('countryG', this.CurrentUserProfile.country);
           formdata.append('userprofileG', this.CurrentUserProfile.id);
+          formdata.append('userentrepriseG', this.CurrentUserEntreprise.id);
           if(this.CurrentUser.is_superuser)
           {
             formdata.append('accepted', true);
             this.$swal('Good Job!', 'The group has been created successfuly!', 'success');
           }
           await this.CreateGroup(formdata);
-          
-        /*  if (this.CurrentUser.is_superuser == false) {
-            await this.CreateNotification({
-              message: ' requested a Verification on their question !',
-              byuserprofileNo: this.form.userprofileQ,
-              byuserentrepriseNo: this.form.userentrepriseQ,
-              questionNo: 1,
-              foradmin: true,
-            });
-            this.$swal('Good Job!', 'Your question has been created successfuly, Please wait for the administator to accept it !', 'success');
-          }*/
+     
           this.$router.push('/groups');
         }
       } catch (error) {
@@ -155,7 +154,11 @@ export default {
     },
   },
   computed: {
-    ...mapGetters({ Userentreprises: 'StateUserentreprises', Questioncategories: 'StateQuestioncategories', Userprofiles: 'StateUserprofiles', User: 'StateUser', Users: 'StateUsers' }),
+    ...mapGetters({
+     Userentreprises:'StateUserentreprises',
+    Userprofiles: 'StateUserprofiles', 
+    User: 'StateUser', 
+    Users: 'StateUsers' }),
     isLoggedIn: function () {
       return this.$store.getters.isAuthenticated;
     },

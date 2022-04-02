@@ -803,6 +803,7 @@ export default {
     promote() {
       this.CreateServicepromotion({ serviceP: this.service.id, nbDays: this.nbDays });
       this.promoted = true;
+      this.CreateNotification({message:' requested a Promotion on their service !',byuserprofileNo:this.CurrentUserProfile.id,foradmin:true})
       this.$swal('Good Job!', 'Your Service promotion has been sent, Please wait for the administrator to launch your promotion !', 'success');
     },
     deleteService(id) {

@@ -42,6 +42,7 @@ const state = {
   groupmembers:null,
   groupposts:null,
   groupcomments:null,
+  groupvotes:null,
 };
 
 const getters = {
@@ -88,6 +89,7 @@ const getters = {
   StateGroupmembers:(state) => state.groupmembers,
   StateGroupposts:(state) => state.groupposts,
   StateGroupcomments:(state) => state.groupcomments,
+  StateGroupvotes:(state) => state.groupvotes,
 };
 
 const actions = {
@@ -344,6 +346,14 @@ const actions = {
     await axios.post("/groupcomment/groupcomment-create/", groupcomment);
     return await dispatch("GetGroupcomments");
   },
+  async CreateGroupvote({ dispatch }, groupvote) {
+    await axios.post("/groupvote/groupvote-create/", groupvote);
+    return await dispatch("GetGroupvotes");
+  },
+  async GetGroupvotes({ commit }) {
+    let response = await axios.get("groupvote/groupvote-list/");
+    commit("setGroupvotes", response.data);
+  },
 };
 
 const mutations = {
@@ -465,6 +475,10 @@ const mutations = {
   setGroupcomments(state,groupcomments)
   {
       state.groupcomments=groupcomments;
+  },
+  setGroupvotes(state,groupvotes)
+  {
+      state.groupvotes=groupvotes;
   },
 };
 

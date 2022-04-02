@@ -248,7 +248,7 @@ export default {
     
   },
   methods: {
-    ...mapActions(['GetServices','GetServicepromotions','GetServicetypes', 'GetUsers', 'GetUserprofiles','GetRoles']),
+    ...mapActions(['GetServices','CreateNotification','GetServicepromotions','GetServicetypes', 'GetUsers', 'GetUserprofiles','GetRoles']),
       async Accept(userid) {
       this.$swal({
         icon: 'warning',
@@ -265,6 +265,7 @@ export default {
          if (this.Roles[r].userRole== userid && this.Roles[r].service==false)
          {
              axios.post('/role/role-update/'+this.Roles[r].id+'/', { service: true , userRole:this.Roles[r].userRole,admin:this.Roles[r].admin }); 
+            this.CreateNotification({message:'Your verification request has been accepted !' ,userprofileNo:userid,admin:true})
             update=true
         }
         

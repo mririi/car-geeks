@@ -9,6 +9,7 @@ class Role(models.Model):
   service=models.BooleanField(default=False)
   admin=models.BooleanField(default=False)
   staff=models.BooleanField(default=False)
+  groupadmin=models.BooleanField(default=False)
   userRole =models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
   def __str__(self):
     return self.userRole.__str__()

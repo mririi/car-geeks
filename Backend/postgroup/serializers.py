@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import PostGroup
+from .models import Postgroup
 
-class PostGroupSerializer(serializers.ModelSerializer):
+class PostgroupSerializer(serializers.ModelSerializer):
 	class Meta:
-		model = PostGroup
+		model = Postgroup
 		fields ='__all__'

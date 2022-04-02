@@ -31,9 +31,9 @@
                       <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                       <circle cx="12" cy="7" r="4"></circle>
                     </svg>
-                    <b-input placeholder="Username" v-model="form.username" :class="[is_submit_form1 ? (form.username && form.username.length >= 6 ? 'is-valid' : 'is-invalid') : '']"></b-input>
+                    <b-input placeholder="Username" v-model="form.username" :class="[is_submit_form1 ? (form.username && form.username.length >= 8 ? 'is-valid' : 'is-invalid') : '']"></b-input>
                     <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
-                    <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.username.length >= 6 }">Please enter a username longer than 6 characters !</b-form-invalid-feedback>
+                    <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.username.length >= 8 }">Please enter a username longer than 8 characters !</b-form-invalid-feedback>
                   </div>
                   <div id="email-field" class="field-wrapper input">
                     <label for="email">Email</label>
@@ -77,7 +77,7 @@
                       :type="pwd_type"
                       placeholder="Password"
                       v-model="form.password"
-                      :class="[is_submit_form1 ? (form.password && form.password.length >= 6 ? 'is-valid' : 'is-invalid') : '']"
+                      :class="[is_submit_form1 ? (form.password && form.password.length >= 8 ? 'is-valid' : 'is-invalid') : '']"
                     ></b-input>
                     <svg
                       @click="set_pwd_type"
@@ -97,7 +97,7 @@
                       <circle cx="12" cy="12" r="3"></circle>
                     </svg>
                     <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
-                    <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.password.length >= 6 }">Please enter a password longer than 6 characters !</b-form-invalid-feedback>
+                    <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.password.length >= 8 }">Please enter a password longer than 8 characters !</b-form-invalid-feedback>
                   </div>
                   <b-form-checkbox
                 id="checkbox-1"
@@ -187,8 +187,9 @@ export default {
     },
     async submit() {
       this.is_submit_form1 = true;
-      if (this.form.username && this.form.username.length>=6 && this.form.password.length>=6 && this.form.password && this.form.email) {
+      if (this.form.username && this.form.username.length>=8 && this.form.password.length>=8 && this.form.password && this.form.email) {
         try {
+          console.log("wa")
           await this.Register(this.form);
           if (this.check==null){
         await this.isEntreprise(false)

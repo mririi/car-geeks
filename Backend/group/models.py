@@ -11,6 +11,7 @@ class Group(models.Model):
   dateinscrit = models.DateTimeField(auto_now_add=True)
   imageG = models.ImageField(upload_to='images/',null=True, blank=True)
   userprofileG =models.ForeignKey('userprofile.Userprofile',on_delete=models.CASCADE,blank=True,null=True)
+  userentrepriseG =models.ForeignKey('userentreprise.Userentreprise',on_delete=models.CASCADE,blank=True,null=True)
 
   def __str__(self):
     return self.titleG

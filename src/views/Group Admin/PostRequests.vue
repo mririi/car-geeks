@@ -60,7 +60,7 @@
               responsive
               hover
               bordered
-              :items="filteredList"
+              :items="GroupPost"
               :fields="columns2"
               :per-page="table_option2.page_size"
               :current-page="table_option2.current_page"

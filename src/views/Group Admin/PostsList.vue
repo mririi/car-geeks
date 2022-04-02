@@ -64,7 +64,7 @@
               responsive
               hover
               bordered
-              :items="filteredList"
+              :items="GroupPost"
               :fields="columns2"
               :per-page="table_option2.page_size"
               :current-page="table_option2.current_page"
@@ -233,6 +233,7 @@ export default {
      axios.get('/group/group-detail/' + this.$route.params.id + '/').then((response) => {
      this.group = response.data;
      });
+     console.log(this.GroupPost)
   },
   mounted() {
     this.bind_data();
@@ -248,15 +249,13 @@ export default {
       User: 'StateUser',
       Users: 'StateUsers',
     }),
-     filteredList() {
+    /*filteredList() {
       return this.GroupPost.filter((post) => {
         return (
-          post.detailsP.toLowerCase().includes(this.search.toLowerCase())&& post.accepted==true 
-         
+          post.detailsP.toLowerCase().includes(this.search.toLowerCase())  
         );
       });
-    },
-   
+    },*/
      
    
   },
@@ -292,7 +291,7 @@ export default {
         { key: 'actions', label: 'Delete', class: 'text-center  ' },
       ],
 
-      this.table_option2.total_rows = this.pendingUserprofiles.length;
+      this.table_option2.total_rows = this.GroupPost.length;
       this.get_meta2();
     },
     on_filtered(filtered_items) {
