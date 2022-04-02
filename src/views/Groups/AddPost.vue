@@ -73,7 +73,7 @@ import '@/assets/sass/components/cards/card.scss';
 import '@/assets/sass/forms/file-upload-with-preview.min.css';
 import { mapGetters, mapActions } from 'vuex';
 //import VueTagsInput from '@johmun/vue-tags-input';
-//import axios from 'axios';
+import axios from 'axios';
 export default {
   metaInfo: { title: 'Add Post' },
   components: {
@@ -91,6 +91,7 @@ export default {
       CurrentUser: [],
       CurrentUserProfile: [],
       is_submit_form1: false,
+      group:[]
     };
   },
   created: function () {
@@ -98,6 +99,8 @@ export default {
     this.GetUserprofiles();
     this.GetGroups();
     this.GetGroupposts();
+     axios.get('/group/group-detail/' + this.$route.params.id + '/').then((response) => {
+      this.group = response.data;
     for (let u in this.Users) {
       if (this.Users[u].username == this.User) {
         this.CurrentUser = this.Users[u];
@@ -107,7 +110,7 @@ export default {
       if (this.Userprofiles[u].userU == this.CurrentUser.id) {
         this.CurrentUserProfile = this.Userprofiles[u];
       }
-    }
+    }})
   },
   methods: {
     onFileChanged(event) {
@@ -133,6 +136,10 @@ export default {
           //formdata.append("tags", this.tags.text);
           formdata.append('userprofilePost', this.CurrentUserProfile.id);
           formdata.append('groupPost', this.$route.params.id);
+          if(this.group.userprofileG==this.CurrentUserProfile.id)
+          {
+            formdata.append('accepted', true);
+          }
           await this.CreateGrouppost(formdata);
           
         /*  if (this.CurrentUser.is_superuser == false) {
