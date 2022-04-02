@@ -202,6 +202,13 @@ const routes = [
         component: () => import(/* webpackChunkName: "auth-pass-recovery-boxed" */ '../views/auth/pass_recovery_boxed.vue'),
         meta: { layout: 'auth' }
     },
+    {
+        path: '/api/password_reset_confirm/',
+        query:{token:""},
+        name: 'pass-recovery-boxed-confirm',
+        component: () => import(/* webpackChunkName: "auth-pass-recovery-boxed" */ '../views/auth/pass_recovery_confirm.vue'),
+        meta: { layout: 'auth' }
+    },
     //Login
     {
         path: '/auth/login',
