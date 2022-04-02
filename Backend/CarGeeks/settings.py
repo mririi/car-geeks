@@ -167,7 +167,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 
 EMAIL_HOST_USER = 'contact.cargeeks@gmail.com'
 
-EMAIL_HOST_PASSWORD = 'bxpclfygatpqgihs'
+EMAIL_HOST_PASSWORD = 'racgligdjwynbjpi'
 
 EMAIL_PORT = 587
 
