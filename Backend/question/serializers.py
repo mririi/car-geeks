@@ -5,3 +5,6 @@ class QuestionSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Question
 		fields ='__all__'
+		extra_kwargs = {'url': {'lookup_field': 'slug'}}
+		lookup_field ='slug'
+    	

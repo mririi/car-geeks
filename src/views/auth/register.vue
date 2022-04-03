@@ -9,7 +9,7 @@
               <p class="signup-link register">Already have an account? <router-link to="/auth/login-boxed">Log in</router-link></p>
               <b-form @submit.prevent="submit" class="text-left">
                 <div class="form">
-                  <b-form-invalid-feedback class="text-center" :class="{ 'd-block': is_submit_form1 && !valid }">Username already exists!</b-form-invalid-feedback>
+                  <b-form-invalid-feedback class="text-center" :class="{ 'd-block': is_submit_form1 && !valid }">Username or email already exists!</b-form-invalid-feedback>
                   <b-form-invalid-feedback class="text-center" :class="{ 'd-block': is_submit_form1 && (!form.password || !form.username || !form.email) }"
                     >Please fill all the fields !</b-form-invalid-feedback
                   >
