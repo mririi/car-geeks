@@ -3,7 +3,7 @@ from django_extensions.db.fields import AutoSlugField
 # Create your models here.
 
 class Question(models.Model):
-  titleQ = models.CharField(max_length=200,null=True,blank=True)
+  titleQ = models.CharField(max_length=501,unique=True,null=True,blank=True)
   contentQ = models.TextField(unique=True,null=True,blank=True)
   accepted = models.BooleanField(default=False)
   modified = models.BooleanField(default=False)

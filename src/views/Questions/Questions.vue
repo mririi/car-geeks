@@ -59,7 +59,7 @@
     <div class="row layout-top-spacing">
       <div class="col-xl-12 col-md-12 col-sm-12 col-12 ">
         <div class="panel-body" v-for="q in filterByCategory" :key="q.id">
-          <b-card class="component-card_9" v-if="q.accepted == true">
+          <b-card class="component-card_9" v-if="q.accepted == true && checkpref(q)==true">
            
             
             <div v-if="CurrentUserProfile.id == q.userprofileQ && q.userprofileQ !=null|| CurrentUserEntreprise.id==q.userentrepriseQ &&q.userentrepriseQ!=null">
@@ -143,6 +143,92 @@
             </div>
           </b-card>
         </div>
+        <div class="panel-body" v-for="q in filterByCategory" :key="q.id">
+          <b-card class="component-card_9" v-if="q.accepted == true && checkpref(q)==false">
+           
+            
+            <div v-if="CurrentUserProfile.id == q.userprofileQ && q.userprofileQ !=null|| CurrentUserEntreprise.id==q.userentrepriseQ &&q.userentrepriseQ!=null">
+              <b-dropdown variant="icon-only"  toggle-tag="a" size="1em" class="mb-4 mr-2 custom-dropdown float-right">
+                <template #button-content>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    style="width: 18px; height: 18px"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-more-vertical"
+                  >
+                    <circle cx="12" cy="12" r="1"></circle>
+                    <circle cx="12" cy="5" r="1"></circle>
+                    <circle cx="12" cy="19" r="1"></circle>
+                  </svg>
+                </template>
+                <b-dropdown-item :href="'/updatequestion/'+q.id">Modify</b-dropdown-item>
+                <b-dropdown-item @click="deleteQuestion(q.id)">Delete</b-dropdown-item>
+              </b-dropdown>
+            </div>
+              <div v-for="c in Questioncategories" :key="c.id">
+              <div v-if="c.id==q.categoryQ">
+              <b-card-text class="float-right mr-2">
+                <p>{{c.typeC}}</p>
+            </b-card-text>
+              </div>
+            </div>
+            <p class="meta-date mb-3">{{ q.dateQ | formatDate }}</p>
+
+            <router-link :to="'questionpage/' + q.id +'/'+q.slug">
+              <b-card-title class="ml-4" title-tag="h4">{{ q.titleQ }}</b-card-title></router-link
+            >
+            <b-card-text class="ml-4 ten-chars">{{ q.contentQ }}</b-card-text>
+              
+            <div class="meta-info">
+              <div class="meta-user">
+                <div v-for="p in Userprofiles" :key="p.id">
+                  <div class="avatar avatar-sm" v-if="p.id == q.userprofileQ && q.userprofileQ!=null">
+                    <b-avatar :src="'http://127.0.0.1:8000' + p.imageU" class="avatar-title rounded-circle"></b-avatar>
+                  </div>
+                </div>
+                 <div v-for="e in Userentreprises" :key="e.id">
+                  <div class="avatar avatar-sm" v-if="e.id == q.userentrepriseQ && q.userentrepriseQ!=null">
+                    <b-avatar :src="'http://127.0.0.1:8000' + e.imageE" class="avatar-title rounded-circle"></b-avatar>
+                  </div>
+                </div>
+                <div v-for="p in Userprofiles" :key="p.id">
+                  <div v-if="p.id == q.userprofileQ && q.userprofileQ!=null">
+                 <router-link :to="'/profile/'+p.id" >  <div class="user-name mt-2">{{ p.firstname }} {{ p.lastname }}</div></router-link>
+                  </div>
+                </div>
+                 <div v-for="e in Userentreprises" :key="e.id">
+                  <div v-if="e.id == q.userentrepriseQ && q.userentrepriseQ!=null">
+                 <router-link :to="'/entreprisedetails/'+e.id" >  <div class="user-name mt-2">{{ e.nameE }}</div></router-link>
+                  </div>
+                </div>
+              </div>
+              <div class="meta-action">
+                <div class="meta-likes">
+                  <svg viewBox="0 0 22 18" width="32" height="28" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                  <span class="h6 ml-1">{{ q.nblikes }}</span>
+                </div>
+
+                <div class="meta-view">
+                  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="32" height="28" preserveAspectRatio="xMidYMid meet" viewBox="0 0 14 12">
+                    <path
+                      fill="currentColor"
+                      d="M6.598 5.013a.144.144 0 0 1 .202.134V6.3a.5.5 0 0 0 .5.5c.667 0 2.013.005 3.3.822c.984.624 1.99 1.76 2.595 3.876c-1.02-.983-2.185-1.516-3.205-1.799a8.74 8.74 0 0 0-1.921-.306a7.404 7.404 0 0 0-.798.008h-.013l-.005.001h-.001L7.3 9.9l-.05-.498a.5.5 0 0 0-.45.498v1.153c0 .108-.11.176-.202.134L2.614 8.254a.503.503 0 0 0-.042-.028a.147.147 0 0 1 0-.252a.499.499 0 0 0 .042-.028l3.984-2.933zM7.8 10.386c.068 0 .143.003.223.006c.434.02 1.034.086 1.7.271c1.326.368 2.896 1.202 3.94 3.08a.5.5 0 0 0 .933-.305c-.464-3.71-1.886-5.662-3.46-6.66c-1.245-.79-2.527-.942-3.336-.971v-.66a1.144 1.144 0 0 0-1.767-.96l-3.994 2.94a1.147 1.147 0 0 0 0 1.946l3.994 2.94a1.144 1.144 0 0 0 1.767-.96v-.667z"
+                    />
+                  </svg>
+                  <span class="h6 "> {{ q.nbrep }}</span>
+                </div>
+              </div>
+            </div>
+          </b-card>
+        </div>
+        <!-- jib melol eli == l categoryPref1..3 wba3d jib lokhrin-->
       </div>
     </div>
   </div>
@@ -174,6 +260,7 @@ export default {
     this.GetUserentreprises();
     this.GetQuestioncategories();
     this.GetUsers();
+    this.GetPreferences();
     for (let u in this.Users) {
       if (this.Users[u].username == this.User) {
         this.CurrentUser = this.Users[u];
@@ -199,6 +286,7 @@ export default {
   computed: {
     ...mapGetters({
       Questions: 'StateQuestions',
+      Preferences: 'StatePreferences',
       Userprofiles: 'StateUserprofiles',
       Questioncategories: 'StateQuestioncategories',
       User: 'StateUser',
@@ -217,8 +305,18 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['GetQuestions', 'GetUsers', 'GetUserprofiles', 'GetQuestioncategories','GetUserentreprises']),
-
+    ...mapActions(['GetQuestions', 'GetUsers', 'GetUserprofiles', 'GetQuestioncategories','GetUserentreprises','GetPreferences']),
+    checkpref(question){
+      if(this.CurrentUserProfile.id!=null){
+      let profile=this.Userprofiles.find((d)=>d.id==this.CurrentUserProfile.id)
+      let preferences=this.Preferences.find((p)=>p.id==profile.preferencesU)
+      if(question.categoryQ==preferences.categoryPref1||question.categoryQ==preferences.categoryPref2||question.categoryQ==preferences.categoryPref3){
+        return true
+      }else if (question.categoryQ!=preferences.categoryPref1&&question.categoryQ!=preferences.categoryPref2&&question.categoryQ!=preferences.categoryPref3){
+        return false
+      }}
+      else return false
+    },
     deleteQuestion(id) {
       this.$swal({
         icon: 'warning',

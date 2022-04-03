@@ -109,6 +109,7 @@ export default {
     this.GetUserprofiles()
     this.GetQuestioncategories()
     this.GetUserentreprises()
+    this.GetQuestions()
     for (let u in this.Users){
       if(this.Users[u].username==this.User)
         {
@@ -147,18 +148,14 @@ export default {
       this.image = event.target.files[0]
       console.log(this.image)
     },
-    ...mapActions(["GetUserentreprises",'CreateNotification',"GetQuestioncategories","CreateQuestion","GetUsers","GetUserprofiles"]),
+    ...mapActions(["GetUserentreprises",'GetQuestions','CreateNotification',"GetQuestioncategories","CreateQuestion","GetUsers","GetUserprofiles"]),
     async submit() {
-      try {
+      if(this.Questions.find((q)=>q.titleQ==this.form.titleQ)==null){
         this.is_submit_form1 = true;
                 if (this.form.titleQ && this.form.titleQ.length<100 && this.form.titleQ.length>15 &&
                   this.form.contentQ && this.form.contentQ.length<500 && this.form.contentQ.length>25 &&
                   this.form.categoryQ
                 ) {
-        
-          
-        
-       
       var formdata = new FormData();
       if (this.image!=null)
       {
@@ -174,23 +171,26 @@ export default {
         //formdata.append("tags", this.tags.text);
         formdata.append("userprofileQ", this.form.userprofileQ);
         formdata.append("userentrepriseQ", this.form.userentrepriseQ);
-        await this.CreateQuestion(formdata);
+        this.CreateQuestion(formdata);
         if (this.CurrentUser.is_superuser==false){
           await this.CreateNotification({message:' requested a Verification on their question !',byuserprofileNo:this.form.userprofileQ,byuserentrepriseNo:this.form.userentrepriseQ,questionNo:1,foradmin:true})
         this.$swal('Good Job!', 'Your question has been created successfuly, Please wait for the administator to accept it !', 'success');
         }
         this.$router.push("/questions");
-      
-        
-        }
-      } catch (error) {
-        throw "Il ya un error!"
       }
-    },
-    
+      }else{
+        let question=this.Questions.find((q)=>q.titleQ==this.form.titleQ)
+        this.$swal.fire({
+        title: 'This question already exists !',
+        padding: '2em',
+        html: '<a style="color:blue" href="/questionpage/'+question.id+'/'+question.slug+'/">Check it out!</a>',
+        confirmButtonText: 'No thanks'
+      })
+      }
+       }
     },
     computed: {
-    ...mapGetters({ Userentreprises:"StateUserentreprises",Questioncategories:"StateQuestioncategories",Userprofiles:"StateUserprofiles", User: "StateUser",Users: "StateUsers"}),
+    ...mapGetters({Questions:"StateQuestions", Userentreprises:"StateUserentreprises",Questioncategories:"StateQuestioncategories",Userprofiles:"StateUserprofiles", User: "StateUser",Users: "StateUsers"}),
     isLoggedIn: function() {
       return this.$store.getters.isAuthenticated;
     },
