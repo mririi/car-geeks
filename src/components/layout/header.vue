@@ -1131,7 +1131,7 @@ export default {
     updatenotif(notif) {
       axios.put('/notifications/notification-update/' + notif.id + '/', { seen: true, admin: notif.admin });
       if (notif.foradmin==false &&notif.questionNo != null) {
-        this.$router.push('/questionpage/' + notif.questionNo + '/')
+        this.$router.push('/questionpage/' + notif.questionNo + '/' + this.Questions.find((d)=>d.id==notif.questionNo).slug)
       } else if (notif.foradmin==false &&notif.entrepriseNo == null && notif.serviceNo == null && notif.questionNo == null && notif.replyNo == null) {
         this.$router.push('/profile/' + notif.userprofileNo + '/')
       } else if (notif.foradmin==false &&notif.serviceNo != null) {
@@ -1155,11 +1155,7 @@ export default {
       }else if (notif.foradmin==true && notif.byuserprofileNo!=null && notif.verifnotif==true) {
         this.$router.push('/dashboard/userverificationrequest')
       } else if (notif.replyNo != null) {
-        for (let r in this.Replies) {
-          if (this.Replies[r].id == notif.replyNo) {
-            this.$router.push('/questionpage/' + this.Replies[r].questionRep + '/')
-          }
-        }
+            this.$router.push('/questionpage/' + this.Replies.find((d)=>d.id==notif.replyNo).questionRep + '/' + this.Questions.find((d)=>d.id==this.Replies.find((d)=>d.id==notif.replyNo).questionRep).slug)
       }
     },
 

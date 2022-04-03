@@ -266,7 +266,7 @@ const routes = [
     },
     //Question Page(newest)
     {
-        path: '/questionpage/:id',
+        path: '/questionpage/:id/:slug',
         name: 'questionpage',
         component: () => import('../views/Questions/QuestionPage.vue'),
         meta: {
@@ -275,7 +275,7 @@ const routes = [
     },
     //Question Page(oldest)
     {
-        path: '/questionpageoldest/:id',
+        path: '/questionpageoldest/:id/:slug',
         name: 'questionpageoldest',
         component: () => import('../views/Questions/QuestionPage_Oldest.vue'),
         meta: {
@@ -284,7 +284,7 @@ const routes = [
     },
     //Question Page(oldest)
     {
-        path: '/questionpagemostliked/:id',
+        path: '/questionpagemostliked/:id/:slug',
         name: 'questionpagemostliked',
         component: () => import('../views/Questions/QuestionPage_Mostliked.vue'),
         meta: {
@@ -293,7 +293,7 @@ const routes = [
     },
     //Question Page(oldest)
     {
-        path: '/questionpagerightanswer/:id',
+        path: '/questionpagerightanswer/:id/:slug',
         name: 'questionpagerightanswer',
         component: () => import('../views/Questions/QuestionPage_Rightanswer.vue'),
         meta: {

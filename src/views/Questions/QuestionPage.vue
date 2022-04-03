@@ -195,10 +195,10 @@
           </div>
           <div class="float-right mt-4">
             <b-button-group>
-              <a class="btn btn-primary" :href="'/questionpagerightanswer/' + question.id + '/'">Right Answer</a>
+              <a class="btn btn-primary" :href="'/questionpagerightanswer/' + question.id + '/' + question.slug">Right Answer</a>
               <a class="btn btn-outline-primary" href="#">Newest</a>
-              <a class="btn btn-primary" :href="'/questionpageoldest/' + question.id + '/'">Oldest</a>
-              <a class="btn btn-primary" :href="'/questionpagemostliked/' + question.id + '/'">Most Liked</a>
+              <a class="btn btn-primary" :href="'/questionpageoldest/' + question.id + '/'+ question.slug">Oldest</a>
+              <a class="btn btn-primary" :href="'/questionpagemostliked/' + question.id + '/'+ question.slug">Most Liked</a>
             </b-button-group>
           </div>
           <h5 class="mt-4 ml-4">Answers</h5>
@@ -786,6 +786,7 @@ export default {
     this.GetVotes();
     this.GetComments();
     this.GetUserentreprises();
+    console.log(this.$route.params)
     for (let r in this.Replies) {
       if (this.Replies[r].checked == true) {
         this.alreadychecked = true;

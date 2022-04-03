@@ -96,7 +96,7 @@
             </div>
             <p class="meta-date mb-3">{{ q.dateQ | formatDate }}</p>
 
-            <router-link :to="'questionpage/' + q.id">
+            <router-link :to="'questionpage/' + q.id +'/'+q.slug">
               <b-card-title class="ml-4" title-tag="h4">{{ q.titleQ }}</b-card-title></router-link
             >
             <b-card-text class="ml-4 ten-chars">{{ q.contentQ }}</b-card-text>
