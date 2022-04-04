@@ -60,7 +60,7 @@
               responsive
               hover
               bordered
-              :items="GroupPost"
+              :items="filteredList"
               :fields="columns2"
               :per-page="table_option2.page_size"
               :current-page="table_option2.current_page"
@@ -174,7 +174,7 @@
 import { mapGetters, mapActions } from 'vuex';
 import axios from 'axios';
 export default {
-  metaInfo: { title: 'Join Requests' },
+  metaInfo: { title: 'Posts Requests' },
   data() {
     return {
       //table 3
@@ -256,7 +256,7 @@ export default {
     }),
     filteredList() {
       return this.GroupPost.filter((post) => {
-        return post.detailsP.toLowerCase().includes(this.search.toLowerCase()) && post.accepted == false;
+        return  post.accepted == false;
       });
     },
   },
@@ -289,7 +289,7 @@ export default {
         { key: 'accepted', label: 'Status', class: 'text-center  ' },
         { key: 'actions', label: 'Actions', class: 'text-center  ' },
       ]),
-        (this.table_option2.total_rows = this.pendingUserprofiles.length);
+        (this.table_option2.total_rows = this.filteredList.length);
       this.get_meta2();
     },
     on_filtered(filtered_items) {

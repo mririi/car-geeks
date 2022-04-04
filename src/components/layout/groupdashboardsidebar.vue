@@ -49,7 +49,8 @@
           </a>
           <b-collapse id="quest" accordion="menu">
             <ul class="collapse submenu list-unstyled show">
-              <router-link tag="li" :to="'/groupdashboard/'+this.$route.params.id+'/join'" @click.native="toggleMobileMenu"><a>Join requests</a></router-link>
+              <router-link tag="li" :to="'/groupdashboard/'+this.$route.params.id+'/join'" @click.native="toggleMobileMenu"><a>User requests</a></router-link>
+              <router-link tag="li" :to="'/groupdashboard/'+this.$route.params.id+'/entreprisejoin'" @click.native="toggleMobileMenu"><a>Entreprise requests</a></router-link>
             </ul>
           </b-collapse>
         </li>

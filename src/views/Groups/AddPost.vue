@@ -90,6 +90,7 @@ export default {
       uprofile: [],
       CurrentUser: [],
       CurrentUserProfile: [],
+      CurrentUserEntreprise:[],
       is_submit_form1: false,
       group:[]
     };
@@ -99,6 +100,7 @@ export default {
     this.GetUserprofiles();
     this.GetGroups();
     this.GetGroupposts();
+    this.GetUserentreprises();
      axios.get('/group/group-detail/' + this.$route.params.id + '/').then((response) => {
       this.group = response.data;
     for (let u in this.Users) {
@@ -110,13 +112,20 @@ export default {
       if (this.Userprofiles[u].userU == this.CurrentUser.id) {
         this.CurrentUserProfile = this.Userprofiles[u];
       }
-    }})
+    }
+     for (let ue in this.Userentreprises) {
+        if (this.Userentreprises[ue].userE == this.CurrentUser.id) {
+          this.CurrentUserEntreprise = this.Userentreprises[ue];
+        }
+      }
+    
+    })
   },
   methods: {
     onFileChanged(event) {
       this.image = event.target.files[0];
     },
-    ...mapActions(['CreateNotification', 'GetUsers', 'GetUserprofiles', 'GetGroups','GetGroupposts' ,'CreateGrouppost']),
+    ...mapActions(['CreateNotification','GetUserentreprises', 'GetUsers', 'GetUserprofiles', 'GetGroups','GetGroupposts' ,'CreateGrouppost']),
     async submit() {
       try {
         this.is_submit_form1 = true;
@@ -128,20 +137,23 @@ export default {
           if (this.image != null) {
             formdata.append('imagePost', this.image);
           }
+          console.log(this.image)
           formdata.append('detailsP', this.form.detailsP);
-         /* if (this.CurrentUser.is_superuser) {
-            formdata.append('accepted', true);
-            axios.put('/userprofile/userprofile-update/' + this.form.userprofileQ + '/', { nbquestions: this.uprofile.nbquestions + 1 });
-          }*/
-          //formdata.append("tags", this.tags.text);
-          formdata.append('userprofilePost', this.CurrentUserProfile.id);
+          if(this.CurrentUserEntreprise.id==null){
+          formdata.append('userprofilePost', this.CurrentUserProfile.id);}
+          console.log(this.CurrentUserProfile.id)
+          if(this.CurrentUserProfile.id==null){
+          formdata.append('userentreprisePost', this.CurrentUserEntreprise.id);}
+          console.log(this.CurrentUserEntreprise.id)
           formdata.append('groupPost', this.$route.params.id);
-          if(this.group.userprofileG==this.CurrentUserProfile.id)
+          console.log(this.$route.params.id)
+          /*if(this.group.userprofileG==this.CurrentUserProfile.id ||this.group.userentrepriseG == this.CurrentUserEntreprise.id )
           {
             formdata.append('accepted', true);
             axios.put('/group/group-update/' + this.$route.params.id + '/', { nbposts: this.group.nbposts + 1 });
              this.$swal('Good Job!', 'Your Post has been created successfuly!', 'success');
-          }
+          }*/
+          
           await this.CreateGrouppost(formdata);
           
         /*  if (this.CurrentUser.is_superuser == false) {
@@ -154,10 +166,10 @@ export default {
             });
             this.$swal('Good Job!', 'Your question has been created successfuly, Please wait for the administator to accept it !', 'success');
           }*/
-          this.$router.push('/groupdetail/'+this.group.id);
+          //this.$router.push('/groupdetail/'+this.group.id);
         }
       } catch (error) {
-        throw 'Il ya un error!';
+        console.log(error)
       }
     },
   },

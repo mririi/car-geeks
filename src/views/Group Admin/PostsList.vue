@@ -184,7 +184,7 @@
 import { mapGetters, mapActions } from 'vuex';
 import axios from 'axios'
 export default {
-  metaInfo: { title: 'Join Requests' },
+  metaInfo: { title: 'Posts List' },
   data() {
     return {
       //table 3
@@ -249,13 +249,13 @@ export default {
       User: 'StateUser',
       Users: 'StateUsers',
     }),
-    /*filteredList() {
+    filteredList() {
       return this.GroupPost.filter((post) => {
         return (
-          post.detailsP.toLowerCase().includes(this.search.toLowerCase())  
+          post.accepted==true  
         );
       });
-    },*/
+    },
      
    
   },
@@ -291,7 +291,7 @@ export default {
         { key: 'actions', label: 'Delete', class: 'text-center  ' },
       ],
 
-      this.table_option2.total_rows = this.GroupPost.length;
+      this.table_option2.total_rows = this.filteredList.length;
       this.get_meta2();
     },
     on_filtered(filtered_items) {

@@ -275,7 +275,7 @@ const routes = [
     },
     //Question Page(oldest)
     {
-        path: '/questionpageoldest/:id/:slug',
+        path: '/questionpageoldest/:id',
         name: 'questionpageoldest',
         component: () => import('../views/Questions/QuestionPage_Oldest.vue'),
         meta: {
@@ -284,7 +284,7 @@ const routes = [
     },
     //Question Page(oldest)
     {
-        path: '/questionpagemostliked/:id/:slug',
+        path: '/questionpagemostliked/:id',
         name: 'questionpagemostliked',
         component: () => import('../views/Questions/QuestionPage_Mostliked.vue'),
         meta: {
@@ -293,7 +293,7 @@ const routes = [
     },
     //Question Page(oldest)
     {
-        path: '/questionpagerightanswer/:id/:slug',
+        path: '/questionpagerightanswer/:id',
         name: 'questionpagerightanswer',
         component: () => import('../views/Questions/QuestionPage_Rightanswer.vue'),
         meta: {
@@ -417,6 +417,15 @@ const routes = [
         path: '/group/:id/addpost/',
         name: 'addpost',
         component: () => import('../views/Groups/AddPost.vue'),
+        meta: {
+            layout: 'app'
+        }
+    },
+     //Update Post Group
+     {
+        path: '/group/:id/updatepost/:id',
+        name: 'updatepost',
+        component: () => import('../views/Groups/UpdatePost.vue'),
         meta: {
             layout: 'app'
         }
@@ -638,6 +647,7 @@ const routes = [
             layout: 'dashboard'
         },
     },
+    
 
     //Group Dashboard
     {
@@ -662,6 +672,15 @@ const routes = [
         path: "/groupdashboard/:id/join",
         name: 'groupdashboardjoin',
         component: () => import('../views/Group Admin/JoinRequests.vue'),
+        meta: {
+            layout: 'groupdashboard'
+        },
+    },
+     //Group Dashboard Entreprise Join requests
+     {
+        path: "/groupdashboard/:id/entreprisejoin",
+        name: 'groupdashboardentreprisejoin',
+        component: () => import('../views/Group Admin/EntrepriseRequests.vue'),
         meta: {
             layout: 'groupdashboard'
         },

@@ -156,7 +156,7 @@ import '@/assets/sass/apps/contacts.scss';
 import axios from 'axios';
 import { mapGetters, mapActions } from 'vuex';
 export default {
-  metaInfo: { title: 'Contact Profile' },
+  metaInfo: { title: 'Group Members' },
   components: {},
   computed: {
     filteredList() {
