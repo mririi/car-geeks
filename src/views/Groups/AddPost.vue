@@ -147,26 +147,20 @@ export default {
           console.log(this.CurrentUserEntreprise.id)
           formdata.append('groupPost', this.$route.params.id);
           console.log(this.$route.params.id)
-          /*if(this.group.userprofileG==this.CurrentUserProfile.id ||this.group.userentrepriseG == this.CurrentUserEntreprise.id )
+          if(this.group.userprofileG==this.CurrentUserProfile.id ||this.group.userentrepriseG == this.CurrentUserEntreprise.id )
           {
             formdata.append('accepted', true);
             axios.put('/group/group-update/' + this.$route.params.id + '/', { nbposts: this.group.nbposts + 1 });
-             this.$swal('Good Job!', 'Your Post has been created successfuly!', 'success');
-          }*/
-          
+            
+          }
           await this.CreateGrouppost(formdata);
-          
-        /*  if (this.CurrentUser.is_superuser == false) {
-            await this.CreateNotification({
-              message: ' requested a Verification on their question !',
-              byuserprofileNo: this.form.userprofileQ,
-              byuserentrepriseNo: this.form.userentrepriseQ,
-              questionNo: 1,
-              foradmin: true,
-            });
-            this.$swal('Good Job!', 'Your question has been created successfuly, Please wait for the administator to accept it !', 'success');
-          }*/
-          //this.$router.push('/groupdetail/'+this.group.id);
+          this.$router.push('/groups');
+          if(this.group.userprofileG==this.CurrentUserProfile.id ||this.group.userentrepriseG == this.CurrentUserEntreprise.id )
+          {
+             this.$swal('Good Job!', 'Your Post has been created successfuly!', 'success');
+          }else{
+            this.$swal('Good Job!', 'Your Post has been created. Please wait for the admin to accept it !', 'success');
+          }
         }
       } catch (error) {
         console.log(error)

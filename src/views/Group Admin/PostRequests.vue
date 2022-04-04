@@ -75,13 +75,24 @@
                   <b-badge variant="danger">Pending</b-badge>
                 </span>
               </template>
-              <template #cell(userprofilePost)="data">
-                <span v-for="u in Userprofiles" :key="u.id">
-                  <span v-if="u.id == data.item.userprofilePost">
-                    <router-link :to="'/profile/' + u.id"> {{ u.firstname }} {{ u.lastname }} </router-link>
-                  </span>
-                </span>
-              </template>
+                <template #cell(userprofilePost)="data">
+              <span v-if="data.item.userprofilePost!=null">
+              <span v-for="u in Userprofiles" :key="u.id">
+                <span v-if="u.id == data.item.userprofilePost">
+                  <router-link :to="'/profile/'+data.item.userprofilePost">
+                   {{ u.firstname }} {{ u.lastname }} 
+                  </router-link>
+                   </span>
+                </span></span>
+                <span v-if="data.item.userentreprisePost!=null">
+                <span v-for="e in Userentreprises" :key="e.id">
+                <span v-if="e.id == data.item.userentreprisePost">
+                  <router-link :to="'/entreprisedetails/'+data.item.userentreprisePost">
+                   {{ e.nameE }} 
+                  </router-link>
+                   </span>
+              </span></span>
+            </template>
               <template #cell(actions)="data">
                 <span @click="Accept(data.item)">
                   <svg
@@ -220,6 +231,7 @@ export default {
     this.GetUserprofiles();
     this.GetGroupcomments();
     this.GetGroupmembers();
+    this.GetUserentreprises();
     this.GetUsers();
     axios.get('/group/group-detail/' + this.$route.params.id + '/').then((response) => {
       this.group = response.data;
@@ -249,6 +261,7 @@ export default {
       Groups: 'StateGroups',
       GroupPost: 'StateGroupposts',
       Userprofiles: 'StateUserprofiles',
+      Userentreprises:'StateUserentreprises',
       Comments: 'StateGroupcomments',
       Members: 'StateGroupmembers',
       User: 'StateUser',
@@ -262,7 +275,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['GetGroups', 'GetGroupposts', 'GetUsers', 'GetUserprofiles', 'GetGroupcomments', 'GetGroupmembers', 'CreateGroupmember']),
+    ...mapActions(['GetGroups','GetUserentreprises' ,'GetGroupposts', 'GetUsers', 'GetUserprofiles', 'GetGroupcomments', 'GetGroupmembers', 'CreateGroupmember']),
     async Accept(post) {
       this.$swal({
         icon: 'warning',

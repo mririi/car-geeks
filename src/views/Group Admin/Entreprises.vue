@@ -37,7 +37,7 @@
                     <circle cx="11" cy="11" r="8"></circle>
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                   </svg>
-                  <b-input v-model.trim="search" class="product-search" placeholder="Search Profiles..." />
+                  <b-input v-model.trim="search" class="product-search" placeholder="Search entreprises..." />
                 </div>
               </form>
             </div>
@@ -79,7 +79,7 @@
                   <h4>Name</h4>
                 </div>
                 <div class="user-location">
-                  <h4>Country</h4>
+                  <h4 style="margin-left:150px">Country</h4>
                 </div>
                 <div class="user-phone">
                   <h4>Phone</h4>
@@ -93,11 +93,11 @@
             <div v-for="user in filteredList" class="items" :key="user.id">
               <div class="item-content">
                 <div class="user-profile">
-                  <router-link :to="'/profile/' + user.id">
-                    <img :src="'http://127.0.0.1:8000' + user.imageU" alt="avatar" />
+                  <router-link :to="'/entreprisedetails/' + user.id">
+                    <img :src="'http://127.0.0.1:8000' + user.imageE" alt="avatar" />
                   </router-link>
                   <div class="user-meta-info">
-                    <p class="user-name">{{ user.firstname }} {{ user.lastname }}</p>
+                    <p class="user-name">{{ user.nameE }}</p>
                   </div>
                 </div>
                 <div class="user-location">
@@ -106,7 +106,7 @@
                 </div>
                 <div class="user-phone">
                   <p class="info-title">Phone:</p>
-                  <p class="usr-ph-no">{{ user.tel }}</p>
+                  <p class="usr-ph-no">{{ user.contactE }}</p>
                 </div>
                 <div class="user-phone">
                   <p class="info-title">Actions:</p>
@@ -160,14 +160,14 @@ export default {
   components: {},
   computed: {
     filteredList() {
-      return this.UserprofilesMembers.filter((profile) => {
-        return profile.firstname.toLowerCase().includes(this.search.toLowerCase()) || profile.lastname.toLowerCase().includes(this.search.toLowerCase());
+      return this.UserentreprisesMembers.filter((entreprise) => {
+        return entreprise.nameE.toLowerCase().includes(this.search.toLowerCase())
       });
     },
     ...mapGetters({
       Groups: 'StateGroups',
       GroupPost: 'StateGroupposts',
-      Userprofiles: 'StateUserprofiles',
+      Userentreprises: 'StateUserentreprises',
       Comments: 'StateGroupcomments',
       Members: 'StateGroupmembers',
       User: 'StateUser',
@@ -187,12 +187,12 @@ export default {
       CurrentUserprofile: [],
       group: [],
       members: [],
-      UserprofilesMembers: [],
+      UserentreprisesMembers: [],
     };
   },
 
   methods: {
-    ...mapActions(['GetGroups', 'GetGroupposts', 'GetUsers', 'GetUserprofiles', 'GetGroupcomments', 'GetGroupmembers', 'CreateGroupmember']),
+    ...mapActions(['GetGroups', 'GetGroupposts', 'GetUsers', 'GetUserentreprises', 'GetGroupcomments', 'GetGroupmembers', 'CreateGroupmember']),
     DeleteUser(id) {
       this.$swal({
         icon: 'warning',
@@ -203,17 +203,17 @@ export default {
       }).then((result) => {
         if (result.value) {
           for (let m in this.members) {
-            if (this.members[m].userprofileMem == id) {
+            if (this.members[m].userentrepriseMem == id) {
               axios.delete(`/groupmember/groupmember-delete/${this.members[m].id}/`);
             }
           }
-         for (let p in this.GroupPost) {
-            if (this.GroupPost[p].userprofilePost == id) {
+           for (let p in this.GroupPost) {
+            if (this.GroupPost[p].userentreprisePost == id) {
               axios.delete(`/postgroup/postgroup-delete/${this.GroupPost[p].id}/`);
             }
           }
         }
-        this.$swal('Deleted!', 'This User has been deleted from the group.', 'success');
+        this.$swal('Deleted!', 'This Entreprise has been deleted from the group.', 'success');
         this.$router.go();
       });
     },
@@ -221,7 +221,7 @@ export default {
   created: function () {
     this.GetGroups();
     this.GetGroupposts();
-    this.GetUserprofiles();
+    this.GetUserentreprises();
     this.GetGroupcomments();
     this.GetGroupmembers();
     this.GetUsers();
@@ -233,9 +233,9 @@ export default {
           this.CurrentUser = this.Users[u];
         }
       }
-      for (let u in this.Userprofiles) {
-        if (this.Userprofiles[u].userU == this.CurrentUser.id) {
-          this.CurrentUserProfile = this.Userprofiles[u];
+      for (let u in this.Userentreprises) {
+        if (this.Userentreprises[u].userU == this.CurrentUser.id) {
+          this.CurrentUserProfile = this.Userentreprises[u];
         }
       }
       for (let m in this.Members) {
@@ -245,14 +245,14 @@ export default {
       }
       console.log(this.members);
       let i = 0;
-      for (let up in this.Userprofiles) {
+      for (let up in this.Userentreprises) {
         for (i in this.members)
-          if (this.Userprofiles[up].id == this.members[i].userprofileMem) {
-            this.UserprofilesMembers.push(this.Userprofiles[up]);
+          if (this.Userentreprises[up].id == this.members[i].userentrepriseMem) {
+            this.UserentreprisesMembers.push(this.Userentreprises[up]);
             i++;
           }
       }
-      console.log(this.UserprofilesMembers);
+      
     });
   },
 };

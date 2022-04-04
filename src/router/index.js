@@ -667,6 +667,15 @@ const routes = [
             layout: 'groupdashboard'
         },
     },
+    //Group Dashboard Entreprises
+    {
+        path: "/groupdashboard/:id/entreprises",
+        name: 'groupdashboardentreprises',
+        component: () => import('../views/Group Admin/Entreprises.vue'),
+        meta: {
+            layout: 'groupdashboard'
+        },
+    },
     //Group Dashboard Join requests
     {
         path: "/groupdashboard/:id/join",

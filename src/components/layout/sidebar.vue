@@ -68,7 +68,7 @@
                 />
                 <path fill="none" d="M0 0h36v36H0z" />
               </svg>
-              <span>{{ $t('Groups') }}</span>
+              <span>{{ $t('Groups') }} ({{nbG}})</span>
             </div>
           </router-link>
         </li>
@@ -138,7 +138,7 @@
 import { mapGetters, mapActions } from 'vuex';
 export default {
   data() {
-    return { menu_collapse: 'dashboard', CurrentUserProfile: [], CurrentUser: [], nbQ:0,nbS:0,nbE:0 };
+    return { menu_collapse: 'dashboard', CurrentUserProfile: [], CurrentUser: [], nbQ:0,nbS:0,nbE:0,nbG:0 };
   },
 
   watch: {
@@ -160,6 +160,7 @@ export default {
       Services:'StateServices',
       Userentreprises:'StateUserentreprises',
       User: 'StateUser',
+      Groups:'StateGroups',
       Users: 'StateUsers',
     }),
   },
@@ -188,14 +189,15 @@ export default {
         this.$store.commit('toggleSideBar', !this.$store.state.is_show_sidebar);
       }
     },
-    ...mapActions(['GetUsers', 'GetUserprofiles','GetUserentreprises','GetServices','GetQuestions']),
+    ...mapActions(['GetUsers','GetGroups', 'GetUserprofiles','GetUserentreprises','GetServices','GetQuestions']),
   },
   created: function () {
     this.GetUserprofiles();
     this.GetUsers();
     this.GetQuestions();
     this.GetServices();
-    this.GetUserentreprises()
+    this.GetUserentreprises();
+    this.GetGroups();
     for (let u in this.Users) {
       if (this.Users[u].username == this.User) {
         this.CurrentUser = this.Users[u];
@@ -225,6 +227,13 @@ export default {
       if(this.Userentreprises[e].published==true)
       {
         this.nbE++
+      }
+    }
+    for (let g in this.Groups)
+    {
+      if(this.Groups[g].accepted==true)
+      {
+        this.nbG++
       }
     }
   },

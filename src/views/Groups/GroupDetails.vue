@@ -168,7 +168,7 @@
                 <span v-if="p.groupPost == group.id && p.accepted == true && existmember == true">
                   <span v-for="u in Userprofiles" :key="u.id">
                     <span v-if="u.id == p.userprofilePost">
-                      <div v-if="CurrentUserProfile.id == p.userprofilePost">
+                      <div v-if="CurrentUserProfile.id == p.userprofilePost&& p.userprofilePost !=null|| CurrentUserEntreprise.id==p.userentreprisePost &&p.userentreprisePost!=null">
                         <b-dropdown variant="icon-only" dropleft toggle-tag="a" size="1em" class="mb-4 mr-5 custom-dropdown float-right">
                           <template #button-content>
                             <svg
@@ -267,7 +267,315 @@
                                             <b-avatar :src="'http://127.0.0.1:8000' + up.imageU" class="avatar-title rounded-circl mr-4"> </b-avatar>
                                           </router-link>
                                           <p class="mt-1 mr-5">{{ c.contentCom }}</p>
-                                          <div v-if="CurrentUserProfile.id == c.userprofileCom">
+                                          <div v-if="CurrentUserProfile.id == c.userprofileCom&& c.userprofileCom !=null|| CurrentUserEntreprise.id==c.userentrepriseCom &&c.userentrepriseCom!=null">
+                                            <b-dropdown variant="icon-only" dropright toggle-tag="a" size="1em" class="mb-4 mr-2 ml-5 custom-dropdown float-right">
+                                              <template #button-content>
+                                                <svg
+                                                  xmlns="http://www.w3.org/2000/svg"
+                                                  style="width: 18px; height: 18px"
+                                                  width="24"
+                                                  height="24"
+                                                  viewBox="0 0 24 24"
+                                                  fill="none"
+                                                  stroke="currentColor"
+                                                  stroke-width="2"
+                                                  stroke-linecap="round"
+                                                  stroke-linejoin="round"
+                                                  class="feather feather-more-vertical"
+                                                >
+                                                  <circle cx="12" cy="12" r="1"></circle>
+                                                  <circle cx="12" cy="5" r="1"></circle>
+                                                  <circle cx="12" cy="19" r="1"></circle>
+                                                </svg>
+                                              </template>
+                                              <b-dropdown-item v-b-modal="modalModifComment(c.id)">Modify</b-dropdown-item>
+                                              <b-dropdown-item @click="deleteComment(c)">Delete</b-dropdown-item>
+                                            </b-dropdown>
+                                            <b-modal
+                                              :id="'modalModifComment' + c.id"
+                                              hide-footer
+                                              title="Modify Comment"
+                                              title-tag="h4"
+                                              modal-class="register-modal"
+                                              footer-class="justify-content-center"
+                                            >
+                                              <form class="mt-0">
+                                                <div class="form-group">
+                                                  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                                    <path
+                                                      fill="currentColor"
+                                                      d="m21.558 3.592l-1.15-1.15a1.49 1.49 0 0 0-2.12 0L13 7.731V11h3.27l5.288-5.288a1.49 1.49 0 0 0 0-2.12ZM15.579 9.45h-1.03V8.42L18 4.973l1.03 1.03Z"
+                                                    />
+                                                    <path fill="currentColor" d="M19 19H5V5h6V3H5a2.006 2.006 0 0 0-2 2v14a2.006 2.006 0 0 0 2 2h14a2.006 2.006 0 0 0 2-2v-6h-2Z" />
+                                                  </svg>
+                                                  <b-form-textarea
+                                                    type="text"
+                                                    class="mb-2"
+                                                    :class="[is_submit_commentmodif ? (c.contentCom && c.contentCom.length < 200 && c.contentCom.length > 15 ? 'is-valid' : 'is-invalid') : '']"
+                                                    v-model="c.contentCom"
+                                                    placeholder="Modify your comment here"
+                                                  ></b-form-textarea>
+                                                  <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
+                                                  <b-form-invalid-feedback :class="{ 'd-block': is_submit_commentmodif && !c.contentCom }"
+                                                    >Please Enter content between 15 and 200 characters</b-form-invalid-feedback
+                                                  >
+                                                </div>
+                                                <b-button variant="primary" block class="mt-2 mb-2" @click="commentModif(c)">Modify</b-button>
+                                              </form>
+                                            </b-modal>
+                                          </div>
+                                        </template>
+                                      </b-media>
+                                    </span>
+                                  </span>
+                                  <span v-for="ue in Userentreprises" :key="ue.id">
+                                    <span v-if="c.userentrepriseCom == ue.id">
+                                      <b-media>
+                                        <template #aside>
+                                          <router-link :to="'/entreprisedetails/' + ue.id" class="text-primary">
+                                            <b-avatar :src="'http://127.0.0.1:8000' + ue.imageE" class="avatar-title rounded-circl mr-4"> </b-avatar>
+                                          </router-link>
+                                          <p class="mt-1 mr-5">{{ c.contentCom }}</p>
+                                          <div v-if="CurrentUserProfile.id == c.userprofileCom&& c.userprofileCom !=null|| CurrentUserEntreprise.id==c.userentrepriseCom &&c.userentrepriseCom!=null">
+                                            <b-dropdown variant="icon-only" dropright toggle-tag="a" size="1em" class="mb-4 mr-2 ml-5 custom-dropdown float-right">
+                                              <template #button-content>
+                                                <svg
+                                                  xmlns="http://www.w3.org/2000/svg"
+                                                  style="width: 18px; height: 18px"
+                                                  width="24"
+                                                  height="24"
+                                                  viewBox="0 0 24 24"
+                                                  fill="none"
+                                                  stroke="currentColor"
+                                                  stroke-width="2"
+                                                  stroke-linecap="round"
+                                                  stroke-linejoin="round"
+                                                  class="feather feather-more-vertical"
+                                                >
+                                                  <circle cx="12" cy="12" r="1"></circle>
+                                                  <circle cx="12" cy="5" r="1"></circle>
+                                                  <circle cx="12" cy="19" r="1"></circle>
+                                                </svg>
+                                              </template>
+                                              <b-dropdown-item v-b-modal="modalModifComment(c.id)">Modify</b-dropdown-item>
+                                              <b-dropdown-item @click="deleteComment(c)">Delete</b-dropdown-item>
+                                            </b-dropdown>
+                                            <b-modal
+                                              :id="'modalModifComment' + c.id"
+                                              hide-footer
+                                              title="Modify Comment"
+                                              title-tag="h4"
+                                              modal-class="register-modal"
+                                              footer-class="justify-content-center"
+                                            >
+                                              <form class="mt-0">
+                                                <div class="form-group">
+                                                  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                                    <path
+                                                      fill="currentColor"
+                                                      d="m21.558 3.592l-1.15-1.15a1.49 1.49 0 0 0-2.12 0L13 7.731V11h3.27l5.288-5.288a1.49 1.49 0 0 0 0-2.12ZM15.579 9.45h-1.03V8.42L18 4.973l1.03 1.03Z"
+                                                    />
+                                                    <path fill="currentColor" d="M19 19H5V5h6V3H5a2.006 2.006 0 0 0-2 2v14a2.006 2.006 0 0 0 2 2h14a2.006 2.006 0 0 0 2-2v-6h-2Z" />
+                                                  </svg>
+                                                  <b-form-textarea
+                                                    type="text"
+                                                    class="mb-2"
+                                                    :class="[is_submit_commentmodif ? (c.contentCom && c.contentCom.length < 200 && c.contentCom.length > 15 ? 'is-valid' : 'is-invalid') : '']"
+                                                    v-model="c.contentCom"
+                                                    placeholder="Modify your comment here"
+                                                  ></b-form-textarea>
+                                                  <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
+                                                  <b-form-invalid-feedback :class="{ 'd-block': is_submit_commentmodif && !c.contentCom }"
+                                                    >Please Enter content between 15 and 200 characters</b-form-invalid-feedback
+                                                  >
+                                                </div>
+                                                <b-button variant="primary" block class="mt-2 mb-2" @click="commentModif(c)">Modify</b-button>
+                                              </form>
+                                            </b-modal>
+                                          </div>
+                                        </template>
+                                      </b-media>
+                                    </span>
+                                  </span>
+                                </b-card-body>
+                              </span>
+                            </span>
+                          </b-collapse>
+                        </div>
+                      </div>
+                    </span>
+                  </span>
+                  <span v-for="ue in Userentreprises" :key="ue.id">
+                    <span v-if="ue.id == p.userentreprisePost">
+                      <div v-if="CurrentUserProfile.id == p.userprofilePost&& p.userprofilePost !=null|| CurrentUserEntreprise.id==p.userentreprisePost &&p.userentreprisePost!=null">
+                        <b-dropdown variant="icon-only" dropleft toggle-tag="a" size="1em" class="mb-4 mr-5 custom-dropdown float-right">
+                          <template #button-content>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              style="width: 25px; height: 25px"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="feather feather-more-vertical"
+                            >
+                              <circle cx="12" cy="12" r="1"></circle>
+                              <circle cx="12" cy="5" r="1"></circle>
+                              <circle cx="12" cy="19" r="1"></circle>
+                            </svg>
+                          </template>
+                          <b-dropdown-item :href="'/group/' + group.id + '/updatepost/' + p.id">Modify</b-dropdown-item>
+                          <b-dropdown-item @click="deletePost(p.id)">Delete</b-dropdown-item>
+                        </b-dropdown>
+                      </div>
+                      <div class="timeline-post-content">
+                        <div class="user-profile">
+                          <img :src="'http://127.0.0.1:8000' + ue.imageE" img-top alt="" />
+                        </div>
+
+                        <div class="">
+                          
+                            <h4>{{ ue.nameE }}<span v-if="ue.id==group.userentrepriseG"> <b-badge variant="outline-primary" class="outline-badge-primary border-0 ml-2 mb-1">Admin</b-badge> </span></h4>
+                            <p class="meta-time-date">{{ p.datecreation | formatDate }}</p>
+                         
+                          <div class="">
+                            <h6 class="post-text">
+                              {{ p.detailsP }}
+                            </h6>
+                          </div>
+                          <div class="post-gallery-img col-md-12" v-if="p.imagePost != null">
+                            <img :src="'http://127.0.0.1:8000' + p.imagePost" style="width: 400px; height: 200px" />
+                          </div>
+                          <div class="media-notation mb-5">
+                            <a href="javascript:void(0);" class="mr-5"><likecomponent :userprofile="CurrentUserProfile.id" :userentreprise="CurrentUserEntreprise.id" :postid="p.id" /> </a>
+                            <a href="javascript:void(0);" v-b-toggle="collapseComment(p.id)" class="mr-5"
+                              ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1.28em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1792 1408">
+                                <path
+                                  fill="currentColor"
+                                  d="M1408 512q0 139-94 257t-256.5 186.5T704 1024q-86 0-176-16q-124 88-278 128q-36 9-86 16h-3q-11 0-20.5-8t-11.5-21q-1-3-1-6.5t.5-6.5t2-6l2.5-5l3.5-5.5l4-5l4.5-5l4-4.5q5-6 23-25t26-29.5t22.5-29t25-38.5t20.5-44Q142 841 71 736T0 512q0-139 94-257T350.5 68.5T704 0t353.5 68.5T1314 255t94 257zm384 256q0 120-71 224.5T1526 1169q10 24 20.5 44t25 38.5t22.5 29t26 29.5t23 25q1 1 4 4.5t4.5 5t4 5t3.5 5.5l2.5 5l2 6l.5 6.5l-1 6.5q-3 14-13 22t-22 7q-50-7-86-16q-154-40-278-128q-90 16-176 16q-271 0-472-132q58 4 88 4q161 0 309-45t264-129q125-92 192-212t67-254q0-77-23-152q129 71 204 178t75 230z"
+                                />
+                              </svg>
+                              {{ p.nbcomments }} Comments
+                            </a>
+                            <a href="javascript:void(0);" v-b-modal="modalAddComment(p.id)" class="mr-5"
+                              ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
+                                <path
+                                  fill="currentColor"
+                                  d="M256 32C114.62 32 0 125.12 0 240c0 49.56 21.41 95 57 130.74C44.46 421.05 2.7 466 2.2 466.5A8 8 0 0 0 8 480c66.26 0 116-31.75 140.6-51.38A304.66 304.66 0 0 0 256 448c141.39 0 256-93.12 256-208S397.39 32 256 32zm96 232a8 8 0 0 1-8 8h-56v56a8 8 0 0 1-8 8h-48a8 8 0 0 1-8-8v-56h-56a8 8 0 0 1-8-8v-48a8 8 0 0 1 8-8h56v-56a8 8 0 0 1 8-8h48a8 8 0 0 1 8 8v56h56a8 8 0 0 1 8 8z"
+                                />
+                              </svg>
+                              Add Comment
+                            </a>
+                          </div>
+                          <b-modal :id="'modaladdcomment' + p.id" hide-footer title="Add Comment" title-tag="h4" modal-class="register-modal" footer-class="justify-content-center">
+                            <form class="mt-0">
+                              <div class="form-group">
+                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                  <path
+                                    fill="currentColor"
+                                    d="m21.558 3.592l-1.15-1.15a1.49 1.49 0 0 0-2.12 0L13 7.731V11h3.27l5.288-5.288a1.49 1.49 0 0 0 0-2.12ZM15.579 9.45h-1.03V8.42L18 4.973l1.03 1.03Z"
+                                  />
+                                  <path fill="currentColor" d="M19 19H5V5h6V3H5a2.006 2.006 0 0 0-2 2v14a2.006 2.006 0 0 0 2 2h14a2.006 2.006 0 0 0 2-2v-6h-2Z" />
+                                </svg>
+                                <b-form-textarea
+                                  type="text"
+                                  class="mb-2"
+                                  v-model="form.contentCom"
+                                  :class="[is_submit_comment ? (form.contentCom && form.contentCom.length < 200 && form.contentCom.length > 15 ? 'is-valid' : 'is-invalid') : '']"
+                                  placeholder="Enter your comment here"
+                                ></b-form-textarea>
+                                <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
+                                <b-form-invalid-feedback :class="{ 'd-block': is_submit_comment && !form.contentCom }">Please Enter content between 15 and 200 characters</b-form-invalid-feedback>
+                              </div>
+                              <b-button variant="primary" block class="mt-2 mb-2" @click="commentaire(p)">Submit</b-button>
+                            </form>
+                          </b-modal>
+                          <b-collapse :id="'collapse-hd-statistics-' + p.id" accordion="helpdesk-accordion" class="mb-5 col-xl-12">
+                            <span v-for="c in Comments" :key="c.id">
+                              <span v-if="c.postCom == p.id">
+                                <b-card-body>
+                                  <span v-for="up in Userprofiles" :key="up.id">
+                                    <span v-if="c.userprofileCom == up.id">
+                                      <b-media>
+                                        <template #aside>
+                                          <router-link :to="'/profile/' + up.id" class="text-primary">
+                                            <b-avatar :src="'http://127.0.0.1:8000' + up.imageU" class="avatar-title rounded-circl mr-4"> </b-avatar>
+                                          </router-link>
+                                          <p class="mt-1 mr-5">{{ c.contentCom }}</p>
+                                          <div v-if="CurrentUserProfile.id == c.userprofileCom&& c.userprofileCom !=null|| CurrentUserEntreprise.id==c.userentrepriseCom &&c.userentrepriseCom!=null">
+                                            <b-dropdown variant="icon-only" dropright toggle-tag="a" size="1em" class="mb-4 mr-2 ml-5 custom-dropdown float-right">
+                                              <template #button-content>
+                                                <svg
+                                                  xmlns="http://www.w3.org/2000/svg"
+                                                  style="width: 18px; height: 18px"
+                                                  width="24"
+                                                  height="24"
+                                                  viewBox="0 0 24 24"
+                                                  fill="none"
+                                                  stroke="currentColor"
+                                                  stroke-width="2"
+                                                  stroke-linecap="round"
+                                                  stroke-linejoin="round"
+                                                  class="feather feather-more-vertical"
+                                                >
+                                                  <circle cx="12" cy="12" r="1"></circle>
+                                                  <circle cx="12" cy="5" r="1"></circle>
+                                                  <circle cx="12" cy="19" r="1"></circle>
+                                                </svg>
+                                              </template>
+                                              <b-dropdown-item v-b-modal="modalModifComment(c.id)">Modify</b-dropdown-item>
+                                              <b-dropdown-item @click="deleteComment(c)">Delete</b-dropdown-item>
+                                            </b-dropdown>
+                                            <b-modal
+                                              :id="'modalModifComment' + c.id"
+                                              hide-footer
+                                              title="Modify Comment"
+                                              title-tag="h4"
+                                              modal-class="register-modal"
+                                              footer-class="justify-content-center"
+                                            >
+                                              <form class="mt-0">
+                                                <div class="form-group">
+                                                  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                                    <path
+                                                      fill="currentColor"
+                                                      d="m21.558 3.592l-1.15-1.15a1.49 1.49 0 0 0-2.12 0L13 7.731V11h3.27l5.288-5.288a1.49 1.49 0 0 0 0-2.12ZM15.579 9.45h-1.03V8.42L18 4.973l1.03 1.03Z"
+                                                    />
+                                                    <path fill="currentColor" d="M19 19H5V5h6V3H5a2.006 2.006 0 0 0-2 2v14a2.006 2.006 0 0 0 2 2h14a2.006 2.006 0 0 0 2-2v-6h-2Z" />
+                                                  </svg>
+                                                  <b-form-textarea
+                                                    type="text"
+                                                    class="mb-2"
+                                                    :class="[is_submit_commentmodif ? (c.contentCom && c.contentCom.length < 200 && c.contentCom.length > 15 ? 'is-valid' : 'is-invalid') : '']"
+                                                    v-model="c.contentCom"
+                                                    placeholder="Modify your comment here"
+                                                  ></b-form-textarea>
+                                                  <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
+                                                  <b-form-invalid-feedback :class="{ 'd-block': is_submit_commentmodif && !c.contentCom }"
+                                                    >Please Enter content between 15 and 200 characters</b-form-invalid-feedback
+                                                  >
+                                                </div>
+                                                <b-button variant="primary" block class="mt-2 mb-2" @click="commentModif(c)">Modify</b-button>
+                                              </form>
+                                            </b-modal>
+                                          </div>
+                                        </template>
+                                      </b-media>
+                                    </span>
+                                  </span>
+                                  <span v-for="ue in Userentreprises" :key="ue.id">
+                                    <span v-if="c.userentrepriseCom == ue.id">
+                                      <b-media>
+                                        <template #aside>
+                                          <router-link :to="'/entreprisedetails/' + ue.id" class="text-primary">
+                                            <b-avatar :src="'http://127.0.0.1:8000' + ue.imageE" class="avatar-title rounded-circl mr-4"> </b-avatar>
+                                          </router-link>
+                                          <p class="mt-1 mr-5">{{ c.contentCom }}</p>
+                                          <div v-if="CurrentUserProfile.id == c.userprofileCom&& c.userprofileCom !=null|| CurrentUserEntreprise.id==c.userentrepriseCom &&c.userentrepriseCom!=null">
                                             <b-dropdown variant="icon-only" dropright toggle-tag="a" size="1em" class="mb-4 mr-2 ml-5 custom-dropdown float-right">
                                               <template #button-content>
                                                 <svg
@@ -530,9 +838,7 @@ export default {
         });
         try {
           await this.CreateGroupcomment({ contentCom: this.form.contentCom, userprofileCom: this.CurrentUserProfile.id,userentrepriseCom: this.CurrentUserEntreprise.id, postCom: post.id });
-          /* if(this.userprofile!=this.reply.userprofileRep || this.userentreprise!=this.reply.userentrepriseRep){
-      this.CreateNotification({message:' commented on your reply !',byuserprofileNo:this.CurrentUserProfile.id,userprofileNo:rep.userprofileRep,byuserentrepriseNo:this.CurrentUserEntreprise.id,entrepriseNo:rep.userentrepriseRep,replyNo:rep.id})
-      }*/
+       
           await axios.put('/postgroup/postgroup-update/' + post.id + '/', {
             nbcomments: (this.postdetails.nbcomments += 1),
           });
