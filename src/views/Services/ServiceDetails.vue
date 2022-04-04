@@ -60,7 +60,7 @@
         <b-badge variant="success"> Promoted Service</b-badge>
       </div>
       <div class="float-child">
-        <img :src="'http://127.0.0.1:8000' + service.imageS" class="img-fluid img-thumbnail mt-4" style="height: 450px; width: 100%" />
+        <img :src="'https://cargeeks.herokuapp.com' + service.imageS" class="img-fluid img-thumbnail mt-4" style="height: 450px; width: 100%" />
       </div>
       <div class="float-child">
         <strong class="card-category ml-4">
@@ -654,7 +654,7 @@
                       <b-carousel-slide>
                         <template #img>
                           <a :href="'/servicedetails/' + s.id">
-                            <img class="d-block w-100 slide-image" height="350px" :src="'http://127.0.0.1:8000' + s.imageS" alt="First slide" />
+                            <img class="d-block w-100 slide-image" height="350px" :src="'https://cargeeks.herokuapp.com' + s.imageS" alt="First slide" />
                           </a>
                         </template>
 
@@ -757,7 +757,7 @@ export default {
           const d = new Date(this.Servicepromotions[s].dateP);
           d.setDate(d.getDate() + parseInt(this.Servicepromotions[s].nbDays));
           if (new Date() > d && this.Servicepromotions[s].dateP != null) {
-            axios.delete(`http://127.0.0.1:8000/servicepromotion/servicepromotion-delete/${this.Servicepromotions[s].id}/`);
+            axios.delete(`https://cargeeks.herokuapp.com/servicepromotion/servicepromotion-delete/${this.Servicepromotions[s].id}/`);
             axios.post('/service/service-update/' + this.service.id + '/', { promoted: false, accepted: this.service.accepted });
             this.promoted = false;
             this.$router.go();
@@ -816,7 +816,7 @@ export default {
         padding: '2em',
       }).then((result) => {
         if (result.value) {
-          axios.delete(`http://127.0.0.1:8000/service/service-delete/${id}/`);
+          axios.delete(`https://cargeeks.herokuapp.com/service/service-delete/${id}/`);
           this.$swal('Deleted!', 'Your Service has been deleted.', 'success');
           this.$router.push('/services');
         }

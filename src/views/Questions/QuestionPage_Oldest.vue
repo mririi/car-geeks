@@ -47,7 +47,7 @@
             
             <template #aside>
               <div class="w-img">
-                <img :src="'http://127.0.0.1:8000' + userprofile.imageU" alt="avatar" />
+                <img :src="'https://cargeeks.herokuapp.com' + userprofile.imageU" alt="avatar" />
               </div>
               
             </template>
@@ -69,7 +69,7 @@
             <b-card-text>
           <h6 class="ml-5 mb-5">{{ question.contentQ }}</h6></b-card-text></b-card>
           <div class="widget-content mb-5" v-if="question.imageQ != null">
-            <img :src="'http://127.0.0.1:8000' + question.imageQ" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
+            <img :src="'https://cargeeks.herokuapp.com' + question.imageQ" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
           </div>
           <div class="w-action">
             <div class="card-like ml-4">
@@ -250,7 +250,7 @@
                             <div v-for="u in Userprofiles" :key="u.id">
                               <div v-if="u.id == rep.userprofileRep">
                                 <div class="float-left">
-                                  <b-avatar class="mr-3" :square="true" size="3rem" :src="'http://127.0.0.1:8000' + u.imageU" width="40px" />
+                                  <b-avatar class="mr-3" :square="true" size="3rem" :src="'https://cargeeks.herokuapp.com' + u.imageU" width="40px" />
                                 </div>
                                 <h6 class="">{{ u.firstname }} {{ u.lastname }}</h6>
                               </div>
@@ -299,7 +299,7 @@
                               </b-media>
                              </b-card>
                             <div v-if="rep.imageR != null" class="widget-content mb-4">
-                              <img :src="'http://127.0.0.1:8000' + rep.imageR" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
+                              <img :src="'https://cargeeks.herokuapp.com' + rep.imageR" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
                             </div>
                             <div class="media-notation mb-4 float-right">
                               <a v-if="existentreprise==false" href="javascript:void(0);" class="">
@@ -584,7 +584,7 @@ export default {
         padding: '2em',
       }).then((result) => {
         if (result.value) {
-          axios.delete(`http://127.0.0.1:8000/reply/reply-delete/${id}/`);
+          axios.delete(`https://cargeeks.herokuapp.com/reply/reply-delete/${id}/`);
           axios.put('/userprofile/userprofile-update/' + this.CurrentUserProfile.id + '/', { nbreplies: (this.CurrentUserProfile.nbreplies -= 1) });
           axios.put('/question/question-update/' + this.$route.params.id + '/', {
             nbrep: (this.question.nbrep -= 1),
@@ -612,7 +612,7 @@ export default {
               nbCommentR: (replydetails.nbCommentR -= 1),
             });
           });
-          axios.delete(`http://127.0.0.1:8000/comment/comment-delete/${c.id}/`);
+          axios.delete(`https://cargeeks.herokuapp.com/comment/comment-delete/${c.id}/`);
           this.$swal('Deleted!', 'Your comment has been deleted.', 'success');
           this.$router.go();
         }

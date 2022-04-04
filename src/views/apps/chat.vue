@@ -60,7 +60,7 @@
                 <div v-for="person in filteredList" class="person" :key="person.id" :class="{ active: selected_user && selected_user.id == person.id }" @click="select_user(person)">
                   <div class="user-info">
                     <div class="f-head">
-                      <img :src="'http://127.0.0.1:8000' + person.imageU + '/'" alt="avatar" />
+                      <img :src="'https://cargeeks.herokuapp.com' + person.imageU + '/'" alt="avatar" />
                     </div>
                     <div class="f-body">
                       <div class="meta-info">
@@ -97,7 +97,7 @@
                 <div class="chat-meta-user chat-active">
                   <div class="current-chat-user-name">
                     <span>
-                      <img :src="'http://127.0.0.1:8000' + selected_user.imageU + '/'" alt="dynamic-image" />
+                      <img :src="'https://cargeeks.herokuapp.com' + selected_user.imageU + '/'" alt="dynamic-image" />
                       <span class="name">{{ selected_user.firstname }} {{ selected_user.lastname }}</span>
                     </span>
                   </div>

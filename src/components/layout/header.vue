@@ -300,14 +300,14 @@
                                   <div v-if="n.byuserentrepriseNo==null">
                                     <div v-for="u in Userprofiles" :key="u.id">
                                     <div v-if="u.id == n.byuserprofileNo">
-                                    <b-avatar :src="'http://127.0.0.1:8000'+u.imageU" class="avatar-title rounded-circle"></b-avatar>
+                                    <b-avatar :src="'https://cargeeks.herokuapp.com'+u.imageU" class="avatar-title rounded-circle"></b-avatar>
                                     </div>
                                   </div>
                                   </div>
                                   <div v-else-if="n.byuserprofileNo==null">
                                     <div v-for="ue in Userentreprises" :key="ue.id">
                                     <div v-if="ue.id == n.byuserentrepriseNo">
-                                    <b-avatar :src="'http://127.0.0.1:8000'+ue.imageE" class="avatar-title rounded-circle"></b-avatar>
+                                    <b-avatar :src="'https://cargeeks.herokuapp.com'+ue.imageE" class="avatar-title rounded-circle"></b-avatar>
                                     </div>
                                   </div>
                                   </div>
@@ -355,14 +355,14 @@
                                   <div v-if="n.byuserentrepriseNo==null">
                                     <div v-for="u in Userprofiles" :key="u.id">
                                     <div v-if="u.id == n.byuserprofileNo">
-                                    <b-avatar :src="'http://127.0.0.1:8000'+u.imageU" class="avatar-title rounded-circle"></b-avatar>
+                                    <b-avatar :src="'https://cargeeks.herokuapp.com'+u.imageU" class="avatar-title rounded-circle"></b-avatar>
                                     </div>
                                   </div>
                                   </div>
                                   <div v-else-if="n.byuserprofileNo==null">
                                     <div v-for="ue in Userentreprises" :key="ue.id">
                                     <div v-if="ue.id == n.byuserentrepriseNo">
-                                    <b-avatar :src="'http://127.0.0.1:8000'+ue.imageE" class="avatar-title rounded-circle"></b-avatar>
+                                    <b-avatar :src="'https://cargeeks.herokuapp.com'+ue.imageE" class="avatar-title rounded-circle"></b-avatar>
                                     </div>
                                   </div>
                                   </div>
@@ -472,14 +472,14 @@
                                   <div v-if="n.byuserentrepriseNo==null">
                                     <div v-for="u in Userprofiles" :key="u.id">
                                     <div v-if="u.id == n.byuserprofileNo">
-                                    <b-avatar :src="'http://127.0.0.1:8000'+u.imageU" class="avatar-title rounded-circle"></b-avatar>
+                                    <b-avatar :src="'https://cargeeks.herokuapp.com'+u.imageU" class="avatar-title rounded-circle"></b-avatar>
                                     </div>
                                   </div>
                                   </div>
                                   <div v-else-if="n.byuserprofileNo==null">
                                     <div v-for="ue in Userentreprises" :key="ue.id">
                                     <div v-if="ue.id == n.byuserentrepriseNo">
-                                    <b-avatar :src="'http://127.0.0.1:8000'+ue.imageE" class="avatar-title rounded-circle"></b-avatar>
+                                    <b-avatar :src="'https://cargeeks.herokuapp.com'+ue.imageE" class="avatar-title rounded-circle"></b-avatar>
                                     </div>
                                   </div>
                                   </div>
@@ -525,14 +525,14 @@
                                   <div v-if="n.byuserentrepriseNo==null">
                                     <div v-for="u in Userprofiles" :key="u.id">
                                     <div v-if="u.id == n.byuserprofileNo">
-                                    <b-avatar :src="'http://127.0.0.1:8000'+u.imageU" class="avatar-title rounded-circle"></b-avatar>
+                                    <b-avatar :src="'https://cargeeks.herokuapp.com'+u.imageU" class="avatar-title rounded-circle"></b-avatar>
                                     </div>
                                   </div>
                                   </div>
                                   <div v-else-if="n.byuserprofileNo==null">
                                     <div v-for="ue in Userentreprises" :key="ue.id">
                                     <div v-if="ue.id == n.byuserentrepriseNo">
-                                    <b-avatar :src="'http://127.0.0.1:8000'+ue.imageE" class="avatar-title rounded-circle"></b-avatar>
+                                    <b-avatar :src="'https://cargeeks.herokuapp.com'+ue.imageE" class="avatar-title rounded-circle"></b-avatar>
                                     </div>
                                   </div>
                                   </div>
@@ -723,10 +723,10 @@
             <b-dropdown toggle-tag="a" variant="icon-only" toggle-class="user nav-link" class="nav-item user-profile-dropdown" :right="true">
               <template #button-content>
                 <span v-if="Userprofile.length != 0">
-                  <img :src="'http://127.0.0.1:8000' + Userprofile.imageU" class="navbar-logo" />
+                  <img :src="'https://cargeeks.herokuapp.com' + Userprofile.imageU" class="navbar-logo" />
                 </span>
                 <span v-if="Userprofile.length == 0">
-                  <img :src="'http://127.0.0.1:8000' + Userentreprise.imageE" class="navbar-logo" />
+                  <img :src="'https://cargeeks.herokuapp.com' + Userentreprise.imageE" class="navbar-logo" />
                 </span>
               </template>
               <span v-if="Userprofile.length != 0">
@@ -1122,7 +1122,7 @@ export default {
         padding: '2em',
       }).then((result) => {
         if (result.value) {
-          axios.delete(`http://127.0.0.1:8000/notifications/notification-delete/${id}/`);
+          axios.delete(`https://cargeeks.herokuapp.com/notifications/notification-delete/${id}/`);
           this.$swal('Deleted!', 'Your Notification has been deleted.', 'success');
           this.$router.go();
         }
