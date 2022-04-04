@@ -28,7 +28,7 @@
                         <div class="col-xl-2 col-lg-12 col-md-4">
                           <div class="upload mt-4 pr-md-4">
                             <input ref="fl_profile" type="file" class="d-none" accept="image/*" @change="change_file" />
-                            <img :src="selected_file ? selected_file : 'http://127.0.0.1:8000' + form.imageE" alt="profile" class="profile-preview" @click="$refs.fl_profile.click()" />
+                            <img :src="selected_file ? selected_file : 'https://cargeeks.herokuapp.com' + form.imageE" alt="profile" class="profile-preview" @click="$refs.fl_profile.click()" />
                             <p class="mt-2">Upload Picture</p>
                           </div>
                         </div>

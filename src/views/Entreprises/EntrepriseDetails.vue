@@ -22,7 +22,7 @@
           </div>
           <div class="col-md-6 order-md-0 mt-4 order-0">
             <div class="banner-img">
-              <b-avatar :src="'http://127.0.0.1:8000' + userentreprise.imageE" size="25rem" class="mb-5 bg-transparent img-fluid" style="width: 100%" rounded="lg" alt="header-image" />
+              <b-avatar :src="'https://cargeeks.herokuapp.com' + userentreprise.imageE" size="25rem" class="mb-5 bg-transparent img-fluid" style="width: 100%" rounded="lg" alt="header-image" />
             </div>
           </div>
         </div>
@@ -766,7 +766,7 @@
               <b-td v-if="e.id != userentreprise.id"
                 ><a :href="'/entreprisedetails/' + e.id"
                   ><div class="td-content">
-                    <img :src="'http://127.0.0.1:8000' + e.imageE" alt="avatar" /><span>{{ e.nameE }} </span>
+                    <img :src="'https://cargeeks.herokuapp.com' + e.imageE" alt="avatar" /><span>{{ e.nameE }} </span>
                   </div></a
                 ></b-td
               >
@@ -952,7 +952,7 @@ export default {
           const d = new Date(this.Entreprisepromotions[s].datePE);
           d.setDate(d.getDate() + parseInt(this.Entreprisepromotions[s].nbDays));
           if (new Date() > new Date(this.Entreprisepromotions[s].datePE) && this.Entreprisepromotions[s].dateP != null) {
-            axios.delete(`http://127.0.0.1:8000/entreprisepromotion/entreprisepromotion-delete/${this.Entreprisepromotions[s].id}/`);
+            axios.delete(`https://cargeeks.herokuapp.com/entreprisepromotion/entreprisepromotion-delete/${this.Entreprisepromotions[s].id}/`);
             axios.post('/userentreprise/userentreprise-update/' + this.userentreprise.id + '/', { promoted: false, published: this.userentreprise.published });
             this.promoted = false;
             this.$router.go();

@@ -19,7 +19,7 @@
         <div class="row"></div>
       </div>
       <div class="panel-body">
-        <b-card :img-src="'http://127.0.0.1:8000' + group.imageG" img-width="100%" img-height="290px" img-top class="component-card_8">
+        <b-card :img-src="'https://cargeeks.herokuapp.com' + group.imageG" img-width="100%" img-height="290px" img-top class="component-card_8">
           <div class="progress-order">
             <div class="progress-order-header">
               <div class="row">
@@ -67,7 +67,7 @@
                           <span v-if="uu.id == m.userprofileMem">
                         <li class="list-inline-item chat-online-usr">
                           <router-link :to="'/profile/'+uu.id">
-                          <img alt="avatar" :src="'http://127.0.0.1:8000' + uu.imageU" class="ml-0" />
+                          <img alt="avatar" :src="'https://cargeeks.herokuapp.com' + uu.imageU" class="ml-0" />
                           </router-link>
                         </li>
                       </span>
@@ -103,7 +103,7 @@
                     <span v-if="u.id == p.userprofilePost">
                       <div class="timeline-post-content">
                         <div class="user-profile">
-                          <img :src="'http://127.0.0.1:8000' + u.imageU" img-top alt="" />
+                          <img :src="'https://cargeeks.herokuapp.com' + u.imageU" img-top alt="" />
                         </div>
 
                         <div class="">
@@ -116,7 +116,7 @@
                             </h6>
                           </div>
                           <div class="post-gallery-img col-md-12" v-if="p.imagePost != null">
-                            <img :src="'http://127.0.0.1:8000' + p.imagePost" style="width: 400px; height: 200px" />
+                            <img :src="'https://cargeeks.herokuapp.com' + p.imagePost" style="width: 400px; height: 200px" />
                           </div>
                           <div class="media-notation mb-5">
                             <a href="javascript:void(0);" class="mr-5"
@@ -169,7 +169,7 @@
                                       <b-media>
                                         <template #aside>
                                           <router-link :to="'/profile/' + up.id" class="text-primary">
-                                            <b-avatar :src="'http://127.0.0.1:8000' + up.imageU" class="avatar-title rounded-circle mr-5"></b-avatar>
+                                            <b-avatar :src="'https://cargeeks.herokuapp.com' + up.imageU" class="avatar-title rounded-circle mr-5"></b-avatar>
                                           </router-link>
                                           <p class="mt-1">{{ c.contentCom }}</p>
                                         </template>

@@ -94,7 +94,7 @@
               <div class="item-content">
                 <div class="user-profile">
                   <router-link :to="'/profile/' + user.id">
-                    <img :src="'http://127.0.0.1:8000' + user.imageU" alt="avatar" />
+                    <img :src="'https://cargeeks.herokuapp.com' + user.imageU" alt="avatar" />
                   </router-link>
                   <div class="user-meta-info">
                     <p class="user-name">{{ user.firstname }} {{ user.lastname }}</p>

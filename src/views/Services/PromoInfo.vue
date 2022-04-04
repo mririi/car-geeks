@@ -29,7 +29,7 @@
             <div class="browser-list mb-5">
               <div class="w-icon icon-fill-primary">
                     <router-link :to="'/servicedetails/' + s.id">
-                      <b-avatar :src="'http://127.0.0.1:8000' + s.imageS" size="2.5rem" rounded="lg" />
+                      <b-avatar :src="'https://cargeeks.herokuapp.com' + s.imageS" size="2.5rem" rounded="lg" />
                     </router-link>
                   
               </div>

@@ -88,7 +88,7 @@
                   
                 <b-card  v-for="c in Questioncategories" :key="c.id" class="component-card_4  mb-3" style="margin-left:10%" >
                 <div class="user-profile">
-                    <img :src="'http://127.0.0.1:8000'+c.imageCat" class="mb-2" style="width:250px;height:200px;">
+                    <img :src="'https://cargeeks.herokuapp.com'+c.imageCat" class="mb-2" style="width:250px;height:200px;">
                 </div>
                 <div class="user-info">
                     <b-card-text class="col-12"><b-form-checkbox :value="c.id" v-show="category.length<=2" class="slider round">{{ c.typeC }}</b-form-checkbox><b-form-checkbox :value="c.id" v-show="category.length>2" disabled class="slider round">{{ c.typeC }}</b-form-checkbox></b-card-text>
