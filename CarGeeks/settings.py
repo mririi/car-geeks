@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-9k22l0#a5-4(5z%=yc02p)8ri_&feze_jhyp^6ug!m(w_@z(-a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost','cargeeksbackend.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1','localhost','cargeeksbackend.herokuapp.com','cargeeks.herokuapp.com']
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 # Application definition
