@@ -15,7 +15,7 @@
     </portal>
     <div class="col-xl-12 mt-3 col-lg-6 col-md-12 col-sm-12 col-12 layout-spacing">
       <div class="widget widget-card-one">
-        <div v-if="CurrentUserProfile.id == question.userprofileQ && question.userprofileQ !=null|| CurrentUserEntreprise.id==question.userentrepriseQ &&question.userentrepriseQ!=null">
+        <div v-if="(CurrentUserProfile.id == question.userprofileQ && question.userprofileQ != null) || (CurrentUserEntreprise.id == question.userentrepriseQ && question.userentrepriseQ != null)">
           <b-dropdown variant="icon-only" toggle-tag="a" size="1em" class="mb-4 mr-2 custom-dropdown mt-3 float-right">
             <template #button-content>
               <svg
@@ -40,7 +40,7 @@
             <b-dropdown-item @click="deleteQuestion(question.id)">Delete</b-dropdown-item>
           </b-dropdown>
         </div>
-        <div v-if="question.userprofileQ !=null" class="widget-heading">
+        <div v-if="question.userprofileQ != null" class="widget-heading">
           <b-media>
             <template #aside>
               <div class="w-img">
@@ -51,7 +51,7 @@
             <router-link :to="'/profile/' + userprofile.id">
               <h6>{{ userprofile.firstname }} {{ userprofile.lastname }}</h6>
             </router-link>
-            
+
             <p class="meta-date-time">{{ question.dateQ | formatDate }}</p>
 
             <b-card class="bg-transparent border-0 col-12">
@@ -61,7 +61,7 @@
             >
           </b-media>
         </div>
-        <div v-if="question.userentrepriseQ !=null" class="widget-heading">
+        <div v-if="question.userentrepriseQ != null" class="widget-heading">
           <b-media>
             <template #aside>
               <div class="w-img">
@@ -72,7 +72,7 @@
             <router-link :to="'/entreprisedetails/' + userentreprise.id">
               <h6>{{ userentreprise.nameE }}</h6>
             </router-link>
-            
+
             <p class="meta-date-time">{{ question.dateQ | formatDate }}</p>
 
             <b-card class="bg-transparent border-0 col-12">
@@ -93,7 +93,7 @@
           </div>
           <div class="w-action">
             <div class="card-like ml-4">
-              <span v-if="isLoggedIn && CurrentUserProfile.id != null || CurrentUserEntreprise.id !=null">
+              <span v-if="(isLoggedIn && CurrentUserProfile.id != null) || CurrentUserEntreprise.id != null">
                 <svg
                   v-show="likedQuestion == false"
                   @click="liked()"
@@ -152,10 +152,10 @@
                   />
                 </g>
               </svg>
-              <span v-if="isLoggedIn && CurrentUserProfile.id != null || CurrentUserEntreprise.id != null">
+              <span v-if="(isLoggedIn && CurrentUserProfile.id != null) || CurrentUserEntreprise.id != null">
                 <span v-b-modal.exampleModalCenter>Reply</span>
               </span>
-              <span v-else-if="isLoggedIn && CurrentUserProfile.id == null || CurrentUserEntreprise.id == null">
+              <span v-else-if="(isLoggedIn && CurrentUserProfile.id == null) || CurrentUserEntreprise.id == null">
                 <a href="/auth/userinfo"> <span>Reply</span> </a>
               </span>
             </div>
@@ -176,7 +176,9 @@
                     placeholder="Enter your reply content here"
                   ></b-form-textarea>
                   <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
-                  <b-form-invalid-feedback :class="{ 'd-block': is_submit_reply && !replies.contentR && replies.contentR.length > 500 && replies.contentR.length <25 }">Please Enter content between 25 and 500 characters</b-form-invalid-feedback>
+                  <b-form-invalid-feedback :class="{ 'd-block': is_submit_reply && !replies.contentR && replies.contentR.length > 500 && replies.contentR.length < 25 }"
+                    >Please Enter content between 25 and 500 characters</b-form-invalid-feedback
+                  >
 
                   <div class="mt-4 mb-5">
                     <svg xmlns="http://www.w3.org/2000/svg" class="mb-1" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
@@ -197,8 +199,8 @@
             <b-button-group>
               <a class="btn btn-primary" :href="'/questionpagerightanswer/' + question.id + '/' + question.slug">Right Answer</a>
               <a class="btn btn-outline-primary" href="#">Newest</a>
-              <a class="btn btn-primary" :href="'/questionpageoldest/' + question.id + '/'+ question.slug">Oldest</a>
-              <a class="btn btn-primary" :href="'/questionpagemostliked/' + question.id + '/'+ question.slug">Most Liked</a>
+              <a class="btn btn-primary" :href="'/questionpageoldest/' + question.id + '/' + question.slug">Oldest</a>
+              <a class="btn btn-primary" :href="'/questionpagemostliked/' + question.id + '/' + question.slug">Most Liked</a>
             </b-button-group>
           </div>
           <h5 class="mt-4 ml-4">Answers</h5>
@@ -250,17 +252,22 @@
                             </div>
                             <h6 class="">{{ u.firstname }} {{ u.lastname }}</h6>
                           </div>
-                           </div>
-                          <div v-for="e in Userentreprises" :key="e.id">
+                        </div>
+                        <div v-for="e in Userentreprises" :key="e.id">
                           <div v-if="e.id == rep.userentrepriseRep">
                             <div class="float-left">
                               <b-avatar class="mr-3" :square="true" size="3rem" :src="'http://127.0.0.1:8000' + e.imageE" width="40px" />
                             </div>
                             <h6 class="">{{ e.nameE }}</h6>
                           </div>
-                          </div>
-                       
-                        <div v-if="(CurrentUserProfile.id == rep.userprofileRep && rep.userprofileRep !=null|| CurrentUserEntreprise.id==rep.userentrepriseRep &&rep.userentrepriseRep!=null) && rep.checked == false">
+                        </div>
+
+                        <div
+                          v-if="
+                            ((CurrentUserProfile.id == rep.userprofileRep && rep.userprofileRep != null) || (CurrentUserEntreprise.id == rep.userentrepriseRep && rep.userentrepriseRep != null)) &&
+                            rep.checked == false
+                          "
+                        >
                           <b-dropdown variant="icon-only" dropleft toggle-tag="a" class="mb-4 mr-2 custom-dropdown float-right">
                             <template #button-content>
                               <svg
@@ -317,21 +324,13 @@
                             <likecomponent :replyid="rep.id" :userprofile="CurrentUserProfile.id" :userentreprise="CurrentUserEntreprise.id" />
                           </a>
                           <a v-else>
-                            <svg
-                  
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                  role="img"
-                  width="24"
-                  height="24"
-                  preserveAspectRatio="xMidYMid meet"
-                  viewBox="0 0 512 512"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M96 191.1H32c-17.67 0-32 14.33-32 31.1v223.1c0 17.67 14.33 31.1 32 31.1h64c17.67 0 32-14.33 32-31.1V223.1c0-16.8-14.3-32-32-32zM512 227c0-36.89-30.05-66.92-66.97-66.92h-99.86C354.7 135.1 360 113.5 360 100.8c0-33.8-26.2-68.78-70.06-68.78c-46.61 0-59.36 32.44-69.61 58.5c-31.66 80.5-60.33 66.39-60.33 93.47c0 12.84 10.36 23.99 24.02 23.99a23.88 23.88 0 0 0 14.97-5.26c76.76-61.37 57.97-122.7 90.95-122.7c16.08 0 22.06 12.75 22.06 20.79c0 7.404-7.594 39.55-25.55 71.59a23.934 23.934 0 0 0-3.066 11.72c0 13.92 11.43 23.1 24 23.1h137.6C455.5 208.1 464 216.6 464 227c0 9.809-7.766 18.03-17.67 18.71c-12.66.86-22.36 11.4-22.36 23.94c0 15.47 11.39 15.95 11.39 28.91c0 25.37-35.03 12.34-35.03 42.15c0 11.22 6.392 13.03 6.392 22.25c0 22.66-29.77 13.76-29.77 40.64c0 4.515 1.11 5.961 1.11 9.456c0 10.45-8.516 18.95-18.97 18.95h-52.53c-25.62 0-51.02-8.466-71.5-23.81l-36.66-27.51a23.851 23.851 0 0 0-14.38-4.811c-13.85 0-24.03 11.38-24.03 24.04c0 7.287 3.312 14.42 9.596 19.13l36.67 27.52C235 468.1 270.6 480 306.6 480h52.53c35.33 0 64.36-27.49 66.8-62.2c17.77-12.23 28.83-32.51 28.83-54.83a65.97 65.97 0 0 0-.64-9.122c17.84-12.15 29.28-32.58 29.28-55.28a66.33 66.33 0 0 0-1.876-15.64C499.9 270.1 512 250.2 512 227z"
-                  />
-                </svg> {{ rep.nblikesR }} likes
+                            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
+                              <path
+                                fill="currentColor"
+                                d="M96 191.1H32c-17.67 0-32 14.33-32 31.1v223.1c0 17.67 14.33 31.1 32 31.1h64c17.67 0 32-14.33 32-31.1V223.1c0-16.8-14.3-32-32-32zM512 227c0-36.89-30.05-66.92-66.97-66.92h-99.86C354.7 135.1 360 113.5 360 100.8c0-33.8-26.2-68.78-70.06-68.78c-46.61 0-59.36 32.44-69.61 58.5c-31.66 80.5-60.33 66.39-60.33 93.47c0 12.84 10.36 23.99 24.02 23.99a23.88 23.88 0 0 0 14.97-5.26c76.76-61.37 57.97-122.7 90.95-122.7c16.08 0 22.06 12.75 22.06 20.79c0 7.404-7.594 39.55-25.55 71.59a23.934 23.934 0 0 0-3.066 11.72c0 13.92 11.43 23.1 24 23.1h137.6C455.5 208.1 464 216.6 464 227c0 9.809-7.766 18.03-17.67 18.71c-12.66.86-22.36 11.4-22.36 23.94c0 15.47 11.39 15.95 11.39 28.91c0 25.37-35.03 12.34-35.03 42.15c0 11.22 6.392 13.03 6.392 22.25c0 22.66-29.77 13.76-29.77 40.64c0 4.515 1.11 5.961 1.11 9.456c0 10.45-8.516 18.95-18.97 18.95h-52.53c-25.62 0-51.02-8.466-71.5-23.81l-36.66-27.51a23.851 23.851 0 0 0-14.38-4.811c-13.85 0-24.03 11.38-24.03 24.04c0 7.287 3.312 14.42 9.596 19.13l36.67 27.52C235 468.1 270.6 480 306.6 480h52.53c35.33 0 64.36-27.49 66.8-62.2c17.77-12.23 28.83-32.51 28.83-54.83a65.97 65.97 0 0 0-.64-9.122c17.84-12.15 29.28-32.58 29.28-55.28a66.33 66.33 0 0 0-1.876-15.64C499.9 270.1 512 250.2 512 227z"
+                              />
+                            </svg>
+                            {{ rep.nblikesR }} likes
                           </a>
                           <a href="javascript:void(0);" class="mr-2"
                             ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1792 1536">
@@ -357,11 +356,11 @@
                             >
                               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                             </svg>
-                            <span v-if="isLoggedIn && CurrentUserProfile.id != null||CurrentUserEntreprise!=null">
+                            <span v-if="(isLoggedIn && CurrentUserProfile.id != null) || CurrentUserEntreprise != null">
                               <span v-b-modal="modalCreateCommentNewest(rep.id)">Add a comment</span>
                             </span>
-                            
-                            <span v-else-if="isLoggedIn && CurrentUserProfile.id == null||CurrentUserEntreprise==null">
+
+                            <span v-else-if="(isLoggedIn && CurrentUserProfile.id == null) || CurrentUserEntreprise == null">
                               <a href="/auth/userinfo"> <span>Add a comment</span></a>
                             </span>
                           </a>
@@ -393,9 +392,9 @@
                           </b-modal>
                         </div>
                       </b-media>
-                      
+
                       <hr width="90%" />
-                      
+
                       <div v-for="c in Comments" :key="c.id">
                         <div v-if="c.replyCo == rep.id">
                           <div v-if="CurrentUserProfile.id == c.userprofileCo">
@@ -446,9 +445,9 @@
                               <b-dropdown-item @click="deleteComment(c)">Delete</b-dropdown-item>
                             </b-dropdown>
                           </div>
-                          
+
                           <p class="float-right mr-5" style="font-size: 10px">{{ c.dateCo | formatDate }}</p>
-                          <b-card class="ml-5 bg-transparent border-0" style="height:45px"
+                          <b-card class="ml-5 bg-transparent border-0" style="height: 45px"
                             ><b-card-text
                               >{{ c.contentCo }} -
                               <span v-for="u in Userprofiles" :key="u.id">
@@ -497,7 +496,7 @@ export default {
       alreadychecked: false,
       question: [],
       userprofile: [],
-      userentreprise : [],
+      userentreprise: [],
       userprofileRep: [],
       userentrepriseRep: [],
       CurrentUserProfile: [],
@@ -519,10 +518,10 @@ export default {
         questionVo: '',
         userprofileVo: '',
         userentrepriseVo: '',
-        
+
         replyVo: '',
       },
-      existentreprise:false,
+      existentreprise: false,
       is_submit_reply: false,
       is_submit_replymodif: false,
       is_submit_comment: false,
@@ -531,7 +530,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      Userentreprises:'StateUserentreprises',
+      Userentreprises: 'StateUserentreprises',
       Questions: 'StateQuestions',
       Replies: 'StateReplies',
       Userprofiles: 'StateUserprofiles',
@@ -545,11 +544,11 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['GetUserentreprises','CreateNotification','GetComments', 'GetQuestions', 'GetUsers', 'GetVotes', 'CreateVote', 'GetReplies', 'GetUserprofiles', 'CreateReply', 'CreateComment']),
+    ...mapActions(['GetUserentreprises', 'CreateNotification', 'GetComments', 'GetQuestions', 'GetUsers', 'GetVotes', 'CreateVote', 'GetReplies', 'GetUserprofiles', 'CreateReply', 'CreateComment']),
     onFileChanged(event) {
       this.image = event.target.files[0];
     },
-   
+
     deleteQuestion() {
       this.$swal({
         icon: 'warning',
@@ -561,17 +560,14 @@ export default {
       }).then((result) => {
         if (result.value) {
           axios.delete(`/question/question-delete/${this.question.id}/`);
-          if(this.existentreprise==null)
-          {
-          axios.put('/userprofile/userprofile-update/' + this.CurrentUserProfile.id + '/', {
-            nbquestions: (this.CurrentUserProfile.nbquestions -= 1),
-          });
-          }
-          else
-          {
+          if (this.existentreprise == null) {
+            axios.put('/userprofile/userprofile-update/' + this.CurrentUserProfile.id + '/', {
+              nbquestions: (this.CurrentUserProfile.nbquestions -= 1),
+            });
+          } else {
             axios.put('/userentreprise/userentreprise-update/' + this.CurrentUserEntreprise.id + '/', {
-            nbquestions: (this.CurrentUserEntreprise.nbquestions -= 1),
-          });
+              nbquestions: (this.CurrentUserEntreprise.nbquestions -= 1),
+            });
           }
           this.$swal('Deleted!', 'Your question has been deleted.', 'success');
           this.GetQuestions();
@@ -581,7 +577,11 @@ export default {
     },
     deleteliked() {
       for (let v in this.Votes) {
-        if (this.Votes[v].questionVo === this.vote.questionVo && (this.Votes[v].userprofileVo === this.vote.userprofileVo &&  this.vote.userprofileVo!=null || this.Votes[v].userentrepriseVo === this.vote.userentrepriseVo && this.vote.userentrepriseVo!=null)) {
+        if (
+          this.Votes[v].questionVo === this.vote.questionVo &&
+          ((this.Votes[v].userprofileVo === this.vote.userprofileVo && this.vote.userprofileVo != null) ||
+            (this.Votes[v].userentrepriseVo === this.vote.userentrepriseVo && this.vote.userentrepriseVo != null))
+        ) {
           axios.delete('/vote/vote-delete/' + this.Votes[v].id + '/');
         }
       }
@@ -594,8 +594,15 @@ export default {
     },
     liked() {
       this.CreateVote(this.vote);
-      if(this.CurrentUserProfile.id!=this.question.userprofileQ || this.CurrentUserEntreprise.id!=this.question.userentrepriseQ){
-      this.CreateNotification({message:' liked your question !',byuserprofileNo:this.CurrentUserProfile.id,userprofileNo:this.question.userprofileQ,byuserentrepriseNo:this.CurrentUserEntreprise.id,entrepriseNo:this.question.userentrepriseQ,questionNo:this.question.id})
+      if (this.CurrentUserProfile.id != this.question.userprofileQ || this.CurrentUserEntreprise.id != this.question.userentrepriseQ) {
+        this.CreateNotification({
+          message: ' liked your question !',
+          byuserprofileNo: this.CurrentUserProfile.id,
+          userprofileNo: this.question.userprofileQ,
+          byuserentrepriseNo: this.CurrentUserEntreprise.id,
+          entrepriseNo: this.question.userentrepriseQ,
+          questionNo: this.question.id,
+        });
       }
       axios.put('/question/question-update/' + this.$route.params.id + '/', {
         nblikes: this.likes + 1,
@@ -641,17 +648,14 @@ export default {
             nbreplies: (this.question.nbreplies -= 1),
           });
           axios.delete(`http://127.0.0.1:8000/reply/reply-delete/${r.id}/`);
-           if(this.existentreprise==null)
-          {
-          axios.put('/userprofile/userprofile-update/' + this.CurrentUserProfile.id + '/', {
-            nbreplies: (this.CurrentUserProfile.nbreplies -= 1),
-          });
-          }
-          else
-          {
+          if (this.existentreprise == null) {
+            axios.put('/userprofile/userprofile-update/' + this.CurrentUserProfile.id + '/', {
+              nbreplies: (this.CurrentUserProfile.nbreplies -= 1),
+            });
+          } else {
             axios.put('/userentreprise/userentreprise-update/' + this.CurrentUserEntreprise.id + '/', {
-            nbreplies: (this.CurrentUserEntreprise.nbreplies -= 1),
-          });
+              nbreplies: (this.CurrentUserEntreprise.nbreplies -= 1),
+            });
           }
           this.$swal('Deleted!', 'Your comment has been deleted.', 'success');
           this.$router.go();
@@ -663,11 +667,11 @@ export default {
         this.is_submit_reply = true;
         if (this.replies.contentR && this.replies.contentR.length < 500 && this.replies.contentR.length > 25) {
           this.$bvModal.hide('exampleModalCenter');
-          if(this.existentreprise==false){
-              this.userprofileRep = this.CurrentUserProfile.id;
-          }else if (this.existentreprise==true){
-              this.userentrepriseRep = this.CurrentUserEntreprise.id
-            }
+          if (this.existentreprise == false) {
+            this.userprofileRep = this.CurrentUserProfile.id;
+          } else if (this.existentreprise == true) {
+            this.userentrepriseRep = this.CurrentUserEntreprise.id;
+          }
           var formdata = new FormData();
           if (this.image != null) {
             formdata.append('imageR', this.image);
@@ -676,22 +680,28 @@ export default {
           formdata.append('questionRep', this.questionRep);
           formdata.append('userprofileRep', this.userprofileRep);
           formdata.append('userentrepriseRep', this.userentrepriseRep);
-          
-          if (this.CurrentUser.is_superuser){
-            formdata.append("accepted", true);
-            await axios.put('/userprofile/userprofile-update/' + this.userprofileRep + '/', { nbreplies:this.CurrentUserProfile.nbreplies+=1  });
-            }
+
+          if (this.CurrentUser.is_superuser) {
+            formdata.append('accepted', true);
+            await axios.put('/userprofile/userprofile-update/' + this.userprofileRep + '/', { nbreplies: (this.CurrentUserProfile.nbreplies += 1) });
+          }
           await this.CreateReply(formdata);
 
           this.replies.contentR = '';
           this.GetReplies();
-          if (this.CurrentUser.is_superuser==false){
-          await this.CreateNotification({message:' requested a Verification on their reply !',byuserentrepriseNo:this.CurrentUserEntreprise.id,byuserprofileNo:this.CurrentUserProfile.id,replyNo:1,foradmin:true})
-        this.$swal('Good Job!', 'Your reply has been created successfuly, Please wait for the administator to accept it !', 'success');
-        }
+          if (this.CurrentUser.is_superuser == false) {
+            await this.CreateNotification({
+              message: ' requested a Verification on their reply !',
+              byuserentrepriseNo: this.CurrentUserEntreprise.id,
+              byuserprofileNo: this.CurrentUserProfile.id,
+              replyNo: 1,
+              foradmin: true,
+            });
+            this.$swal('Good Job!', 'Your reply has been created successfuly, Please wait for the administator to accept it !', 'success');
+          }
           this.is_submit_reply = false;
-        }}
-      catch (error) {
+        }
+      } catch (error) {
         throw 'Il ya un error!';
       }
     },
@@ -707,16 +717,22 @@ export default {
           }
           formdata.append('contentR', this.replies.contentR);
           formdata.append('checked', r.checked);
-          if (this.CurrentUser.is_superuser){
-        formdata.append("accepted", true);
-        }
+          if (this.CurrentUser.is_superuser) {
+            formdata.append('accepted', true);
+          }
           formdata.append('modified', true);
           await axios.post('/reply/reply-update/' + r.id + '/', formdata);
           this.GetReplies();
-          if (this.CurrentUser.is_superuser==false){
-          await this.CreateNotification({message:' requested a Verification on their reply !',byuserentrepriseNo:this.CurrentUserEntreprise.id,byuserprofileNo:this.CurrentUserProfile.id,replyNo:r.id,foradmin:true})
-        this.$swal('Good Job!', 'Your reply has been updated successfuly, Please wait for the administator to accept it !', 'success');
-        }
+          if (this.CurrentUser.is_superuser == false) {
+            await this.CreateNotification({
+              message: ' requested a Verification on their reply !',
+              byuserentrepriseNo: this.CurrentUserEntreprise.id,
+              byuserprofileNo: this.CurrentUserProfile.id,
+              replyNo: r.id,
+              foradmin: true,
+            });
+            this.$swal('Good Job!', 'Your reply has been updated successfuly, Please wait for the administator to accept it !', 'success');
+          }
           this.is_submit_replymodif = false;
         }
       } catch (error) {
@@ -733,16 +749,23 @@ export default {
         this.comment.replyCo = rep.id;
         try {
           await this.CreateComment(this.comment);
-          if(this.userprofile!=this.reply.userprofileRep || this.userentreprise!=this.reply.userentrepriseRep){
-      this.CreateNotification({message:' commented on your reply !',byuserprofileNo:this.CurrentUserProfile.id,userprofileNo:rep.userprofileRep,byuserentrepriseNo:this.CurrentUserEntreprise.id,entrepriseNo:rep.userentrepriseRep,replyNo:rep.id})
-      }
+          if (this.userprofile != this.reply.userprofileRep || this.userentreprise != this.reply.userentrepriseRep) {
+            this.CreateNotification({
+              message: ' commented on your reply !',
+              byuserprofileNo: this.CurrentUserProfile.id,
+              userprofileNo: rep.userprofileRep,
+              byuserentrepriseNo: this.CurrentUserEntreprise.id,
+              entrepriseNo: rep.userentrepriseRep,
+              replyNo: rep.id,
+            });
+          }
           await axios.post('/reply/reply-update/' + rep.id + '/', {
             nbCommentR: (this.replydetails.nbCommentR += 1),
           });
           this.GetReplies();
           this.comment.contentCo = '';
           this.is_submit_comment = false;
-        this.$swal('Good Job!', 'Your comment has been created successfuly !', 'success');
+          this.$swal('Good Job!', 'Your comment has been created successfuly !', 'success');
         } catch (error) {
           throw 'Il ya un errora !';
         }
@@ -760,7 +783,7 @@ export default {
           this.GetComments();
           this.is_submit_commentmodif = false;
           this.comment.contentCo = '';
-        this.$swal('Good Job!', 'Your comment has been updated successfuly !', 'success');
+          this.$swal('Good Job!', 'Your comment has been updated successfuly !', 'success');
         }
       } catch (error) {
         throw 'Il ya un errora !';
@@ -786,7 +809,7 @@ export default {
     this.GetVotes();
     this.GetComments();
     this.GetUserentreprises();
-    console.log(this.$route.params)
+    console.log(this.$route.params);
     for (let r in this.Replies) {
       if (this.Replies[r].checked == true) {
         this.alreadychecked = true;
@@ -800,13 +823,12 @@ export default {
         for (let u in this.Users) {
           if (this.Users[u].username == this.User) {
             this.CurrentUser = this.Users[u];
-      for (let ue in this.Userentreprises){
-      if(this.Userentreprises[ue].userE==this.CurrentUser.id)
-        {
-          this.existentreprise = true
-          this.CurrentUserEntreprise=this.Userentreprises[ue]
-        }
-      }
+            for (let ue in this.Userentreprises) {
+              if (this.Userentreprises[ue].userE == this.CurrentUser.id) {
+                this.existentreprise = true;
+                this.CurrentUserEntreprise = this.Userentreprises[ue];
+              }
+            }
             for (let p in this.Userprofiles) {
               if (this.Userprofiles[p].userU == this.CurrentUser.id) {
                 this.CurrentUserProfile = this.Userprofiles[p];
@@ -835,15 +857,17 @@ export default {
             }
           }
         }
-        if(this.question.userprofileQ!=null){
-        axios.get('/userprofile/userprofile-detail/' + this.question.userprofileQ + '/').then((response) => {
-          this.userprofile = response.data;
-          this.questionRep = this.question.id;
-        });}else if(this.question.userentrepriseQ!=null){
-        axios.get('/userentreprise/userentreprise-detail/' + this.question.userentrepriseQ + '/').then((response) => {
-          this.userentreprise = response.data;
-          this.questionRep = this.question.id;
-        });}
+        if (this.question.userprofileQ != null) {
+          axios.get('/userprofile/userprofile-detail/' + this.question.userprofileQ + '/').then((response) => {
+            this.userprofile = response.data;
+            this.questionRep = this.question.id;
+          });
+        } else if (this.question.userentrepriseQ != null) {
+          axios.get('/userentreprise/userentreprise-detail/' + this.question.userentrepriseQ + '/').then((response) => {
+            this.userentreprise = response.data;
+            this.questionRep = this.question.id;
+          });
+        }
       })
       .catch((err) => {
         console.log(err);
