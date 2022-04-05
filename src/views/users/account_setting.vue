@@ -188,7 +188,6 @@ export default {
     axios.get('/userprofile/userprofile-detail/' + this.$route.params.id + '/').then((response) => {
       this.form = response.data;
       this.reset = response.data;
-      console.log(this.reset);
     });
   },
   mounted() {},

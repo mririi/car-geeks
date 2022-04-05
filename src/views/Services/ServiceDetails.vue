@@ -52,7 +52,7 @@
           <label>Number of days</label>
           <b-input placeholder="1,3,7..etc" type="number" v-model="nbDays" min="1" value="7"></b-input>
           <template #modal-footer>
-            <b-button variant="primary" @click="promote()">Submit your promotion request</b-button>
+            <b-button variant="primary" @click="promote()">Submit your promotion</b-button>
           </template>
         </b-modal>
       </div>
@@ -575,7 +575,7 @@
               d="M73.88 67.143a2.091 2.091 0 0 0 .765-2.855c-.022-.038-.052-.069-.076-.105l.002-.001l-26.905-46.599l-.015.008a2.08 2.08 0 0 0-.929-.801l.038-.022l-11.01-6.357v.044a2.082 2.082 0 0 0-1.846-.107l-.012-.021l-.206.119c-.004.003-.009.003-.013.006s-.007.006-.012.008L12.478 22.69a2.078 2.078 0 0 0-1.037 1.764l-.007-.004v12.714l.021-.012c-.047.427.03.872.261 1.273c.014.024.032.042.047.065l26.815 46.446c.026.055.044.112.075.166a2.085 2.085 0 0 0 2.772.801l.005.008l32.465-18.743l-.015-.025zM29.545 27.522a3.865 3.865 0 1 1 1.415-5.279a3.862 3.862 0 0 1-1.415 5.279z"
             />
           </svg>
-          : <b-badge variant="success"> {{ service.priceS }} DT </b-badge>
+          : <b-badge variant="success"> {{ service.priceS }} $ </b-badge>
         </h6>
         <h6 class="card-text mb-4 ml-4">
           <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
@@ -801,7 +801,15 @@ export default {
   methods: {
     ...mapActions(['GetUserentreprises', 'CreateNotification', 'GetServicepromotions', 'GetServices', 'GetUserprofiles', 'CreateServicepromotion', 'GetServicetypes', 'GetUsers', 'GetEvaluations']),
     promote() {
+      if(this.CurrentUser.is_superuser==false){
       this.CreateServicepromotion({ serviceP: this.service.id, nbDays: this.nbDays });
+      this.CreateNotification({message:' requested a Promotion on their service !',byuserprofileNo:this.CurrentUserProfile.id,foradmin:true})
+      this.$swal('Good Job!', 'Your Service promotion has been sent, Please wait for the administrator to launch your promotion !', 'success');
+    }else if(this.CurrentUser.is_superuser==true){
+      const current = new Date();
+      this.CreateServicepromotion({ serviceP: this.service.id, nbDays: this.nbDays,Running: true , dateP:current.getFullYear()+'-'+(current.getMonth()+1)+'-'+current.getDate() });
+      axios.post('/service/service-update/' + this.service.id + '/', { promoted: true });
+      }
       this.promoted = true;
       this.CreateNotification({message:' requested a Promotion on their service !',byuserprofileNo:this.CurrentUserProfile.id,foradmin:true})
       this.$swal('Good Job!', 'Your Service promotion has been sent, Please wait for the administrator to launch your promotion !', 'success');

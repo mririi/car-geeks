@@ -813,7 +813,6 @@ export default {
     this.GetVotes();
     this.GetComments();
     this.GetUserentreprises();
-    console.log(this.$route.params);
     for (let r in this.Replies) {
       if (this.Replies[r].checked == true) {
         this.alreadychecked = true;

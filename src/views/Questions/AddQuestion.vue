@@ -146,7 +146,6 @@ export default {
     methods: {
    onFileChanged (event) {
       this.image = event.target.files[0]
-      console.log(this.image)
     },
     ...mapActions(["GetUserentreprises",'GetQuestions','CreateNotification',"GetQuestioncategories","CreateQuestion","GetUsers","GetUserprofiles"]),
     async submit() {

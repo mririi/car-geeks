@@ -820,7 +820,6 @@ export default {
       });
     },
     preferencesUpdate(){
-      console.log(this.form)
       axios.post('/preferences/preferences-update/'+this.userprofile.preferencesU+'/',this.form)
       this.$router.go()
 
