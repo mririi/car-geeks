@@ -255,7 +255,7 @@ export default {
     }),
     filteredList() {
       return this.Replies.filter((rep) => {
-         rep.accepted == false;
+        return rep.contentR.toLowerCase().includes(this.search.toLowerCase()) && rep.accepted == false;
       });
     },
   },
@@ -346,7 +346,7 @@ this.CreateNotification({ message: 'Your reply has been accepted!',entrepriseNo:
         { key: 'accepted', label: 'Status', class: 'text-center' },
         { key: 'actions', label: 'Actions', class: 'text-center  ' },
       ]),
-        (this.table_option2.total_rows = this.Replies.length);
+        (this.table_option2.total_rows = this.filteredList.length);
       this.get_meta2();
     },
     on_filtered(filtered_items) {

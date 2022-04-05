@@ -26,7 +26,7 @@
             <div class="browser-list mb-5">
               <div class="w-icon icon-fill-primary">
                     <router-link :to="'/entreprisedetails/' + s.id">
-                      <b-avatar :src="'https://cargeeks.herokuapp.com' + s.imageE" size="2.5rem" rounded="lg" />
+                      <b-avatar :src=" s.imageE" size="2.5rem" rounded="lg" />
                     </router-link>
                   
               </div>

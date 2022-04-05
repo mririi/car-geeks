@@ -44,7 +44,7 @@
           <b-media>
             <template #aside>
               <div class="w-img">
-                <img :src="'https://cargeeks.herokuapp.com' + userprofile.imageU" alt="avatar" />
+                <img :src=" userprofile.imageU" alt="avatar" />
               </div>
             </template>
 
@@ -65,7 +65,7 @@
           <b-media>
             <template #aside>
               <div class="w-img">
-                <img :src="'https://cargeeks.herokuapp.com' + userentreprise.imageE" alt="avatar" />
+                <img :src=" userentreprise.imageE" alt="avatar" />
               </div>
             </template>
 
@@ -89,7 +89,7 @@
             ></b-card
           >
           <div class="widget-content mb-5" v-if="question.imageQ != null">
-            <img :src="'https://cargeeks.herokuapp.com' + question.imageQ" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
+            <img :src=" question.imageQ" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
           </div>
           <div class="w-action">
             <div class="card-like ml-4">
@@ -248,7 +248,7 @@
                         <div v-for="u in Userprofiles" :key="u.id">
                           <div v-if="u.id == rep.userprofileRep">
                             <div class="float-left">
-                              <b-avatar class="mr-3" :square="true" size="3rem" :src="'https://cargeeks.herokuapp.com' + u.imageU" width="40px" />
+                              <b-avatar class="mr-3" :square="true" size="3rem" :src=" u.imageU" width="40px" />
                             </div>
                             <h6 class="">{{ u.firstname }} {{ u.lastname }}</h6>
                           </div>
@@ -256,7 +256,7 @@
                         <div v-for="e in Userentreprises" :key="e.id">
                           <div v-if="e.id == rep.userentrepriseRep">
                             <div class="float-left">
-                              <b-avatar class="mr-3" :square="true" size="3rem" :src="'https://cargeeks.herokuapp.com' + e.imageE" width="40px" />
+                              <b-avatar class="mr-3" :square="true" size="3rem" :src=" e.imageE" width="40px" />
                             </div>
                             <h6 class="">{{ e.nameE }}</h6>
                           </div>
@@ -317,7 +317,7 @@
                           </b-media>
                         </b-card>
                         <div v-if="rep.imageR != null" class="widget-content mb-4">
-                          <img :src="'https://cargeeks.herokuapp.com' + rep.imageR" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
+                          <img :src=" rep.imageR" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
                         </div>
                         <div class="media-notation mb-4 float-right">
                           <a v-if="isLoggedIn" href="javascript:void(0);" class="">

@@ -48,7 +48,7 @@
                 <div class="browser-list">
                   <div class="w-icon icon-fill-primary">
                     <router-link :to="'/profile/' + u.id">
-                  <b-avatar :src="'https://cargeeks.herokuapp.com' + u.imageU" size="2.5rem" rounded="lg" />
+                  <b-avatar :src=" u.imageU" size="2.5rem" rounded="lg" />
                     </router-link>
                   </div>
                   <div class="w-browser-details">

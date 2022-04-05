@@ -62,7 +62,7 @@
           <div class="row">
             <div class="col-lg-4 col-md-6 mb-lg-0 mb-4" v-for="s in filterByPromoted" :key="s.id">
               <b-badge variant="danger" class="ml-2">Sponsorised</b-badge>
-              <b-card :img-src="'https://cargeeks.herokuapp.com' + s.imageS" img-top img-alt="Service" style="height: 410px"  class="counter" img-width="100%" img-height="200px">
+              <b-card :img-src=" s.imageS" img-top img-alt="Service" style="height: 410px"  class="counter" img-width="100%" img-height="200px">
               
                 <router-link :to="'/servicedetails/' + s.id">
                   <div class="fq-rating text-center responsive mt-3 mb-4">
@@ -88,7 +88,7 @@
               </b-card>
             </div>
             <div class="col-lg-4 col-md-6 mb-lg-0 mb-4 mt-4" v-for="s in filterByNotPromoted" :key="s.id">
-              <b-card :img-src="'https://cargeeks.herokuapp.com' + s.imageS" img-top img-alt="faq-video-tutorials" style="height:410px" img-width="100%" img-height="200px">
+              <b-card :img-src=" s.imageS" img-top img-alt="faq-video-tutorials" style="height:410px" img-width="100%" img-height="200px">
                 <router-link :to="'/servicedetails/' + s.id">
                   <div class="fq-rating text-center  mt-3 mb-4">
                     <span v-for="t in Servicetypes" :key="t.id">

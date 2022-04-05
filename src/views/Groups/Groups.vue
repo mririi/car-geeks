@@ -24,7 +24,7 @@
               <b-media>
                 <template #aside>
                   <div class="w-img">
-                    <img :src="'https://cargeeks.herokuapp.com' + g.imageG" alt="avatar" />
+                    <img :src=" g.imageG" alt="avatar" />
                   </div>
                 </template>
                 <h6>{{ g.titleG }}</h6>
@@ -38,7 +38,7 @@
                   <span v-if="m.groupMem == g.id && m.accepted == true">
                     <span v-for="uu in Userprofiles.slice(0,m.id)" :key="uu.id">
                       <span v-if="uu.id == m.userprofileMem">
-                        <img :src="'https://cargeeks.herokuapp.com' + uu.imageU" alt="avatar" />
+                        <img :src=" uu.imageU" alt="avatar" />
                       </span>
                     </span>
                   </span>

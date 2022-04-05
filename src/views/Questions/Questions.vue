@@ -105,12 +105,12 @@
               <div class="meta-user">
                 <div v-for="p in Userprofiles" :key="p.id">
                   <div class="avatar avatar-sm" v-if="p.id == q.userprofileQ && q.userprofileQ!=null">
-                    <b-avatar :src="'https://cargeeks.herokuapp.com' + p.imageU" class="avatar-title rounded-circle"></b-avatar>
+                    <b-avatar :src=" p.imageU" class="avatar-title rounded-circle"></b-avatar>
                   </div>
                 </div>
                  <div v-for="e in Userentreprises" :key="e.id">
                   <div class="avatar avatar-sm" v-if="e.id == q.userentrepriseQ && q.userentrepriseQ!=null">
-                    <b-avatar :src="'https://cargeeks.herokuapp.com' + e.imageE" class="avatar-title rounded-circle"></b-avatar>
+                    <b-avatar :src=" e.imageE" class="avatar-title rounded-circle"></b-avatar>
                   </div>
                 </div>
                 <div v-for="p in Userprofiles" :key="p.id">
@@ -190,12 +190,12 @@
               <div class="meta-user">
                 <div v-for="p in Userprofiles" :key="p.id">
                   <div class="avatar avatar-sm" v-if="p.id == q.userprofileQ && q.userprofileQ!=null">
-                    <b-avatar :src="'https://cargeeks.herokuapp.com' + p.imageU" class="avatar-title rounded-circle"></b-avatar>
+                    <b-avatar :src=" p.imageU" class="avatar-title rounded-circle"></b-avatar>
                   </div>
                 </div>
                  <div v-for="e in Userentreprises" :key="e.id">
                   <div class="avatar avatar-sm" v-if="e.id == q.userentrepriseQ && q.userentrepriseQ!=null">
-                    <b-avatar :src="'https://cargeeks.herokuapp.com' + e.imageE" class="avatar-title rounded-circle"></b-avatar>
+                    <b-avatar :src=" e.imageE" class="avatar-title rounded-circle"></b-avatar>
                   </div>
                 </div>
                 <div v-for="p in Userprofiles" :key="p.id">
