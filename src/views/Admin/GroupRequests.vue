@@ -276,7 +276,7 @@ export default {
         if (result.value) {
        axios.put('/group/group-update/' + group.id + '/', { accepted: true , nbmembers:group.nbmembers+1});
        this.CreateGroupmember({ userprofileMem: group.userprofileG, groupMem: group.id , userentrepriseMem:group.userentrepriseG,accepted:true});
-     //  this.CreateNotification({message:'Your service has been accepted ' ,userprofileNo:service.userprofileS,entrepriseNo:service.userentrepriseS,serviceNo:service.id,admin:true})
+     //this.CreateNotification({message:'Your service has been accepted ' ,userprofileNo:service.userprofileS,entrepriseNo:service.userentrepriseS,serviceNo:service.id,admin:true})
         this.$router.go();
         this.$swal('Accepted!', group.titleG+' has been accepted.', 'success');
        
