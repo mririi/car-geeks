@@ -79,11 +79,13 @@ termcolor==1.1.0
 toml==0.10.2
 typed-ast==1.4.2
 uritemplate==4.1.1
-urllib3==1.25.11
 virtualenv==20.7.0
 virtualenv-clone==0.5.7
 wcwidth==0.1.9
 whitenoise==6.0.0
 wrapt==1.12.1
+urllib3==1.26.9
 django-cloudinary-storage==0.3.0
 cloudinary==1.29.0
+
+
