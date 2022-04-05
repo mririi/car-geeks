@@ -105,12 +105,12 @@
               <div class="meta-user">
                 <div v-for="p in Userprofiles" :key="p.id">
                   <div class="avatar avatar-sm" v-if="p.id == q.userprofileQ && q.userprofileQ!=null">
-                    <b-avatar :src="'http://127.0.0.1:8000' + p.imageU" class="avatar-title rounded-circle"></b-avatar>
+                    <b-avatar :src="'https://cargeeks.herokuapp.com' + p.imageU" class="avatar-title rounded-circle"></b-avatar>
                   </div>
                 </div>
                  <div v-for="e in Userentreprises" :key="e.id">
                   <div class="avatar avatar-sm" v-if="e.id == q.userentrepriseQ && q.userentrepriseQ!=null">
-                    <b-avatar :src="'http://127.0.0.1:8000' + e.imageE" class="avatar-title rounded-circle"></b-avatar>
+                    <b-avatar :src="'https://cargeeks.herokuapp.com' + e.imageE" class="avatar-title rounded-circle"></b-avatar>
                   </div>
                 </div>
                 <div v-for="p in Userprofiles" :key="p.id">
@@ -190,12 +190,12 @@
               <div class="meta-user">
                 <div v-for="p in Userprofiles" :key="p.id">
                   <div class="avatar avatar-sm" v-if="p.id == q.userprofileQ && q.userprofileQ!=null">
-                    <b-avatar :src="'http://127.0.0.1:8000' + p.imageU" class="avatar-title rounded-circle"></b-avatar>
+                    <b-avatar :src="'https://cargeeks.herokuapp.com' + p.imageU" class="avatar-title rounded-circle"></b-avatar>
                   </div>
                 </div>
                  <div v-for="e in Userentreprises" :key="e.id">
                   <div class="avatar avatar-sm" v-if="e.id == q.userentrepriseQ && q.userentrepriseQ!=null">
-                    <b-avatar :src="'http://127.0.0.1:8000' + e.imageE" class="avatar-title rounded-circle"></b-avatar>
+                    <b-avatar :src="'https://cargeeks.herokuapp.com' + e.imageE" class="avatar-title rounded-circle"></b-avatar>
                   </div>
                 </div>
                 <div v-for="p in Userprofiles" :key="p.id">
@@ -307,7 +307,7 @@ export default {
   methods: {
     ...mapActions(['GetQuestions', 'GetUsers', 'GetUserprofiles', 'GetQuestioncategories','GetUserentreprises','GetPreferences']),
     checkpref(question){
-      if(this.CurrentUserProfile.id!=null){
+      if(this.CurrentUserProfile.id!=null && this.CurrentUserProfile.preferencesU!=null){
       let profile=this.Userprofiles.find((d)=>d.id==this.CurrentUserProfile.id)
       let preferences=this.Preferences.find((p)=>p.id==profile.preferencesU)
       if(question.categoryQ==preferences.categoryPref1||question.categoryQ==preferences.categoryPref2||question.categoryQ==preferences.categoryPref3){

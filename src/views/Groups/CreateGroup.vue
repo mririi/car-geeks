@@ -137,8 +137,10 @@ export default {
           formdata.append('titleG', this.form.titleG);
      
           formdata.append('countryG', this.CurrentUserProfile.country);
-          formdata.append('userprofileG', this.CurrentUserProfile.id);
-          formdata.append('userentrepriseG', this.CurrentUserEntreprise.id);
+          if(this.CurrentUserEntreprise.id==null){
+          formdata.append('userprofileG', this.CurrentUserProfile.id);}
+          if(this.CurrentUserProfile.id==null){
+          formdata.append('userentrepriseG', this.CurrentUserEntreprise.id);}
           if(this.CurrentUser.is_superuser)
           {
             formdata.append('accepted', true);

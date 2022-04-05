@@ -102,7 +102,7 @@
 
               <template #cell(imageE)="data">
                 <span v-if="data.item.imageE != null">
-                  <b-avatar :src="'http://127.0.0.1:8000' + data.item.imageE" size="4rem" rounded="lg" alt="" srcset="" />
+                  <b-avatar :src="'https://cargeeks.herokuapp.com' + data.item.imageE" size="4rem" rounded="lg" alt="" srcset="" />
                 </span>
                 <span v-else>
                   <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="4em" height="4em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 64 64">
@@ -116,8 +116,8 @@
               <template #cell(imageVerif)="data">
                 <span v-if="data.item.imageVerif != null">
                   <CoolLightBox
-                    :images="'http://127.0.0.1:8000'+data.item.imageVerif"
-                    :items="['http://127.0.0.1:8000'+data.item.imageVerif]"
+                    :images="'https://cargeeks.herokuapp.com'+data.item.imageVerif"
+                    :items="['https://cargeeks.herokuapp.com'+data.item.imageVerif]"
                     :index="index"
                     :useZoomBar="true"
                     :gallery="false"
@@ -130,7 +130,7 @@
                    
 
                   <b-avatar
-                    :src="'http://127.0.0.1:8000' + data.item.imageVerif"
+                    :src="'https://cargeeks.herokuapp.com' + data.item.imageVerif"
                     href="javascript:;"
                     :class="`img-${data.item.id + 1}`"
                     @click="index = data.item.id"

@@ -114,7 +114,7 @@
               </template>
               <template #cell(imagePost)="data">
                 <span v-if="data.item.imagePost != null">
-                  <b-avatar :src="'http://127.0.0.1:8000' + data.item.imagePost" size="4rem" rounded="lg" alt="" srcset="" />
+                  <b-avatar :src="'https://cargeeks.herokuapp.com' + data.item.imagePost" size="4rem" rounded="lg" alt="" srcset="" />
                 </span>
                 <span v-else>
                   <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="4em" height="4em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 64 64">

@@ -255,7 +255,7 @@ export default {
     }),
     filteredList() {
       return this.Replies.filter((rep) => {
-        return rep.contentR.toLowerCase().includes(this.search.toLowerCase()) && rep.accepted == false;
+         rep.accepted == false;
       });
     },
   },

@@ -15,7 +15,7 @@
     </portal>
     <div class="col-xl-12 mt-3 col-lg-6 col-md-12 col-sm-12 col-12 layout-spacing">
       <div class="widget widget-card-one">
-       <div v-if="(CurrentUserProfile.id == question.userprofileQ && question.userprofileQ != null) || (CurrentUserEntreprise.id == question.userentrepriseQ && question.userentrepriseQ != null)">
+        <div v-if="(CurrentUserProfile.id == question.userprofileQ && question.userprofileQ != null) || (CurrentUserEntreprise.id == question.userentrepriseQ && question.userentrepriseQ != null)">
           <b-dropdown variant="icon-only" toggle-tag="a" size="1em" class="mb-4 mr-2 custom-dropdown mt-3 float-right">
             <template #button-content>
               <svg
@@ -44,7 +44,7 @@
           <b-media>
             <template #aside>
               <div class="w-img">
-                <img :src="'http://127.0.0.1:8000' + userprofile.imageU" alt="avatar" />
+                <img :src="'https://cargeeks.herokuapp.com' + userprofile.imageU" alt="avatar" />
               </div>
             </template>
 
@@ -65,7 +65,7 @@
           <b-media>
             <template #aside>
               <div class="w-img">
-                <img :src="'http://127.0.0.1:8000' + userentreprise.imageE" alt="avatar" />
+                <img :src="'https://cargeeks.herokuapp.com' + userentreprise.imageE" alt="avatar" />
               </div>
             </template>
 
@@ -82,7 +82,6 @@
             >
           </b-media>
         </div>
-
         <div class="widget-content">
           <b-card class="bg-transparent border-0 col-12">
             <b-card-text>
@@ -90,7 +89,7 @@
             ></b-card
           >
           <div class="widget-content mb-5" v-if="question.imageQ != null">
-            <img :src="'http://127.0.0.1:8000' + question.imageQ" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
+            <img :src="'https://cargeeks.herokuapp.com' + question.imageQ" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
           </div>
           <div class="w-action">
             <div class="card-like ml-4">
@@ -112,7 +111,6 @@
                   />
                 </svg>
               </span>
-             
               <span v-else>
                 <a href="/auth/userinfo">
                   <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
@@ -154,7 +152,7 @@
                   />
                 </g>
               </svg>
-              <span  v-if="(isLoggedIn && CurrentUserProfile.id != null) || CurrentUserEntreprise.id != null">
+              <span v-if="(isLoggedIn && CurrentUserProfile.id != null) || CurrentUserEntreprise.id != null">
                 <span v-b-modal.exampleModalCenter>Reply</span>
               </span>
               <span v-else-if="(isLoggedIn && CurrentUserProfile.id == null) || CurrentUserEntreprise.id == null">
@@ -178,7 +176,9 @@
                     placeholder="Enter your reply content here"
                   ></b-form-textarea>
                   <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
-                  <b-form-invalid-feedback :class="{ 'd-block': is_submit_reply && !replies.contentR }">Please Enter content between 25 and 500 characters</b-form-invalid-feedback>
+                  <b-form-invalid-feedback :class="{ 'd-block': is_submit_reply && !replies.contentR && replies.contentR.length > 500 && replies.contentR.length < 25 }"
+                    >Please Enter content between 25 and 500 characters</b-form-invalid-feedback
+                  >
 
                   <div class="mt-4 mb-5">
                     <svg xmlns="http://www.w3.org/2000/svg" class="mb-1" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
@@ -197,11 +197,11 @@
           </div>
           <div class="float-right mt-4">
             <b-button-group>
-              <a class="btn btn-primary" :href="'/questionpagerightanswer/' + question.id + '/' + question.slug">Right Answer</a>
-              <a class="btn btn-primary" :href="'/questionpage/' + question.id + '/' + question.slug">Newest</a>
-              <a class="btn btn-outline-primary" href="#">Oldest</a>
-              <a class="btn btn-primary" :href="'/questionpagemostliked/' + question.id + '/' + question.slug">Most Liked</a>
-            </b-button-group>
+                    <a class="btn btn-primary" :href="'/questionpagerightanswer/'+question.id+'/'">Right Answer</a>
+                    <a class="btn btn-primary" :href="'/questionpage/'+question.id+'/'">Newest</a>
+                    <a class="btn btn-outline-primary" href="#" >Oldest</a>
+                    <a class="btn btn-primary" :href="'/questionpagemostliked/'+question.id+'/'">Most Liked</a>
+                    </b-button-group>
           </div>
           <h5 class="mt-4 ml-4">Answers</h5>
           <div id="mediaObjectNotationIcon" class="col-lg-12 layout-spacing mt-5 row">
@@ -248,12 +248,26 @@
                         <div v-for="u in Userprofiles" :key="u.id">
                           <div v-if="u.id == rep.userprofileRep">
                             <div class="float-left">
-                              <b-avatar class="mr-3" :square="true" size="3rem" :src="'http://127.0.0.1:8000' + u.imageU" width="40px" />
+                              <b-avatar class="mr-3" :square="true" size="3rem" :src="'https://cargeeks.herokuapp.com' + u.imageU" width="40px" />
                             </div>
                             <h6 class="">{{ u.firstname }} {{ u.lastname }}</h6>
                           </div>
                         </div>
-                        <div v-if="CurrentUserProfile.id == rep.userprofileRep && rep.checked == false">
+                        <div v-for="e in Userentreprises" :key="e.id">
+                          <div v-if="e.id == rep.userentrepriseRep">
+                            <div class="float-left">
+                              <b-avatar class="mr-3" :square="true" size="3rem" :src="'https://cargeeks.herokuapp.com' + e.imageE" width="40px" />
+                            </div>
+                            <h6 class="">{{ e.nameE }}</h6>
+                          </div>
+                        </div>
+
+                        <div
+                          v-if="
+                            ((CurrentUserProfile.id == rep.userprofileRep && rep.userprofileRep != null) || (CurrentUserEntreprise.id == rep.userentrepriseRep && rep.userentrepriseRep != null)) &&
+                            rep.checked == false
+                          "
+                        >
                           <b-dropdown variant="icon-only" dropleft toggle-tag="a" class="mb-4 mr-2 custom-dropdown float-right">
                             <template #button-content>
                               <svg
@@ -285,7 +299,7 @@
                               <b-card-text v-if="alreadychecked == false">
                                 <checkreply :userprofile="question.userprofileQ" :currentuserprofile="CurrentUserProfile.id" :replyid="rep.id" />
                               </b-card-text>
-                              <b-card-text v-else-if="rep.checked == true && question.userprofileQ == CurrentUserProfile.id">
+                              <b-card-text v-else-if="rep.checked == true">
                                 <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="3em" height="3em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
                                   <path
                                     fill="#62b47d"
@@ -303,23 +317,14 @@
                           </b-media>
                         </b-card>
                         <div v-if="rep.imageR != null" class="widget-content mb-4">
-                          <img :src="'http://127.0.0.1:8000' + rep.imageR" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
+                          <img :src="'https://cargeeks.herokuapp.com' + rep.imageR" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
                         </div>
                         <div class="media-notation mb-4 float-right">
-                          <a v-if="existentreprise == false" href="javascript:void(0);" class="">
-                            <likecomponent :replyid="rep.id" :userprofile="CurrentUserProfile.id" />
+                          <a v-if="isLoggedIn" href="javascript:void(0);" class="">
+                            <likecomponent :replyid="rep.id" :userprofile="CurrentUserProfile.id" :userentreprise="CurrentUserEntreprise.id" />
                           </a>
                           <a v-else>
-                            <svg
-                              @click="showAlertlike()"
-                              xmlns="http://www.w3.org/2000/svg"
-                              aria-hidden="true"
-                              role="img"
-                              width="24"
-                              height="24"
-                              preserveAspectRatio="xMidYMid meet"
-                              viewBox="0 0 512 512"
-                            >
+                            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
                               <path
                                 fill="currentColor"
                                 d="M96 191.1H32c-17.67 0-32 14.33-32 31.1v223.1c0 17.67 14.33 31.1 32 31.1h64c17.67 0 32-14.33 32-31.1V223.1c0-16.8-14.3-32-32-32zM512 227c0-36.89-30.05-66.92-66.97-66.92h-99.86C354.7 135.1 360 113.5 360 100.8c0-33.8-26.2-68.78-70.06-68.78c-46.61 0-59.36 32.44-69.61 58.5c-31.66 80.5-60.33 66.39-60.33 93.47c0 12.84 10.36 23.99 24.02 23.99a23.88 23.88 0 0 0 14.97-5.26c76.76-61.37 57.97-122.7 90.95-122.7c16.08 0 22.06 12.75 22.06 20.79c0 7.404-7.594 39.55-25.55 71.59a23.934 23.934 0 0 0-3.066 11.72c0 13.92 11.43 23.1 24 23.1h137.6C455.5 208.1 464 216.6 464 227c0 9.809-7.766 18.03-17.67 18.71c-12.66.86-22.36 11.4-22.36 23.94c0 15.47 11.39 15.95 11.39 28.91c0 25.37-35.03 12.34-35.03 42.15c0 11.22 6.392 13.03 6.392 22.25c0 22.66-29.77 13.76-29.77 40.64c0 4.515 1.11 5.961 1.11 9.456c0 10.45-8.516 18.95-18.97 18.95h-52.53c-25.62 0-51.02-8.466-71.5-23.81l-36.66-27.51a23.851 23.851 0 0 0-14.38-4.811c-13.85 0-24.03 11.38-24.03 24.04c0 7.287 3.312 14.42 9.596 19.13l36.67 27.52C235 468.1 270.6 480 306.6 480h52.53c35.33 0 64.36-27.49 66.8-62.2c17.77-12.23 28.83-32.51 28.83-54.83a65.97 65.97 0 0 0-.64-9.122c17.84-12.15 29.28-32.58 29.28-55.28a66.33 66.33 0 0 0-1.876-15.64C499.9 270.1 512 250.2 512 227z"
@@ -351,13 +356,11 @@
                             >
                               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                             </svg>
-                            <span v-if="isLoggedIn && CurrentUserProfile.id != null">
+                            <span v-if="(isLoggedIn && CurrentUserProfile.id != null) || CurrentUserEntreprise != null">
                               <span v-b-modal="modalCreateCommentOldest(rep.id)">Add a comment</span>
                             </span>
-                            <span v-else-if="existentreprise == true">
-                              <span @click="showAlertcomment()">Add a comment</span>
-                            </span>
-                            <span v-else>
+
+                            <span v-else-if="(isLoggedIn && CurrentUserProfile.id == null) || CurrentUserEntreprise == null">
                               <a href="/auth/userinfo"> <span>Add a comment</span></a>
                             </span>
                           </a>
@@ -389,7 +392,9 @@
                           </b-modal>
                         </div>
                       </b-media>
+
                       <hr width="90%" />
+
                       <div v-for="c in Comments" :key="c.id">
                         <div v-if="c.replyCo == rep.id">
                           <div v-if="CurrentUserProfile.id == c.userprofileCo">
@@ -440,13 +445,19 @@
                               <b-dropdown-item @click="deleteComment(c)">Delete</b-dropdown-item>
                             </b-dropdown>
                           </div>
-                          <p class="float-right mr-4" style="font-size: 10px">{{ c.dateCo | formatDate }}</p>
-                          <b-card class="ml-5 bg-transparent border-0"
+
+                          <p class="float-right mr-5" style="font-size: 10px">{{ c.dateCo | formatDate }}</p>
+                          <b-card class="ml-5 bg-transparent border-0" style="height: 45px"
                             ><b-card-text
                               >{{ c.contentCo }} -
                               <span v-for="u in Userprofiles" :key="u.id">
                                 <span v-if="u.id == c.userprofileCo">
                                   <a class="text-primary" :href="'/profile/' + u.id + '/'"> {{ u.firstname }} {{ u.lastname }}</a>
+                                </span>
+                              </span>
+                              <span v-for="e in Userentreprises" :key="e.id">
+                                <span v-if="e.id == c.userentrepriseCo">
+                                  <a class="text-primary" :href="'/entreprisedetails/' + e.id + '/'"> {{ e.nameE }}</a>
                                 </span>
                               </span>
                             </b-card-text></b-card
@@ -465,6 +476,7 @@
     </div>
   </div>
 </template>
+
 
 <script>
 import axios from 'axios';
@@ -489,6 +501,7 @@ export default {
       userentrepriseRep: [],
       CurrentUserProfile: [],
       CurrentUserEntreprise: [],
+       oldestreplies: [],
       comment: {
         contentCo: '',
         replyCo: '',
@@ -616,7 +629,7 @@ export default {
               nbCommentR: (replydetails.nbCommentR -= 1),
             });
           });
-          axios.delete(`http://127.0.0.1:8000/comment/comment-delete/${c.id}/`);
+          axios.delete(`https://cargeeks.herokuapp.com/comment/comment-delete/${c.id}/`);
           this.$swal('Deleted!', 'Your comment has been deleted.', 'success');
           this.$router.go();
         }
@@ -635,12 +648,15 @@ export default {
           axios.put('/question/question-update/' + this.question.id + '/', {
             nbreplies: (this.question.nbreplies -= 1),
           });
-          axios.delete(`http://127.0.0.1:8000/reply/reply-delete/${r.id}/`);
-          if (this.existentreprise == null) {
-            axios.put('/userprofile/userprofile-update/' + this.CurrentUserProfile.id + '/', {
-              nbreplies: (this.CurrentUserProfile.nbreplies -= 1),
-            });
-          } else {
+          axios.delete(`https://cargeeks.herokuapp.com/reply/reply-delete/${r.id}/`);
+           if(this.existentreprise==null)
+          {
+          axios.put('/userprofile/userprofile-update/' + this.CurrentUserProfile.id + '/', {
+            nbreplies: (this.CurrentUserProfile.nbreplies -= 1),
+          });
+          }
+          else
+          {
             axios.put('/userentreprise/userentreprise-update/' + this.CurrentUserEntreprise.id + '/', {
               nbreplies: (this.CurrentUserEntreprise.nbreplies -= 1),
             });
@@ -790,7 +806,6 @@ export default {
     },
   },
   created() {
-    this.GetComments();
     this.GetQuestions();
     this.GetReplies();
     this.GetUsers();
@@ -798,9 +813,12 @@ export default {
     this.GetVotes();
     this.GetComments();
     this.GetUserentreprises();
-    //liked replies
-
-    //sort
+    console.log(this.$route.params);
+    for (let r in this.Replies) {
+      if (this.Replies[r].checked == true) {
+        this.alreadychecked = true;
+      }
+    }
     this.oldestreplies = this.Replies.reverse();
     axios
       .get('/question/question-detail/' + this.$route.params.id + '/')
@@ -813,6 +831,7 @@ export default {
             for (let ue in this.Userentreprises) {
               if (this.Userentreprises[ue].userE == this.CurrentUser.id) {
                 this.existentreprise = true;
+                this.CurrentUserEntreprise = this.Userentreprises[ue];
               }
             }
             for (let p in this.Userprofiles) {
@@ -828,13 +847,32 @@ export default {
                 }
               }
             }
+            for (let pe in this.Userentreprises) {
+              if (this.Userentreprises[pe].userE == this.CurrentUser.id) {
+                this.CurrentUserEntreprise = this.Userentreprises[pe];
+                this.vote.questionVo = this.question.id;
+                this.vote.userentrepriseVo = this.CurrentUserEntreprise.id;
+                this.comment.userentrepriseCo = this.CurrentUserEntreprise.id;
+                for (let v in this.Votes) {
+                  if (this.Votes[v].userentrepriseVo == this.CurrentUserEntreprise.id && this.Votes[v].questionVo == this.question.id) {
+                    this.likedQuestion = true;
+                  }
+                }
+              }
+            }
           }
         }
-
-        axios.get('/userprofile/userprofile-detail/' + this.question.userprofileQ + '/').then((response) => {
-          this.userprofile = response.data;
-          this.questionRep = this.question.id;
-        });
+        if (this.question.userprofileQ != null) {
+          axios.get('/userprofile/userprofile-detail/' + this.question.userprofileQ + '/').then((response) => {
+            this.userprofile = response.data;
+            this.questionRep = this.question.id;
+          });
+        } else if (this.question.userentrepriseQ != null) {
+          axios.get('/userentreprise/userentreprise-detail/' + this.question.userentrepriseQ + '/').then((response) => {
+            this.userentreprise = response.data;
+            this.questionRep = this.question.id;
+          });
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -842,6 +880,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>

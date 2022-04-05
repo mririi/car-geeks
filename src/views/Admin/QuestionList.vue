@@ -139,7 +139,7 @@
              <template #cell(imageQ)="data">
                 <span v-if="data.item.imageQ!=null">
                   <router-link :to="'/questionpage/'+data.item.id+'/'+data.item.slug">
-              <b-avatar :src="'http://127.0.0.1:8000'+data.item.imageQ" size="4rem" rounded="lg"  alt="" srcset=""/>
+              <b-avatar :src="'https://cargeeks.herokuapp.com'+data.item.imageQ" size="4rem" rounded="lg"  alt="" srcset=""/>
                   </router-link>
               </span>
               <span v-else>

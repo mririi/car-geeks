@@ -121,7 +121,7 @@
              <template #cell(imageG)="data">
                 <span v-if="data.item.imageG!=null">
                   <router-link :to="'/groupdetail/'+data.item.id">
-              <b-avatar :src="'http://127.0.0.1:8000'+data.item.imageG" size="4rem" rounded="lg"  alt="" srcset=""/>
+              <b-avatar :src="'https://cargeeks.herokuapp.com'+data.item.imageG" size="4rem" rounded="lg"  alt="" srcset=""/>
                   </router-link>
               </span>
               <span v-else>
