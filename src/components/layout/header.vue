@@ -723,10 +723,10 @@
             <b-dropdown toggle-tag="a" variant="icon-only" toggle-class="user nav-link" class="nav-item user-profile-dropdown" :right="true">
               <template #button-content>
                 <span v-if="Userprofile.length != 0">
-                  <img :src="'https://cargeeks.herokuapp.com' + Userprofile.imageU" class="navbar-logo" />
+                  <img :src=" Userprofile.imageU" class="navbar-logo" />
                 </span>
                 <span v-if="Userprofile.length == 0">
-                  <img :src="'https://cargeeks.herokuapp.com' + Userentreprise.imageE" class="navbar-logo" />
+                  <img :src=" Userentreprise.imageE" class="navbar-logo" />
                 </span>
               </template>
               <span v-if="Userprofile.length != 0">

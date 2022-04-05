@@ -22,7 +22,7 @@
           </div>
           <div class="col-md-6 order-md-0 mt-4 order-0">
             <div class="banner-img">
-              <b-avatar :src="'https://cargeeks.herokuapp.com' + userentreprise.imageE" size="25rem" class="mb-5 bg-transparent img-fluid" style="width: 100%" rounded="lg" alt="header-image" />
+              <b-avatar :src=" userentreprise.imageE" size="25rem" class="mb-5 bg-transparent img-fluid" style="width: 100%" rounded="lg" alt="header-image" />
             </div>
           </div>
         </div>
@@ -766,7 +766,7 @@
               <b-td v-if="e.id != userentreprise.id"
                 ><a :href="'/entreprisedetails/' + e.id"
                   ><div class="td-content">
-                    <img :src="'https://cargeeks.herokuapp.com' + e.imageE" alt="avatar" /><span>{{ e.nameE }} </span>
+                    <img :src=" e.imageE" alt="avatar" /><span>{{ e.nameE }} </span>
                   </div></a
                 ></b-td
               >

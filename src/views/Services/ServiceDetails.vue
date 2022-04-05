@@ -60,7 +60,7 @@
         <b-badge variant="success"> Promoted Service</b-badge>
       </div>
       <div class="float-child">
-        <img :src="'https://cargeeks.herokuapp.com' + service.imageS" class="img-fluid img-thumbnail mt-4" style="height: 450px; width: 100%" />
+        <img :src=" service.imageS" class="img-fluid img-thumbnail mt-4" style="height: 450px; width: 100%" />
       </div>
       <div class="float-child">
         <strong class="card-category ml-4">
@@ -654,7 +654,7 @@
                       <b-carousel-slide>
                         <template #img>
                           <a :href="'/servicedetails/' + s.id">
-                            <img class="d-block w-100 slide-image" height="350px" :src="'https://cargeeks.herokuapp.com' + s.imageS" alt="First slide" />
+                            <img class="d-block w-100 slide-image" height="350px" :src=" s.imageS" alt="First slide" />
                           </a>
                         </template>
 

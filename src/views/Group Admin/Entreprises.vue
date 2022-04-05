@@ -94,7 +94,7 @@
               <div class="item-content">
                 <div class="user-profile">
                   <router-link :to="'/entreprisedetails/' + user.id">
-                    <img :src="'https://cargeeks.herokuapp.com' + user.imageE" alt="avatar" />
+                    <img :src=" user.imageE" alt="avatar" />
                   </router-link>
                   <div class="user-meta-info">
                     <p class="user-name">{{ user.nameE }}</p>
