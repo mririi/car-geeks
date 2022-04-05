@@ -16,7 +16,7 @@
     >
     <div class="mt-5">
     <a v-show="serviceuser==true || CurrentUser.is_superuser==true"
-          href="http://localhost:8080/addservice"
+          href="https://cargeeksjs.herokuapp.com/addservice"
           
           class="mt-5 ml-5 mb-3"
           >
@@ -28,7 +28,7 @@
     </div>
     <div >
     <a v-if="promo==true"
-          href="http://localhost:8080/promoinfo"
+          href="https://cargeeksjs.herokuapp.com/promoinfo"
           
           class=" ml-5 mb-3"
           >
