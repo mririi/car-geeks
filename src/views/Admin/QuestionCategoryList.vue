@@ -114,7 +114,7 @@
              <template #cell(imageCat)="data">
                 <span v-if="data.item.imageCat!=null">
                   
-              <b-avatar :src="'https://cargeeks.herokuapp.com'+data.item.imageCat" size="4rem" rounded="lg"  alt="" srcset=""/>
+              <b-avatar :src="data.item.imageCat" size="4rem" rounded="lg"  alt="" srcset=""/>
                
               </span>
               <span v-else>

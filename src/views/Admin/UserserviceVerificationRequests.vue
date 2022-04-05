@@ -103,7 +103,7 @@
              <template #cell(imageVerif)="data">
                 <span v-if="data.item.imageVerif!=null">
                   
-              <b-avatar :src="'https://cargeeks.herokuapp.com'+data.item.imageVerif" size="4rem" rounded="lg"  alt="" srcset=""/>
+              <b-avatar :src="data.item.imageVerif" size="4rem" rounded="lg"  alt="" srcset=""/>
                 
               </span>
               <span v-else>
@@ -113,7 +113,7 @@
                <template #cell(imageU)="data">
                 <span v-if="data.item.imageU!=null">
                    <router-link :to="'/profile/'+data.item.id">
-              <b-avatar :src="'https://cargeeks.herokuapp.com'+data.item.imageU" size="4rem" rounded="lg"  alt="" srcset=""/>
+              <b-avatar :src="data.item.imageU" size="4rem" rounded="lg"  alt="" srcset=""/>
                    </router-link>
               </span>
               <span v-else>

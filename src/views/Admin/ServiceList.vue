@@ -138,7 +138,7 @@
                <template #cell(imageS)="data">
                 <span v-if="data.item.imageS!=null">
                    <router-link :to="'/servicedetails/'+data.item.id">
-              <b-avatar :src="'https://cargeeks.herokuapp.com'+data.item.imageS" size="4rem" rounded="lg"  alt="" srcset=""/>
+              <b-avatar :src="data.item.imageS" size="4rem" rounded="lg"  alt="" srcset=""/>
                    </router-link>
               </span>
               <span v-else>

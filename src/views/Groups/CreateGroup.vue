@@ -140,8 +140,7 @@ export default {
           if(this.CurrentUserEntreprise.id==null){
           formdata.append('userprofileG', this.CurrentUserProfile.id);}
           if(this.CurrentUserProfile.id==null){
-          formdata.append('userentrepriseG', this.CurrentUserEntreprise.id);
-          }
+          formdata.append('userentrepriseG', this.CurrentUserEntreprise.id);}
           if(this.CurrentUser.is_superuser)
           {
             formdata.append('accepted', true);

@@ -117,11 +117,29 @@
                 </span>
              
             </template>
-        
+              <template #cell(actions)="data">
+              <span @click="Accept(data.item)">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="feather feather-check-circle text-primary ac"
+                >
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+              </span>
+            </template>
              <template #cell(imageG)="data">
                 <span v-if="data.item.imageG!=null">
                   <router-link :to="'/groupdetail/'+data.item.id">
-              <b-avatar :src="'https://cargeeks.herokuapp.com'+data.item.imageG" size="4rem" rounded="lg"  alt="" srcset=""/>
+              <b-avatar :src="data.item.imageG" size="4rem" rounded="lg"  alt="" srcset=""/>
                   </router-link>
               </span>
               <span v-else>
@@ -183,6 +201,7 @@
 </style>
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import axios from 'axios'
 export default {
   metaInfo: { title: 'Bootstrap Custom Table' },
   data() {
@@ -245,17 +264,34 @@ export default {
     
   },
   methods: {
-    ...mapActions(['GetGroups','GetUserprofiles']),
-    
+    ...mapActions(['GetGroups','GetUserprofiles','CreateGroupmember']),
+     async Accept(group) {
+      this.$swal({
+        icon: 'warning',
+        title: 'Are you sure?',
+        showCancelButton: true,
+        confirmButtonText: 'Accept',
+        padding: '2em',
+      }).then((result) => {
+        if (result.value) {
+       axios.put('/group/group-update/' + group.id + '/', { accepted: true });
+       this.CreateGroupmember({ userprofileMem: group.userprofileG, groupMem: group.id , userentrepriseMem:group.userentrepriseG});
+     //  this.CreateNotification({message:'Your service has been accepted ' ,userprofileNo:service.userprofileS,entrepriseNo:service.userentrepriseS,serviceNo:service.id,admin:true})
+        this.$router.go();
+        this.$swal('Accepted!', group.titleG+' has been accepted.', 'success');
+       
+        }
+      });
+     
+    },
     bind_data() {
       //table 3
       this.columns2 = [
         { key: 'imageG', label: 'Image', class: 'text-center  ' },
         { key: 'titleG', label: 'Title' },
-        { key: 'nbposts', label: 'Posts Number' },
-        { key: 'nbmembers', label: 'Members Number' },
         { key: 'userprofileG', label: 'Admin' },
         { key: 'accepted', label: 'Status', class: 'text-center  ' },
+        { key: 'actions', label: 'Actions', class: 'text-center  ' },
       ],
       
 
