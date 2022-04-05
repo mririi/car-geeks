@@ -165,9 +165,9 @@ export default {
           this.CurrentUser = this.Users[u];
           let exist=false
           for(let r in this.Roles){
-            if(this.Users[u].id==this.Roles[r].userRole && this.Roles[r].service==true){
+            if(this.Users[u].id==this.Roles[r].userRole && this.Roles[r].service==true || this.Roles[r].admin==true){
               exist=true
-            }
+            
           }
           if (exist==false){
             this.$swal({
