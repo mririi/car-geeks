@@ -39,6 +39,8 @@
                     <label>Insert image</label>
                     <div class="mb-4">
                       <b-file @change="onFileChanged"></b-file>
+                       <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
+                      <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !image  }">Please fill the image field</b-form-invalid-feedback>
                     </div>
 
                     <!--      <vue-tags-input
@@ -128,14 +130,12 @@ export default {
         this.is_submit_form1 = true;
         if (
           this.form.titleG.length < 30 &&
-          this.form.titleG.length > 15
+          this.form.titleG.length > 15 && this.image 
         ) {
           var formdata = new FormData();
-          if (this.image != null) {
-            formdata.append('imageG', this.image);
-          }
+          formdata.append('imageG', this.image);
           formdata.append('titleG', this.form.titleG);
-     
+
           formdata.append('countryG', this.CurrentUserProfile.country);
           if(this.CurrentUserEntreprise.id==null){
           formdata.append('userprofileG', this.CurrentUserProfile.id);}

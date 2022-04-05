@@ -15,25 +15,19 @@
       "
     >
     <div class="mt-5">
-    <a v-show="serviceuser==true || CurrentUser.is_superuser==true"
-          href="https://cargeeksjs.herokuapp.com/addservice"
-          
-          class="mt-5 ml-5 mb-3"
-          >
-          <b-button variant="primary" class="mt-5">
-          Add a Service</b-button></a
-        >
+          <b-button v-show="serviceuser==true || CurrentUser.is_superuser==true" href="https://cargeeksjs.herokuapp.com/addservice" variant="primary" class="mt-5 ml-5">
+          Add a Service</b-button>
           <b-button  v-show="serviceuser==false&& CurrentUser.is_superuser==false" v-b-modal.verify variant="primary" class="mt-5 ml-5 mb-3">
           Get Verified</b-button>
     </div>
     <div >
-    <a v-if="promo==true"
-          href="https://cargeeksjs.herokuapp.com/promoinfo"
+    <router-link v-if="promo==true"
+          to="https://cargeeksjs.herokuapp.com/promoinfo"
           
           class=" ml-5 mb-3"
           >
           <b-button variant="warning" class="mt-3">
-          My Promotions</b-button></a
+          My Promotions</b-button></router-link
         >
     </div>
         
@@ -115,7 +109,7 @@ export default {
       }
     }
     for (let r in this.Roles){
-      if((this.Roles[r].userRole==this.CurrentUserEntreprise.id || this.Roles[r].userRole==this.CurrentUserProfile.id ) && this.Roles[r].service==true){
+      if(this.Roles[r].userRole==this.CurrentUser.id   && this.Roles[r].service==true){
         this.serviceuser=true
       }
     }

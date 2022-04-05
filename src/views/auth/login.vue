@@ -166,7 +166,7 @@ export default {
             if (this.Users[u].username == this.form.username) {
               this.CurrentUser = this.Users[u];
               for (let r in this.Roles){
-                if(this.CurrentUser.id==this.Roles[r].userRole){
+                if(this.CurrentUser.id==this.Roles[r].userRole&& this.CurrentUser.is_superuser){
                   this.exist=true
                 }
               }

@@ -175,11 +175,7 @@
               </b-dropdown-item>
             </perfect-scrollbar>
           </b-dropdown>
-          <span class="mt-2" v-if="isLoggedIn">
-            <a href="https://cargeeksjs.herokuapp.com/apps/chat" class=" ml-3 ">
-            <svg xmlns="http://www.w3.org/2000/svg" role="img" width="25" height="25" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.486 2 2 5.589 2 10c0 2.908 1.898 5.515 5 6.934V22l5.34-4.005C17.697 17.852 22 14.32 22 10c0-4.411-4.486-8-10-8zm0 14h-.333L9 18v-2.417l-.641-.247C5.67 14.301 4 12.256 4 10c0-3.309 3.589-6 8-6s8 2.691 8 6s-3.589 6-8 6z"/><path fill="currentColor" d="M7 7h10v2H7zm0 4h7v2H7z"/></svg>              
-            </a></span
-          >
+         
           <span v-if="isLoggedIn">
             <b-dropdown toggle-tag="a" variant="icon-only" toggle-class="nav-link" menu-class="notification-scroll" class="nav-item notification-dropdown" :right="true">
                         
@@ -790,7 +786,7 @@
                 </b-dropdown-item>
               </span>
               <b-dropdown-divider></b-dropdown-divider>
-              <b-dropdown-item to="/apps/mailbox">
+              <b-dropdown-item to="/apps/chat" v-if="isLoggedIn">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"

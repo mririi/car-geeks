@@ -74,7 +74,7 @@
                     >
                   </span>
                   <span v-if="requested == true">
-                    <b-button variant="primary" @click="Join()"
+                    <b-button variant="primary"
                       ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
                         <circle cx="18" cy="12" r="0" fill="currentColor">
                           <animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0" />
@@ -143,7 +143,12 @@
                     </span>
                     <li class="list-inline-item badge-notify">
                       <div class="notification">
-                        <span class="badge badge-info badge-pill">+{{ group.nbmembers - 3 }} more</span>
+                        <span class="badge badge-info badge-pill">
+                          <span v-if="group.nbmembers >3">
+                              +{{ group.nbmembers - 3 }} more
+                          </span>
+                         
+                          </span>
                       </div>
                     </li>
                   </ul>
@@ -161,8 +166,7 @@
         </div>
         <div class="panel-body">
           <div class="timeline-simple">
-            <p class="timeline-title">Group Posts</p>
-
+            <p v-if="existmember == true" class="timeline-title">Group Posts</p>
             <div class="timeline-list">
               <span v-for="p in GroupPost" :key="p.id">
                 <span v-if="p.groupPost == group.id && p.accepted == true && existmember == true">
@@ -645,6 +649,9 @@
                     </span>
                   </span>
                 </span>
+                <span v-else>
+                    <h4>You cannot see the posts </h4>
+                </span>
               </span>
             </div>
           </div>
@@ -714,9 +721,10 @@ export default {
         if (this.Members[m].groupMem == this.group.id && this.Members[m].accepted == true) {
           this.members.push(this.Members[m]);
         }
-        if ((this.Members[m].userprofileMem == this.CurrentUserProfile.id||this.Members[m].userentrepriseMem==this.CurrentUserEntreprise.id) && this.Members[m].groupMem == this.group.id && this.Members[m].accepted == true) {
+        if (((this.Members[m].userprofileMem == this.CurrentUserProfile.id && this.CurrentUserProfile.id!=null) || (this.Members[m].userentrepriseMem == this.CurrentUserEntreprise.id && this.CurrentUserEntreprise.id!=null))  && this.Members[m].groupMem == this.group.id && this.Members[m].accepted == true) {
           this.existmember = true;
         }
+        console.log(this.existmember)
       }
       for (let m in this.Members) {
         if (this.Members[m].groupMem == this.group.id && this.Members[m].accepted == true) {
@@ -820,7 +828,7 @@ export default {
               nbcomments: (postdetails.nbcomments -= 1),
             });
           });
-          axios.delete(`https://cargeeks.herokuapp.com/groupcomment/groupcomment-delete/${c.id}/`);
+          axios.delete(`http://127.0.0.1:8000/groupcomment/groupcomment-delete/${c.id}/`);
           this.$swal('Deleted!', 'Your comment has been deleted.', 'success');
           this.$router.go();
         }
