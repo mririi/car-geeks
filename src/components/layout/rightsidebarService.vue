@@ -15,14 +15,14 @@
       "
     >
     <div class="mt-5">
-          <b-button v-show="serviceuser==true || CurrentUser.is_superuser==true" href="https://cargeeksjs.herokuapp.com/addservice" variant="primary" class="mt-5 ml-5">
+          <b-button v-show="serviceuser==true || CurrentUser.is_superuser==true" href="http://localhost:8080/addservice" variant="primary" class="mt-5 ml-5">
           Add a Service</b-button>
           <b-button  v-show="serviceuser==false&& CurrentUser.is_superuser==false" v-b-modal.verify variant="primary" class="mt-5 ml-5 mb-3">
           Get Verified</b-button>
     </div>
     <div >
     <router-link v-if="promo==true"
-          to="https://cargeeksjs.herokuapp.com/promoinfo"
+          to="http://localhost:8080/promoinfo"
           
           class=" ml-5 mb-3"
           >

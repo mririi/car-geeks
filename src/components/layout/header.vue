@@ -848,8 +848,8 @@
             </b-dropdown></span
           >
           <span class="mt-2" v-if="isLoggedIn == false">
-            <a href="auth/login" class="mt-2 ml-3">Login</a>
-            <a href="auth/register" class="mt-2 ml-3 mr-3">Register</a>
+            <a href="/auth/login" class="mt-2 ml-3">Login</a>
+            <a href="/auth/register" class="mt-2 ml-3 mr-3">Register</a>
           </span>
         </div>
       </header>
@@ -1118,7 +1118,7 @@ export default {
         padding: '2em',
       }).then((result) => {
         if (result.value) {
-          axios.delete(`https://cargeeks.herokuapp.com/notifications/notification-delete/${id}/`);
+          axios.delete(`http://127.0.0.1:8000/notifications/notification-delete/${id}/`);
           this.$swal('Deleted!', 'Your Notification has been deleted.', 'success');
           this.$router.go();
         }

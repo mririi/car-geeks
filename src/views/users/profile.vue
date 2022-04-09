@@ -22,7 +22,7 @@
             <div class="panel-body">
               <div class="d-flex justify-content-between">
                 <h3 class="">Profile</h3>
-                <router-link :to="'/profile-edit/' + userprofile.id" v-if="CurrentUserProfile.id == userprofile.id || CurrentUser.is_superuser==true" class="mt-2 edit-profile">
+                <router-link :to="'/profile-edit/' + userprofile.id" v-if="CurrentUserProfile.id == userprofile.id || CurrentUser.is_superuser == true" class="mt-2 edit-profile">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -130,493 +130,517 @@
                 <div class="education ml-4 col-lg-8">
                   <span class="ml-4">Rate this profile</span>
                   <span v-if="CurrentUserProfile.id != userprofile.id">
-                  <span v-if="isLoggedIn && existprofile == true">
-                    <span v-b-modal.Rating>
-                      <div class="d-flex  mt-4 mb-4">
-                  <div class="text-center mt-3">
-                    <span class="h1 font-weight-bolder mr-1">{{ average }}</span
-                    ><br />
-                    <span class="p">out of 5</span>
-                  </div>
-                  <div class="flex-grow-1">
-                    <div class="row">
-                      <div class="col-lg-6 text-right">
-                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          />
-                        </svg>
-                      </div>
-                      <div class="col-6 mt-2">
-                        <b-progress variant="gradient-warning" :value="nb5" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-6 text-right">
-                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          />
-                        </svg>
-                      </div>
-                      <div class="col-6 mt-2">
-                        <b-progress variant="gradient-warning" :value="nb4" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-6 text-right">
-                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        >
-                      </div>
-                      <div class="col-6 mt-2">
-                        <b-progress variant="gradient-warning" :value="nb3" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-6 text-right"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg></div>
-                      <div class="col-6 mt-2">
-                        <b-progress variant="gradient-warning" :value="nb2" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-6 text-right"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg></div>
-                      <div class="col-6 mt-2">
-                        <b-progress variant="gradient-warning" :value="nb1" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                    <span v-if="isLoggedIn && existprofile == true">
+                      <span v-b-modal.Rating>
+                        <div class="d-flex mt-4 mb-4">
+                          <div class="text-center mt-3">
+                            <span class="h1 font-weight-bolder mr-1">{{ average }}</span
+                            ><br />
+                            <span class="p">out of 5</span>
+                          </div>
+                          <div class="flex-grow-1">
+                            <div class="row">
+                              <div class="col-lg-6 text-right">
+                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  />
+                                </svg>
+                              </div>
+                              <div class="col-6 mt-2">
+                                <b-progress variant="gradient-warning" :value="nb5" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-lg-6 text-right">
+                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  />
+                                </svg>
+                              </div>
+                              <div class="col-6 mt-2">
+                                <b-progress variant="gradient-warning" :value="nb4" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-lg-6 text-right">
+                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  />
+                                </svg>
+                              </div>
+                              <div class="col-6 mt-2">
+                                <b-progress variant="gradient-warning" :value="nb3" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-lg-6 text-right">
+                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  />
+                                </svg>
+                              </div>
+                              <div class="col-6 mt-2">
+                                <b-progress variant="gradient-warning" :value="nb2" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-lg-6 text-right">
+                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  />
+                                </svg>
+                              </div>
+                              <div class="col-6 mt-2">
+                                <b-progress variant="gradient-warning" :value="nb1" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </span>
                     </span>
-                  </span>
-                   <span v-else-if="existentreprise==true">
-                    <span @click="showAlert1()" >
-                      <div class="d-flex col-xl-12 col-lg-12 col-md-12 mt-4 mb-4 ml-4">
-                  <div class="text-center mt-3">
-                    <span class="h1 font-weight-bolder mr-1">{{ average }}</span
-                    ><br />
-                    <span class="p">out of 5</span>
-                  </div>
-                  <div class="flex-grow-1">
-                    <div class="row">
-                      <div class="col-lg-6 text-right">
-                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          />
-                        </svg>
-                      </div>
-                      <div class="col-6 mt-2">
-                        <b-progress variant="gradient-warning" :value="nb5" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-6 text-right">
-                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          />
-                        </svg>
-                      </div>
-                      <div class="col-6 mt-2">
-                        <b-progress variant="gradient-warning" :value="nb4" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-6 text-right">
-                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        >
-                      </div>
-                      <div class="col-6 mt-2">
-                        <b-progress variant="gradient-warning" :value="nb3" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-6 text-right"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg></div>
-                      <div class="col-6 mt-2">
-                        <b-progress variant="gradient-warning" :value="nb2" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-6 text-right"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg></div>
-                      <div class="col-6 mt-2">
-                        <b-progress variant="gradient-warning" :value="nb1" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                    <span v-else-if="existentreprise == true">
+                      <span @click="showAlert1()">
+                        <div class="d-flex col-xl-12 col-lg-12 col-md-12 mt-4 mb-4 ml-4">
+                          <div class="text-center mt-3">
+                            <span class="h1 font-weight-bolder mr-1">{{ average }}</span
+                            ><br />
+                            <span class="p">out of 5</span>
+                          </div>
+                          <div class="flex-grow-1">
+                            <div class="row">
+                              <div class="col-lg-6 text-right">
+                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  />
+                                </svg>
+                              </div>
+                              <div class="col-6 mt-2">
+                                <b-progress variant="gradient-warning" :value="nb5" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-lg-6 text-right">
+                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  />
+                                </svg>
+                              </div>
+                              <div class="col-6 mt-2">
+                                <b-progress variant="gradient-warning" :value="nb4" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-lg-6 text-right">
+                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  />
+                                </svg>
+                              </div>
+                              <div class="col-6 mt-2">
+                                <b-progress variant="gradient-warning" :value="nb3" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-lg-6 text-right">
+                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  />
+                                </svg>
+                              </div>
+                              <div class="col-6 mt-2">
+                                <b-progress variant="gradient-warning" :value="nb2" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-lg-6 text-right">
+                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  />
+                                </svg>
+                              </div>
+                              <div class="col-6 mt-2">
+                                <b-progress variant="gradient-warning" :value="nb1" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </span>
                     </span>
-                  </span>
-                  <span v-else>
-                    <a href="/auth/login">
-                     <div class="d-flex col-xl-12 col-lg-12 col-md-12 mt-4 mb-4 ml-4">
-                  <div class="text-center mt-3">
-                    <span class="h1 font-weight-bolder mr-1">{{ average }}</span
-                    ><br />
-                    <span class="p">out of 5</span>
-                  </div>
-                  <div class="flex-grow-1">
-                    <div class="row">
-                      <div class="col-lg-6 text-right">
-                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          />
-                        </svg>
-                      </div>
-                      <div class="col-6 mt-2">
-                        <b-progress variant="gradient-warning" :value="nb5" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-6 text-right">
-                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          />
-                        </svg>
-                      </div>
-                      <div class="col-6 mt-2">
-                        <b-progress variant="gradient-warning" :value="nb4" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-6 text-right">
-                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        >
-                      </div>
-                      <div class="col-6 mt-2">
-                        <b-progress variant="gradient-warning" :value="nb3" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-6 text-right"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg></div>
-                      <div class="col-6 mt-2">
-                        <b-progress variant="gradient-warning" :value="nb2" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-6 text-right"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg></div>
-                      <div class="col-6 mt-2">
-                        <b-progress variant="gradient-warning" :value="nb1" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                    </a>
-                  </span>
+                    <span v-else>
+                      <a href="/auth/login">
+                        <div class="d-flex col-xl-12 col-lg-12 col-md-12 mt-4 mb-4 ml-4">
+                          <div class="text-center mt-3">
+                            <span class="h1 font-weight-bolder mr-1">{{ average }}</span
+                            ><br />
+                            <span class="p">out of 5</span>
+                          </div>
+                          <div class="flex-grow-1">
+                            <div class="row">
+                              <div class="col-lg-6 text-right">
+                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  />
+                                </svg>
+                              </div>
+                              <div class="col-6 mt-2">
+                                <b-progress variant="gradient-warning" :value="nb5" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-lg-6 text-right">
+                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  />
+                                </svg>
+                              </div>
+                              <div class="col-6 mt-2">
+                                <b-progress variant="gradient-warning" :value="nb4" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-lg-6 text-right">
+                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  />
+                                </svg>
+                              </div>
+                              <div class="col-6 mt-2">
+                                <b-progress variant="gradient-warning" :value="nb3" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-lg-6 text-right">
+                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  /></svg
+                                ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  />
+                                </svg>
+                              </div>
+                              <div class="col-6 mt-2">
+                                <b-progress variant="gradient-warning" :value="nb2" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-lg-6 text-right">
+                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                  <path
+                                    fill="currentColor"
+                                    d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                  />
+                                </svg>
+                              </div>
+                              <div class="col-6 mt-2">
+                                <b-progress variant="gradient-warning" :value="nb1" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </span>
                   </span>
                   <span v-else>
                     <span @click="showAlert()">
                       <div class="d-flex col-xl-12 col-lg-12 col-md-12 mt-4 mb-4 ml-4">
-                  <div class="text-center mt-3">
-                    <span class="h1 font-weight-bolder mr-1">{{ average }}</span
-                    ><br />
-                    <span class="p">out of 5</span>
-                  </div>
-                  <div class="flex-grow-1">
-                    <div class="row">
-                      <div class="col-lg-6 text-right">
-                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          />
-                        </svg>
+                        <div class="text-center mt-3">
+                          <span class="h1 font-weight-bolder mr-1">{{ average }}</span
+                          ><br />
+                          <span class="p">out of 5</span>
+                        </div>
+                        <div class="flex-grow-1">
+                          <div class="row">
+                            <div class="col-lg-6 text-right">
+                              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                <path
+                                  fill="currentColor"
+                                  d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                /></svg
+                              ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                <path
+                                  fill="currentColor"
+                                  d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                /></svg
+                              ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                <path
+                                  fill="currentColor"
+                                  d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                /></svg
+                              ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                <path
+                                  fill="currentColor"
+                                  d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                /></svg
+                              ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                <path
+                                  fill="currentColor"
+                                  d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                />
+                              </svg>
+                            </div>
+                            <div class="col-6 mt-2">
+                              <b-progress variant="gradient-warning" :value="nb5" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-lg-6 text-right">
+                              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                <path
+                                  fill="currentColor"
+                                  d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                /></svg
+                              ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                <path
+                                  fill="currentColor"
+                                  d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                /></svg
+                              ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                <path
+                                  fill="currentColor"
+                                  d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                /></svg
+                              ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                <path
+                                  fill="currentColor"
+                                  d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                />
+                              </svg>
+                            </div>
+                            <div class="col-6 mt-2">
+                              <b-progress variant="gradient-warning" :value="nb4" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-lg-6 text-right">
+                              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                <path
+                                  fill="currentColor"
+                                  d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                /></svg
+                              ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                <path
+                                  fill="currentColor"
+                                  d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                /></svg
+                              ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                <path
+                                  fill="currentColor"
+                                  d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                />
+                              </svg>
+                            </div>
+                            <div class="col-6 mt-2">
+                              <b-progress variant="gradient-warning" :value="nb3" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-lg-6 text-right">
+                              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                <path
+                                  fill="currentColor"
+                                  d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                /></svg
+                              ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                <path
+                                  fill="currentColor"
+                                  d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                />
+                              </svg>
+                            </div>
+                            <div class="col-6 mt-2">
+                              <b-progress variant="gradient-warning" :value="nb2" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-lg-6 text-right">
+                              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                <path
+                                  fill="currentColor"
+                                  d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
+                                />
+                              </svg>
+                            </div>
+                            <div class="col-6 mt-2">
+                              <b-progress variant="gradient-warning" :value="nb1" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <div class="col-6 mt-2">
-                        <b-progress variant="gradient-warning" :value="nb5" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-6 text-right">
-                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          />
-                        </svg>
-                      </div>
-                      <div class="col-6 mt-2">
-                        <b-progress variant="gradient-warning" :value="nb4" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-6 text-right">
-                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        >
-                      </div>
-                      <div class="col-6 mt-2">
-                        <b-progress variant="gradient-warning" :value="nb3" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-6 text-right"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg
-                        ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg></div>
-                      <div class="col-6 mt-2">
-                        <b-progress variant="gradient-warning" :value="nb2" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-6 text-right"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                          <path
-                            fill="currentColor"
-                            d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3z"
-                          /></svg></div>
-                      <div class="col-6 mt-2">
-                        <b-progress variant="gradient-warning" :value="nb1" :min="0" :max="nbTotal" class="br-30 progress-sm"></b-progress>
-                      </div>
-                    </div>
-                  </div>
-                </div>
                     </span>
                   </span>
                 </div>
@@ -627,46 +651,130 @@
       </div>
       <b-modal id="Rating" :title="'Rate ' + userprofile.firstname + ' ' + userprofile.lastname" centered>
         <b-form-rating id="rating" v-model="nbEval" precision="2" show-value-max show-value color="primary" size="lg" class="mb-2 bg-transparent border-0"> </b-form-rating>
-        <label >Your feedback </label>
-                    <b-form-group class="mb-3">
-                      <b-input type="text" placeholder="Feedback " v-model="form.commentEval" ></b-input>
-                      
-                    </b-form-group>
+        <label>Your feedback </label>
+        <b-form-group class="mb-3">
+          <b-input type="text" placeholder="Feedback " v-model="form.commentEval"></b-input>
+        </b-form-group>
         <template #modal-footer>
           <b-button variant="primary" @click="Rating()">Submit your rating</b-button>
         </template>
       </b-modal>
-      <b-modal id="preference" title="Modify your preferences" centered>
-        <h5>Question Category:</h5>
-                  <b-select v-model="form.categoryPref" value="Default select">
-                    <b-select-option value="0">Select Category</b-select-option>
-                    <b-select-option v-for="c in Questioncategories" :key="c.id" :value="c.id">{{ c.typeC }}</b-select-option>
-                  </b-select>
-        <template #modal-footer>
-          <b-button variant="primary" @click="preferencesUpdate()">Update</b-button>
-        </template>
-      </b-modal>
+
       <div class="col-xl-8 col-lg-6 col-md-7 col-sm-12 layout-top-spacing">
         <div class="skills layout-spacing">
           <div class="panel">
             <div class="panel-body">
               <h3 class="">Badges</h3>
-              <div class="float-right"><h1><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 64 64"><path fill="#428bc1" d="M46.1 2L34.8 18.9h5.6L53 2z"/><path fill="#e8e8e8" d="M40.4 2L29.2 18.9h5.6L46.1 2z"/><path fill="#ed4c5c" d="M34.8 2L23.6 18.9h5.6L40.4 2z"/><g fill="#d3976e"><circle cx="32" cy="41.4" r="20.6"/><path d="M21.7 15.1c-.5 0-.9.4-.9.9v8.4c0 .5.4.9.9.9h20.6c.5 0 .9-.4.9-.9V16c0-.5-.4-.9-.9-.9H21.7m19.7 6.6c0 .5-.4.9-.9.9H23.6c-.5 0-.9-.4-.9-.9v-3.8c0-.5.4-.9.9-.9h16.9c.5 0 .9.4.9.9v3.8"/></g><path fill="#3e4347" d="M14.3 43.8c0-11.2 8.6-20.3 19.6-21.1c-.5 0-1.1-.1-1.6-.1c-10.5 0-19 8.5-19 19.1c0 3.1.8 6.1 2.1 8.7c-.7-2.1-1.1-4.3-1.1-6.6" opacity=".5"/><path fill="#fff" d="M39.9 57.3C49.2 51.1 52 39 46.6 29.6l.9 1.2c5.8 8.6 3.4 20.3-5.3 26.2c-2.6 1.8-5.5 2.8-8.4 3.1c2.2-.6 4.2-1.5 6.1-2.8" opacity=".33"/><path fill="#ed4c5c" d="M23.6 18.9h5.6L17.9 2H11z"/><path fill="#e8e8e8" d="M29.2 18.9h5.6L23.6 2h-5.7z"/><path fill="#3e4347" d="M32.9 4.8L30.1 9l6.6 9.9h3.7l1-1.4z" opacity=".5"/><path fill="#428bc1" d="M34.8 18.9h5.6L29.2 2h-5.6z"/><path fill="#3e4347" d="M31.5 31.5c-2.1 0-3.8 1.7-3.8 3.7H25c0 .3-.1.6-.1.9h3.8c0-2.1 1.7-3.8 3.8-3.8c.8 0 1.5.3 2.1.7c-.7-.8-1.8-1.5-3.1-1.5m5.9 10.3c1.6-1.4 2.6-3.4 2.6-5.6c0-2.3-1-4.4-2.7-5.8c1.1 1.3 1.8 3 1.8 4.8c0 2.2-1 4.3-2.6 5.6c1.6 1.4 2.6 3.4 2.6 5.6c0 4.1-3.4 7.5-7.5 7.5c-1.8 0-3.5-.7-4.8-1.8c1.4 1.6 3.4 2.7 5.8 2.7c4.1 0 7.5-3.4 7.5-7.5c-.1-2.1-1.1-4.1-2.7-5.5" opacity=".5"/><path fill="#fff" d="M32.5 28.7c1.8 0 3.5.7 4.8 1.8c-1.4-1.6-3.4-2.7-5.8-2.7c-4.1 0-7.5 3.4-7.5 7.5h1c.5-3.7 3.6-6.6 7.5-6.6m3.7 7.5c0-1.3-.6-2.4-1.6-3.1c.4.6.7 1.3.7 2.1c0 2.1-1.7 3.8-3.8 3.8v3.8c.3 0 .6.1.9.1V40c2.1 0 3.8-1.7 3.8-3.8m-3.7 15c2.1 0 3.8-1.7 3.8-3.8c0-1.3-.6-2.4-1.6-3.1c.4.6.7 1.3.7 2.1c0 2.1-1.7 3.8-3.8 3.8c-.8 0-1.5-.3-2.1-.7c.6 1.1 1.7 1.7 3 1.7m-4.6-3.7c-.1-.3-.1-.6-.1-.9H24c0 2.3 1 4.4 2.7 5.8c-1.1-1.3-1.8-3-1.8-4.8l3-.1" opacity=".33"/></svg></h1></div>
-                <p v-if="userprofile.nbreplies<10" class="">{{10-userprofile.nbreplies}} replies left</p>
+              <div class="float-right">
+                <h1>
+                  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 64 64">
+                    <path fill="#428bc1" d="M46.1 2L34.8 18.9h5.6L53 2z" />
+                    <path fill="#e8e8e8" d="M40.4 2L29.2 18.9h5.6L46.1 2z" />
+                    <path fill="#ed4c5c" d="M34.8 2L23.6 18.9h5.6L40.4 2z" />
+                    <g fill="#d3976e">
+                      <circle cx="32" cy="41.4" r="20.6" />
+                      <path
+                        d="M21.7 15.1c-.5 0-.9.4-.9.9v8.4c0 .5.4.9.9.9h20.6c.5 0 .9-.4.9-.9V16c0-.5-.4-.9-.9-.9H21.7m19.7 6.6c0 .5-.4.9-.9.9H23.6c-.5 0-.9-.4-.9-.9v-3.8c0-.5.4-.9.9-.9h16.9c.5 0 .9.4.9.9v3.8"
+                      />
+                    </g>
+                    <path fill="#3e4347" d="M14.3 43.8c0-11.2 8.6-20.3 19.6-21.1c-.5 0-1.1-.1-1.6-.1c-10.5 0-19 8.5-19 19.1c0 3.1.8 6.1 2.1 8.7c-.7-2.1-1.1-4.3-1.1-6.6" opacity=".5" />
+                    <path fill="#fff" d="M39.9 57.3C49.2 51.1 52 39 46.6 29.6l.9 1.2c5.8 8.6 3.4 20.3-5.3 26.2c-2.6 1.8-5.5 2.8-8.4 3.1c2.2-.6 4.2-1.5 6.1-2.8" opacity=".33" />
+                    <path fill="#ed4c5c" d="M23.6 18.9h5.6L17.9 2H11z" />
+                    <path fill="#e8e8e8" d="M29.2 18.9h5.6L23.6 2h-5.7z" />
+                    <path fill="#3e4347" d="M32.9 4.8L30.1 9l6.6 9.9h3.7l1-1.4z" opacity=".5" />
+                    <path fill="#428bc1" d="M34.8 18.9h5.6L29.2 2h-5.6z" />
+                    <path
+                      fill="#3e4347"
+                      d="M31.5 31.5c-2.1 0-3.8 1.7-3.8 3.7H25c0 .3-.1.6-.1.9h3.8c0-2.1 1.7-3.8 3.8-3.8c.8 0 1.5.3 2.1.7c-.7-.8-1.8-1.5-3.1-1.5m5.9 10.3c1.6-1.4 2.6-3.4 2.6-5.6c0-2.3-1-4.4-2.7-5.8c1.1 1.3 1.8 3 1.8 4.8c0 2.2-1 4.3-2.6 5.6c1.6 1.4 2.6 3.4 2.6 5.6c0 4.1-3.4 7.5-7.5 7.5c-1.8 0-3.5-.7-4.8-1.8c1.4 1.6 3.4 2.7 5.8 2.7c4.1 0 7.5-3.4 7.5-7.5c-.1-2.1-1.1-4.1-2.7-5.5"
+                      opacity=".5"
+                    />
+                    <path
+                      fill="#fff"
+                      d="M32.5 28.7c1.8 0 3.5.7 4.8 1.8c-1.4-1.6-3.4-2.7-5.8-2.7c-4.1 0-7.5 3.4-7.5 7.5h1c.5-3.7 3.6-6.6 7.5-6.6m3.7 7.5c0-1.3-.6-2.4-1.6-3.1c.4.6.7 1.3.7 2.1c0 2.1-1.7 3.8-3.8 3.8v3.8c.3 0 .6.1.9.1V40c2.1 0 3.8-1.7 3.8-3.8m-3.7 15c2.1 0 3.8-1.7 3.8-3.8c0-1.3-.6-2.4-1.6-3.1c.4.6.7 1.3.7 2.1c0 2.1-1.7 3.8-3.8 3.8c-.8 0-1.5-.3-2.1-.7c.6 1.1 1.7 1.7 3 1.7m-4.6-3.7c-.1-.3-.1-.6-.1-.9H24c0 2.3 1 4.4 2.7 5.8c-1.1-1.3-1.8-3-1.8-4.8l3-.1"
+                      opacity=".33"
+                    />
+                  </svg>
+                </h1>
+              </div>
+              <p v-if="userprofile.nbreplies < 10" class="">{{ 10 - userprofile.nbreplies }} replies left </p><p v-else class="text-success"> Badge Rewarded !</p>
               <b-progress variant="primary" :min="0" :max="10" show-progress class="br-30">
-                <b-progress-bar :value="userprofile.nbreplies" :label-html="`<div class='progress-title'><span>Bronze</span><span>`+this.userprofile.nbreplies*100/10+`%</span></div>`"></b-progress-bar>
-              
+                <b-progress-bar
+                  :value="userprofile.nbreplies"
+                  :label-html="`<div class='progress-title'><span>Bronze</span><span>` + (this.userprofile.nbreplies * 100) / 10 + `%</span></div>`"
+                ></b-progress-bar>
               </b-progress>
-                            <div class="float-right"><h1><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 64 64"><path fill="#428bc1" d="M46.1 2L34.8 18.9h5.6L53 2z"/><path fill="#e8e8e8" d="M40.4 2L29.2 18.9h5.6L46.1 2z"/><path fill="#ed4c5c" d="M34.8 2L23.6 18.9h5.6L40.4 2z"/><g fill="#b2c1c0"><circle cx="32" cy="41.4" r="20.6"/><path d="M21.7 15.1c-.5 0-.9.4-.9.9v8.4c0 .5.4.9.9.9h20.6c.5 0 .9-.4.9-.9V16c0-.5-.4-.9-.9-.9H21.7m19.7 6.6c0 .5-.4.9-.9.9H23.6c-.5 0-.9-.4-.9-.9v-3.8c0-.5.4-.9.9-.9h16.9c.5 0 .9.4.9.9v3.8"/></g><path fill="#3e4347" d="M14.3 43.8c0-11.2 8.6-20.3 19.6-21.1c-.5 0-1.1-.1-1.6-.1c-10.5 0-19 8.5-19 19.1c0 3.1.8 6.1 2.1 8.7c-.7-2.1-1.1-4.3-1.1-6.6" opacity=".5"/><path fill="#fff" d="M39.9 57.3C49.2 51.1 52 39 46.6 29.6c.3.4.6.8.9 1.3c5.8 8.6 3.4 20.3-5.3 26.2c-2.6 1.8-5.5 2.8-8.4 3.1c2.2-.7 4.2-1.6 6.1-2.9" opacity=".33"/><path fill="#ed4c5c" d="M23.6 18.9h5.6L17.9 2H11z"/><path fill="#e8e8e8" d="M29.2 18.9h5.6L23.6 2h-5.7z"/><path fill="#3e4347" d="M32.9 4.8L30.1 9l6.6 9.9h3.7l1-1.4z" opacity=".5"/><path fill="#428bc1" d="M34.8 18.9h5.6L29.2 2h-5.6z"/><path fill="#3e4347" d="M31.5 31.5c-2.1 0-3.8 1.7-3.8 3.7H25c0 .3-.1.6-.1.9h3.8c0-2.1 1.7-3.8 3.8-3.8c.8 0 1.5.3 2.1.7c-.7-.8-1.8-1.5-3.1-1.5M39 54H25v1h15v-3.8h-1zm-7.5-11.2c-2.1 0-3.8 1.7-3.8 3.8v3.8h.9v-2.8c0-2.1 1.7-3.8 3.8-3.8c4.1 0 7.5-3.4 7.5-7.5c0-2.3-1-4.4-2.7-5.8c1.1 1.3 1.8 3 1.8 4.8c0 4.1-3.3 7.5-7.5 7.5" opacity=".5"/><path fill="#fff" d="M28.7 50.3H39v.9H28.7zM32.5 40c2.1 0 3.8-1.7 3.8-3.8c0-1.3-.6-2.4-1.6-3.1c.4.6.7 1.3.7 2.1c0 2.1-1.7 3.8-3.8 3.8c-4.1 0-7.5 3.4-7.5 7.5V54h.9v-6.6c0-4.1 3.3-7.4 7.5-7.4m0-11.3c1.8 0 3.5.7 4.8 1.8c-1.4-1.6-3.4-2.7-5.8-2.7c-4.1 0-7.5 3.4-7.5 7.5h1c.5-3.7 3.6-6.6 7.5-6.6" opacity=".33"/></svg></h1></div>
+              <div class="float-right">
+                <h1>
+                  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 64 64">
+                    <path fill="#428bc1" d="M46.1 2L34.8 18.9h5.6L53 2z" />
+                    <path fill="#e8e8e8" d="M40.4 2L29.2 18.9h5.6L46.1 2z" />
+                    <path fill="#ed4c5c" d="M34.8 2L23.6 18.9h5.6L40.4 2z" />
+                    <g fill="#b2c1c0">
+                      <circle cx="32" cy="41.4" r="20.6" />
+                      <path
+                        d="M21.7 15.1c-.5 0-.9.4-.9.9v8.4c0 .5.4.9.9.9h20.6c.5 0 .9-.4.9-.9V16c0-.5-.4-.9-.9-.9H21.7m19.7 6.6c0 .5-.4.9-.9.9H23.6c-.5 0-.9-.4-.9-.9v-3.8c0-.5.4-.9.9-.9h16.9c.5 0 .9.4.9.9v3.8"
+                      />
+                    </g>
+                    <path fill="#3e4347" d="M14.3 43.8c0-11.2 8.6-20.3 19.6-21.1c-.5 0-1.1-.1-1.6-.1c-10.5 0-19 8.5-19 19.1c0 3.1.8 6.1 2.1 8.7c-.7-2.1-1.1-4.3-1.1-6.6" opacity=".5" />
+                    <path fill="#fff" d="M39.9 57.3C49.2 51.1 52 39 46.6 29.6c.3.4.6.8.9 1.3c5.8 8.6 3.4 20.3-5.3 26.2c-2.6 1.8-5.5 2.8-8.4 3.1c2.2-.7 4.2-1.6 6.1-2.9" opacity=".33" />
+                    <path fill="#ed4c5c" d="M23.6 18.9h5.6L17.9 2H11z" />
+                    <path fill="#e8e8e8" d="M29.2 18.9h5.6L23.6 2h-5.7z" />
+                    <path fill="#3e4347" d="M32.9 4.8L30.1 9l6.6 9.9h3.7l1-1.4z" opacity=".5" />
+                    <path fill="#428bc1" d="M34.8 18.9h5.6L29.2 2h-5.6z" />
+                    <path
+                      fill="#3e4347"
+                      d="M31.5 31.5c-2.1 0-3.8 1.7-3.8 3.7H25c0 .3-.1.6-.1.9h3.8c0-2.1 1.7-3.8 3.8-3.8c.8 0 1.5.3 2.1.7c-.7-.8-1.8-1.5-3.1-1.5M39 54H25v1h15v-3.8h-1zm-7.5-11.2c-2.1 0-3.8 1.7-3.8 3.8v3.8h.9v-2.8c0-2.1 1.7-3.8 3.8-3.8c4.1 0 7.5-3.4 7.5-7.5c0-2.3-1-4.4-2.7-5.8c1.1 1.3 1.8 3 1.8 4.8c0 4.1-3.3 7.5-7.5 7.5"
+                      opacity=".5"
+                    />
+                    <path
+                      fill="#fff"
+                      d="M28.7 50.3H39v.9H28.7zM32.5 40c2.1 0 3.8-1.7 3.8-3.8c0-1.3-.6-2.4-1.6-3.1c.4.6.7 1.3.7 2.1c0 2.1-1.7 3.8-3.8 3.8c-4.1 0-7.5 3.4-7.5 7.5V54h.9v-6.6c0-4.1 3.3-7.4 7.5-7.4m0-11.3c1.8 0 3.5.7 4.8 1.8c-1.4-1.6-3.4-2.7-5.8-2.7c-4.1 0-7.5 3.4-7.5 7.5h1c.5-3.7 3.6-6.6 7.5-6.6"
+                      opacity=".33"
+                    />
+                  </svg>
+                </h1>
+              </div>
 
-              <p v-if="userprofile.nbreplies<20" class="">{{20-userprofile.nbreplies}} replies left</p>
+              <p v-if="userprofile.nbreplies < 20" class="">{{ 20 - userprofile.nbreplies }} replies left</p><p v-else class="text-success"> Badge Rewarded !</p>
               <b-progress variant="primary" :min="10" :max="20" show-progress class="br-30">
-                <b-progress-bar :value="userprofile.nbreplies" :label-html="`<div class='progress-title'><span>Silver</span><span>`+this.userprofile.nbreplies*100/20+`%</span></div>`"></b-progress-bar>
+                <b-progress-bar
+                  :value="userprofile.nbreplies"
+                  :label-html="`<div class='progress-title'><span>Silver</span><span>` + (this.userprofile.nbreplies * 100) / 20 + `%</span></div>`"
+                ></b-progress-bar>
               </b-progress>
-              <div class="float-right"><h1><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 64 64"><path fill="#428bc1" d="M46.1 2L34.8 18.9h5.6L53 2z"/><path fill="#e8e8e8" d="M40.4 2L29.2 18.9h5.6L46.1 2z"/><path fill="#ed4c5c" d="M34.8 2L23.6 18.9h5.6L40.4 2z"/><g fill="#ffce31"><circle cx="32" cy="41.4" r="20.6"/><path d="M21.7 15.1c-.5 0-.9.4-.9.9v8.4c0 .5.4.9.9.9h20.6c.5 0 .9-.4.9-.9V16c0-.5-.4-.9-.9-.9H21.7m19.7 6.6c0 .5-.4.9-.9.9H23.6c-.5 0-.9-.4-.9-.9v-3.8c0-.5.4-.9.9-.9h16.9c.5 0 .9.4.9.9v3.8"/></g><path fill="#89664c" d="M14.3 43.8c0-11.2 8.6-20.3 19.6-21.1c-.5 0-1.1-.1-1.6-.1c-10.5 0-19 8.5-19 19.1c0 3.1.8 6.1 2.1 8.7c-.7-2.1-1.1-4.3-1.1-6.6" opacity=".5"/><path fill="#fff" d="M39.9 57.3C49.2 51.1 52 39 46.6 29.6l.9 1.2c5.8 8.6 3.4 20.3-5.3 26.2c-2.6 1.8-5.5 2.8-8.4 3.1c2.2-.6 4.2-1.5 6.1-2.8" opacity=".33"/><path fill="#ed4c5c" d="M23.6 18.9h5.6L17.9 2H11z"/><path fill="#e8e8e8" d="M29.2 18.9h5.6L23.6 2h-5.7z"/><path fill="#3e4347" d="M32.9 4.8L30.1 9l6.6 9.9h3.7l1-1.4z" opacity=".5"/><path fill="#428bc1" d="M34.8 18.9h5.6L29.2 2h-5.6z"/><path fill="#89664c" d="M26.8 35.2v1c1 0 1.9-.2 2.8-.6v-1.4c-.8.6-1.7.9-2.8 1m6.6-6.5h.9v21.6h-.9zm3.8 22.5V54H26.8v1h11.3v-3.8z" opacity=".5"/><path fill="#fff" d="M34.3 50.3h2.8v.9h-2.8zm-3.7-21.6h2.8v-.9h-3.8c0 2.1-1.7 3.8-3.8 3.8v3.7c.3 0 .6 0 .9-.1v-2.8c2.2.1 3.9-1.6 3.9-3.7m0 22.5v-16c-.3.2-.6.3-.9.5v14.6h-3.8V54h.9v-2.8h3.8" opacity=".33"/></svg></h1></div>
-              <p v-if="userprofile.nbreplies<30" class="">{{30-userprofile.nbreplies}} replies left</p>
+              <div class="float-right">
+                <h1>
+                  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 64 64">
+                    <path fill="#428bc1" d="M46.1 2L34.8 18.9h5.6L53 2z" />
+                    <path fill="#e8e8e8" d="M40.4 2L29.2 18.9h5.6L46.1 2z" />
+                    <path fill="#ed4c5c" d="M34.8 2L23.6 18.9h5.6L40.4 2z" />
+                    <g fill="#ffce31">
+                      <circle cx="32" cy="41.4" r="20.6" />
+                      <path
+                        d="M21.7 15.1c-.5 0-.9.4-.9.9v8.4c0 .5.4.9.9.9h20.6c.5 0 .9-.4.9-.9V16c0-.5-.4-.9-.9-.9H21.7m19.7 6.6c0 .5-.4.9-.9.9H23.6c-.5 0-.9-.4-.9-.9v-3.8c0-.5.4-.9.9-.9h16.9c.5 0 .9.4.9.9v3.8"
+                      />
+                    </g>
+                    <path fill="#89664c" d="M14.3 43.8c0-11.2 8.6-20.3 19.6-21.1c-.5 0-1.1-.1-1.6-.1c-10.5 0-19 8.5-19 19.1c0 3.1.8 6.1 2.1 8.7c-.7-2.1-1.1-4.3-1.1-6.6" opacity=".5" />
+                    <path fill="#fff" d="M39.9 57.3C49.2 51.1 52 39 46.6 29.6l.9 1.2c5.8 8.6 3.4 20.3-5.3 26.2c-2.6 1.8-5.5 2.8-8.4 3.1c2.2-.6 4.2-1.5 6.1-2.8" opacity=".33" />
+                    <path fill="#ed4c5c" d="M23.6 18.9h5.6L17.9 2H11z" />
+                    <path fill="#e8e8e8" d="M29.2 18.9h5.6L23.6 2h-5.7z" />
+                    <path fill="#3e4347" d="M32.9 4.8L30.1 9l6.6 9.9h3.7l1-1.4z" opacity=".5" />
+                    <path fill="#428bc1" d="M34.8 18.9h5.6L29.2 2h-5.6z" />
+                    <path fill="#89664c" d="M26.8 35.2v1c1 0 1.9-.2 2.8-.6v-1.4c-.8.6-1.7.9-2.8 1m6.6-6.5h.9v21.6h-.9zm3.8 22.5V54H26.8v1h11.3v-3.8z" opacity=".5" />
+                    <path
+                      fill="#fff"
+                      d="M34.3 50.3h2.8v.9h-2.8zm-3.7-21.6h2.8v-.9h-3.8c0 2.1-1.7 3.8-3.8 3.8v3.7c.3 0 .6 0 .9-.1v-2.8c2.2.1 3.9-1.6 3.9-3.7m0 22.5v-16c-.3.2-.6.3-.9.5v14.6h-3.8V54h.9v-2.8h3.8"
+                      opacity=".33"
+                    />
+                  </svg>
+                </h1>
+              </div>
+              <p v-if="userprofile.nbreplies < 30" class="">{{ 30 - userprofile.nbreplies }} replies left</p><p v-else class="text-success"> Badge Rewarded !</p>
               <b-progress variant="primary" :min="20" :max="30" show-progress class="br-30">
-                <b-progress-bar :value="userprofile.nbreplies" :label-html="`<div class='progress-title'><span>Gold</span><span>`+this.userprofile.nbreplies*100/30+`%</span></div>`"></b-progress-bar>
+                <b-progress-bar
+                  :value="userprofile.nbreplies"
+                  :label-html="`<div class='progress-title'><span>Gold</span><span>` + (this.userprofile.nbreplies * 100) / 30 + `%</span></div>`"
+                ></b-progress-bar>
               </b-progress>
             </div>
           </div>
@@ -687,16 +795,12 @@
             <div class="panel-body">
               <h3 class="">Preferences</h3>
               <div class="timeline-alter">
+                <p> Prefered Question Category :  </p>
                 <div v-for="p in Preferences" :key="p.id">
-                  <div v-if="p.userprofilePref==userprofile.id">
+                  <div v-if="p.userprofilePref == userprofile.id">
                     <div v-for="q in Questioncategories" :key="q.id">
-                      <div v-if="q.id==p.categoryPref">
-                       
-                          <p>Prefered Question Category : {{q.typeC}}</p>
-                          <div v-if="CurrentUserProfile.id == userprofile.id"> 
-                        <b-button variant="warning" v-b-modal.preference>Modify</b-button>
-                        <!--<b-button variant="danger" @click="deletePref()">Delete</b-button>-->
-                        </div>
+                      <div v-if="q.id == p.categoryPref1|| q.id == p.categoryPref2 || q.id == p.categoryPref3">
+                        <p class="text-warning"> {{ q.typeC }}</p>
                       </div>
                     </div>
                   </div>
@@ -780,18 +884,18 @@ export default {
       CurrentUser: [],
       userprofile: [],
       CurrentUserProfile: [],
-      CurrentUserEntreprise:[],
-      form:{
-        categoryPref:'',
-        userprofilePref:'',
-        commentEval:''
+      CurrentUserEntreprise: [],
+      form: {
+        categoryPref: '',
+        userprofilePref: '',
+        commentEval: '',
       },
       nbEval: '',
       search: '',
       UserEval: '',
       average: 0,
-      existprofile:false,
-      existentreprise:false,
+      existprofile: false,
+      existentreprise: false,
       nb1: 0,
       nb2: 0,
       nb3: 0,
@@ -802,28 +906,8 @@ export default {
   },
   mounted() {},
   methods: {
-    ...mapActions(['GetPreferences','GetQuestioncategories','GetUserentreprises','CreateNotification','GetUsers', 'GetUserprofiles', 'GetEvaluationProfile', 'GetEvaluationProfile']),
-    deletePref(){
-      this.$swal({
-        icon: 'warning',
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        showCancelButton: true,
-        confirmButtonText: 'Delete',
-        padding: '2em',
-      }).then((result) => {
-        if (result.value) {
-          axios.put(`https://cargeeks.herokuapp.com/userprofile/userprofile-update/${this.userprofile.id}/`,{preferencesU:null});
-          this.$swal('Deleted!', 'Your Preference has been deleted.', 'success');
-          this.$router.go();
-        }
-      });
-    },
-    preferencesUpdate(){
-      axios.post('/preferences/preferences-update/'+this.userprofile.preferencesU+'/',this.form)
-      this.$router.go()
+    ...mapActions(['GetPreferences', 'GetQuestioncategories', 'GetUserentreprises', 'CreateNotification', 'GetUsers', 'GetUserprofiles', 'GetEvaluationProfile', 'GetEvaluationProfile']),
 
-    },
     async Rating() {
       let done = false;
       if (this.EvaluationProfile.length == 0) {
@@ -831,9 +915,9 @@ export default {
           userprofileEval: this.$route.params.id,
           userEval: this.CurrentUser.id,
           nbEval: this.nbEval,
-          commentEval:this.form.commentEval
+          commentEval: this.form.commentEval,
         });
-        this.GetEvaluationProfile()
+        this.GetEvaluationProfile();
       } else {
         for (let e in this.EvaluationProfile) {
           if (this.EvaluationProfile[e].userprofileEval == this.$route.params.id && this.EvaluationProfile[e].userEval == this.CurrentUser.id) {
@@ -848,16 +932,21 @@ export default {
             userprofileEval: this.$route.params.id,
             userEval: this.CurrentUser.id,
             nbEval: this.nbEval,
-            commentEval:this.form.commentEval
+            commentEval: this.form.commentEval,
           });
         }
 
-        this.GetEvaluationProfile()
+        this.GetEvaluationProfile();
       }
-      this.CreateNotification({message:' Rated your Profile '+this.nbEval+' Stars !',byuserprofileNo:this.CurrentUserProfile.id,byuserentrepriseNo:this.CurrentUserEntreprise.id,userprofileNo:this.$route.params.id})
+      this.CreateNotification({
+        message: ' Rated your Profile ' + this.nbEval + ' Stars !',
+        byuserprofileNo: this.CurrentUserProfile.id,
+        byuserentrepriseNo: this.CurrentUserEntreprise.id,
+        userprofileNo: this.$route.params.id,
+      });
       this.$router.go();
     },
-     async showAlert() {
+    async showAlert() {
       this.$swal({
         title: 'You cannot rating your profile',
         padding: '2em',
@@ -872,14 +961,14 @@ export default {
   },
   computed: {
     ...mapGetters({
-      Userentreprises:'StateUserentreprises',
+      Userentreprises: 'StateUserentreprises',
       User: 'StateUser',
       Users: 'StateUsers',
       Userprofiles: 'StateUserprofiles',
       EvaluationProfile: 'StateEvaluationProfile',
-      
-      Questioncategories:'StateQuestioncategories',
-      Preferences:'StatePreferences',
+
+      Questioncategories: 'StateQuestioncategories',
+      Preferences: 'StatePreferences',
     }),
     isLoggedIn: function () {
       return this.$store.getters.isAuthenticated;
@@ -901,7 +990,7 @@ export default {
     this.GetEvaluationProfile();
     this.GetEvaluationProfile();
     this.GetPreferences();
-    this.GetQuestioncategories()
+    this.GetQuestioncategories();
     for (let u in this.Users) {
       if (this.Users[u].username == this.User) {
         this.CurrentUser = this.Users[u];
@@ -916,17 +1005,16 @@ export default {
     for (let ue in this.Userentreprises) {
       if (this.Userentreprises[ue].userE == this.CurrentUser.id) {
         this.CurrentUserEntreprise = this.Userentreprises[ue];
-        this.existentreprise= true;
+        this.existentreprise = true;
       }
     }
-    
-    
+
     axios.get('/userprofile/userprofile-detail/' + this.$route.params.id + '/').then((response) => {
       this.userprofile = response.data;
       axios.get('/preferences/preferences-detail/' + this.userprofile.preferencesU + '/').then((response) => {
-      this.form = response.data;
-    }); 
-    for (let ev in this.EvaluationProfile) {
+        this.form = response.data;
+      });
+      for (let ev in this.EvaluationProfile) {
         if (this.EvaluationProfile[ev].userprofileEval == this.$route.params.id && this.EvaluationProfile[ev].nbEval == 5) {
           this.nb5++;
         } else if (this.EvaluationProfile[ev].userprofileEval == this.$route.params.id && this.EvaluationProfile[ev].nbEval == 4) {
@@ -941,18 +1029,18 @@ export default {
       }
       this.nbTotal = this.nb1 + this.nb2 + this.nb3 + this.nb4 + this.nb5;
       var sum = 0;
-    var nb = 0;
-    for (let e in this.EvaluationProfile) {
-      if (this.EvaluationProfile[e].userprofileEval == this.$route.params.id) {
-        sum += this.EvaluationProfile[e].nbEval;
-        nb++;
+      var nb = 0;
+      for (let e in this.EvaluationProfile) {
+        if (this.EvaluationProfile[e].userprofileEval == this.$route.params.id) {
+          sum += this.EvaluationProfile[e].nbEval;
+          nb++;
+        }
       }
-    }
-    this.average = sum / nb;
+      this.average = sum / nb;
 
-    axios.put('/userprofile/userprofile-update/' + this.userprofile.id + '/', {
-      nbEvalProfile: this.average,
-    });
+      axios.put('/userprofile/userprofile-update/' + this.userprofile.id + '/', {
+        nbEvalProfile: this.average,
+      });
     });
   },
 };

@@ -196,14 +196,29 @@
             </b-modal>
           </div>
           <div class="float-right mt-4">
-           <b-button-group>
-                    <a class="btn btn-outline-primary" href="#" >Right Answer</a>
-                    <a class="btn btn-primary" :href="'/questionpage/'+question.id+'/'+question.slug" >Newest</a>
-                    <a class="btn btn-primary" :href="'/questionpageoldest/'+question.id+'/'+question.slug">Oldest</a>
-                    <a class="btn btn-primary" :href="'/questionpagemostliked/'+question.id+'/'+question.slug">Most Liked</a>
-                    </b-button-group>
+           <div class="col-lg-12">
+              <b-media>
+                <template #aside>
+                  <h6 class="mt-3 mr-2">Sort by :</h6>
+                  <b-dropdown variant="outline-primary" size="md" class="mt-2 mr-2 custom-dropdown">
+                    <template #button-content>
+                      Right Answer
+                      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
+                        <path
+                          fill="currentColor"
+                          d="M4.22 6.53a.75.75 0 0 0 1.06 0L8 3.81l2.72 2.72a.75.75 0 1 0 1.06-1.06L8.53 2.22a.75.75 0 0 0-1.06 0L4.22 5.47a.75.75 0 0 0 0 1.06Zm0 2.94a.75.75 0 0 1 1.06 0L8 12.19l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0l-3.25-3.25a.75.75 0 0 1 0-1.06Z"
+                        />
+                      </svg>
+                    </template>
+                    <b-dropdown-item :href="'/questionpageoldest/'+question.id+'/'+question.slug">Oldest</b-dropdown-item>
+                    <b-dropdown-item :href="'/questionpage/'+question.id+'/'+question.slug">Newest (default)</b-dropdown-item>
+                    <b-dropdown-item  :href="'/questionpagemostliked/'+question.id+'/'+question.slug">Most Liked</b-dropdown-item>
+                  </b-dropdown>
+                </template>
+              </b-media>
+            </div>
           </div>
-          <h5 class="mt-4 ml-4">Answers</h5>
+          <h5 class="mt-5 ml-4">Answers ({{question.nbrep}})</h5>
           <div id="mediaObjectNotationIcon" class="col-lg-12 layout-spacing mt-5 row">
             <div class="panel-heading col-12">
               <div class="panel-body mb-3 pill-justify-right col-xl-12">
@@ -628,7 +643,7 @@ export default {
               nbCommentR: (replydetails.nbCommentR -= 1),
             });
           });
-          axios.delete(`https://cargeeks.herokuapp.com/comment/comment-delete/${c.id}/`);
+          axios.delete(`http://127.0.0.1:8000/comment/comment-delete/${c.id}/`);
           this.$swal('Deleted!', 'Your comment has been deleted.', 'success');
           this.$router.go();
         }
@@ -647,7 +662,7 @@ export default {
           axios.put('/question/question-update/' + this.question.id + '/', {
             nbreplies: (this.question.nbreplies -= 1),
           });
-          axios.delete(`https://cargeeks.herokuapp.com/reply/reply-delete/${r.id}/`);
+          axios.delete(`http://127.0.0.1:8000/reply/reply-delete/${r.id}/`);
            if(this.existentreprise==null)
           {
           axios.put('/userprofile/userprofile-update/' + this.CurrentUserProfile.id + '/', {

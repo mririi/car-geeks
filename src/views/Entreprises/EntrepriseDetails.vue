@@ -952,7 +952,7 @@ export default {
           const d = new Date(this.Entreprisepromotions[s].datePE);
           d.setDate(d.getDate() + parseInt(this.Entreprisepromotions[s].nbDays));
           if (new Date() > new Date(this.Entreprisepromotions[s].datePE) && this.Entreprisepromotions[s].dateP != null) {
-            axios.delete(`https://cargeeks.herokuapp.com/entreprisepromotion/entreprisepromotion-delete/${this.Entreprisepromotions[s].id}/`);
+            axios.delete(`http://127.0.0.1:8000/entreprisepromotion/entreprisepromotion-delete/${this.Entreprisepromotions[s].id}/`);
             axios.post('/userentreprise/userentreprise-update/' + this.userentreprise.id + '/', { promoted: false, published: this.userentreprise.published });
             this.promoted = false;
             this.$router.go();

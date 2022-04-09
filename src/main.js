@@ -5,7 +5,7 @@ import store from './store';
 import axios from "axios";
 //import './index.css'
 //axios.defaults.withCredentials = true;
-axios.defaults.baseURL = "https://cargeeks.herokuapp.com/";
+axios.defaults.baseURL = "http://127.0.0.1:8000/";
 //bootstrap vue
 import { BootstrapVue } from 'bootstrap-vue';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
