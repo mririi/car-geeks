@@ -66,6 +66,8 @@ export default {
     this.GetGroups();
     this.GetGroupmembers();
     this.GetUserprofiles();
+    //let groupup=this.Groups.find((d)=>d.accepted==true && this.Members.find((m)=>m.groupMem==d.id)==null)
+    //this.CreateGroupmember({ userprofileMem: this.CurrentUserProfile.id, groupMem: groupup.id , userentrepriseMem:this.CurrentUserEntreprise.id,accepted:true});  
   },
   mounted() {},
   computed: {

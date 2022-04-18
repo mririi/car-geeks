@@ -229,9 +229,11 @@
                         </b-dropdown>
                       </div>
                       <div class="timeline-post-content">
+                        <router-link :to="'/profile/' + u.id" class="text-primary">
                         <div class="user-profile">
                           <img :src=" u.imageU" img-top alt="" />
                         </div>
+                        </router-link>
 
                         <div class="">
                           
@@ -468,10 +470,11 @@
                         </b-dropdown>
                       </div>
                       <div class="timeline-post-content">
+                        <router-link :to="'/entreprisedetails/' + ue.id" class="text-primary">
                         <div class="user-profile">
                           <img :src=" ue.imageE" img-top alt="" />
                         </div>
-
+                        </router-link>
                         <div class="">
                           
                             <h4>{{ ue.nameE }}<span v-if="ue.id==group.userentrepriseG"> <b-badge variant="outline-primary" class="outline-badge-primary border-0 ml-2 mb-1">Admin</b-badge> </span></h4>
@@ -680,10 +683,11 @@
                     </span>
                   </span>
                 </span>
-                <span v-else>
+                
+              </span>
+              <span v-if="existmember == false">
                     <h4>You cannot see the posts </h4>
                 </span>
-              </span>
             </div>
           </div>
         </div>

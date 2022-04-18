@@ -41,8 +41,6 @@
                     <p>{{s.typeE}}</p>
                   </template>
                   <b-list-group class="list-group-minimal mb-3">
-                    <b-list-group-item><b-form-rating id="rating" v-model="s.nbEval"  readonly variant="warning" size="lg" class=" bg-transparent border-0 w-25">
-                                    </b-form-rating></b-list-group-item>
                     <b-list-group-item class="ml-4"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
                         <path fill="currentColor" d="M24 13h-2a3.003 3.003 0 0 0-3-3V8a5.006 5.006 0 0 1 5 5Z" />
                         <path
@@ -67,8 +65,6 @@
                     <p>{{s.typeE}}</p>
                   </template>
                   <b-list-group class="list-group-minimal mb-3">
-                    <b-list-group-item><b-form-rating id="rating" v-model="s.nbEval"  readonly variant="warning" size="lg" class=" bg-transparent border-0 w-25">
-                                    </b-form-rating></b-list-group-item>
                     <b-list-group-item class="ml-4"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
                         <path fill="currentColor" d="M24 13h-2a3.003 3.003 0 0 0-3-3V8a5.006 5.006 0 0 1 5 5Z" />
                         <path
