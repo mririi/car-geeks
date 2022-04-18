@@ -29,7 +29,7 @@
                                 to you as soon as possible.
                             </p>
                         </div>
-
+                        <form @submit.prevent="submit">
                         <h4>Send us a Message</h4>
                         <div class="row mb-4">
                             <div class="col-sm-12 col-12 input-fields">
@@ -117,9 +117,11 @@
                         </div>
                         <div class="row">
                             <div class="col text-sm-left text-center">
-                                <b-button type="submit" @click="submit()" class="btn btn-primary mt-4">Submit</b-button>
+                                <b-button v-show="form.messageRec&&form.emailRec" type="submit" @click="submit()" class="btn btn-primary mt-4">Submit</b-button>
+                                <b-button v-show="!form.messageRec||!form.emailRec" class="btn btn-primary mt-4">Please fill the Message and Email field to submit</b-button>
                             </div>
                         </div>
+                        </form>
                     </perfect-scrollbar>
                 </div>
             </div>
@@ -128,15 +130,6 @@
 </template>
 
 <script>
-    import Vue from 'vue';
-    import * as VueGoogleMaps from 'vue2-google-maps';
-    Vue.use(VueGoogleMaps, {
-        load: {
-            //key: 'YOUR_API_TOKEN',
-            // OR: libraries: 'places,drawing,visualization'
-        }
-    });
-
     import '@/assets/sass/pages/contact_us.scss';
     import { mapActions } from 'vuex';
     //import highlight from '@/components/plugins/highlight.vue';
@@ -159,8 +152,8 @@
         mounted() {},
         methods: {
              ...mapActions(["CreateReclamation"]),
-        async submit(){
-            await this.CreateReclamation(this.form)
+        submit(){
+            this.CreateReclamation(this.form)
         this.$swal('We heard you !', 'Your reclamation has been sent successfuly, Wait for our email !', 'success');
         }
         },
