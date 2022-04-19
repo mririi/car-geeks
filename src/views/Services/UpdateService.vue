@@ -217,11 +217,13 @@ export default {
         
         this.is_submit_form1 = true;
                 if (this.form.titleS && this.form.titleS.length<100 && this.form.titleS.length>15 &&
+                this.form.details && this.form.details.length<500 && this.form.details.length>25 &&
                   this.form.addressS &&
                   this.form.typeS &&
                   this.form.country &&
                   this.form.contactS &&
-                  this.form.priceS
+                  this.form.priceS &&
+                  this.form.email && this.email_validate(this.form.email)
                 ) {
                   this.disable=true
                   
@@ -244,16 +246,20 @@ export default {
           formdata.append("accepted", false);
         }
         formdata.append("promoted", this.form.promoted);
+        if(this.form.userprofileS!=null){
         formdata.append("userprofileS", this.form.userprofileS);
+        }
+        else if (this.form.userentrepriseS!=null){
         formdata.append("userentrepriseS", this.form.userentrepriseS);
-        console.log(formdata)
+        }
+        
         await axios.post('/service/service-update/' + this.$route.params.id + '/',formdata);
         if (this.CurrentUser.is_superuser==false){
         await this.CreateNotification({message:' requested a Verification on their service !',byuserprofileNo:this.form.userprofileS,byuserentrepriseNo:this.form.userentrepriseS,serviceNo:this.form.id,foradmin:true})
         this.$swal('Good Job!', 'Your service has been updated successfuly, Please wait for the administator to accept it !', 'success');
         }
         
-        //this.$router.push("/services");
+        this.$router.push("/services");
         }
       } catch (error) {
         this.disable=false

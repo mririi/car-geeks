@@ -6,7 +6,7 @@
           <div class="page-header">
             <nav class="breadcrumb-one" aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item active" aria-current="page"><span>Add Post</span></li>
+                <li class="breadcrumb-item active" aria-current="page"><span>Update Post</span></li>
               </ol>
             </nav>
           </div>
@@ -52,7 +52,8 @@
       @tags-changed="newTags => tags = newTags"
     />-->
                     <small id="emailHelp2" class="form-text text-muted mt-3"><span style="color: red">*</span> Required Fields</small>
-                    <b-button @click="submit" variant="primary" class="mt-4 justfiy-content-end">Submit</b-button>
+                    <b-button v-show="!disable" @click="submit" variant="primary" class="mt-4 justfiy-content-end">Update</b-button>
+                    <b-button v-show="disable" variant="primary" class="disabled">Updating..</b-button>
                   </b-form>
                 </div>
               </div>
@@ -81,15 +82,14 @@ export default {
   },
   data() {
     return {
-      
+      disable:false,
       form: {
         detailsP: '',
       },
       image: null,
-      uentreprise: [],
-      uprofile: [],
       CurrentUser: [],
       CurrentUserProfile: [],
+      CurrentUserEntreprise: [],
       is_submit_form1: false,
       group:[]
     };
@@ -99,6 +99,7 @@ export default {
     this.GetUserprofiles();
     this.GetGroups();
     this.GetGroupposts();
+    this.GetUserentreprises();
      axios.get('/postgroup/postgroup-detail/' + this.$route.params.id + '/').then((response) => {
       this.form = response.data;
       axios.get('/group/group-detail/' + this.form.groupPost+ '/').then((response) => {
@@ -112,13 +113,19 @@ export default {
       if (this.Userprofiles[u].userU == this.CurrentUser.id) {
         this.CurrentUserProfile = this.Userprofiles[u];
       }
-    }})
+    }
+    for (let ue in this.Userentreprises) {
+        if (this.Userentreprises[ue].userE == this.CurrentUser.id) {
+          this.CurrentUserEntreprise = this.Userentreprises[ue];
+        }
+      }
+    })
   },
   methods: {
     onFileChanged(event) {
       this.image = event.target.files[0];
     },
-    ...mapActions(['CreateNotification', 'GetUsers', 'GetUserprofiles', 'GetGroups','GetGroupposts' ,'CreateGrouppost']),
+    ...mapActions(['CreateNotification','GetUserentreprises', 'GetUsers', 'GetUserprofiles', 'GetGroups','GetGroupposts' ,'CreateGrouppost']),
     async submit() {
       try {
         this.is_submit_form1 = true;
@@ -126,15 +133,16 @@ export default {
           this.form.detailsP.length < 500 &&
           this.form.detailsP.length > 15
         ) {
+          this.disable=true
           var formdata = new FormData();
           if (this.image != null) {
             formdata.append('imagePost', this.image);
           }
           formdata.append('detailsP', this.form.detailsP);
        
-          if(this.group.userprofileG==this.CurrentUserProfile.id)
+          if(this.group.userprofileG==this.CurrentUserProfile.id ||this.group.userentrepriseG == this.CurrentUserEntreprise.id || this.CurrentUser.is_superuser==true )
           {
-            formdata.append('accepted', true);
+            formdata.append('accepted', true);            
           }
           await axios.put('/postgroup/postgroup-update/' + this.$route.params.id + '/', formdata);
           
@@ -148,10 +156,12 @@ export default {
             });
             this.$swal('Good Job!', 'Your question has been created successfuly, Please wait for the administator to accept it !', 'success');
           }*/
+          //this.$router.push('/groupdetail/'+this.group.id);
           this.$router.push('/groups');
         }
       } catch (error) {
-        throw 'Il ya un error!';
+        this.disable=false
+        console.log(error)
       }
     },
   },

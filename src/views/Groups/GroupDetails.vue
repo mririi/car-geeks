@@ -42,7 +42,7 @@
                     >
                   </span>
 
-                  <span v-if="existmember == false && requested == false &&  CurrentUserProfile.id!=null || CurrentUserEntreprise.id!=null">
+                  <span v-if="existmember == false && requested == false &&  (CurrentUserProfile.id!=null || CurrentUserEntreprise.id!=null)">
                     <b-button variant="primary" @click="Join()"
                       ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36">
                         <path
@@ -104,7 +104,7 @@
                       Join Group</b-button
                     >
                   </span>
-                  <span v-if="requested == true &&  CurrentUserProfile.id!=null || CurrentUserEntreprise.id!=null">
+                  <span v-if="requested == true &&  (CurrentUserProfile.id!=null || CurrentUserEntreprise.id!=null)">
                     <b-button variant="primary"
                       ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
                         <circle cx="18" cy="12" r="0" fill="currentColor">
@@ -120,7 +120,7 @@
                       Requested</b-button
                     >
                   </span>
-                  <span v-if="group.userprofileG == CurrentUserProfile.id">
+                  <span v-if="group.userprofileG == CurrentUserProfile.id || group.userentrepriseG == CurrentUserEntreprise.id">
                     <b-button variant="primary" :href="'/groupdashboard/' + group.id + '/dashboard'" class="ml-3"
                       ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36">
                         <path
@@ -759,7 +759,6 @@ export default {
         if (((this.Members[m].userprofileMem == this.CurrentUserProfile.id && this.CurrentUserProfile.id!=null) || (this.Members[m].userentrepriseMem == this.CurrentUserEntreprise.id && this.CurrentUserEntreprise.id!=null))  && this.Members[m].groupMem == this.group.id && this.Members[m].accepted == true) {
           this.existmember = true;
         }
-        console.log(this.existmember)
       }
       for (let m in this.Members) {
         if (this.Members[m].groupMem == this.group.id && this.Members[m].accepted == true) {
