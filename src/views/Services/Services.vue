@@ -73,7 +73,7 @@
                     </span>
                   </div>
                   <h5 class="card-title text-center">{{ s.titleS }}</h5>
-                  <b-badge variant="warning" class="float-right  h4 mt-3">{{ s.priceS }} DT</b-badge>
+                  <b-badge variant="success" class="float-right  h4 mt-3">{{ s.priceS }} $</b-badge>
                   <p class="meta-text mt-4">
                     <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
                       <path
@@ -98,7 +98,7 @@
                     </span>
                   </div>
                   <h5 class="card-title text-center">{{ s.titleS }}</h5>
-                  <b-badge variant="warning" class="float-right h4 mt-3">{{ s.priceS }} DT</b-badge>
+                  <b-badge variant="success" class="float-right h4 mt-3">{{ s.priceS }} $</b-badge>
                   <p class="meta-text mt-4">
                     <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
                       <path

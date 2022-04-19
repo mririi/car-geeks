@@ -111,17 +111,17 @@ export default {
     
     axios.get('/question/question-detail/' + this.$route.params.id + '/').then((response) => {
       this.form = response.data;
-    
     let existuserentreprise=false
       for (let ue in this.Userentreprises){
       if(this.Userentreprises[ue].userE==this.CurrentUser.id)
         {
           existuserentreprise = true
+          if(this.Userentreprises[ue].id!=this.form.userentrepriseQ){
           this.$router.push('/questions')
           this.$swal({
-              title: 'You cannot access this page !',
+              title: 'This is not your Question !',
               padding: '2em'
-          });
+          });}
         }
       }
       if (existuserentreprise==false){
@@ -140,8 +140,7 @@ export default {
           existuserprofile = true
         }
       }
-      if (existuserprofile==false){
-        
+      if (existuserprofile==false && existuserentreprise==false){
         this.$router.push('/auth/userinfo')
       }
       }});

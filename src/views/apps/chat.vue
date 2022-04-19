@@ -170,6 +170,7 @@ export default {
       Users: 'StateUsers',
       Chats: 'StateChats',
       Userprofiles: 'StateUserprofiles',
+      Userentreprises: 'StateUserentreprises'
     }),
     isLoggedIn: function () {
       return this.$store.getters.isAuthenticated;
@@ -198,7 +199,7 @@ export default {
     });
   },
   methods: {
-    ...mapActions(['GetUsers', 'CreateChat', 'GetUserprofiles', 'GetChats']),
+    ...mapActions(['GetUsers','GetUserentreprises', 'CreateChat', 'GetUserprofiles', 'GetChats']),
     
     preview(person) {
       var ms=this.messages.filter((c) => c.sender == person.userU && c.reciever==this.CurrentUser.id);
@@ -229,11 +230,15 @@ export default {
     this.GetUsers();
     this.GetChats();
     this.GetUserprofiles();
+    this.GetUserentreprises()
     this.messages = this.Chats;
     
     for (let u in this.Users) {
       if (this.Users[u].username == this.User) {
         this.CurrentUser = this.Users[u];
+        if(this.Userentreprises.find((d)=>d.userE==this.CurrentUser.id)!=null){
+          this.$router.push('/')
+        }
         let contact=[]
       for (let c in this.messages.sort(function(a, b){return b-a})){
         if(contact.find((d)=>d==this.messages[c].sender)==null&&this.messages[c].reciever==this.CurrentUser.id){

@@ -52,7 +52,8 @@
       @tags-changed="newTags => tags = newTags"
     />-->
                     <small id="emailHelp2" class="form-text text-muted mt-3"><span style="color: red">*</span> Required Fields</small>
-                    <b-button @click="submit" variant="primary" class="mt-4 justfiy-content-end">Submit</b-button>
+                    <b-button v-show="!disable" @click="submit" variant="primary" class="mt-4 justfiy-content-end">Submit</b-button>
+                    <b-button v-show="disable" variant="primary" class="disabled">Submitting..</b-button>
                   </b-form>
                 </div>
               </div>
@@ -81,7 +82,7 @@ export default {
   },
   data() {
     return {
-      
+      disable:false,
       form: {
         detailsP: '',
       },
@@ -133,21 +134,18 @@ export default {
           this.form.detailsP.length < 500 &&
           this.form.detailsP.length > 15
         ) {
+          this.disable=true
           var formdata = new FormData();
           if (this.image != null) {
             formdata.append('imagePost', this.image);
           }
-          console.log(this.image)
           formdata.append('detailsP', this.form.detailsP);
           if(this.CurrentUserEntreprise.id==null){
           formdata.append('userprofilePost', this.CurrentUserProfile.id);}
-          console.log(this.CurrentUserProfile.id)
           if(this.CurrentUserProfile.id==null){
           formdata.append('userentreprisePost', this.CurrentUserEntreprise.id);}
-          console.log(this.CurrentUserEntreprise.id)
           formdata.append('groupPost', this.$route.params.id);
-          console.log(this.$route.params.id)
-          if(this.group.userprofileG==this.CurrentUserProfile.id ||this.group.userentrepriseG == this.CurrentUserEntreprise.id )
+          if(this.group.userprofileG==this.CurrentUserProfile.id ||this.group.userentrepriseG == this.CurrentUserEntreprise.id || this.CurrentUser.is_superuser==true )
           {
             formdata.append('accepted', true);
             axios.put('/group/group-update/' + this.$route.params.id + '/', { nbposts: this.group.nbposts + 1 });
@@ -163,6 +161,7 @@ export default {
           }
         }
       } catch (error) {
+        this.disable=false
         console.log(error)
       }
     },

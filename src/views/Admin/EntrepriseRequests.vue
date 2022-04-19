@@ -295,14 +295,8 @@ export default {
         padding: '2em',
       }).then((result) => {
         if (result.value) {
-          for (let r in this.Roles)
-          {
-            if(this.Roles[r].userRole==e.userE && this.Roles[r].entreprise==true)
-            {
-              axios.put('/userentreprise/userentreprise-update/' + e.id + '/', { roleE: this.Roles[r].id,published:true });
-              axios.post('/role/role-update/' + this.Roles[r].id + '/',{entreprise:true,service:true,userRole:e.userE});
-            }
-          }
+            axios.put('/userentreprise/userentreprise-update/' + e.id + '/', {published:true });
+            axios.post('/role/role-create/',{entreprise:true,service:true,userRole:e.userE});
           this.CreateNotification({ message: 'Your entreprise has been accepted ', entrepriseNo: e.userE, admin: true });
           this.$router.go();
           this.$swal('Accepted!', 'The entreprise has been accepted.', 'success');

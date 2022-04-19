@@ -44,7 +44,7 @@
           <b-media>
             <template #aside>
               <div class="w-img">
-                <img :src=" userprofile.imageU" alt="avatar" />
+                <img :src="userprofile.imageU" alt="avatar" />
               </div>
             </template>
 
@@ -65,7 +65,7 @@
           <b-media>
             <template #aside>
               <div class="w-img">
-                <img :src=" userentreprise.imageE" alt="avatar" />
+                <img :src="userentreprise.imageE" alt="avatar" />
               </div>
             </template>
 
@@ -89,7 +89,7 @@
             ></b-card
           >
           <div class="widget-content mb-5" v-if="question.imageQ != null">
-            <img :src=" question.imageQ" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
+            <img :src="question.imageQ" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
           </div>
           <div class="w-action">
             <div class="card-like ml-4">
@@ -196,14 +196,29 @@
             </b-modal>
           </div>
           <div class="float-right mt-4">
-            <b-button-group>
-              <a class="btn btn-primary" :href="'/questionpagerightanswer/' + question.id + '/' + question.slug">Right Answer</a>
-              <a class="btn btn-outline-primary" href="#">Newest</a>
-              <a class="btn btn-primary" :href="'/questionpageoldest/' + question.id + '/' + question.slug">Oldest</a>
-              <a class="btn btn-primary" :href="'/questionpagemostliked/' + question.id + '/' + question.slug">Most Liked</a>
-            </b-button-group>
+            <div class="col-lg-12">
+              <b-media>
+                <template #aside>
+                  <h6 class="mt-3 mr-2">Sort by :</h6>
+                  <b-dropdown variant="outline-primary" size="md" class="mt-2 mr-2 custom-dropdown">
+                    <template #button-content>
+                      Newest (default)
+                      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
+                        <path
+                          fill="currentColor"
+                          d="M4.22 6.53a.75.75 0 0 0 1.06 0L8 3.81l2.72 2.72a.75.75 0 1 0 1.06-1.06L8.53 2.22a.75.75 0 0 0-1.06 0L4.22 5.47a.75.75 0 0 0 0 1.06Zm0 2.94a.75.75 0 0 1 1.06 0L8 12.19l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0l-3.25-3.25a.75.75 0 0 1 0-1.06Z"
+                        />
+                      </svg>
+                    </template>
+                    <b-dropdown-item :href="'/questionpageoldest/'+question.id+'/'+question.slug">Oldest</b-dropdown-item>
+                    <b-dropdown-item :href="'/questionpagerightanswer/'+question.id+'/'+question.slug">Right Answer</b-dropdown-item>
+                    <b-dropdown-item  :href="'/questionpagemostliked/'+question.id+'/'+question.slug">Most Liked</b-dropdown-item>
+                  </b-dropdown>
+                </template>
+              </b-media>
+            </div>
           </div>
-          <h5 class="mt-4 ml-4">Answers</h5>
+          <h5 class="mt-5 ml-4">Answers ({{question.nbrep}})</h5>
           <div id="mediaObjectNotationIcon" class="col-lg-12 layout-spacing mt-5 row">
             <div class="panel-heading col-12">
               <div class="panel-body mb-3 pill-justify-right col-xl-12">
@@ -248,15 +263,17 @@
                         <div v-for="u in Userprofiles" :key="u.id">
                           <div v-if="u.id == rep.userprofileRep">
                             <div class="float-left">
-                              <b-avatar class="mr-3" :square="true" size="3rem" :src=" u.imageU" width="40px" />
+                              <b-avatar class="mr-3" :square="true" size="3rem" :src="u.imageU" width="40px" />
                             </div>
+                            <router-link :to="'/profile/'+u.id">
                             <h6 class="">{{ u.firstname }} {{ u.lastname }}</h6>
+                            </router-link>
                           </div>
                         </div>
                         <div v-for="e in Userentreprises" :key="e.id">
                           <div v-if="e.id == rep.userentrepriseRep">
                             <div class="float-left">
-                              <b-avatar class="mr-3" :square="true" size="3rem" :src=" e.imageE" width="40px" />
+                              <b-avatar class="mr-3" :square="true" size="3rem" :src="e.imageE" width="40px" />
                             </div>
                             <h6 class="">{{ e.nameE }}</h6>
                           </div>
@@ -317,7 +334,7 @@
                           </b-media>
                         </b-card>
                         <div v-if="rep.imageR != null" class="widget-content mb-4">
-                          <img :src=" rep.imageR" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
+                          <img :src="rep.imageR" class="rounded mx-auto d-block" style="max-width: 100%; height: auto" />
                         </div>
                         <div class="media-notation mb-4 float-right">
                           <a v-if="isLoggedIn" href="javascript:void(0);" class="">
@@ -648,14 +665,11 @@ export default {
             nbreplies: (this.question.nbreplies -= 1),
           });
           axios.delete(`https://cargeeks.herokuapp.com/reply/reply-delete/${r.id}/`);
-           if(this.existentreprise==null)
-          {
-          axios.put('/userprofile/userprofile-update/' + this.CurrentUserProfile.id + '/', {
-            nbreplies: (this.CurrentUserProfile.nbreplies -= 1),
-          });
-          }
-          else
-          {
+          if (this.existentreprise == null) {
+            axios.put('/userprofile/userprofile-update/' + this.CurrentUserProfile.id + '/', {
+              nbreplies: (this.CurrentUserProfile.nbreplies -= 1),
+            });
+          } else {
             axios.put('/userentreprise/userentreprise-update/' + this.CurrentUserEntreprise.id + '/', {
               nbreplies: (this.CurrentUserEntreprise.nbreplies -= 1),
             });
@@ -687,6 +701,7 @@ export default {
           if (this.CurrentUser.is_superuser) {
             formdata.append('accepted', true);
             await axios.put('/userprofile/userprofile-update/' + this.userprofileRep + '/', { nbreplies: (this.CurrentUserProfile.nbreplies += 1) });
+            await axios.put('/question/question-update/' + this.question.id + '/', { nbrep: (this.question.nbrep += 1) });
           }
           await this.CreateReply(formdata);
 

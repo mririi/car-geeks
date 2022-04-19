@@ -108,8 +108,8 @@
                     <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
                       <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !image }">Please add an image !</b-form-invalid-feedback>
                      <small id="emailHelp2" class="form-text text-muted mt-3"><span style="color:red">*</span> Required Fields</small>
-                    <b-button  @click="submit" variant="primary" class="mt-4 justfiy-content-end">Submit</b-button>
-                
+                    <b-button v-show="!disable"  @click="submit" variant="primary" class="mt-4 justfiy-content-end">Submit</b-button>
+                    <b-button v-show="disable" variant="primary" class="disabled">Submitting..</b-button>
                   </b-form>
                 </div>
               </div>
@@ -134,6 +134,7 @@ export default {
   components: {},
   data() {
     return {
+      disable:false,
       form: {
         titleS: '',
         addressS: '',
@@ -197,9 +198,10 @@ export default {
    onFileChanged (event) {
       this.image = event.target.files[0]
     },
-    ...mapActions(["GetRoles","GetUserentreprises","GetServicetypes","CreateService","GetUsers","GetUserprofiles"]),
+    ...mapActions(["GetRoles","CreateNotification","GetUserentreprises","GetServicetypes","CreateService","GetUsers","GetUserprofiles"]),
     async submit() {
       try {
+        
         this.is_submit_form1 = true;
                 if (this.form.titleS && this.form.titleS.length<24 && this.form.titleS.length>15 &&
                   this.form.addressS &&
@@ -211,6 +213,7 @@ export default {
                   this.form.details && this.form.details.length<500 && this.form.details.length>25 &&
                   this.image
                 ) {
+        this.disable=true
         for (let u in this.Userprofiles){
       if(this.Userprofiles[u].userU==this.CurrentUser.id)
         {
@@ -256,7 +259,8 @@ export default {
         this.$router.push("/services");
         }
       } catch (error) {
-        throw "Il ya un error!"
+        this.disable=false
+        console.log(error)
       }
     },
     
