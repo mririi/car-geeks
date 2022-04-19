@@ -32,7 +32,6 @@
                       <circle cx="12" cy="7" r="4"></circle>
                     </svg>
                     <b-input placeholder="Username" v-model="form.username" :class="[is_submit_form1 ? (form.username && form.username.length >= 8 ? 'is-valid' : 'is-invalid') : '']"></b-input>
-                    <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
                     <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.username.length >= 8 }">Please enter a username longer than 8 characters !</b-form-invalid-feedback>
                   </div>
                   <div id="email-field" class="field-wrapper input">
@@ -49,7 +48,6 @@
                       v-model="form.email"
                       :class="[is_submit_form1 ? (form.email && email_validate(form.email) ? 'is-valid' : 'is-invalid') : '']"
                     ></b-input>
-                    <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
                     <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !email_validate(form.email) }">Please fill a correct email !</b-form-invalid-feedback>
                   </div>
 
@@ -95,7 +93,6 @@
                       <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                       <circle cx="12" cy="12" r="3"></circle>
                     </svg>
-                    <b-form-valid-feedback>Looks good!</b-form-valid-feedback>
                     <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.password.length >= 8 }">Please enter a password longer than 8 characters !</b-form-invalid-feedback>
                   </div>
                   <b-form-checkbox

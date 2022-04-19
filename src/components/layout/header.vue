@@ -1099,7 +1099,7 @@ export default {
         padding: '2em',
       }).then((result) => {
         if (result.value) {
-          axios.delete(`http://127.0.0.1:8000/notifications/notification-delete/${id}/`);
+          axios.delete(`https://cargeeks.herokuapp.com/notifications/notification-delete/${id}/`);
           this.$swal('Deleted!', 'Your Notification has been deleted.', 'success');
           this.$router.go();
         }

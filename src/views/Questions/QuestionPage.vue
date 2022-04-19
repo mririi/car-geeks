@@ -645,7 +645,7 @@ export default {
               nbCommentR: (replydetails.nbCommentR -= 1),
             });
           });
-          axios.delete(`http://127.0.0.1:8000/comment/comment-delete/${c.id}/`);
+          axios.delete(`https://cargeeks.herokuapp.com/comment/comment-delete/${c.id}/`);
           this.$swal('Deleted!', 'Your comment has been deleted.', 'success');
           this.$router.go();
         }
@@ -664,7 +664,7 @@ export default {
           axios.put('/question/question-update/' + this.question.id + '/', {
             nbreplies: (this.question.nbreplies -= 1),
           });
-          axios.delete(`http://127.0.0.1:8000/reply/reply-delete/${r.id}/`);
+          axios.delete(`https://cargeeks.herokuapp.com/reply/reply-delete/${r.id}/`);
           if (this.existentreprise == null) {
             axios.put('/userprofile/userprofile-update/' + this.CurrentUserProfile.id + '/', {
               nbreplies: (this.CurrentUserProfile.nbreplies -= 1),

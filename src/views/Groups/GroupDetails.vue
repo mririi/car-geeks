@@ -869,7 +869,7 @@ export default {
               nbcomments: (postdetails.nbcomments -= 1),
             });
           });
-          axios.delete(`http://127.0.0.1:8000/groupcomment/groupcomment-delete/${c.id}/`);
+          axios.delete(`https://cargeeks.herokuapp.com/groupcomment/groupcomment-delete/${c.id}/`);
           this.$swal('Deleted!', 'Your comment has been deleted.', 'success');
           this.$router.go();
         }
