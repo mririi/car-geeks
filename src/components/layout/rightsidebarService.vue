@@ -22,7 +22,7 @@
     </div>
     <div >
     <router-link v-if="promo==true"
-          to="http://localhost:8080/promoinfo"
+          to="/promoinfo"
           
           class=" ml-5 mb-3"
           >

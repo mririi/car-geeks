@@ -104,7 +104,8 @@
                       <b-file @change="onFileChanged"></b-file>
                     </div>
                      <small id="emailHelp2" class="form-text text-muted mt-3"><span style="color:red">*</span> Required Fields</small>
-                    <b-button  @click="submit" variant="primary" class="mt-4 justfiy-content-end">Submit</b-button>
+                    <b-button v-show="!disable"  @click="submit" variant="primary" class="mt-4 justfiy-content-end">Update</b-button>
+                    <b-button v-show="disable" variant="primary" class="disabled">Updating..</b-button>                 
                   </b-form>
                 </div>
               </div>
@@ -131,6 +132,7 @@ export default {
   },
   data() {
     return {
+      disable:false,
       form: {
         titleS: '',
         addressS: '',
@@ -209,9 +211,10 @@ export default {
    onFileChanged (event) {
       this.image = event.target.files[0]
     },
-    ...mapActions(["GetUserentreprises","GetServicetypes","GetUsers","GetUserprofiles"]),
+    ...mapActions(["GetUserentreprises","CreateNotification","GetServicetypes","GetUsers","GetUserprofiles"]),
     async submit() {
       try {
+        
         this.is_submit_form1 = true;
                 if (this.form.titleS && this.form.titleS.length<100 && this.form.titleS.length>15 &&
                   this.form.addressS &&
@@ -220,6 +223,8 @@ export default {
                   this.form.contactS &&
                   this.form.priceS
                 ) {
+                  this.disable=true
+                  
       var formdata = new FormData();
       if (this.image!=null)
       {
@@ -235,18 +240,23 @@ export default {
         formdata.append("typeS", this.form.typeS);
         if (this.CurrentUser.is_superuser){
         formdata.append("accepted", true);
+        }else{
+          formdata.append("accepted", false);
         }
         formdata.append("promoted", this.form.promoted);
         formdata.append("userprofileS", this.form.userprofileS);
         formdata.append("userentrepriseS", this.form.userentrepriseS);
+        console.log(formdata)
         await axios.post('/service/service-update/' + this.$route.params.id + '/',formdata);
         if (this.CurrentUser.is_superuser==false){
         await this.CreateNotification({message:' requested a Verification on their service !',byuserprofileNo:this.form.userprofileS,byuserentrepriseNo:this.form.userentrepriseS,serviceNo:this.form.id,foradmin:true})
         this.$swal('Good Job!', 'Your service has been updated successfuly, Please wait for the administator to accept it !', 'success');
         }
-        this.$router.push("/services");
+        
+        //this.$router.push("/services");
         }
       } catch (error) {
+        this.disable=false
         console.log(error)
       }
     },
