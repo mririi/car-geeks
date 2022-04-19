@@ -169,11 +169,13 @@ export default {
       if(this.Userentreprises[ue].userE==this.CurrentUser.id)
         {
           existuserentreprise = true
+          if(this.Userentreprises[ue].id!=this.form.userentrepriseS){
           this.$router.push('/services')
           this.$swal({
-              title: 'You cannot access this page !',
+              title: 'This is not your Service !',
               padding: '2em'
           });
+          }
         }
       }
       if (existuserentreprise==false){
@@ -218,13 +220,6 @@ export default {
                   this.form.contactS &&
                   this.form.priceS
                 ) {
-        for (let u in this.Userprofiles){
-      if(this.Userprofiles[u].userU==this.CurrentUser.id)
-        {
-          this.form.userprofileS=this.Userprofiles[u].id;
-          
-        }
-      }
       var formdata = new FormData();
       if (this.image!=null)
       {
@@ -243,7 +238,7 @@ export default {
         }
         formdata.append("promoted", this.form.promoted);
         formdata.append("userprofileS", this.form.userprofileS);
-        formdata.append("userprofileS", this.form.userentrepriseS);
+        formdata.append("userentrepriseS", this.form.userentrepriseS);
         await axios.post('/service/service-update/' + this.$route.params.id + '/',formdata);
         if (this.CurrentUser.is_superuser==false){
         await this.CreateNotification({message:' requested a Verification on their service !',byuserprofileNo:this.form.userprofileS,byuserentrepriseNo:this.form.userentrepriseS,serviceNo:this.form.id,foradmin:true})
@@ -252,7 +247,7 @@ export default {
         this.$router.push("/services");
         }
       } catch (error) {
-        throw "Il ya un error!"
+        console.log(error)
       }
     },
     
