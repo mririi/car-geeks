@@ -273,6 +273,7 @@ export default {
   methods: {
     ...mapActions(['GetGroups', 'GetGroupposts','GetUsers', 'GetUserprofiles', 'GetGroupcomments', 'GetGroupmembers','CreateGroupmember']),
     async Accept(user) {
+      
        this.$swal({
         icon: 'warning',
         title: 'Are you sure?',
@@ -281,18 +282,22 @@ export default {
         padding: '2em',
       }).then((result) => {
         if (result.value) {
+          try{
              for (let m in this.Members) {
-            if (this.Members[m].userprofileMem == user.id) {
+            if (this.Members[m].userprofileMem == user.id && this.Members[m].groupMem==this.$route.params.id) {
              axios.put('/groupmember/groupmember-update/' + this.Members[m].id + '/', { accepted: true });
              axios.put('/group/group-update/' + this.$route.params.id + '/', { nbmembers: this.group.nbmembers+1 });
             }
             }
-            
+            console.log("done")
             this.$router.go();
             this.$swal('Accepted!', 'Member has been added to your group.', 'success');
-           
+         }catch(error){
+        console.log(error)
+      }  
       }
-      });
+      })
+      
      
     
     },

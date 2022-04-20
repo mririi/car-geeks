@@ -161,7 +161,7 @@ export default {
   computed: {
     filteredList() {
       return this.UserentreprisesMembers.filter((entreprise) => {
-        return entreprise.nameE.toLowerCase().includes(this.search.toLowerCase())
+        return entreprise.nameE.toLowerCase().includes(this.search.toLowerCase()) && entreprise.nameE!=this.CurrentUserEntreprise.nameE
       });
     },
     ...mapGetters({
@@ -184,7 +184,7 @@ export default {
       grid_type: 'list',
       CurrentUser: [],
       userprofile: [],
-      CurrentUserprofile: [],
+      CurrentUserEntreprise: [],
       group: [],
       members: [],
       UserentreprisesMembers: [],
@@ -234,8 +234,8 @@ export default {
         }
       }
       for (let u in this.Userentreprises) {
-        if (this.Userentreprises[u].userU == this.CurrentUser.id) {
-          this.CurrentUserProfile = this.Userentreprises[u];
+        if (this.Userentreprises[u].userE == this.CurrentUser.id) {
+          this.CurrentUserEntreprise = this.Userentreprises[u];
         }
       }
       for (let m in this.Members) {

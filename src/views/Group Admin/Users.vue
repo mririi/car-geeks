@@ -161,7 +161,8 @@ export default {
   computed: {
     filteredList() {
       return this.UserprofilesMembers.filter((profile) => {
-        return profile.firstname.toLowerCase().includes(this.search.toLowerCase()) || profile.lastname.toLowerCase().includes(this.search.toLowerCase());
+        return (profile.firstname.toLowerCase().includes(this.search.toLowerCase()) || profile.lastname.toLowerCase().includes(this.search.toLowerCase()))
+        && this.CurrentUser.id!=profile.userU
       });
     },
     ...mapGetters({
