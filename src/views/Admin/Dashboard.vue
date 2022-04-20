@@ -1,17 +1,6 @@
 <template>
   <div id="chartDonut" class="col-xl-12 layout-spacing">
-                    <div class="statbox panel box box-shadow">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                    <h4>Questions statistics</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <apexchart v-if="options_7" height="350" type="donut" :options="options_7" :series="series_7"></apexchart>
-                        </div>
-                    </div>
+                   
                 </div>
 </template>
 

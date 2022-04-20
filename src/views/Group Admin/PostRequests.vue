@@ -269,7 +269,7 @@ export default {
     }),
     filteredList() {
       return this.GroupPost.filter((post) => {
-        return  post.accepted == false;
+        return  post.accepted == false && post.groupPost==this.$route.params.id
       });
     },
   },

@@ -64,7 +64,7 @@
               responsive
               hover
               bordered
-              :items="GroupPost"
+              :items="filteredList"
               :fields="columns2"
               :per-page="table_option2.page_size"
               :current-page="table_option2.current_page"
@@ -252,7 +252,7 @@ export default {
     filteredList() {
       return this.GroupPost.filter((post) => {
         return (
-          post.accepted==true  
+          post.accepted==true && post.groupPost==this.$route.params.id 
         );
       });
     },

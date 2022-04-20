@@ -107,7 +107,7 @@
           </router-link>
         </li>
         <li class="menu" v-if="CurrentUser.is_superuser">
-          <router-link to="/dashboard" v-b-toggle class="dropdown-toggle" @click.prevent>
+          <router-link to="/dashboard/users" v-b-toggle class="dropdown-toggle" @click.prevent>
             <div class="">
               <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36">
                 <circle cx="14.67" cy="8.3" r="6" fill="currentColor" class="clr-i-solid clr-i-solid-path-1" />

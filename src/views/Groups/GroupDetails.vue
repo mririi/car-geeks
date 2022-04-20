@@ -120,7 +120,7 @@
                       Requested</b-button
                     >
                   </span>
-                  <span v-if="group.userprofileG == CurrentUserProfile.id || group.userentrepriseG == CurrentUserEntreprise.id">
+                  <span v-if="(group.userprofileG == CurrentUserProfile.id && CurrentUserProfile.id!=null) || (group.userentrepriseG == CurrentUserEntreprise.id && CurrentUserEntreprise.id!=null)">
                     <b-button variant="primary" :href="'/groupdashboard/' + group.id + '/dashboard'" class="ml-3"
                       ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36">
                         <path
@@ -160,18 +160,23 @@
                 <div class="col-md-12">
                   <ul class="list-inline badge-collapsed-img mb-0 mb-3">
                     <span v-for="m in Members" :key="m.id">
-                      <span v-if="m.groupMem == group.id && m.userprofileMem && m.accepted == true">
-                        <span v-for="uu in Userprofiles.slice(0, 4)" :key="uu.id">
-                          <span v-if="uu.id == m.userprofileMem">
-                            <li class="list-inline-item chat-online-usr">
-                              <router-link :to="'/profile/' + uu.id">
-                                <img alt="avatar" :src=" uu.imageU" class="ml-0" />
+                      <span v-if="m.groupMem == group.id && m.accepted == true">
+                          <span v-if="Userprofiles.find((u)=>u.id == m.userprofileMem)">
+                        <li class="list-inline-item chat-online-usr">
+                              <router-link :to="'/profile/' + Userprofiles.find((u)=>u.id == m.userprofileMem).id">
+                                <img alt="avatar" :src="Userprofiles.find((u)=>u.id == m.userprofileMem).imageU" class="ml-0" />
                               </router-link>
                             </li>
-                          </span>
+                      </span>
+                      <span v-else-if="Userentreprises.find((u)=>u.id == m.userentrepriseMem)">
+                        <li class="list-inline-item chat-online-usr">
+                              <router-link :to="'/entreprisedetails/' + Userentreprises.find((u)=>u.id == m.userentrepriseMem).id">
+                                <img alt="avatar" :src=" Userentreprises.find((u)=>u.id == m.userentrepriseMem).imageE" class="ml-0" />
+                              </router-link>
+                            </li>
+                      </span>
                         </span>
                       </span>
-                    </span>
                     <li class="list-inline-item badge-notify">
                       <div class="notification">
                         <span class="badge badge-info badge-pill">

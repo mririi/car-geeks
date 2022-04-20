@@ -33,7 +33,7 @@
             </svg>
           </a>
         </div>
-        <ul class="navbar-item flex-row">
+       <!-- <ul class="navbar-item flex-row">
           <li class="nav-item align-self-center search-animated" :class="{ 'show-search': $store.state.is_show_search }">
             <svg
               @click="$store.commit('toggleSearch', !$store.state.is_show_search)"
@@ -69,20 +69,13 @@
                   @keydown.enter="gotoLink"
                 />
               </div>
-            </form>
-          </li>
-          <li style="margin-top: 150px; margin-right: 350px">
-            <div v-if="query.length > 0" class="text-2xl cursor-pointer text-gray-600 hover:text-gray-800" @click="reset">&times;</div>
-
-            <transition name="fade">
-              <div v-if="query.length > 0 && searchResultsVisible" class="bg-white border text-left rounded-lg mt-5" style="max-height: 50rem; max-width: 15rem">
-                <div class="flex flex-col" ref="results">
+              <div v-if="query.length > 0 && searchResultsVisible" class="bg-white border text-left rounded-lg" style="max-height: 5rem; max-width: 15rem" ref="results">
                   <a
                     v-for="(question, index) in searchResults"
                     :key="index"
-                    :href="'/questionpage/' + question.item.id"
+                    :href="'/questionpage/' + question.item.id + '/'+question.item.slug"
                     @mousedown.prevent="searchResultsVisible = true"
-                    class="border-b border-gray-400 text-xl cursor-pointer p-4 hover:bg-blue-100"
+                    class="cursor-pointer"
                     :class="{ 'bg-blue-100': index === highlightedIndex }"
                   >
                     {{ question.item.titleQ }}
@@ -91,16 +84,17 @@
                   </a>
 
                   <div v-if="searchResults.length === 0" class="font-normal w-full border-b cursor-pointer p-4">
-                    <p class="my-0">
+                    <p class="">
                       No results for '<strong>{{ query }}</strong
                       >'
                     </p>
                   </div>
                 </div>
-              </div>
-            </transition>
+            </form>
+                
           </li>
-        </ul>
+          
+        </ul>-->
 
         <div class="navbar-item flex-row ml-md-auto">
           <div class="dark-mode d-flex align-items-center">

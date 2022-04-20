@@ -32,15 +32,16 @@
               </b-media>
             </div>
             <div class="widget-content">
-              <h5>{{ g.nbmembers }} Members Going</h5>
+              <h5>{{ g.nbmembers }} Members</h5>
               <div class="img-group">
                 <span v-for="m in Members" :key="m.id">
                   <span v-if="m.groupMem == g.id && m.accepted == true">
-                    <span v-for="uu in Userprofiles.slice(0,m.id)" :key="uu.id">
-                      <span v-if="uu.id == m.userprofileMem">
-                        <img :src=" uu.imageU" alt="avatar" />
+                      <span v-if="Userprofiles.find((u)=>u.id == m.userprofileMem)">
+                        <img :src="Userprofiles.find((u)=>u.id == m.userprofileMem).imageU" alt="avatar" />
                       </span>
-                    </span>
+                      <span v-else-if="Userentreprises.find((u)=>u.id == m.userentrepriseMem)">
+                        <img :src="Userentreprises.find((u)=>u.id == m.userentrepriseMem).imageE" alt="avatar" />
+                      </span>
                   </span>
                 </span>
               </div>
@@ -75,10 +76,11 @@ export default {
       Groups: 'StateGroups',
       Members: 'StateGroupmembers',
       Userprofiles: 'StateUserprofiles',
+      Userentreprises: 'StateUserentreprises',
     }),
   },
   methods: {
-    ...mapActions(['GetGroups', 'GetGroupmembers', 'GetUserprofiles']),
+    ...mapActions(['GetGroups', 'GetGroupmembers','GetUserentreprises', 'GetUserprofiles']),
   },
 };
 </script>

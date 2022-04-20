@@ -131,10 +131,12 @@ export default {
           formdata.append('imageG', this.image);
           formdata.append('titleG', this.form.titleG);
 
-          formdata.append('countryG', this.CurrentUserProfile.country);
+          
           if(this.CurrentUserEntreprise.id==null){
+          formdata.append('countryG', this.CurrentUserProfile.country);
           formdata.append('userprofileG', this.CurrentUserProfile.id);}
           if(this.CurrentUserProfile.id==null){
+          formdata.append('countryG', this.CurrentUserEntreprise.country);
           formdata.append('userentrepriseG', this.CurrentUserEntreprise.id);}
           if(this.CurrentUser.is_superuser)
           {

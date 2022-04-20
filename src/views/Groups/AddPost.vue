@@ -145,7 +145,7 @@ export default {
           if(this.CurrentUserProfile.id==null){
           formdata.append('userentreprisePost', this.CurrentUserEntreprise.id);}
           formdata.append('groupPost', this.$route.params.id);
-          if(this.group.userprofileG==this.CurrentUserProfile.id ||this.group.userentrepriseG == this.CurrentUserEntreprise.id || this.CurrentUser.is_superuser==true )
+          if((this.group.userprofileG==this.CurrentUserProfile.id && this.CurrentUserProfile.id!=null) ||(this.group.userentrepriseG == this.CurrentUserEntreprise.id && this.CurrentUserEntreprise.id!=null)|| this.CurrentUser.is_superuser==true )
           {
             formdata.append('accepted', true);
             axios.put('/group/group-update/' + this.$route.params.id + '/', { nbposts: this.group.nbposts + 1 });
@@ -153,7 +153,7 @@ export default {
           }
           await this.CreateGrouppost(formdata);
           this.$router.push('/groups');
-          if(this.group.userprofileG==this.CurrentUserProfile.id ||this.group.userentrepriseG == this.CurrentUserEntreprise.id )
+          if((this.group.userprofileG==this.CurrentUserProfile.id && this.CurrentUserProfile.id!=null) ||(this.group.userentrepriseG == this.CurrentUserEntreprise.id && this.CurrentUserEntreprise.id!=null)|| this.CurrentUser.is_superuser==true )
           {
              this.$swal('Good Job!', 'Your Post has been created successfuly!', 'success');
           }else{

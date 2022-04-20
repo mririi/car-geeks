@@ -284,9 +284,10 @@ export default {
              for (let m in this.Members) {
             if (this.Members[m].userprofileMem == user.id) {
              axios.put('/groupmember/groupmember-update/' + this.Members[m].id + '/', { accepted: true });
+             axios.put('/group/group-update/' + this.$route.params.id + '/', { nbmembers: this.group.nbmembers+1 });
             }
             }
-            axios.put('/group/group-update/' + this.$route.params.id + '/', { nbmembers: this.group.nbmembers+1 });
+            
             this.$router.go();
             this.$swal('Accepted!', 'Member has been added to your group.', 'success');
            

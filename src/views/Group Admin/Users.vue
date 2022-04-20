@@ -205,6 +205,7 @@ export default {
           for (let m in this.members) {
             if (this.members[m].userprofileMem == id) {
               axios.delete(`/groupmember/groupmember-delete/${this.members[m].id}/`);
+              
             }
           }
          for (let p in this.GroupPost) {
