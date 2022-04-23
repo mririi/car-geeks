@@ -199,7 +199,7 @@ export default {
     updateProfile() {
       try {
         this.is_submit_form1 = true;
-        if (this.form.firstname && this.form.firstname.length != 0 && this.form.lastname && this.form.lastname.length != 0 && this.form.tel && this.form.tel.length!=0) {
+        if (this.form.firstname && this.form.country && this.form.lastname && this.form.tel) {
           var formdata = new FormData();
           if (this.image != null) {
             formdata.append('imageU', this.image);
@@ -207,7 +207,7 @@ export default {
           formdata.append('lastname', this.form.lastname);
           formdata.append('firstname', this.form.firstname);
           formdata.append('address', this.form.address);
-          formdata.append('email', this.form.email);
+          formdata.append('country', this.form.country);
           formdata.append('bio', this.form.bio);
           formdata.append('tel', this.form.tel);
           axios.put('/userprofile/userprofile-update/' + this.$route.params.id + '/', formdata);
