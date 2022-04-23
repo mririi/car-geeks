@@ -15,7 +15,7 @@
       "
     >
     <div class="mt-5">
-          <b-button v-show="serviceuser==true || CurrentUser.is_superuser==true" href="http://localhost:8080/addservice" variant="primary" class="mt-5 ml-5">
+          <b-button v-show="serviceuser==true || CurrentUser.is_superuser==true" href="/addservice" variant="primary" class="mt-5 ml-5">
           Add a Service</b-button>
           <b-button  v-show="serviceuser==false&& CurrentUser.is_superuser==false" v-b-modal.verify variant="primary" class="mt-5 ml-5 mb-3">
           Get Verified</b-button>
