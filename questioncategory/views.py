@@ -22,7 +22,7 @@ def apiOverview(request):
 
 @api_view(['GET'])
 def questioncategoryList(request):
-	questioncategorys = Questioncategory.objects.all().order_by('-id')
+	questioncategorys = Questioncategory.objects.all().order_by('id')
 	serializer = QuestioncategorySerializer(questioncategorys, many=True)
 	return Response(serializer.data)
 
