@@ -157,6 +157,7 @@ export default {
           {
              this.$swal('Good Job!', 'Your Post has been created successfuly!', 'success');
           }else{
+            await this.CreateNotification({message:' requested a Verification on their post !',byuserprofileNo:this.CurrentUserProfile.id,byuserentrepriseNo:this.CurrentUserEntreprise.id,userprofileNo:this.group.userprofileG,entrepriseNo:this.group.userentrepriseG,groupNo:this.group.id})
             this.$swal('Good Job!', 'Your Post has been created. Please wait for the admin to accept it !', 'success');
           }
         }

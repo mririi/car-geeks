@@ -41,7 +41,7 @@
                 </router-link>
               </div>
               <div class="text-center user-info">
-                <img :src="userprofile.imageU" width="150" height="150" alt="avatar" />
+                <img :src="userprofile.imageU" width="150" height="150" alt="profile" />
                 <p class="">{{ userprofile.firstname }} {{ userprofile.lastname }}</p>
               </div>
               <div class="user-info-list">
@@ -842,7 +842,7 @@
                 <b-td
                   ><a :href="'/profile/' + u.id"
                     ><div class="td-content">
-                      <img :src="u.imageU" alt="avatar" /><span>{{ u.firstname }} {{ u.lastname }} </span>
+                      <img :src="u.imageU" alt="profile" /><span>{{ u.firstname }} {{ u.lastname }} </span>
                     </div></a
                   ></b-td
                 >

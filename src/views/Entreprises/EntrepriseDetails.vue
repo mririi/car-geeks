@@ -40,14 +40,14 @@
                   <ul class="">
                     <li class="list-unstyled">
                       <div class="icon-svg">
-                        <a :href="'mailto:' + user.email" target="_blank"
+                        <a :href="'mailto:' + useren.email" target="_blank"
                           ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
                             <path
                               fill="currentColor"
                               d="M4 3a2 2 0 0 0-2 2v.201l6 3.231l6-3.23V5a2 2 0 0 0-2-2H4Zm10 3.337L8.237 9.44a.5.5 0 0 1-.474 0L2 6.337V11a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6.337Z"
                             />
                           </svg>
-                          {{ user.email }}
+                           {{ useren.email }}
                         </a>
                       </div>
                     </li>
@@ -98,7 +98,7 @@
         </div>
       </div>
     </div>
-    <div class="faq container mt-5">
+    <!--<div class="faq container mt-5">
       <div class="faq-layouting layout-spacing">
         <div class="fq-comman-question-wrapper">
           <div class="row">
@@ -168,7 +168,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
     <div class="faq container mt-5">
       <div class="faq-layouting layout-spacing">
         <div class="fq-comman-question-wrapper">
@@ -822,7 +822,7 @@ export default {
       userentreprise: [],
       CurrentUserProfile:[],
       CurrentUserEntreprise: [],
-      user: [],
+      useren: [],
       nbEval: 0,
       search: '',
       UserEval: '',
@@ -938,6 +938,14 @@ export default {
     }
     axios.get('/userentreprise/userentreprise-detail/' + this.$route.params.id + '/').then((response) => {
       this.userentreprise = response.data;
+      axios.get('/user/users/' + this.userentreprise.userE + '/').then((response) => {
+        this.useren = response.data;
+      });
+      for (let ep in this.Evaluationentreprises) {
+      if (this.Evaluationentreprises[ep].userentrepriseEval == this.userentreprise.id) {
+        this.nbStat = this.nbStat + 1;
+      }
+    }
       if (this.userentreprise.published == false) {
         this.$router.push('/entreprises');
          this.$swal({
@@ -987,15 +995,9 @@ export default {
         nbvisits:this.entreprise.nbvisits+1
       });
       this.userentreprise.nbEval = this.average;
-      axios.get('/user/users/' + this.userentreprise.userE + '/').then((response) => {
-        this.user = response.data;
-      });
+      
     });
-    for (let ep in this.Evaluationentreprises) {
-      if (this.Evaluationentreprises[ep].userentrepriseEval == this.userentreprise.id) {
-        this.nbStat = this.nbStat + 1;
-      }
-    }
+    
   },
 };
 </script>

@@ -145,6 +145,7 @@ export default {
           }
           await this.CreateGroup(formdata);
           if(this.CurrentUser.is_superuser==false){
+            await this.CreateNotification({message:' requested a Verification on their group !',byuserprofileNo:this.CurrentUserProfile.id,byuserentrepriseNo:this.CurrentUserEntreprise.id,foradmin:true})
             this.$swal('Good Job!', 'Your group has been created, Please wait for the administrator to accept it!', 'success');
           }
           this.GetGroups()

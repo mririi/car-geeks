@@ -204,14 +204,15 @@ export default {
       }).then((result) => {
         if (result.value) {
           for (let m in this.members) {
-            if (this.members[m].userprofileMem == id) {
+            if (this.members[m].userprofileMem == id && this.group.id == this.members[m].groupMem) {
               axios.delete(`/groupmember/groupmember-delete/${this.members[m].id}/`);
-              
+              axios.put('/group/group-update/'+this.group.id+'/',{nbmembers:this.group.nbmembers-1})
             }
           }
          for (let p in this.GroupPost) {
-            if (this.GroupPost[p].userprofilePost == id) {
+            if (this.GroupPost[p].userprofilePost == id && this.group.id == this.GroupPost[p].groupPost) {
               axios.delete(`/postgroup/postgroup-delete/${this.GroupPost[p].id}/`);
+              axios.put('/group/group-update/'+this.group.id+'/',{nbposts:this.group.nbposts-1})
             }
           }
         }

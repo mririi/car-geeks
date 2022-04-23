@@ -203,13 +203,15 @@ export default {
       }).then((result) => {
         if (result.value) {
           for (let m in this.members) {
-            if (this.members[m].userentrepriseMem == id) {
+            if (this.members[m].userentrepriseMem == id && this.group.id == this.members[m].groupMem) {
               axios.delete(`/groupmember/groupmember-delete/${this.members[m].id}/`);
+              axios.put('/group/group-update/'+this.group.id+'/',{nbmembers:this.group.nbmembers-1})
             }
           }
            for (let p in this.GroupPost) {
-            if (this.GroupPost[p].userentreprisePost == id) {
+            if (this.GroupPost[p].userentreprisePost == id && this.group.id == this.GroupPost[p].groupPost) {
               axios.delete(`/postgroup/postgroup-delete/${this.GroupPost[p].id}/`);
+              axios.put('/group/group-update/'+this.group.id+'/',{nbposts:this.group.nbposts-1})
             }
           }
         }

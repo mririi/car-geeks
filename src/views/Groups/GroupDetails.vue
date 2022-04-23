@@ -121,7 +121,7 @@
                     >
                   </span>
                   <span v-if="(group.userprofileG == CurrentUserProfile.id && CurrentUserProfile.id!=null) || (group.userentrepriseG == CurrentUserEntreprise.id && CurrentUserEntreprise.id!=null)">
-                    <b-button variant="primary" :href="'/groupdashboard/' + group.id + '/dashboard'" class="ml-3"
+                    <b-button variant="primary" :href="'/groupdashboard/' + group.id + '/users'" class="ml-3"
                       ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36">
                         <path
                           fill="currentColor"

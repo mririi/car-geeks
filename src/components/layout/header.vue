@@ -712,14 +712,17 @@
           <span v-if="isLoggedIn">
             <b-dropdown toggle-tag="a" variant="icon-only" toggle-class="user nav-link" class="nav-item user-profile-dropdown" :right="true">
               <template #button-content>
-                <span v-if="Userprofile.length != 0">
+                <span v-if="Userprofile.length != 0 && Userentreprise.length == 0">
                   <img :src=" Userprofile.imageU" class="navbar-logo" />
                 </span>
-                <span v-if="Userprofile.length == 0">
+                <span v-if="Userprofile.length == 0 && Userentreprise.length != 0">
                   <img :src=" Userentreprise.imageE" class="navbar-logo" />
                 </span>
+                <span v-else-if="Userprofile.length == 0 && Userentreprise.length == 0">
+                  <img src="https://res.cloudinary.com/dck3wk9k1/image/upload/v1/media/images/user4_crnqwx" class="navbar-logo" />
+                </span>
               </template>
-              <span v-if="Userprofile.length != 0">
+              <span v-if="Userprofile.length != 0 && Userentreprise.length == 0">
                 <b-dropdown-item :to="'/profile/' + Userprofile.id">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -739,7 +742,7 @@
                   Profile
                 </b-dropdown-item>
               </span>
-              <span v-else-if="Userprofile.length == 0">
+              <span v-else-if="Userprofile.length == 0 && Userentreprise.length != 0">
                 <b-dropdown-item :to="'/entreprisedetails/' + Userentreprise.id">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -1103,11 +1106,11 @@ export default {
       axios.put('/notifications/notification-update/' + notif.id + '/', { seen: true, admin: notif.admin });
       if (notif.foradmin==false &&notif.questionNo != null) {
         this.$router.push('/questionpage/' + notif.questionNo + '/' + this.Questions.find((d)=>d.id==notif.questionNo).slug)
-      } else if (notif.foradmin==false &&notif.entrepriseNo == null && notif.serviceNo == null && notif.questionNo == null && notif.replyNo == null) {
+      } else if (notif.foradmin==false &&notif.entrepriseNo == null && notif.serviceNo == null && notif.questionNo == null && notif.groupNo == null && notif.replyNo == null) {
         this.$router.push('/profile/' + notif.userprofileNo + '/')
       } else if (notif.foradmin==false &&notif.serviceNo != null) {
         this.$router.push('/servicedetails/' + notif.serviceNo + '/')
-      } else if (notif.foradmin==false &&notif.userprofileNo == null && notif.serviceNo == null && notif.questionNo == null && notif.replyNo == null) {
+      } else if (notif.foradmin==false &&notif.userprofileNo == null && notif.serviceNo == null && notif.questionNo == null && notif.groupNo == null && notif.replyNo == null) {
         this.$router.push('/entreprisedetails/' + notif.entrepriseNo + '/')
       }else if (notif.foradmin==true && notif.questionNo!=null ) {
         this.$router.push('/dashboard/questionrequests')
@@ -1119,7 +1122,7 @@ export default {
         this.$router.push('/dashboard/promotionservicerequests')
       }else if (notif.foradmin==true && notif.byuserentrepriseNo!=null && notif.promotionnotif==false) {
         this.$router.push('/dashboard/entrepriserequests')
-      }else if (notif.foradmin==true && notif.byuserentrepriseNo==null && notif.questionNo==false && notif.replyNo==null&& notif.serviceNo==null && notif.byuserprofileNo==null) {
+      }else if (notif.foradmin==true && notif.byuserentrepriseNo==null && notif.questionNo==false && notif.groupNo == null &&  notif.replyNo==null&& notif.serviceNo==null && notif.byuserprofileNo==null) {
         this.$router.push('/dashboard/entrepriserequests')
       }else if (notif.foradmin==true && notif.byuserentrepriseNo!=null && notif.promotionnotif==true) {
         this.$router.push('/dashboard/promotionentrepriserequests')
@@ -1127,6 +1130,8 @@ export default {
         this.$router.push('/dashboard/userverificationrequest')
       } else if (notif.replyNo != null) {
             this.$router.push('/questionpage/' + this.Replies.find((d)=>d.id==notif.replyNo).questionRep + '/' + this.Questions.find((d)=>d.id==this.Replies.find((d)=>d.id==notif.replyNo).questionRep).slug)
+      }else if (notif.groupNo!=null){
+        this.$router.push('/groupdetail/'+notif.groupNo)
       }
     },
 
