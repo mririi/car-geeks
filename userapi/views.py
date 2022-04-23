@@ -13,4 +13,12 @@ class UserViewSet(viewsets.ModelViewSet):
   serializer_class = UserSerializer
   permission_classes = (AllowAny, )
   
-  
+@api_view(['PUT'])
+def PassUpdate(request, pk):
+	user = Users.objects.get(id=pk)
+	serializer = UserSerializer(instance=user, data=request.data)
+
+	if serializer.is_valid():
+		serializer.save()
+
+	return Response(serializer.data) 
