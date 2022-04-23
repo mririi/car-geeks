@@ -8,7 +8,7 @@ class Userentreprise(models.Model):
   typeE = models.CharField(max_length=200,blank=True,null=True)
   addressE = models.CharField(max_length=200,blank=True,null=True)
   country = models.CharField(max_length=200,blank=True,null=True)
-  contactE = models.DecimalField(max_digits=20,decimal_places=1,default=0)
+  contactE = models.DecimalField(max_digits=20,decimal_places=0,default=0)
   bio = models.TextField(default="",blank=True,null=True)
   published = models.BooleanField(default=False)
   promoted = models.BooleanField(default=False)

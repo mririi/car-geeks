@@ -9,7 +9,7 @@ class Userprofile(models.Model):
   address = models.CharField(max_length=200,blank=True,null=True)
   country = models.CharField(max_length=200,blank=True,null=True)
   age = models.IntegerField(default=0)
-  tel = models.DecimalField(max_digits=20,decimal_places=1,default=0)
+  tel = models.DecimalField(max_digits=20,decimal_places=0,default=0)
   bio = models.TextField(default="",blank=True,null=True)
   nbquestions = models.IntegerField(default=0)
   nbreplies = models.IntegerField(default=0)
