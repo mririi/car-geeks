@@ -767,7 +767,7 @@ export default {
         this.comment.replyCo = rep.id;
         try {
           await this.CreateComment(this.comment);
-          if (this.userprofile != this.reply.userprofileRep || this.userentreprise != this.reply.userentrepriseRep) {
+          if ((this.userprofile != this.reply.userprofileRep && this.userprofile!=null) || (this.userentreprise != this.reply.userentrepriseRep && this.userentreprise!=null)) {
             this.CreateNotification({
               message: ' commented on your reply !',
               byuserprofileNo: this.CurrentUserProfile.id,

@@ -275,7 +275,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['GetGroups','GetUserentreprises' ,'GetGroupposts', 'GetUsers', 'GetUserprofiles', 'GetGroupcomments', 'GetGroupmembers', 'CreateGroupmember']),
+    ...mapActions(['CreateNotification','GetGroups','GetUserentreprises' ,'GetGroupposts', 'GetUsers', 'GetUserprofiles', 'GetGroupcomments', 'GetGroupmembers', 'CreateGroupmember']),
     async Accept(post) {
       this.$swal({
         icon: 'warning',
@@ -286,7 +286,6 @@ export default {
       }).then((result) => {
         if (result.value) {
           axios.put('/postgroup/postgroup-update/' + post.id + '/', { accepted: true });
-
           axios.put('/group/group-update/' + this.$route.params.id + '/', { nbposts: this.group.nbposts + 1 });
           this.$router.go();
           this.$swal('Accepted!', 'Post has been added to your group.', 'success');

@@ -14,11 +14,24 @@
         </li>
       </ul>
     </portal>
-
+    <h3 class="mt-2"><b>Group List</b></h3>
+    <div>
+      <div class="mr-1 mt-3 d-flex justify-content-center w-25">
+        <div class="col-lg-12 col-md-12 col-sm-12 filtered-list-search-live mx-auto">
+          <b-form class="form-inline my-2 my-lg-0 justify-content-center" @submit.prevent="search">
+            <div class="w-100">
+              <b-input v-model="search" class="w-100 product-search br-25" placeholder="Search Groups" @keyup="search"></b-input>
+            </div>
+          </b-form>
+        </div>
+      </div>
+    </div>
+    <hr>
+     
     <div class="row">
-      <span v-for="g in Groups" :key="g.id">
+      <span v-for="g in filteredList" :key="g.id">
         <span v-if="g.accepted==true">
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing mt-5">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing mt-1">
           <div class="widget widget-card-two">
             <div class="widget-heading">
               <b-media>
@@ -61,7 +74,9 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
   metaInfo: { title: 'Groups' },
   data() {
-    return {};
+    return {
+      search:''
+    };
   },
   created: function () {
     this.GetGroups();
@@ -78,6 +93,11 @@ export default {
       Userprofiles: 'StateUserprofiles',
       Userentreprises: 'StateUserentreprises',
     }),
+    filteredList() {
+      return this.Groups.filter((grp) => {
+        return grp.titleG.toLowerCase().includes(this.search.toLowerCase());
+      });
+    },
   },
   methods: {
     ...mapActions(['GetGroups', 'GetGroupmembers','GetUserentreprises', 'GetUserprofiles']),

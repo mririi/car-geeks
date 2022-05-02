@@ -13,8 +13,9 @@
         </li>
       </ul>
     </portal>
+    <h3 class="mt-2"><b>Entreprises List</b></h3>
     <div>
-      <div class="mr-1 mt-2 d-flex justify-content-center w-25">
+      <div class="mr-1 mt-5 d-flex justify-content-center w-25">
         <div class="col-lg-12 col-md-12 col-sm-12 filtered-list-search-live mx-auto">
           <b-form class="form-inline my-2 my-lg-0 justify-content-center" @submit.prevent="search">
             <div class="w-100">
@@ -25,7 +26,7 @@
       </div>
     </div>
     <hr>
-     <h3><b>Entreprises List</b></h3>
+     
     <div class="col-lg-12 layout-spacing">
       <div class="panel-heading"></div>
       <div class="panel-body">
@@ -33,7 +34,7 @@
           <div id="pricingWrapper" >
             
               <div class="row">
-                <b-card class="stacked mt-5 col-md-6 col-lg-3 mr-3" header-class="pt-0" v-for="s in filterByPromoted" :key="s.id">
+                <b-card class="stacked mt-5 col-md-6 col-lg-3 mr-1" header-class="pt-0" v-for="s in filterByPromoted" :key="s.id">
                   <template #header>
                         <b-badge variant="danger" class="float-right mt-1">Promoted</b-badge>
                     <span class="card-price"><b-avatar :src=" s.imageE" size="5.5rem" class="mb-2" rounded="lg" alt="..." /></span>
@@ -57,7 +58,7 @@
               
            
               
-                <b-card class="stacked mt-5 col-md-6 col-lg-3 mr-3" header-class="pt-0"  v-for="s in filterByNotPromoted" :key="s.id">
+                <b-card class="stacked mt-5 col-md-6 col-lg-3 mr-1" header-class="pt-0"  v-for="s in filterByNotPromoted" :key="s.id">
                   <template #header>
                     
                     <span class="card-price"><b-avatar :src=" s.imageE" size="5.5rem" class="mb-2" rounded="lg" alt="..." /></span>

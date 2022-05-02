@@ -82,7 +82,7 @@
             </template>
             
             <template #cell(actions)="data">
-              <span @click="Accept(data.item.id)">
+              <span @click="Accept(data.item)">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -249,7 +249,7 @@ export default {
   },
   methods: {
     ...mapActions(['GetServices','CreateNotification','GetServicepromotions','GetServicetypes', 'GetUsers', 'GetUserprofiles','GetRoles']),
-      async Accept(userid) {
+      async Accept(userp) {
       this.$swal({
         icon: 'warning',
         title: 'Are you sure?',
@@ -258,21 +258,21 @@ export default {
         padding: '2em',
       }).then((result) => {
         if (result.value) {
-        axios.put('/userprofile/userprofile-update/' + userid + '/', { verified:true });
+        axios.put('/userprofile/userprofile-update/' + userp.id + '/', { verified:true });
         let update=false
        for (let r in this.Roles)
        {
-         if (this.Roles[r].userRole== userid && this.Roles[r].service==false)
+         if (this.Roles[r].userRole== userp.userU && this.Roles[r].service==false)
          {
              axios.post('/role/role-update/'+this.Roles[r].id+'/', { service: true , userRole:this.Roles[r].userRole,admin:this.Roles[r].admin }); 
-            this.CreateNotification({message:'Your verification request has been accepted !' ,userprofileNo:userid,admin:true})
+            this.CreateNotification({message:'Your verification request has been accepted !' ,userprofileNo:userp.id,admin:true})
             update=true
         }
         
        }
         if(update==false)
         {
-          axios.post('/role/role-create/',{service:true,userRole:userid});
+          axios.post('/role/role-create/',{service:true,userRole:userp.userU});
         }
         this.$router.go();
         this.$swal('Accepted!', 'The person is been verified.', 'success');
