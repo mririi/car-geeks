@@ -117,7 +117,7 @@
                         </div>
                         <div class="row">
                             <div class="col text-sm-left text-center">
-                                <b-button v-show="form.messageRec&&form.emailRec" type="submit" @click="submit()" class="btn btn-primary mt-4">Submit</b-button>
+                                <b-button v-show="form.messageRec&&form.emailRec" type="submit"  class="btn btn-primary mt-4">Submit</b-button>
                                 <b-button v-show="!form.messageRec||!form.emailRec" class="btn btn-primary mt-4">Please fill the Message and Email field to submit</b-button>
                             </div>
                         </div>

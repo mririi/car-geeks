@@ -103,8 +103,10 @@
              <template #cell(imageVerif)="data">
                 <span v-if="data.item.imageVerif!=null">
                   
-              <b-avatar :src="data.item.imageVerif" size="4rem" rounded="lg"  alt="" srcset=""/>
-                
+              <b-avatar v-b-modal="modimage(data.item.id)" :src="data.item.imageVerif" size="4rem" rounded="lg"  alt="" srcset=""/>
+                <b-modal :id="'modimage' + data.item.id" hide-footer hide-header  size="xl" >
+                        <img :src="data.item.imageVerif" class="rounded mx-auto d-block">
+                      </b-modal>
               </span>
               <span v-else>
                 <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="4em" height="4em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 64 64"><path fill="currentColor" d="M32 2C15.432 2 2 15.432 2 32.001C2 48.567 15.432 62 32 62s30-13.433 30-29.999C62 15.432 48.568 2 32 2zm22 30.001c0 4.629-1.433 8.922-3.876 12.465l-30.591-30.59A21.889 21.889 0 0 1 32 10c12.15 0 22 9.851 22 22.001zm-44 0a21.9 21.9 0 0 1 3.876-12.468l30.591 30.591A21.887 21.887 0 0 1 32 54.001c-12.15 0-22-9.852-22-22z"/></svg>
@@ -249,6 +251,9 @@ export default {
   },
   methods: {
     ...mapActions(['GetServices','CreateNotification','GetServicepromotions','GetServicetypes', 'GetUsers', 'GetUserprofiles','GetRoles']),
+      modimage(id) {
+      return 'modimage' + id;
+    },
       async Accept(userp) {
       this.$swal({
         icon: 'warning',

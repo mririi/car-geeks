@@ -1076,15 +1076,6 @@ export default {
       return this.$store.getters.isAuthenticated;
     },
   },
-  watch: {
-    // whenever question changes, this function will run
-    Notifications(newNotifications, oldNotifications) {
-        if(oldNotifications!=newNotifications){
-            //this.GetNotifications()
-            
-        }
-    }
-    },
   methods: {
     deletenotif(id){
       this.$swal({
@@ -1144,6 +1135,8 @@ export default {
         return new Date().getHours() - new Date(s).getHours() + ' Days';
       } else if (new Date().getMonth() - new Date(s).getMonth() == 0) {
         return new Date().getDate() - new Date(s).getDate() + ' Days';
+      } else if (new Date().getYear() - new Date(s).getYear() == 0){
+        return new Date().getMonth() - new Date(s).getMonth() + ' Months';
       }
     },
     reset() {

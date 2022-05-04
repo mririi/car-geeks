@@ -97,7 +97,7 @@
               <template #cell(questionRep)="data">
                 <span v-for="q in Questions" :key="q.id">
                   <span v-if="q.id == data.item.questionRep">
-                    <router-link :to="'/questionpage/' + q.id">
+                    <router-link :to="'/questionpage/' + q.id+'/'+q.slug">
                       {{ q.titleQ }}
                     </router-link>
                   </span>

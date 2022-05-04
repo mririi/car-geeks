@@ -30,38 +30,11 @@
                     <b-select-option value="50">50</b-select-option>
                   </b-select>
                 </span>
-                <span v-b-toggle.collapse-1 class="ml-2 mt-2 justify-content-end">
-                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="22" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36">
-                  <path
-                    fill="currentColor"
-                    d="M22 33V19.5L33.47 8A1.81 1.81 0 0 0 34 6.7V5a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1.67a1.79 1.79 0 0 0 .53 1.27L14 19.58v10.2Z"
-                    class="clr-i-solid clr-i-solid-path-1"
-                  />
-                  <path
-                    fill="currentColor"
-                    d="M33.48 4h-31a.52.52 0 0 0-.48.52v1.72a1.33 1.33 0 0 0 .39.95l12 12v10l7.25 3.61V19.17l12-12a1.35 1.35 0 0 0 .36-.91V4.52a.52.52 0 0 0-.52-.52Z"
-                    class="clr-i-solid clr-i-solid-path-1"
-                  />
-                  <path fill="none" d="M0 0h36v36H0z" />
-                </svg>
-                <span class="h6">Filter</span>
-              </span>
+            
              
               </div>
 
-              <b-collapse id="collapse-1">
-                <b-card class="bg-transparent border-0 border-white ml-3 default mt-2 mb-4">
-                  <b-form-group label="Categories : " v-slot="{ ariaDescribedby }">
-                    <b-form-checkbox-group id="checkbox-group-2" v-model="category" :aria-describedby="ariaDescribedby" name="flavour-a1">
-                      <div v-for="c in Questioncategories" :key="c.id">
-                        <b-form-checkbox :value="c.id">
-                          {{ c.typeC }}
-                        </b-form-checkbox>
-                      </div>
-                    </b-form-checkbox-group>
-                  </b-form-group>
-                </b-card>
-              </b-collapse>
+           
 
               <div class="header-search">
                 <b-input v-model="search" size="sm" placeholder="Search..." />

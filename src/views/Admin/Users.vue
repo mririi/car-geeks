@@ -159,8 +159,8 @@ export default {
     filteredList() {
       return this.Userprofiles.filter((profile) => {
         return (
-          profile.firstname.toLowerCase().includes(this.search.toLowerCase()) ||
-          profile.lastname.toLowerCase().includes(this.search.toLowerCase()) 
+         (profile.firstname.toLowerCase().includes(this.search.toLowerCase()) ||
+          profile.lastname.toLowerCase().includes(this.search.toLowerCase()) ) && profile.id != this.CurrentUserprofile.id
         );
       });
     },

@@ -115,30 +115,18 @@
               </template>
               <template #cell(imageVerif)="data">
                 <span v-if="data.item.imageVerif != null">
-                  <CoolLightBox
-                    :images="data.item.imageVerif"
-                    :items="[data.item.imageVerif]"
-                    :index="index"
-                    :useZoomBar="true"
-                    :gallery="false"
-                    :slideshow="false"
-                    :fullScreen="false"
-                    slideshow-color-bar="#2196f3"
-                    @close="index = null"
-                  >
-                  </CoolLightBox>
-                   
-
+              
                   <b-avatar
-                    :src=" data.item.imageVerif"
-                    href="javascript:;"
-                    :class="`img-${data.item.id + 1}`"
-                    @click="index = data.item.id"
+                    v-b-modal="modimage(data.item.id)"
+                    :src="data.item.imageVerif"
                     size="4rem"
                     rounded="lg"
                     alt=""
                     srcset=""
                   />
+                  <b-modal :id="'modimage' + data.item.id" hide-footer hide-header  size="xl" >
+                        <img :src="data.item.imageVerif" class="rounded mx-auto d-block">
+                      </b-modal>
                 </span>
                 <span v-else>
                   <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="4em" height="4em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 64 64">
@@ -286,6 +274,9 @@ export default {
 
   methods: {
     ...mapActions(['CreateRole','GetQuestions', 'CreateNotification', 'GetReplies', 'GetUsers', 'GetUserentreprises', 'GetQuestioncategories','GetRoles']),
+    modimage(id) {
+      return 'modimage' + id;
+    },
     async Accept(e) {
       this.$swal({
         icon: 'warning',
