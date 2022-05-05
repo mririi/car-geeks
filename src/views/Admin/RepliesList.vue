@@ -7,7 +7,7 @@
             <nav class="breadcrumb-one" aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:;">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><span>Services</span></li>
+                <li class="breadcrumb-item active" aria-current="page"><span>Replies List</span></li>
               </ol>
             </nav>
           </div>

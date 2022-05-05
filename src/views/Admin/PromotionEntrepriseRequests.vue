@@ -7,7 +7,7 @@
             <nav class="breadcrumb-one" aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:;">Promotions</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><span>Services</span></li>
+                <li class="breadcrumb-item active" aria-current="page"><span>Promoted Entreprises Requests</span></li>
               </ol>
             </nav>
           </div>
@@ -85,12 +85,6 @@
               <span v-else>
                 <b-badge variant="danger">Unpromoted</b-badge>
               </span>
-            </template>
-             <template #cell(datePE)="data">
-              <span v-if="data.item.datePE != null">
-                {{data.item.datePE}}
-              </span>
-              
             </template>
                <template #cell(actions)="data">
               <span @click="Accept(data.item.id,data.item.entreprisePE)">
@@ -253,7 +247,6 @@ export default {
       //table 3
       this.columns2 = [
         { key: 'entreprisePE', label: 'Entreprise' },
-       { key: 'datePE', label: 'Date' },
         { key: 'nbDays', label: 'Number of days' },
          { key: 'Running', label: 'Status' },
         { key: 'actions', label: 'Actions', class: 'text-center  ' },

@@ -21,7 +21,6 @@
           <div class="col-md-6 align-self-center order-md-0 order-1">
             <h1 class="">FAQ</h1>
             <p class="">Get Instant Answer From Popular Question Asked By Other Users</p>
-            <b-button variant="default">Start Learning</b-button>
           </div>
           <div class="col-md-6 order-md-0 order-0">
             <div class="banner-img">
@@ -37,7 +36,7 @@
         <div class="fq-comman-question-wrapper">
           <div class="row">
             <div class="col-md-12">
-              <h3>Platform Base Questions</h3>
+              <h3>Some common questions</h3>
               <div class="row">
                 <div class="col-md-6">
                   <ul class="">
@@ -169,7 +168,7 @@
         <div class="fq-tab-section">
           <div class="row">
             <div class="col-md-12 mb-5 mt-5">
-              <h2>Some common questions</h2>
+              <h2>Platform Base Questions</h2>
 
               <div class="accordion" id="faq">
                 <b-card no-body v-for="q in Questions" :key="q.id">
