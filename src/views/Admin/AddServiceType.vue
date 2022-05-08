@@ -61,7 +61,7 @@ import { mapGetters, mapActions } from 'vuex';
 //import VueTagsInput from '@johmun/vue-tags-input';
 import axios from 'axios'
 export default {
-  metaInfo: { title: 'Add Question' },
+  metaInfo: { title: 'Add Service Types' },
   components: {
    // VueTagsInput,
     },

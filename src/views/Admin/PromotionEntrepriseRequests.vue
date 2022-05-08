@@ -162,7 +162,7 @@
 import { mapGetters, mapActions } from 'vuex';
 import axios from 'axios'
 export default {
-  metaInfo: { title: 'Bootstrap Custom Table' },
+  metaInfo: { title: 'Promotion Entreprise Requests' },
   data() {
     return {
       //table 3

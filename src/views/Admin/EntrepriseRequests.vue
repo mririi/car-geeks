@@ -200,7 +200,7 @@ import '@/assets/sass/components/custom-lightbox.scss';
 import axios from 'axios';
 import { mapGetters, mapActions } from 'vuex';
 export default {
-  metaInfo: { title: 'Bootstrap Custom Table' },
+  metaInfo: { title: 'Entreprise Requests' },
   data() {
     return {
       //table 3

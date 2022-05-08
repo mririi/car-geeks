@@ -195,7 +195,7 @@
 import { mapGetters, mapActions } from 'vuex';
 import axios from 'axios';
 export default {
-  metaInfo: { title: 'Bootstrap Custom Table' },
+  metaInfo: { title: 'Replies Requests' },
   data() {
     return {
       //table 3

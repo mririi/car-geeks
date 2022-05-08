@@ -32,6 +32,12 @@
                    
                 </div>
                 <div class="col-md-6 pl-0 col-sm-6 col-12 text-right">
+                  <span v-if="existmember == true && ((CurrentUserProfile.id!=group.userprofileG && CurrentUserProfile.id!=null)||(CurrentUserEntreprise.id!=group.userentrepriseG && CurrentUserEntreprise.id!=null))">
+                    <b-button @click="deletemember(Currentmember.id)" variant="danger" class="mr-2"
+                      ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M16 13v-2H7V8l-5 4l5 4v-3z"/><path fill="currentColor" d="M20 3h-9c-1.103 0-2 .897-2 2v4h2V5h9v14h-9v-4H9v4c0 1.103.897 2 2 2h9c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2z"/></svg>
+                      Quitter groupe</b-button
+                    >
+                  </span>
                   <span v-if="existmember == true">
                     <b-button variant="primary" :href="'/group/' + group.id + '/addpost'"
                       ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
@@ -41,7 +47,7 @@
                       Add Post</b-button
                     >
                   </span>
-
+                  
                   <span v-if="existmember == false && requested == false &&  (CurrentUserProfile.id!=null || CurrentUserEntreprise.id!=null)">
                     <b-button variant="primary" @click="Join()"
                       ><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36">
@@ -719,6 +725,7 @@ export default {
       CurrentUserProfile: [],
       CurrentUserEntreprise: [],
       postdetails: [],
+      Currentmember:[],
       members: [],
       existmember: false,
       requested: false,
@@ -763,6 +770,8 @@ export default {
         }
         if (((this.Members[m].userprofileMem == this.CurrentUserProfile.id && this.CurrentUserProfile.id!=null) || (this.Members[m].userentrepriseMem == this.CurrentUserEntreprise.id && this.CurrentUserEntreprise.id!=null))  && this.Members[m].groupMem == this.group.id && this.Members[m].accepted == true) {
           this.existmember = true;
+          this.Currentmember=this.Members[m]
+          
         }
       }
       for (let m in this.Members) {
@@ -836,6 +845,23 @@ export default {
           axios.delete(`/postgroup/postgroup-delete/${id}/`);
           axios.put('/group/group-update/' + this.group.id + '/', { nbposts: this.group.nbposts -=1});
           this.$swal('Deleted!', 'Your post has been deleted.', 'success');
+          this.$router.go();
+        }
+      });
+    },
+    deletemember(id) {
+      this.$swal({
+        icon: 'warning',
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        showCancelButton: true,
+        confirmButtonText: 'Delete',
+        padding: '2em',
+      }).then((result) => {
+        if (result.value) {
+          axios.delete('/groupmember/groupmember-delete/'+id+'/' );
+          axios.put('/group/group-update/'+this.group.id+'/',{nbmembers:this.group.nbmembers-1})
+          this.$swal('Deleted!', 'Your are no longer a member in this group.', 'success');
           this.$router.go();
         }
       });

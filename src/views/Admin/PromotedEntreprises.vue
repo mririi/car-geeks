@@ -151,7 +151,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 export default {
-  metaInfo: { title: 'Bootstrap Custom Table' },
+  metaInfo: { title: 'Promoted Entreprises' },
   data() {
     return {
      

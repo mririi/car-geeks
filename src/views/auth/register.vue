@@ -31,7 +31,7 @@
                       <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                       <circle cx="12" cy="7" r="4"></circle>
                     </svg>
-                    <b-input placeholder="Username" v-model="form.username" :class="[is_submit_form1 ? (form.username && form.username.length >= 8 ? 'is-valid' : 'is-invalid') : '']"></b-input>
+                    <b-input placeholder="Username" v-model="form.username" :class="[is_submit_form1 ? (form.username && form.username.length >= 8 ? '' : 'is-invalid') : '']"></b-input>
                     <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !form.username.length >= 8 }">Please enter a username longer than 8 characters !</b-form-invalid-feedback>
                   </div>
                   <div id="email-field" class="field-wrapper input">
@@ -46,7 +46,7 @@
                       placeholder="Email@email.com"
                       type="email"
                       v-model="form.email"
-                      :class="[is_submit_form1 ? (form.email && email_validate(form.email) ? 'is-valid' : 'is-invalid') : '']"
+                      :class="[is_submit_form1 ? (form.email && email_validate(form.email) ? '' : 'is-invalid') : '']"
                     ></b-input>
                     <b-form-invalid-feedback :class="{ 'd-block': is_submit_form1 && !email_validate(form.email) }">Please fill a correct email !</b-form-invalid-feedback>
                   </div>
@@ -74,7 +74,7 @@
                       :type="pwd_type"
                       placeholder="Password"
                       v-model="form.password"
-                      :class="[is_submit_form1 ? (form.password && form.password.length >= 8 ? 'is-valid' : 'is-invalid') : '']"
+                      :class="[is_submit_form1 ? (form.password && form.password.length >= 8 ? '' : 'is-invalid') : '']"
                     ></b-input>
                     <svg
                       @click="set_pwd_type"
