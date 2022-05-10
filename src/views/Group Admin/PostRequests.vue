@@ -200,6 +200,9 @@ export default {
       group: [],
       pendingmember: [],
       pendingUserprofiles: [],
+      CurrentUser:[],
+      CurrentUserProfile:[],
+      CurrentUserEntreprise:[],
     };
   },
   watch: {
@@ -233,6 +236,24 @@ export default {
     this.GetGroupmembers();
     this.GetUserentreprises();
     this.GetUsers();
+    for (let u in this.Users) {
+      if (this.Users[u].username == this.User) {
+        this.CurrentUser = this.Users[u];
+      }
+    }
+    for (let u in this.Userprofiles) {
+      {
+        if (this.Userprofiles[u].userU == this.CurrentUser.id) {
+          this.CurrentUserProfile = this.Userprofiles[u];
+        }
+      }
+    }
+
+    for (let e in this.Userentreprises) {
+      if (this.Userentreprises[e].userE == this.CurrentUser.id) {
+        this.CurrentUserEntreprise = this.Userentreprises[e];
+      }
+    }
     axios.get('/group/group-detail/' + this.$route.params.id + '/').then((response) => {
       this.group = response.data;
 
@@ -287,6 +308,7 @@ export default {
         if (result.value) {
           axios.put('/postgroup/postgroup-update/' + post.id + '/', { accepted: true });
           axios.put('/group/group-update/' + this.$route.params.id + '/', { nbposts: this.group.nbposts + 1 });
+            this.CreateNotification({message:' Accepted your post !',byuserprofileNo:this.CurrentUserProfile.id,byuserentrepriseNo:this.CurrentUserEntreprise.id,userprofileNo:post.userprofilePost,entrepriseNo:post.userentreprisePost,groupNo:this.group.id})
           this.$router.go();
           this.$swal('Accepted!', 'Post has been added to your group.', 'success');
         }

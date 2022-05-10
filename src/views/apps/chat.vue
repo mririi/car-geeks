@@ -161,7 +161,8 @@ export default {
       senders: [],
       messages: [],
       search: '',
-      Contactlist:[]
+      Contactlist:[],
+      CurrentUserProfile:[],
     };
   },
   computed: {
@@ -175,6 +176,7 @@ export default {
     isLoggedIn: function () {
       return this.$store.getters.isAuthenticated;
     },
+    
     
     filteredList() {
       return this.Contactlist.filter((user) => {
@@ -199,7 +201,7 @@ export default {
     });
   },
   methods: {
-    ...mapActions(['GetUsers','GetUserentreprises', 'CreateChat', 'GetUserprofiles', 'GetChats']),
+    ...mapActions(['GetUsers','SendEmail','CreateNotification','GetUserentreprises', 'CreateChat', 'GetUserprofiles', 'GetChats']),
     
     preview(person) {
       var ms=this.messages.filter((c) => c.sender == person.userU && c.reciever==this.CurrentUser.id);
@@ -216,6 +218,8 @@ export default {
       if (this.text_message.trim()) {
         let user = this.Userprofiles.find((d) => d.userU == this.selected_user.userU);
         this.CreateChat({ message: this.text_message, sender: this.CurrentUser.id, reciever: user.userU, preview: this.text_message.slice(0, 10) });
+        this.CreateNotification({message:": "+this.text_message.slice(0, 10)+" (inbox)",byuserprofileNo:this.CurrentUserProfile.id,userprofileNo:this.Userprofiles.find((d)=>d.userU==user.userU).id,chat:true})
+        this.SendEmail({subject:this.CurrentUserProfile.firstname+" "+this.CurrentUserProfile.lastname+" sent you a message: "+this.text_message.slice(0, 10),message:this.CurrentUserProfile.firstname+" "+this.CurrentUserProfile.lastname+" sent: "+this.text_message,to:this.Users.find((d)=>d.id==user.userU).email})
         this.text_message = '';
         this.scroll_to_bottom();
       }
@@ -239,6 +243,13 @@ export default {
         if(this.Userentreprises.find((d)=>d.userE==this.CurrentUser.id)!=null){
           this.$router.push('/')
         }
+    for (let u in this.Userprofiles) {
+      {
+        if (this.Userprofiles[u].userU == this.CurrentUser.id) {
+          this.CurrentUserProfile = this.Userprofiles[u];
+        }
+      }
+    }
         let contact=[]
       for (let c in this.messages.sort(function(a, b){return b-a})){
         if(contact.find((d)=>d==this.messages[c].sender)==null&&this.messages[c].reciever==this.CurrentUser.id){

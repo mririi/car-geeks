@@ -271,7 +271,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['GetGroups', 'GetGroupposts','GetUsers', 'GetUserprofiles', 'GetGroupcomments', 'GetGroupmembers','CreateGroupmember']),
+    ...mapActions(['GetGroups','CreateNotification', 'GetGroupposts','GetUsers', 'GetUserprofiles', 'GetGroupcomments', 'GetGroupmembers','CreateGroupmember']),
     async Accept(user) {
       
        this.$swal({
@@ -287,9 +287,9 @@ export default {
             if (this.Members[m].userprofileMem == user.id && this.Members[m].groupMem==this.$route.params.id) {
              axios.put('/groupmember/groupmember-update/' + this.Members[m].id + '/', { accepted: true });
              axios.put('/group/group-update/' + this.$route.params.id + '/', { nbmembers: this.group.nbmembers+1 });
+             this.CreateNotification({message:' Accepted your join request !',byuserprofileNo:this.group.userprofileG,byuserentrepriseNo:this.group.userentrepriseG ,userprofileNo:this.Members[m].userprofileMem,groupNo:this.group.id})
             }
             }
-            console.log("done")
             this.$router.go();
             this.$swal('Accepted!', 'Member has been added to your group.', 'success');
          }catch(error){

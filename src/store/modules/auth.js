@@ -43,6 +43,7 @@ const state = {
   groupposts:null,
   groupcomments:null,
   groupvotes:null,
+  emails:null,
 };
 
 const getters = {
@@ -68,13 +69,6 @@ const getters = {
   StateReplies: (state) => state.replies,
   StateComments: (state) => state.comments,
   StateVotes: (state) => state.votes,
-  //CAR
-  StateCars: (state) => state.cars,
-  StateBrands: (state) => state.brands,
-  StateCarenergies: (state) => state.carenergies,
-  StateCartypes: (state) => state.cartypes,
-  StateCarmodeles: (state) => state.carmodeles,
-  StateCarengines: (state) => state.carengines,
   //SERVICE
   StateServices: (state) => state.services,
   StateServicetypes: (state) => state.servicetypes,
@@ -82,6 +76,7 @@ const getters = {
   StateServicepromotions:(state) => state.servicepromotions,
   //OTHERS
   StatePreferences: (state) => state.preferences,
+  StateEmails: (state) => state.emails,
   StateReclamations: (state) => state.reclamations,
   StateNotifications:(state) => state.notifications,
   StateChats:(state) => state.chats,
@@ -90,6 +85,7 @@ const getters = {
   StateGroupposts:(state) => state.groupposts,
   StateGroupcomments:(state) => state.groupcomments,
   StateGroupvotes:(state) => state.groupvotes,
+
 };
 
 const actions = {
@@ -200,55 +196,6 @@ const actions = {
     let response = await axios.get("vote/vote-list/");
     commit("setVotes", response.data);
   },
-  //CAR
-  async CreateCar({ dispatch }, car) {
-    await axios.post("/car/car-create/", car);
-    return await dispatch("GetCars");
-  },
-  async GetCars({ commit }) {
-    let response = await axios.get("car/car-list/");
-    commit("setCars", response.data);
-  },
-  async CreateBrand({ dispatch }, brand) {
-    await axios.post("/brand/brand-create/", brand);
-    return await dispatch("GetBrands");
-  },
-  async GetBrands({ commit }) {
-    let response = await axios.get("brand/brand-list/");
-    commit("setBrands", response.data);
-  },
-  async CreateCarmodele({ dispatch }, carmodele) {
-    await axios.post("/carmodele/carmodele-create/", carmodele);
-    return await dispatch("GetCarmodeles");
-  },
-  async GetCarmodeles({ commit }) {
-    let response = await axios.get("carmodele/carmodele-list/");
-    commit("setCarmodeles", response.data);
-  },
-  async CreateCarengine({ dispatch }, carengine) {
-    await axios.post("/carengine/carengine-create/", carengine);
-    return await dispatch("GetCarengine");
-  },
-  async GetCarengines({ commit }) {
-    let response = await axios.get("carengine/carengine-list/");
-    commit("setCarengines", response.data);
-  },
-  async CreateCarenergy({ dispatch }, carenergy) {
-    await axios.post("/carenergy/carenergy-create/", carenergy);
-    return await dispatch("GetCarenergies");
-  },
-  async GetCarenergies({ commit }) {
-    let response = await axios.get("carenergy/carenergy-list/");
-    commit("setCarenergies", response.data);
-  },
-  async CreateCartype({ dispatch }, cartype) {
-    await axios.post("/cartype/cartype-create/", cartype);
-    return await dispatch("GetCartypes");
-  },
-  async GetCartypes({ commit }) {
-    let response = await axios.get("cartype/cartype-list/");
-    commit("setCartypes", response.data);
-  },
   //SERVICE
   async GetServices({ commit }) {
     let response = await axios.get("service/service-list/");
@@ -299,12 +246,17 @@ const actions = {
     await axios.post("/chat/chat-create/", chat);
     return await dispatch("GetChats");
   },
-  async SendEmail(mailinfo) {
+  async SendEmail({ dispatch },mailinfo) {
     await axios.post("/emailapp/email-create/", mailinfo);
+    return await dispatch("GetEmails");
   },
   async GetReclamations({ commit }) {
     let response = await axios.get("reclamation/reclamation-list/");
     commit("setReclamations", response.data);
+  },
+  async GetEmails({ commit }) {
+    let response = await axios.get("emailapp/email-list/");
+    commit("setEmails", response.data);
   },
   async GetNotifications({ commit }) {
     let response = await axios.get("notification/notification-list/");
@@ -446,6 +398,9 @@ const mutations = {
       state.evaluations=evaluations;
   },
   //OTHERS
+  setEmails(state, emails) {
+    state.emails = emails;
+  },
   setPreferences(state, preferences) {
     state.preferences = preferences;
   },

@@ -275,7 +275,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['GetGroups', 'GetUserentreprises','GetGroupposts','GetUsers', 'GetUserprofiles', 'GetGroupcomments', 'GetGroupmembers','CreateGroupmember']),
+    ...mapActions(['GetGroups','CreateNotification', 'GetUserentreprises','GetGroupposts','GetUsers', 'GetUserprofiles', 'GetGroupcomments', 'GetGroupmembers','CreateGroupmember']),
     async Accept(entreprise) {
        this.$swal({
         icon: 'warning',
@@ -288,6 +288,8 @@ export default {
              for (let m in this.Members) {
             if (this.Members[m].userentrepriseMem == entreprise.id) {
              axios.put('/groupmember/groupmember-update/' + this.Members[m].id + '/', { accepted: true });
+              this.CreateNotification({message:' Accepted your join request !',byuserprofileNo:this.group.userprofileG,byuserentrepriseNo:this.group.userentrepriseG ,entrepriseNo:this.Members[m].userentrepriseMem,groupNo:this.group.id})
+
             }
             }
             axios.put('/group/group-update/' + this.$route.params.id + '/', { nbmembers: this.group.nbmembers+1 });

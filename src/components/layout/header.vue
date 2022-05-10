@@ -193,6 +193,53 @@
                         </template>
                         <perfect-scrollbar>
                          <div v-for="n in Notifications" :key="n.id">
+                           <b-dropdown-item  @click="updatenotif(n)" v-if="n.seen == false && n.chat == true && CurrentUser.is_superuser==true">
+                            <b-media class="server-log">
+                                <template #aside>
+                                  <b-badge variant="info" class="mt-2">Chat</b-badge>
+                                  
+                                </template>
+                                <div class="data-info" v-if="n.byuserprofileNo==null && n.byuserentrepriseNo!=null">
+                                    <h6 class="">
+                                      <div v-for="ue in Userentreprises" :key="ue.id">
+                                    <div v-if="ue.id == n.byuserentrepriseNo">
+                                      {{ue.nameE}} {{ n.message }}
+                                    </div></div></h6>
+                                    <p class="">{{ getDateago(n.dateNo) }} ago</p>
+                                </div>
+                                <div class="data-info" v-else-if="n.byuserentrepriseNo==null && n.byuserprofileNo!=null">
+                                    <h6 class="">
+                                      <div v-for="u in Userprofiles" :key="u.id">
+                                    <div v-if="u.id == n.byuserprofileNo">
+                                      {{u.firstname}} {{u.lastname}} {{ n.message }}
+                                    </div></div></h6>
+                                    <p class="">{{ getDateago(n.dateNo) }} ago</p>
+                                </div>
+                                <div class="data-info" v-if="n.byuserentrepriseNo==null && n.byuserprofileNo==null">
+                                    <h6 class="">
+                                      {{ n.message }}
+                                   </h6>
+                                    <p class="">{{ getDateago(n.dateNo) }} ago</p>
+                                </div>
+                                <div @click="deletenotif(n.id)" class="icon-status">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="feather feather-x"
+                                    >
+                                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                                    </svg>
+                                </div>
+                            </b-media>
+                        </b-dropdown-item>
                            <b-dropdown-item  @click="updatenotif(n)" v-if="n.seen == false && n.foradmin == true && CurrentUser.is_superuser==true">
                             <b-media class="server-log">
                                 <template #aside>
@@ -311,6 +358,7 @@
                                     </div></div></h6>
                                     <p class="">{{ getDateago(n.dateNo) }} ago</p>
                                 </div>
+                                <!--ghalta-->
                                 <div class="data-info" v-else-if="n.byuserentrepriseNo==null">
                                     <h6 class="">
                                       <div v-for="u in Userprofiles" :key="u.id">
@@ -1097,7 +1145,7 @@ export default {
       axios.put('/notifications/notification-update/' + notif.id + '/', { seen: true, admin: notif.admin });
       if (notif.foradmin==false &&notif.questionNo != null) {
         this.$router.push('/questionpage/' + notif.questionNo + '/' + this.Questions.find((d)=>d.id==notif.questionNo).slug)
-      } else if (notif.foradmin==false &&notif.entrepriseNo == null && notif.serviceNo == null && notif.questionNo == null && notif.groupNo == null && notif.replyNo == null) {
+      } else if (notif.foradmin==false && notif.chat==false &&notif.entrepriseNo == null && notif.serviceNo == null && notif.questionNo == null && notif.groupNo == null && notif.replyNo == null) {
         this.$router.push('/profile/' + notif.userprofileNo + '/')
       } else if (notif.foradmin==false &&notif.serviceNo != null) {
         this.$router.push('/servicedetails/' + notif.serviceNo + '/')
@@ -1123,11 +1171,13 @@ export default {
             this.$router.push('/questionpage/' + this.Replies.find((d)=>d.id==notif.replyNo).questionRep + '/' + this.Questions.find((d)=>d.id==this.Replies.find((d)=>d.id==notif.replyNo).questionRep).slug)
       }else if (notif.groupNo!=null){
         this.$router.push('/groupdetail/'+notif.groupNo)
+      }else if (notif.chat==true){
+        this.$router.push('/apps/chat/')
       }
     },
 
     getDateago: function (s) {
-      if (new Date().getHours() - new Date(s).getHours() == 0) {
+      if (new Date().getHours() - new Date(s).getHours() == 0 && new Date().getDate() - new Date(s).getDate() == 0 && new Date().getMonth() - new Date(s).getMonth() == 0) {
         return new Date().getMinutes() - new Date(s).getMinutes() + ' mins';
       } else if (new Date().getDate() - new Date(s).getDate() == 0) {
         return new Date().getHours() - new Date(s).getHours() + ' Hours';
@@ -1135,7 +1185,7 @@ export default {
         return new Date().getHours() - new Date(s).getHours() + ' Days';
       } else if (new Date().getMonth() - new Date(s).getMonth() == 0) {
         return new Date().getDate() - new Date(s).getDate() + ' Days';
-      } else if (new Date().getYear() - new Date(s).getYear() == 0){
+      }  else if (new Date().getYear() - new Date(s).getYear() == 0){
         return new Date().getMonth() - new Date(s).getMonth() + ' Months';
       }
     },
