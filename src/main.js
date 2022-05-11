@@ -25,11 +25,7 @@ Vue.use(GoogleAuth, gauthOption)
 import VueCompositionAPI from '@vue/composition-api'
 Vue.use(VueCompositionAPI)
 //
-import VueFuse from 'vue-fuse'
-Vue.use(VueFuse)
 //phone number
-import MazPhoneNumberInput from 'maz-ui'
-Vue.use(MazPhoneNumberInput)
 import VuePhoneNumberInput from 'vue-phone-number-input';
 import 'vue-phone-number-input/dist/vue-phone-number-input.css';
 Vue.component('vue-phone-number-input', VuePhoneNumberInput);
@@ -64,7 +60,6 @@ Vue.filter("formatNumber", function (value) {
 //
 import 'vue-phone-number-input/dist/vue-phone-number-input.css';
 
-Vue.component('vue-phone-number-input', VuePhoneNumberInput);
 //Sweetalert
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';

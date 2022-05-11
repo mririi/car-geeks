@@ -42,6 +42,7 @@
         "veeno": "0.0.4",
         "vue": "^2.6.14",
         "vue-apexcharts": "^1.6.2",
+        "vue-cli-plugin-compression": "^1.2.0",
         "vue-clipboard2": "^0.3.3",
         "vue-cool-lightbox": "^2.7.4",
         "vue-country-region-select": "^2.0.16",
