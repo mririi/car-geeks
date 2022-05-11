@@ -58,7 +58,7 @@
    
     <div class="row layout-top-spacing">
       <div class="col-xl-12 col-md-12 col-sm-12 col-12 ">
-        <div class="panel-body" v-for="q in filterByCategory" :key="q.id">
+        <!--<div class="panel-body" v-for="q in filterByCategory" :key="q.id">
           <b-card class="component-card_9" v-if="q.accepted == true && checkpref(q)==true">
            
             
@@ -142,9 +142,9 @@
               </div>
             </div>
           </b-card>
-        </div>
+        </div>-->
         <div class="panel-body" v-for="q in filterByCategory" :key="q.id">
-          <b-card class="component-card_9" v-if="q.accepted == true && checkpref(q)==false">
+          <b-card class="component-card_9" >
            
             
             <div v-if="CurrentUserProfile.id == q.userprofileQ && q.userprofileQ !=null|| CurrentUserEntreprise.id==q.userentrepriseQ &&q.userentrepriseQ!=null">
@@ -228,7 +228,6 @@
             </div>
           </b-card>
         </div>
-        <!-- jib melol eli == l categoryPref1..3 wba3d jib lokhrin-->
       </div>
     </div>
   </div>
@@ -249,9 +248,13 @@ export default {
     return {
       search: '',
       category: [],
+      AllQuestions:[],
       CurrentUserProfile: [],
       CurrentUserEntreprise:[],
       CurrentUser: [],
+      AcceptedQuestions:[],
+      PrefQuestions:[],
+      NormalQuestions:[],
     };
   },
   created: function () {
@@ -261,6 +264,8 @@ export default {
     this.GetQuestioncategories();
     this.GetUsers();
     this.GetPreferences();
+    
+    
     for (let u in this.Users) {
       if (this.Users[u].username == this.User) {
         this.CurrentUser = this.Users[u];
@@ -281,7 +286,23 @@ export default {
       }
     }
     }
-    
+    this.AcceptedQuestions=this.Questions.filter((question) => question.accepted==true);
+    if(this.CurrentUserProfile.id!=null && this.CurrentUserProfile.preferencesU!=null){
+      let profile=this.Userprofiles.find((d)=>d.id==this.CurrentUserProfile.id)
+      let preferences=this.Preferences.find((p)=>p.id==profile.preferencesU)
+      for(let q in this.AcceptedQuestions){
+      if(this.AcceptedQuestions[q].categoryQ==preferences.categoryPref1||this.AcceptedQuestions[q].categoryQ==preferences.categoryPref2||this.AcceptedQuestions[q].categoryQ==preferences.categoryPref3){
+        this.PrefQuestions.push(this.AcceptedQuestions[q])
+      }else if (this.AcceptedQuestions[q].categoryQ!=preferences.categoryPref1&&this.AcceptedQuestions[q].categoryQ!=preferences.categoryPref2&&this.AcceptedQuestions[q].categoryQ!=preferences.categoryPref3){
+        this.NormalQuestions.push(this.AcceptedQuestions[q])
+      }}
+    }
+    for(let qp in this.PrefQuestions){
+      this.AllQuestions.push(this.PrefQuestions[qp])
+    }
+    for(let nq in this.NormalQuestions){
+      this.AllQuestions.push(this.NormalQuestions[nq])
+    }
   },
   computed: {
     ...mapGetters({
@@ -294,7 +315,7 @@ export default {
       Userentreprises:'StateUserentreprises',
     }),
     filteredList() {
-      return this.Questions.filter((question) => {
+      return this.AllQuestions.filter((question) => {
         return question.titleQ.toLowerCase().includes(this.search.toLowerCase());
       });
     },
