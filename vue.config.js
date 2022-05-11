@@ -1,5 +1,6 @@
 const path = require('path');
 const zlib = require("zlib");
+
 module.exports = {
     devServer: {
         port: 8080

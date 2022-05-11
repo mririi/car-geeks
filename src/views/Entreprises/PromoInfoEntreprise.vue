@@ -30,7 +30,7 @@
                     </router-link>
                   
               </div>
-              <div class="w-browser-details" v-if="getDatee < getDatee1(sp.datePE) + sp.nbDays">
+              <div class="w-browser-details" v-if="getDatee < getDatee1(sp.datePE) + parseInt(sp.nbDays)">
                 <div class="w-browser-info">
                   <h6>Left {{ getDatee1(sp.datePE) + parseInt(sp.nbDays) - getDatee }} Days</h6>
                   <p class="browser-count">{{ sp.nbDays }} Days</p>

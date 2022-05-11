@@ -227,6 +227,24 @@ const routes = [
             layout: 'app'
         }
     },
+    //Faq
+    {
+        path: '/faq',
+        name: 'faq',
+        component: () => import('../views/Others/faq.vue'),
+        meta: {
+            layout: 'app'
+        }
+    },
+    //Contact-us
+    {
+        path: '/contact-us',
+        name: 'contactus',
+        component: () => import('../views/Others/contact_us.vue'),
+        meta: {
+            layout: 'app'
+        }
+    },
     //Groups
     {
         path: '/groups',
