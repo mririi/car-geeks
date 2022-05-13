@@ -296,12 +296,14 @@ export default {
       }else if (this.AcceptedQuestions[q].categoryQ!=preferences.categoryPref1&&this.AcceptedQuestions[q].categoryQ!=preferences.categoryPref2&&this.AcceptedQuestions[q].categoryQ!=preferences.categoryPref3){
         this.NormalQuestions.push(this.AcceptedQuestions[q])
       }}
-    }
+    
     for(let qp in this.PrefQuestions){
       this.AllQuestions.push(this.PrefQuestions[qp])
     }
     for(let nq in this.NormalQuestions){
       this.AllQuestions.push(this.NormalQuestions[nq])
+    }}else{
+      this.AllQuestions=this.AcceptedQuestions
     }
   },
   computed: {
