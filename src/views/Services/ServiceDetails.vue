@@ -634,6 +634,7 @@ export default {
           this.promoted = true;
           const d = new Date(this.Servicepromotions[s].dateP);
           d.setDate(d.getDate() + parseInt(this.Servicepromotions[s].nbDays));
+          console.log(d)
           if (new Date() > d && this.Servicepromotions[s].dateP != null) {
             axios.delete(`https://cargeeks.herokuapp.com/servicepromotion/servicepromotion-delete/${this.Servicepromotions[s].id}/`);
             axios.post('/service/service-update/' + this.service.id + '/', { promoted: false, accepted: this.service.accepted });

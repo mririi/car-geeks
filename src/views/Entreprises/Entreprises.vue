@@ -34,7 +34,7 @@
           <div id="pricingWrapper" >
             
               <div class="row">
-                <b-card class="stacked mt-5 col-md-6 col-lg-3 mr-1" header-class="pt-0" v-for="s in filterByPromoted" :key="s.id">
+                <b-card class="stacked mt-5 col-md-6 col-lg-3 mr-3" header-class="pt-0" v-for="s in filterByPromoted" :key="s.id">
                   <template #header>
                         <b-badge variant="danger" class="float-right mt-1">Promoted</b-badge>
                     <span class="card-price"><b-avatar :src=" s.imageE" size="5.5rem" class="mb-2" rounded="lg" alt="..." /></span>

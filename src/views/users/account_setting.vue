@@ -130,8 +130,8 @@
 
       <div class="account-settings-footer">
         <div class="as-footer-container">
-          <b-button variant="primary" @click="Reset()">Reset All</b-button>
-          <b-button variant="success" @click="updateProfile()">Save Changes</b-button>
+          <div ></div>
+          <b-button variant="success"  @click="updateProfile()">Save Changes</b-button>
 
           <b-toast id="message" header-class="d-none" body-class="toast-success d-flex justify-content-between" toaster="b-toaster-top-right"> Settings Saved Successfully </b-toast>
         </div>
