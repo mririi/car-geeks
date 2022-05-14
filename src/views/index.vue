@@ -9,7 +9,7 @@
         </p>
         <div class="hero-options">
             <a v-show="!isLoggedIn" href="/auth/register" class="btn btn-developers">Get Started !</a>
-            <a v-show="!isLoggedIn" href="/auth/login-boxed" class="btn btn-businesses">Sign In</a>
+            <a v-show="!isLoggedIn" href="/auth/login" class="btn btn-businesses">Sign In</a>
             <a v-show="isLoggedIn" href="/addquestion" class="btn btn-developers">Ask a Question !</a>
         </div>
     </div>

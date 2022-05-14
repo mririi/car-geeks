@@ -59,7 +59,6 @@ export default {
     ...mapActions(['GetVotes','CreateNotification','CreateVote']),
     likedreply(){
         this.liked=false
-        
         axios.post('/reply/reply-update/'+this.replyid+'/',{nblikesR:this.likes-1})
         for (let v in this.Votes) {
         if (this.Votes[v].replyVo === this.replyid && (this.Votes[v].userprofileVo === this.userprofile ||this.Votes[v].userentrepriseVo === this.userentreprise)) {

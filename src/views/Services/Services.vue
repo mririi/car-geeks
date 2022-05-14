@@ -61,7 +61,7 @@
           <h2>Services List</h2>
           <div class="row">
             <div class="col-lg-4 col-md-6 mb-lg-0 mb-4" v-for="s in filterByPromoted" :key="s.id">
-              <b-badge variant="danger" class="ml-2">Sponsorised</b-badge>
+              <b-badge variant="danger" class="ml-2">Sponsored</b-badge>
               <b-card :img-src=" s.imageS" img-top img-alt="Service" style="height: 410px"  class="counter" img-width="100%" img-height="200px">
               
                 <router-link :to="'/servicedetails/' + s.id">
