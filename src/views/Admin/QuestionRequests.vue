@@ -109,8 +109,8 @@
               </span>
             </template>
             <template #cell(actions)="data">
-              <span @click="Accept(data.item)">
-                <svg
+              <span >
+                <svg @click="Accept(data.item)"
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
                   height="24"
@@ -124,7 +124,8 @@
                 >
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                   <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
+                </svg><p>__</p>
+                <svg @click="Delete(data.item.id)" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="red" stroke-width="2"><path stroke-linecap="round" d="M15 15L9 9m6 0l-6 6"/><circle cx="12" cy="12" r="10"/></g></svg>
               </span>
             </template>
             <template #cell(imageQ)="data">
@@ -278,6 +279,23 @@ export default {
 
   methods: {
     ...mapActions(['GetQuestions','CreateNotification', 'GetUsers', 'GetUserprofiles', 'GetQuestioncategories','GetUserentreprises']),
+    Delete(id) {
+      this.$swal({
+        icon: 'warning',
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        showCancelButton: true,
+        confirmButtonText: 'Delete',
+        padding: '2em',
+      }).then((result) => {
+        if (result.value) {
+          axios.delete(`/question/question-delete/${id}/`);
+          this.$swal('Deleted!', 'The question request has been deleted.', 'success');
+          this.$router.go();
+        }
+      });
+     
+    },
     async Accept(quest) {
        this.$swal({
         icon: 'warning',

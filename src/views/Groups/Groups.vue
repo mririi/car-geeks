@@ -6,7 +6,6 @@
           <div class="page-header">
             <nav class="breadcrumb-one" aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="javascript:;">Pages</a></li>
                 <li class="breadcrumb-item active" aria-current="page"><span>Groups</span></li>
               </ol>
             </nav>
