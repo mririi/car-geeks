@@ -90,7 +90,7 @@
                     <img :src="c.imageCat" class="mb-2" style="width:250px;height:200px;">
                 </div>
                 <div class="user-info">
-                    <b-card-text class="col-12"><b-form-checkbox :value="c.id" v-show="category.length<=2" class="slider round">{{ c.typeC }}</b-form-checkbox><b-form-checkbox :value="c.id" v-show="category.length>2" disabled class="slider round">{{ c.typeC }}</b-form-checkbox></b-card-text>
+                    <b-card-text ><b-form-checkbox :value="c.id" v-show="category.length<=2" class="slider round">{{ c.typeC }}</b-form-checkbox><b-form-checkbox :value="c.id" v-show="category.length>2" disabled class="slider round">{{ c.typeC }}</b-form-checkbox></b-card-text>
                     </div>
             </b-card>
                 </b-form-checkbox-group>

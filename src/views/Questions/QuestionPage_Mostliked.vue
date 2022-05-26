@@ -372,11 +372,14 @@
                             >
                               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                             </svg>
-                            <span v-if="(isLoggedIn && CurrentUserProfile.id != null) || CurrentUserEntreprise != null">
+                            <span v-if="(isLoggedIn && CurrentUserProfile.id != null) || CurrentUserEntreprise.id != null">
                               <span v-b-modal="modalCreateCommentMost(rep.id)">Add a comment</span>
                             </span>
 
-                            <span v-else-if="(isLoggedIn && CurrentUserProfile.id == null) || CurrentUserEntreprise == null">
+                            <span v-else-if="isLoggedIn && (CurrentUserProfile.id == null || CurrentUserEntreprise.id == null)">
+                              <a href="/auth/userinfo"> <span>Add a comment</span></a>
+                            </span>
+                            <span v-else-if="User==null">
                               <a href="/auth/userinfo"> <span>Add a comment</span></a>
                             </span>
                           </a>
