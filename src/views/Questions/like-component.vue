@@ -88,10 +88,10 @@ export default {
           this.reply = response.data;
           this.likes = this.reply.nblikesR
           for(let v in this.Votes){
-            if(this.userprofile==this.Votes[v].userprofileVo && this.Votes[v].replyVo==this.reply.id){
+            if(this.userprofile!=null && this.userprofile==this.Votes[v].userprofileVo && this.Votes[v].replyVo==this.reply.id){
                
                 this.liked=true
-            }else if (this.userentreprise==this.Votes[v].userentrepriseVo && this.Votes[v].replyVo==this.reply.id)
+            }else if (this.userentreprise!=null && this.userentreprise==this.Votes[v].userentrepriseVo && this.Votes[v].replyVo==this.reply.id)
             {
               this.liked=true
             }
