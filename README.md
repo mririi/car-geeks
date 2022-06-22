@@ -1,5 +1,5 @@
 # Car Geeks
-Link is [here](https://cargeeksjs.herokuapp.com/).
+Demo is [here](https://cargeeksjs.herokuapp.com/).
 
 ## Project setup
 ```
