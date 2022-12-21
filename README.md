@@ -1,5 +1,5 @@
 # Car Geeks
-Demo is [here](https://cargeeksjs.herokuapp.com/).
+Demo is [here](https://master.dwqiofc0atzod.amplifyapp.com/auth/register). (frontend only)
 
 ## Project setup
 ```
